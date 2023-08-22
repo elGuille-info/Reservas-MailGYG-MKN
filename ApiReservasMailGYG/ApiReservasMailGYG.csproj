@@ -1,0 +1,19 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <RootNamespace>ApiReservasMailGYG</RootNamespace>
+    <ImplicitUsings>disable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <Title>ApiReservasMailGYG</Title>
+    <Description>Analizar los correos de GetYourGuide para crear las nuevas reservas</Description>
+    <Copyright>(c) gSoft para Maro-Kayak Nerja</Copyright>
+    <PackageReadmeFile>Readme.md</PackageReadmeFile>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\MKNReservas\KNDLLs\KNDatos\KNDatos.vbproj" />
+    <ProjectReference Include="..\..\..\MKNReservas\KNDLLs\KNUtilidades\MKNUtilidades.vbproj" />
+  </ItemGroup>
+
+</Project>
