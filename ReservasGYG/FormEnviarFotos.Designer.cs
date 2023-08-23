@@ -33,11 +33,6 @@
             TxtFotosSeleccionada = new System.Windows.Forms.TextBox();
             label8 = new System.Windows.Forms.Label();
             FlowLayoutPanelFotos = new System.Windows.Forms.FlowLayoutPanel();
-            CboHoras = new System.Windows.Forms.ComboBox();
-            BtnEnviarFotos = new System.Windows.Forms.Button();
-            DateTimePickerFotos = new System.Windows.Forms.DateTimePicker();
-            BtnComprobarEmails = new System.Windows.Forms.Button();
-            label1 = new System.Windows.Forms.Label();
             TxtFotos1030 = new System.Windows.Forms.TextBox();
             txtFotos1100 = new System.Windows.Forms.TextBox();
             txtFotos1145 = new System.Windows.Forms.TextBox();
@@ -49,6 +44,11 @@
             TxtFotos1630 = new System.Windows.Forms.TextBox();
             TxtFotos1745 = new System.Windows.Forms.TextBox();
             TxtFotos1800 = new System.Windows.Forms.TextBox();
+            CboHoras = new System.Windows.Forms.ComboBox();
+            BtnEnviarFotos = new System.Windows.Forms.Button();
+            DateTimePickerGYG = new System.Windows.Forms.DateTimePicker();
+            BtnComprobarEmails = new System.Windows.Forms.Button();
+            label1 = new System.Windows.Forms.Label();
             FlowLayoutPanelFotos.SuspendLayout();
             SuspendLayout();
             // 
@@ -106,59 +106,6 @@
             FlowLayoutPanelFotos.Padding = new System.Windows.Forms.Padding(6);
             FlowLayoutPanelFotos.Size = new System.Drawing.Size(606, 842);
             FlowLayoutPanelFotos.TabIndex = 0;
-            // 
-            // CboHoras
-            // 
-            CboHoras.FormattingEnabled = true;
-            CboHoras.Items.AddRange(new object[] { "09:30 (Ruta Corta)", "10:30 (Ruta Larga)", "11:00 (Ruta Corta)", "11:05 (Ruta Tablas)", "11:45 (Ruta Corta)", "13:15 (Ruta Corta)", "13:30 (Ruta Larga)", "14:00 (Ruta Corta)", "15:30 (Ruta Corta)", "16:15 (Ruta Corta)", "16:30 (Ruta Larga)", "17:45 (Ruta Corta)", "18:00 (Ruta Corta)" });
-            CboHoras.Location = new System.Drawing.Point(817, 12);
-            CboHoras.Name = "CboHoras";
-            CboHoras.Size = new System.Drawing.Size(251, 33);
-            CboHoras.TabIndex = 2;
-            CboHoras.SelectedIndexChanged += CboHoras_SelectedIndexChanged;
-            // 
-            // BtnEnviarFotos
-            // 
-            BtnEnviarFotos.Location = new System.Drawing.Point(633, 510);
-            BtnEnviarFotos.Name = "BtnEnviarFotos";
-            BtnEnviarFotos.Size = new System.Drawing.Size(654, 60);
-            BtnEnviarFotos.TabIndex = 6;
-            BtnEnviarFotos.Text = "Enviar las fotos de";
-            BtnEnviarFotos.UseVisualStyleBackColor = true;
-            BtnEnviarFotos.Click += BtnEnviarFotos_Click;
-            // 
-            // DateTimePickerFotos
-            // 
-            DateTimePickerFotos.CustomFormat = "dd/MM/yyyy";
-            DateTimePickerFotos.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            DateTimePickerFotos.Location = new System.Drawing.Point(1074, 10);
-            DateTimePickerFotos.Name = "DateTimePickerFotos";
-            DateTimePickerFotos.Size = new System.Drawing.Size(213, 31);
-            DateTimePickerFotos.TabIndex = 3;
-            DateTimePickerFotos.ValueChanged += DateTimePickerFotos_ValueChanged;
-            // 
-            // BtnComprobarEmails
-            // 
-            BtnComprobarEmails.Location = new System.Drawing.Point(633, 420);
-            BtnComprobarEmails.Name = "BtnComprobarEmails";
-            BtnComprobarEmails.Size = new System.Drawing.Size(654, 60);
-            BtnComprobarEmails.TabIndex = 5;
-            BtnComprobarEmails.Text = "Comprobar si faltan emails";
-            BtnComprobarEmails.UseVisualStyleBackColor = true;
-            BtnComprobarEmails.Click += BtnComprobarEmails_Click;
-            // 
-            // label1
-            // 
-            label1.Anchor = System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
-            label1.BackColor = System.Drawing.SystemColors.Info;
-            label1.Location = new System.Drawing.Point(627, 750);
-            label1.Margin = new System.Windows.Forms.Padding(6, 3, 3, 3);
-            label1.Name = "label1";
-            label1.Padding = new System.Windows.Forms.Padding(12);
-            label1.Size = new System.Drawing.Size(669, 107);
-            label1.TabIndex = 7;
-            label1.Text = "Si 'Enviar las fotos...' no está seleccionado, pulsa en 'Comprobar si faltan emails' y asegúrate de elegir una hora con contenido y una fecha anterior a hoy.";
-            label1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // TxtFotos1030
             // 
@@ -281,6 +228,59 @@
             TxtFotos1800.TabIndex = 11;
             TxtFotos1800.Text = "¡Hola!\r\nTe paso el enlace a las fotos de la ruta:\r\n\r\nRuta Miércoles 16.08.23 13.30h - Juanda\r\nhttps://photos.app.goo.gl/8pt4HWFqB9NUWhyg6\r\n\r\n¡Muchas gracias!";
             // 
+            // CboHoras
+            // 
+            CboHoras.FormattingEnabled = true;
+            CboHoras.Items.AddRange(new object[] { "09:30 (Ruta Corta)", "10:30 (Ruta Larga)", "11:00 (Ruta Corta)", "11:05 (Ruta Tablas)", "11:45 (Ruta Corta)", "13:15 (Ruta Corta)", "13:30 (Ruta Larga)", "14:00 (Ruta Corta)", "15:30 (Ruta Corta)", "16:15 (Ruta Corta)", "16:30 (Ruta Larga)", "17:45 (Ruta Corta)", "18:00 (Ruta Corta)" });
+            CboHoras.Location = new System.Drawing.Point(817, 12);
+            CboHoras.Name = "CboHoras";
+            CboHoras.Size = new System.Drawing.Size(251, 33);
+            CboHoras.TabIndex = 2;
+            CboHoras.SelectedIndexChanged += CboHoras_SelectedIndexChanged;
+            // 
+            // BtnEnviarFotos
+            // 
+            BtnEnviarFotos.Location = new System.Drawing.Point(633, 510);
+            BtnEnviarFotos.Name = "BtnEnviarFotos";
+            BtnEnviarFotos.Size = new System.Drawing.Size(654, 60);
+            BtnEnviarFotos.TabIndex = 6;
+            BtnEnviarFotos.Text = "Enviar las fotos de";
+            BtnEnviarFotos.UseVisualStyleBackColor = true;
+            BtnEnviarFotos.Click += BtnEnviarFotos_Click;
+            // 
+            // DateTimePickerGYG
+            // 
+            DateTimePickerGYG.CustomFormat = "dd/MM/yyyy";
+            DateTimePickerGYG.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
+            DateTimePickerGYG.Location = new System.Drawing.Point(1074, 10);
+            DateTimePickerGYG.Name = "DateTimePickerGYG";
+            DateTimePickerGYG.Size = new System.Drawing.Size(213, 31);
+            DateTimePickerGYG.TabIndex = 3;
+            DateTimePickerGYG.ValueChanged += DateTimePickerFotos_ValueChanged;
+            // 
+            // BtnComprobarEmails
+            // 
+            BtnComprobarEmails.Location = new System.Drawing.Point(633, 420);
+            BtnComprobarEmails.Name = "BtnComprobarEmails";
+            BtnComprobarEmails.Size = new System.Drawing.Size(654, 60);
+            BtnComprobarEmails.TabIndex = 5;
+            BtnComprobarEmails.Text = "Comprobar si faltan emails";
+            BtnComprobarEmails.UseVisualStyleBackColor = true;
+            BtnComprobarEmails.Click += BtnComprobarEmails_Click;
+            // 
+            // label1
+            // 
+            label1.Anchor = System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+            label1.BackColor = System.Drawing.SystemColors.Info;
+            label1.Location = new System.Drawing.Point(627, 750);
+            label1.Margin = new System.Windows.Forms.Padding(6, 3, 3, 3);
+            label1.Name = "label1";
+            label1.Padding = new System.Windows.Forms.Padding(12);
+            label1.Size = new System.Drawing.Size(669, 107);
+            label1.TabIndex = 7;
+            label1.Text = "Si 'Enviar las fotos...' no está seleccionado, pulsa en 'Comprobar si faltan emails' y asegúrate de elegir una hora con contenido y una fecha anterior a hoy.";
+            label1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
             // FormEnviarFotos
             // 
             AutoScaleDimensions = new System.Drawing.SizeF(10F, 25F);
@@ -288,7 +288,7 @@
             ClientSize = new System.Drawing.Size(1308, 869);
             Controls.Add(label1);
             Controls.Add(BtnComprobarEmails);
-            Controls.Add(DateTimePickerFotos);
+            Controls.Add(DateTimePickerGYG);
             Controls.Add(BtnEnviarFotos);
             Controls.Add(FlowLayoutPanelFotos);
             Controls.Add(CboHoras);
@@ -311,7 +311,7 @@
         private System.Windows.Forms.FlowLayoutPanel FlowLayoutPanelFotos;
         private System.Windows.Forms.ComboBox CboHoras;
         private System.Windows.Forms.Button BtnEnviarFotos;
-        private System.Windows.Forms.DateTimePicker DateTimePickerFotos;
+        private System.Windows.Forms.DateTimePicker DateTimePickerGYG;
         private System.Windows.Forms.Button BtnComprobarEmails;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox TxtFotos1030;

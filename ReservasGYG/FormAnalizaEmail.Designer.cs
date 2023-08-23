@@ -81,7 +81,8 @@ namespace ReservasGYG
             LabelStatus = new ToolStripStatusLabel();
             LabelFechaHora = new ToolStripStatusLabel();
             timer1 = new Timer(components);
-            timerCrearReserva = new Timer(components);
+            TimerCrearReserva = new Timer(components);
+            TimerEnviarEmail = new Timer(components);
             GrbEmail.SuspendLayout();
             GrbReserva.SuspendLayout();
             statusStrip1.SuspendLayout();
@@ -96,7 +97,7 @@ namespace ReservasGYG
             GrbEmail.Controls.Add(RtfEmail);
             GrbEmail.Location = new Point(12, 12);
             GrbEmail.Name = "GrbEmail";
-            GrbEmail.Size = new Size(1346, 510);
+            GrbEmail.Size = new Size(1346, 374);
             GrbEmail.TabIndex = 0;
             GrbEmail.TabStop = false;
             GrbEmail.Text = "Correo a procesar";
@@ -117,7 +118,7 @@ namespace ReservasGYG
             // 
             BtnAnalizarEmail.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
             BtnAnalizarEmail.BackColor = Color.Azure;
-            BtnAnalizarEmail.Location = new Point(1135, 434);
+            BtnAnalizarEmail.Location = new Point(1135, 298);
             BtnAnalizarEmail.Name = "BtnAnalizarEmail";
             BtnAnalizarEmail.Size = new Size(205, 70);
             BtnAnalizarEmail.TabIndex = 3;
@@ -143,7 +144,7 @@ namespace ReservasGYG
             RtfEmail.Font = new Font("Consolas", 9F, FontStyle.Regular, GraphicsUnit.Point);
             RtfEmail.Location = new Point(6, 30);
             RtfEmail.Name = "RtfEmail";
-            RtfEmail.Size = new Size(1099, 474);
+            RtfEmail.Size = new Size(1099, 338);
             RtfEmail.TabIndex = 0;
             RtfEmail.Text = resources.GetString("RtfEmail.Text");
             RtfEmail.WordWrap = false;
@@ -188,7 +189,7 @@ namespace ReservasGYG
             GrbReserva.Controls.Add(TxtReference);
             GrbReserva.Controls.Add(label1);
             GrbReserva.Controls.Add(BtnLimpiarReserva);
-            GrbReserva.Location = new Point(12, 528);
+            GrbReserva.Location = new Point(12, 392);
             GrbReserva.Name = "GrbReserva";
             GrbReserva.Size = new Size(1346, 519);
             GrbReserva.TabIndex = 1;
@@ -519,8 +520,8 @@ namespace ReservasGYG
             // 
             // BtnOpciones
             // 
-            BtnOpciones.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
-            BtnOpciones.Location = new Point(1058, 1053);
+            BtnOpciones.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
+            BtnOpciones.Location = new Point(12, 936);
             BtnOpciones.Name = "BtnOpciones";
             BtnOpciones.Size = new Size(300, 40);
             BtnOpciones.TabIndex = 2;
@@ -532,7 +533,7 @@ namespace ReservasGYG
             // 
             statusStrip1.ImageScalingSize = new Size(24, 24);
             statusStrip1.Items.AddRange(new ToolStripItem[] { LabelStatus, LabelFechaHora });
-            statusStrip1.Location = new Point(0, 1115);
+            statusStrip1.Location = new Point(0, 979);
             statusStrip1.Name = "statusStrip1";
             statusStrip1.Size = new Size(1370, 32);
             statusStrip1.TabIndex = 3;
@@ -556,25 +557,29 @@ namespace ReservasGYG
             // timer1
             // 
             timer1.Interval = 900;
-            timer1.Tick += timer1_Tick;
+            timer1.Tick += TimerHoraStatus_Tick;
             // 
-            // timerCrearReserva
+            // TimerCrearReserva
             // 
-            timerCrearReserva.Tick += timerCrearReserva_Tick;
+            TimerCrearReserva.Tick += TimerCrearReserva_Tick;
             // 
-            // FormAnalizaEmailGYG
+            // TimerEnviarEmail
+            // 
+            TimerEnviarEmail.Tick += TimerEnviarEmail_Tick;
+            // 
+            // FormAnalizaEmail
             // 
             AutoScaleDimensions = new SizeF(10F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1370, 1147);
+            ClientSize = new Size(1370, 1011);
             Controls.Add(statusStrip1);
             Controls.Add(BtnOpciones);
             Controls.Add(GrbReserva);
             Controls.Add(GrbEmail);
             Icon = (Icon)resources.GetObject("$this.Icon");
-            Name = "FormAnalizaEmailGYG";
+            Name = "FormAnalizaEmail";
             StartPosition = FormStartPosition.CenterScreen;
-            Text = "FormAnalizaEmailGYG";
+            Text = "Analizar Email de GYG y crear reserva con confirmación";
             Load += FormAnalizaEmailGYG_Load;
             GrbEmail.ResumeLayout(false);
             GrbReserva.ResumeLayout(false);
@@ -634,6 +639,7 @@ namespace ReservasGYG
         private ToolStripStatusLabel LabelFechaHora;
         private Label label15;
         private Timer timer1;
-        private Timer timerCrearReserva;
+        private Timer TimerCrearReserva;
+        private Timer TimerEnviarEmail;
     }
 }
