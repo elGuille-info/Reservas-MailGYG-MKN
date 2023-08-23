@@ -25,17 +25,12 @@ public partial class FormAnalizaEmail : Form
     private string StatusAnt;
     private object QueBoton;
 
-    public static FormAnalizaEmail Current;
+    public static FormAnalizaEmail Current { get; set; }
     public FormAnalizaEmail()
     {
         InitializeComponent();
         Current = this;
     }
-
-    ///// <summary>
-    ///// El retorno de carro según sea UWP/Windows u otro sistema.
-    ///// </summary>
-    //public static string CrLf => "\r\n";
 
     private Reservas LaReserva { get; set; }
 
@@ -48,20 +43,19 @@ public partial class FormAnalizaEmail : Form
         timer1.Interval = 990;
         timer1.Enabled = true;
 
-        //RtfEmail.Text = "";
-        //RtfEmail.Rtf = "";
         RtfEmail.Text = "";
-
-        //ChkCrearConEmail.Enabled = false;
-
-        //ChkCrearConEmail.Checked = false;
-        //ChkEnviarConfirm.Checked = false;
-        //HabilitarBotonesReservas();
 
         LimpiarControlesReserva();
     }
 
-    //private void Limpiar
+    private void FormAnalizaEmail_KeyUp(object sender, KeyEventArgs e)
+    {
+        // Si se pulsa Ctrl+C pegar el texto en RtfEmail.   (23/ago/23 11.51)
+        if (e.Control && e.KeyCode == Keys.C)
+        {
+            BtnPegarEmail_Click(null, null);
+        }
+    }
 
     private void BtnPegarEmail_Click(object sender, EventArgs e)
     {
@@ -143,6 +137,7 @@ public partial class FormAnalizaEmail : Form
         }
 
         ChkCrearConEmail.Enabled = false;
+        ChkEnviarConfirm.Enabled = false;
 
         ChkCrearConEmail.Checked = false;
         ChkEnviarConfirm.Checked = false;
@@ -159,6 +154,53 @@ public partial class FormAnalizaEmail : Form
 
         TimerCrearReserva.Interval = 200;
         TimerCrearReserva.Enabled = true;
+    }
+
+    private void BtnEnviarConfirm_Click(object sender, EventArgs e)
+    {
+        QueBoton = sender;
+
+        StatusAnt = LabelStatus.Text;
+        LabelStatus.Text = "Enviando el email de confirmación...";
+        Application.DoEvents();
+
+        TimerEnviarEmail.Interval = 200;
+        TimerEnviarEmail.Enabled = true;
+    }
+
+    private void BtnCrearConEmail_Click(object sender, EventArgs e)
+    {
+        // Las dos cosas seguidas.                      (22/ago/23 10.28)
+        // Si se hacen desde el temporizador no va bien.
+        //BtnCrearReserva_Click(sender, e);
+        //BtnEnviarConfirm_Click(sender, e);
+
+        QueBoton = sender;
+
+        StatusAnt = LabelStatus.Text;
+        LabelStatus.Text = "Creando la reserva...";
+        Application.DoEvents();
+
+        CrearReserva();
+
+        LabelStatus.Text = StatusAnt;
+        Application.DoEvents();
+
+        QueBoton = sender;
+
+        StatusAnt = LabelStatus.Text;
+        LabelStatus.Text = "Enviando el email de confirmación...";
+        Application.DoEvents();
+
+        EnviarMensajeConfirmacion();
+
+        Application.DoEvents();
+
+        ChkCrearConEmail.Checked = false;
+        ChkEnviarConfirm.Checked = false;
+        HabilitarBotonesReservas();
+
+        MessageBox.Show(InfoCrearConEmail.ToString(), "Crear reserva y enviar email", MessageBoxButtons.OK, MessageBoxIcon.Information);
     }
 
     private bool CrearReserva()
@@ -249,23 +291,19 @@ public partial class FormAnalizaEmail : Form
         return false;
     }
 
-    private void BtnEnviarConfirm_Click(object sender, EventArgs e)
-    {
-        QueBoton = sender;
-
-        StatusAnt = LabelStatus.Text;
-        LabelStatus.Text = "Enviando el email de confirmación...";
-        Application.DoEvents();
-
-        TimerCrearReserva.Interval = 200;
-        TimerCrearReserva.Enabled = true;
-    }
-
-    private void EnviarMensajeConfirmacion()
+    private bool EnviarMensajeConfirmacion()
     {
         StringBuilder sb = new StringBuilder();
 
         var re = LaReserva;
+        if (re == null)
+        {
+            MessageBox.Show($"ERROR la reserva es nula. Debes generarla primero con 'Crear reserva'.",
+                            "Error al enviar el email de la reserva",
+                            MessageBoxButtons.OK, MessageBoxIcon.Error);
+            return true;
+        }
+
         var DatosVPWiz = new MKNUtilidades.VentasPlayaWiz(re);
         MKNUtilidades.VentasPlayaWiz.IncluirReportajeConfirmarReserva = false;
         MKNUtilidades.VentasPlayaWiz.IncluirTextosConfirmarReserva = false;
@@ -335,6 +373,8 @@ public partial class FormAnalizaEmail : Form
         }
         LabelStatus.Text = StatusAnt;
         Application.DoEvents();
+
+        return false;
     }
 
     private void RtfEmail_TextChanged(object sender, EventArgs e)
@@ -362,11 +402,17 @@ public partial class FormAnalizaEmail : Form
     private void HabilitarBotonesReservas()
     {
         BtnCrearConEmail.Enabled = ChkCrearConEmail.Checked;
+
         // No habilitar los otros                       (22/ago/23 20.18)
         // si el de hacer las dos cosas está habilitado
-        ChkEnviarConfirm.Enabled = !ChkCrearConEmail.Checked;
+        //ChkEnviarConfirm.Enabled = !ChkCrearConEmail.Checked;
+        if (ChkCrearConEmail.Checked == false)
+        {
+            ChkEnviarConfirm.Enabled = false;
+        }
         if (ChkEnviarConfirm.Enabled == false)
         {
+            ChkEnviarConfirm.Enabled = false;
             ChkEnviarConfirm.Checked = false;
         }
 
@@ -377,41 +423,6 @@ public partial class FormAnalizaEmail : Form
     private void BtnLimpiarTexto_Click(object sender, EventArgs e)
     {
         RtfEmail.Text = "";
-    }
-
-    private void BtnCrearConEmail_Click(object sender, EventArgs e)
-    {
-        // Las dos cosas seguidas.                      (22/ago/23 10.28)
-        // Si se hacen desde el temporizador no va bien.
-        //BtnCrearReserva_Click(sender, e);
-        //BtnEnviarConfirm_Click(sender, e);
-
-        QueBoton = sender;
-
-        StatusAnt = LabelStatus.Text;
-        LabelStatus.Text = "Creando la reserva...";
-        Application.DoEvents();
-
-        CrearReserva();
-
-        LabelStatus.Text = StatusAnt;
-        Application.DoEvents();
-
-        QueBoton = sender;
-
-        StatusAnt = LabelStatus.Text;
-        LabelStatus.Text = "Enviando el email de confirmación...";
-        Application.DoEvents();
-
-        EnviarMensajeConfirmacion();
-
-        Application.DoEvents();
-
-        ChkCrearConEmail.Checked = false;
-        ChkEnviarConfirm.Checked = false;
-        HabilitarBotonesReservas();
-
-        MessageBox.Show(InfoCrearConEmail.ToString(), "Crear reserva y enviar email", MessageBoxButtons.OK, MessageBoxIcon.Information);
     }
 
     private void BtnOpciones_Click(object sender, EventArgs e)

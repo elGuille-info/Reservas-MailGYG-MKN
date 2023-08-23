@@ -41,6 +41,10 @@ public partial class FormEnviarFotos : Form
 
         DateTimePickerGYG.Value = DateTime.Now;
 
+        // Colorear las cajas de textos de las horas.       (23/ago/23 11.47)
+        TimerColorearHoras.Interval = 300;
+        TimerColorearHoras.Enabled = true;
+
         inicializando = false;
     }
 
@@ -184,5 +188,30 @@ order by FechaActividad, HoraActividad, ID
             MessageBox.Show("Todas las reservas de la fecha tiene asignado el email.", "Comprobar reservas sin email", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
         BtnEnviarFotos.Enabled = true;
+    }
+
+    private void TimerColorearHoras_Tick(object sender, EventArgs e)
+    {
+        TimerColorearHoras.Enabled = false;
+
+        // Ruta corta de color verdoso Honeydew
+        TxtFotos0930.BackColor = Color.Honeydew;
+        txtFotos1100.BackColor = Color.Honeydew;
+        txtFotos1145.BackColor = Color.Honeydew;
+        TxtFotos1315.BackColor = Color.Honeydew;
+        TxtFotos1530.BackColor = Color.Honeydew;
+        TxtFotos1615.BackColor = Color.Honeydew;
+        TxtFotos1745.BackColor = Color.Honeydew;
+
+        // Ruta larga de color azulado AliceBlue
+        TxtFotos1030.BackColor = Color.AliceBlue;
+        TxtFotos1330.BackColor = Color.AliceBlue;
+        TxtFotos1630.BackColor = Color.AliceBlue;
+
+        // Rutas sin datos de color rojizo MistyRose
+        TxtFotos1400.BackColor = Color.MistyRose;
+        TxtFotos1800.BackColor = Color.MistyRose;
+
+        
     }
 }

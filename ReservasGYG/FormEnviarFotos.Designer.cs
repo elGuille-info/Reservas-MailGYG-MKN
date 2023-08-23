@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormEnviarFotos));
             TxtFotos0930 = new System.Windows.Forms.TextBox();
             TxtFotosSeleccionada = new System.Windows.Forms.TextBox();
@@ -49,6 +50,9 @@
             DateTimePickerGYG = new System.Windows.Forms.DateTimePicker();
             BtnComprobarEmails = new System.Windows.Forms.Button();
             label1 = new System.Windows.Forms.Label();
+            textBox1 = new System.Windows.Forms.TextBox();
+            BtnExtraerHoras = new System.Windows.Forms.Button();
+            TimerColorearHoras = new System.Windows.Forms.Timer(components);
             FlowLayoutPanelFotos.SuspendLayout();
             SuspendLayout();
             // 
@@ -72,7 +76,7 @@
             TxtFotosSeleccionada.Multiline = true;
             TxtFotosSeleccionada.Name = "TxtFotosSeleccionada";
             TxtFotosSeleccionada.Size = new System.Drawing.Size(654, 338);
-            TxtFotosSeleccionada.TabIndex = 4;
+            TxtFotosSeleccionada.TabIndex = 6;
             TxtFotosSeleccionada.Text = resources.GetString("TxtFotosSeleccionada.Text");
             TxtFotosSeleccionada.Enter += TxtFotosHoras_Enter;
             // 
@@ -82,7 +86,7 @@
             label8.Margin = new System.Windows.Forms.Padding(6, 3, 3, 3);
             label8.Name = "label8";
             label8.Size = new System.Drawing.Size(180, 31);
-            label8.TabIndex = 1;
+            label8.TabIndex = 3;
             label8.Text = "Selecciona la hora:";
             // 
             // FlowLayoutPanelFotos
@@ -101,11 +105,11 @@
             FlowLayoutPanelFotos.Controls.Add(TxtFotos1630);
             FlowLayoutPanelFotos.Controls.Add(TxtFotos1745);
             FlowLayoutPanelFotos.Controls.Add(TxtFotos1800);
-            FlowLayoutPanelFotos.Location = new System.Drawing.Point(12, 15);
+            FlowLayoutPanelFotos.Location = new System.Drawing.Point(12, 420);
             FlowLayoutPanelFotos.Name = "FlowLayoutPanelFotos";
             FlowLayoutPanelFotos.Padding = new System.Windows.Forms.Padding(6);
-            FlowLayoutPanelFotos.Size = new System.Drawing.Size(606, 842);
-            FlowLayoutPanelFotos.TabIndex = 0;
+            FlowLayoutPanelFotos.Size = new System.Drawing.Size(606, 437);
+            FlowLayoutPanelFotos.TabIndex = 2;
             // 
             // TxtFotos1030
             // 
@@ -235,17 +239,18 @@
             CboHoras.Location = new System.Drawing.Point(817, 12);
             CboHoras.Name = "CboHoras";
             CboHoras.Size = new System.Drawing.Size(251, 33);
-            CboHoras.TabIndex = 2;
+            CboHoras.TabIndex = 4;
             CboHoras.SelectedIndexChanged += CboHoras_SelectedIndexChanged;
             // 
             // BtnEnviarFotos
             // 
+            BtnEnviarFotos.BackColor = System.Drawing.Color.Honeydew;
             BtnEnviarFotos.Location = new System.Drawing.Point(633, 510);
             BtnEnviarFotos.Name = "BtnEnviarFotos";
             BtnEnviarFotos.Size = new System.Drawing.Size(654, 60);
-            BtnEnviarFotos.TabIndex = 6;
+            BtnEnviarFotos.TabIndex = 8;
             BtnEnviarFotos.Text = "Enviar las fotos de";
-            BtnEnviarFotos.UseVisualStyleBackColor = true;
+            BtnEnviarFotos.UseVisualStyleBackColor = false;
             BtnEnviarFotos.Click += BtnEnviarFotos_Click;
             // 
             // DateTimePickerGYG
@@ -255,17 +260,18 @@
             DateTimePickerGYG.Location = new System.Drawing.Point(1074, 10);
             DateTimePickerGYG.Name = "DateTimePickerGYG";
             DateTimePickerGYG.Size = new System.Drawing.Size(213, 31);
-            DateTimePickerGYG.TabIndex = 3;
+            DateTimePickerGYG.TabIndex = 5;
             DateTimePickerGYG.ValueChanged += DateTimePickerFotos_ValueChanged;
             // 
             // BtnComprobarEmails
             // 
+            BtnComprobarEmails.BackColor = System.Drawing.Color.MistyRose;
             BtnComprobarEmails.Location = new System.Drawing.Point(633, 420);
             BtnComprobarEmails.Name = "BtnComprobarEmails";
             BtnComprobarEmails.Size = new System.Drawing.Size(654, 60);
-            BtnComprobarEmails.TabIndex = 5;
+            BtnComprobarEmails.TabIndex = 7;
             BtnComprobarEmails.Text = "Comprobar si faltan emails";
-            BtnComprobarEmails.UseVisualStyleBackColor = true;
+            BtnComprobarEmails.UseVisualStyleBackColor = false;
             BtnComprobarEmails.Click += BtnComprobarEmails_Click;
             // 
             // label1
@@ -277,15 +283,43 @@
             label1.Name = "label1";
             label1.Padding = new System.Windows.Forms.Padding(12);
             label1.Size = new System.Drawing.Size(669, 107);
-            label1.TabIndex = 7;
+            label1.TabIndex = 9;
             label1.Text = "Si 'Enviar las fotos...' no está seleccionado, pulsa en 'Comprobar si faltan emails' y asegúrate de elegir una hora con contenido y una fecha anterior a hoy.";
             label1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // textBox1
+            // 
+            textBox1.Font = new System.Drawing.Font("Consolas", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            textBox1.Location = new System.Drawing.Point(21, 15);
+            textBox1.Margin = new System.Windows.Forms.Padding(12, 6, 12, 12);
+            textBox1.Multiline = true;
+            textBox1.Name = "textBox1";
+            textBox1.Size = new System.Drawing.Size(597, 303);
+            textBox1.TabIndex = 0;
+            textBox1.Text = resources.GetString("textBox1.Text");
+            // 
+            // BtnExtraerHoras
+            // 
+            BtnExtraerHoras.BackColor = System.Drawing.Color.AliceBlue;
+            BtnExtraerHoras.Location = new System.Drawing.Point(21, 333);
+            BtnExtraerHoras.Name = "BtnExtraerHoras";
+            BtnExtraerHoras.Size = new System.Drawing.Size(597, 60);
+            BtnExtraerHoras.TabIndex = 1;
+            BtnExtraerHoras.Text = "Extraer las horas de las fotos";
+            BtnExtraerHoras.UseVisualStyleBackColor = false;
+            // 
+            // TimerColorearHoras
+            // 
+            TimerColorearHoras.Interval = 300;
+            TimerColorearHoras.Tick += TimerColorearHoras_Tick;
             // 
             // FormEnviarFotos
             // 
             AutoScaleDimensions = new System.Drawing.SizeF(10F, 25F);
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             ClientSize = new System.Drawing.Size(1308, 869);
+            Controls.Add(BtnExtraerHoras);
+            Controls.Add(textBox1);
             Controls.Add(label1);
             Controls.Add(BtnComprobarEmails);
             Controls.Add(DateTimePickerGYG);
@@ -325,5 +359,8 @@
         private System.Windows.Forms.TextBox TxtFotos1630;
         private System.Windows.Forms.TextBox TxtFotos1745;
         private System.Windows.Forms.TextBox TxtFotos1800;
+        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.Button BtnExtraerHoras;
+        private System.Windows.Forms.Timer TimerColorearHoras;
     }
 }

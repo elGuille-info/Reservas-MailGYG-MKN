@@ -97,7 +97,7 @@ namespace ReservasGYG
             GrbEmail.Controls.Add(RtfEmail);
             GrbEmail.Location = new Point(12, 12);
             GrbEmail.Name = "GrbEmail";
-            GrbEmail.Size = new Size(1346, 374);
+            GrbEmail.Size = new Size(1346, 328);
             GrbEmail.TabIndex = 0;
             GrbEmail.TabStop = false;
             GrbEmail.Text = "Correo a procesar";
@@ -106,7 +106,7 @@ namespace ReservasGYG
             // 
             BtnLimpiarTexto.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             BtnLimpiarTexto.BackColor = Color.LightGoldenrodYellow;
-            BtnLimpiarTexto.Location = new Point(1135, 182);
+            BtnLimpiarTexto.Location = new Point(1135, 120);
             BtnLimpiarTexto.Name = "BtnLimpiarTexto";
             BtnLimpiarTexto.Size = new Size(205, 70);
             BtnLimpiarTexto.TabIndex = 2;
@@ -118,7 +118,7 @@ namespace ReservasGYG
             // 
             BtnAnalizarEmail.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
             BtnAnalizarEmail.BackColor = Color.Azure;
-            BtnAnalizarEmail.Location = new Point(1135, 298);
+            BtnAnalizarEmail.Location = new Point(1135, 252);
             BtnAnalizarEmail.Name = "BtnAnalizarEmail";
             BtnAnalizarEmail.Size = new Size(205, 70);
             BtnAnalizarEmail.TabIndex = 3;
@@ -144,7 +144,7 @@ namespace ReservasGYG
             RtfEmail.Font = new Font("Consolas", 9F, FontStyle.Regular, GraphicsUnit.Point);
             RtfEmail.Location = new Point(6, 30);
             RtfEmail.Name = "RtfEmail";
-            RtfEmail.Size = new Size(1099, 338);
+            RtfEmail.Size = new Size(1099, 292);
             RtfEmail.TabIndex = 0;
             RtfEmail.Text = resources.GetString("RtfEmail.Text");
             RtfEmail.WordWrap = false;
@@ -189,16 +189,16 @@ namespace ReservasGYG
             GrbReserva.Controls.Add(TxtReference);
             GrbReserva.Controls.Add(label1);
             GrbReserva.Controls.Add(BtnLimpiarReserva);
-            GrbReserva.Location = new Point(12, 392);
+            GrbReserva.Location = new Point(12, 346);
             GrbReserva.Name = "GrbReserva";
-            GrbReserva.Size = new Size(1346, 519);
+            GrbReserva.Size = new Size(1346, 483);
             GrbReserva.TabIndex = 1;
             GrbReserva.TabStop = false;
             GrbReserva.Text = "Datos de la reserva";
             // 
             // label15
             // 
-            label15.Location = new Point(21, 417);
+            label15.Location = new Point(21, 376);
             label15.Margin = new Padding(3);
             label15.Name = "label15";
             label15.Size = new Size(180, 31);
@@ -220,14 +220,14 @@ namespace ReservasGYG
             // 
             // TxtPais
             // 
-            TxtPais.Location = new Point(743, 284);
+            TxtPais.Location = new Point(743, 259);
             TxtPais.Name = "TxtPais";
             TxtPais.Size = new Size(335, 31);
             TxtPais.TabIndex = 19;
             // 
             // label14
             // 
-            label14.Location = new Point(557, 284);
+            label14.Location = new Point(557, 259);
             label14.Margin = new Padding(3);
             label14.Name = "label14";
             label14.Size = new Size(180, 31);
@@ -236,7 +236,7 @@ namespace ReservasGYG
             // 
             // TxtID
             // 
-            TxtID.Location = new Point(743, 358);
+            TxtID.Location = new Point(743, 333);
             TxtID.Name = "TxtID";
             TxtID.Size = new Size(100, 31);
             TxtID.TabIndex = 28;
@@ -244,7 +244,7 @@ namespace ReservasGYG
             // 
             // label13
             // 
-            label13.Location = new Point(557, 361);
+            label13.Location = new Point(557, 336);
             label13.Margin = new Padding(3);
             label13.Name = "label13";
             label13.Size = new Size(180, 31);
@@ -253,11 +253,12 @@ namespace ReservasGYG
             // 
             // TxtGYG
             // 
-            TxtGYG.Location = new Point(207, 414);
+            TxtGYG.Location = new Point(207, 373);
             TxtGYG.Multiline = true;
             TxtGYG.Name = "TxtGYG";
             TxtGYG.Size = new Size(530, 90);
             TxtGYG.TabIndex = 26;
+            TxtGYG.Text = "Línea 1\r\nLínea 2\r\nLínea 3";
             // 
             // ChkEnviarConfirm
             // 
@@ -290,22 +291,22 @@ namespace ReservasGYG
             BtnEnviarConfirm.Location = new Point(1133, 292);
             BtnEnviarConfirm.Margin = new Padding(12, 3, 3, 12);
             BtnEnviarConfirm.Name = "BtnEnviarConfirm";
-            BtnEnviarConfirm.Size = new Size(205, 89);
+            BtnEnviarConfirm.Size = new Size(205, 70);
             BtnEnviarConfirm.TabIndex = 33;
-            BtnEnviarConfirm.Text = "Enviar email confirmación";
+            BtnEnviarConfirm.Text = "Enviar email de confirmación";
             BtnEnviarConfirm.UseVisualStyleBackColor = false;
             BtnEnviarConfirm.Click += BtnEnviarConfirm_Click;
             // 
             // TxtPrice
             // 
-            TxtPrice.Location = new Point(743, 321);
+            TxtPrice.Location = new Point(743, 296);
             TxtPrice.Name = "TxtPrice";
             TxtPrice.Size = new Size(200, 31);
             TxtPrice.TabIndex = 17;
             // 
             // label12
             // 
-            label12.Location = new Point(557, 321);
+            label12.Location = new Point(557, 296);
             label12.Margin = new Padding(3);
             label12.Name = "label12";
             label12.Size = new Size(180, 31);
@@ -327,14 +328,14 @@ namespace ReservasGYG
             // 
             // TxtMenoresG
             // 
-            TxtMenoresG.Location = new Point(207, 358);
+            TxtMenoresG.Location = new Point(207, 333);
             TxtMenoresG.Name = "TxtMenoresG";
             TxtMenoresG.Size = new Size(100, 31);
             TxtMenoresG.TabIndex = 25;
             // 
             // label11
             // 
-            label11.Location = new Point(21, 361);
+            label11.Location = new Point(21, 336);
             label11.Margin = new Padding(3);
             label11.Name = "label11";
             label11.Size = new Size(180, 31);
@@ -343,14 +344,14 @@ namespace ReservasGYG
             // 
             // TxtMenores
             // 
-            TxtMenores.Location = new Point(207, 321);
+            TxtMenores.Location = new Point(207, 296);
             TxtMenores.Name = "TxtMenores";
             TxtMenores.Size = new Size(100, 31);
             TxtMenores.TabIndex = 23;
             // 
             // label10
             // 
-            label10.Location = new Point(21, 324);
+            label10.Location = new Point(21, 299);
             label10.Margin = new Padding(3);
             label10.Name = "label10";
             label10.Size = new Size(180, 31);
@@ -359,7 +360,7 @@ namespace ReservasGYG
             // 
             // TxtAdultos
             // 
-            TxtAdultos.Location = new Point(207, 284);
+            TxtAdultos.Location = new Point(207, 259);
             TxtAdultos.Name = "TxtAdultos";
             TxtAdultos.Size = new Size(100, 31);
             TxtAdultos.TabIndex = 21;
@@ -367,7 +368,7 @@ namespace ReservasGYG
             // 
             // label9
             // 
-            label9.Location = new Point(21, 287);
+            label9.Location = new Point(21, 262);
             label9.Margin = new Padding(3);
             label9.Name = "label9";
             label9.Size = new Size(180, 31);
@@ -396,9 +397,9 @@ namespace ReservasGYG
             TxtNotas.Location = new Point(207, 189);
             TxtNotas.Multiline = true;
             TxtNotas.Name = "TxtNotas";
-            TxtNotas.Size = new Size(871, 89);
+            TxtNotas.Size = new Size(871, 64);
             TxtNotas.TabIndex = 15;
-            TxtNotas.Text = "Las notas del wasap y edades";
+            TxtNotas.Text = "Las notas del wasap y edades\r\nSegunda línea";
             // 
             // label7
             // 
@@ -509,7 +510,7 @@ namespace ReservasGYG
             // 
             BtnLimpiarReserva.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
             BtnLimpiarReserva.BackColor = Color.LightYellow;
-            BtnLimpiarReserva.Location = new Point(1135, 434);
+            BtnLimpiarReserva.Location = new Point(1135, 398);
             BtnLimpiarReserva.Margin = new Padding(12, 3, 3, 3);
             BtnLimpiarReserva.Name = "BtnLimpiarReserva";
             BtnLimpiarReserva.Size = new Size(205, 70);
@@ -521,28 +522,32 @@ namespace ReservasGYG
             // BtnOpciones
             // 
             BtnOpciones.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
-            BtnOpciones.Location = new Point(12, 936);
+            BtnOpciones.BackColor = SystemColors.Highlight;
+            BtnOpciones.ForeColor = SystemColors.Window;
+            BtnOpciones.Location = new Point(12, 846);
+            BtnOpciones.Margin = new Padding(3, 3, 3, 12);
             BtnOpciones.Name = "BtnOpciones";
-            BtnOpciones.Size = new Size(300, 40);
+            BtnOpciones.Size = new Size(361, 54);
             BtnOpciones.TabIndex = 2;
             BtnOpciones.Text = "Mostrar ventana de otras opciones";
-            BtnOpciones.UseVisualStyleBackColor = true;
+            BtnOpciones.UseVisualStyleBackColor = false;
             BtnOpciones.Click += BtnOpciones_Click;
             // 
             // statusStrip1
             // 
             statusStrip1.ImageScalingSize = new Size(24, 24);
             statusStrip1.Items.AddRange(new ToolStripItem[] { LabelStatus, LabelFechaHora });
-            statusStrip1.Location = new Point(0, 979);
+            statusStrip1.Location = new Point(0, 908);
             statusStrip1.Name = "statusStrip1";
-            statusStrip1.Size = new Size(1370, 32);
+            statusStrip1.Size = new Size(1370, 36);
             statusStrip1.TabIndex = 3;
             statusStrip1.Text = "statusStrip1";
             // 
             // LabelStatus
             // 
+            LabelStatus.BorderSides = ToolStripStatusLabelBorderSides.Right;
             LabelStatus.Name = "LabelStatus";
-            LabelStatus.Size = new Size(1155, 25);
+            LabelStatus.Size = new Size(1155, 29);
             LabelStatus.Spring = true;
             LabelStatus.Text = "Crear reservas de GetYourGuide en la app de MKN Reservas y enviar email de confirmación";
             LabelStatus.TextAlign = ContentAlignment.MiddleLeft;
@@ -551,7 +556,7 @@ namespace ReservasGYG
             // 
             LabelFechaHora.AutoSize = false;
             LabelFechaHora.Name = "LabelFechaHora";
-            LabelFechaHora.Size = new Size(200, 25);
+            LabelFechaHora.Size = new Size(200, 29);
             LabelFechaHora.Text = "dd/MM/yyyy HH:mm:ss";
             // 
             // timer1
@@ -571,16 +576,18 @@ namespace ReservasGYG
             // 
             AutoScaleDimensions = new SizeF(10F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1370, 1011);
+            ClientSize = new Size(1370, 944);
             Controls.Add(statusStrip1);
             Controls.Add(BtnOpciones);
             Controls.Add(GrbReserva);
             Controls.Add(GrbEmail);
             Icon = (Icon)resources.GetObject("$this.Icon");
+            KeyPreview = true;
             Name = "FormAnalizaEmail";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Analizar Email de GYG y crear reserva con confirmación";
             Load += FormAnalizaEmailGYG_Load;
+            KeyUp += FormAnalizaEmail_KeyUp;
             GrbEmail.ResumeLayout(false);
             GrbReserva.ResumeLayout(false);
             GrbReserva.PerformLayout();
