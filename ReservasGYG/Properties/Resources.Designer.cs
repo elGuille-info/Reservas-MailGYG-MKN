@@ -63,6 +63,34 @@ namespace ReservasGYG.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap CleanData {
+            get {
+                object obj = ResourceManager.GetObject("CleanData", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 
+        ///Si tienes problemas para ver las fotos, intenta abrir el enlace nuevamente y si aún así no te funciona, 
+        ///por favor responde a este correo o mándame &lt;b&gt;un mensaje de WhatsApp al +34 645761689&lt;/b&gt; indicando tu nombre y el número de la reserva
+        ///y te volveré a mandar el enlace o buscaré una solución para que tengas tus fotos.
+        ///
+        ///&lt;b&gt;&lt;small&gt;Si no me facilitas esos datos, sea por WhatsApp o email, no responderé a los mensajes&lt;/small&gt;&lt;/b&gt;
+        ///
+        ///
+        ///
+        ///If you have trouble viewing the photos, try opening the link again  [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string Fotos_ruta {
+            get {
+                return ResourceManager.GetString("Fotos_ruta", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap GYG_logo_blanco90x90 {
             get {
                 object obj = ResourceManager.GetObject("GYG_logo_blanco90x90", resourceCulture);
@@ -232,6 +260,16 @@ namespace ReservasGYG.Properties {
         internal static string IMPORTANTE_ES_txt {
             get {
                 return ResourceManager.GetString("IMPORTANTE_ES_txt", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Paste {
+            get {
+                object obj = ResourceManager.GetObject("Paste", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
             }
         }
     }

@@ -106,6 +106,7 @@ namespace ReservasGYG
             // 
             BtnLimpiarTexto.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             BtnLimpiarTexto.BackColor = Color.LightGoldenrodYellow;
+            BtnLimpiarTexto.ImageAlign = ContentAlignment.TopLeft;
             BtnLimpiarTexto.Location = new Point(1135, 120);
             BtnLimpiarTexto.Name = "BtnLimpiarTexto";
             BtnLimpiarTexto.Size = new Size(205, 70);
@@ -130,6 +131,7 @@ namespace ReservasGYG
             // 
             BtnPegarEmail.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             BtnPegarEmail.BackColor = Color.Gold;
+            BtnPegarEmail.ImageAlign = ContentAlignment.TopLeft;
             BtnPegarEmail.Location = new Point(1135, 30);
             BtnPegarEmail.Name = "BtnPegarEmail";
             BtnPegarEmail.Size = new Size(205, 70);

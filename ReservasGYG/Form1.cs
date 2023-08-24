@@ -100,6 +100,10 @@ public partial class Form1 : Form
             if (string.IsNullOrEmpty(re.Email)) continue;
             colPara.Add(re.Email);
         }
+        
+        // Agregar el email de kayak.makarena@gmail.com     (23/ago/23 22.18)
+        colPara.Add("kayak.makarena@gmail.com");
+
         StringBuilder sb = new StringBuilder();
         sb.Append("");
         sb.Append(Properties.Resources.Hoy_es_el_dia_txt.Replace(CrLf, "<br/>"));

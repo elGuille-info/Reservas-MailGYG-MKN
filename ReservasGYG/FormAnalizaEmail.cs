@@ -40,6 +40,10 @@ public partial class FormAnalizaEmail : Form
     {
         inicializando = false;
 
+        BtnPegarEmail.Image = Properties.Resources.Paste; // Bitmap.FromFile("..\\Resources\\Paste.png");
+        BtnLimpiarTexto.Image = Properties.Resources.CleanData; //Bitmap.FromFile("..\\Resources\\CleanData.png");
+        //
+
         timer1.Interval = 990;
         timer1.Enabled = true;
 
@@ -231,6 +235,10 @@ public partial class FormAnalizaEmail : Form
                             MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
             return true;
         }
+        // Actualizar el producto.                          (23/ago/23 20.06)
+        pr.TotalPax += re.TotalPax();
+        pr.Actualizar2();
+
         re.idProducto = pr.ID;
         re.Duracion = pr.Duracion;
         re.PrecioAdulto = pr.PrecioAdulto;

@@ -32,8 +32,47 @@ public class MailGYG
         return col;
     }
 
+    // Extraer el contenido entre las partes indicadas en campo1 y campo2 que contenga buscar
+
+    /// <summary>
+    /// Extraer el contenido entre las partes indicadas en campo1 y campo2 que contenga buscar.
+    /// </summary>
+    /// <param name="texto">El texto a evaluar.</param>
+    /// <param name="campo1">La primera cadena a comprobar.</param>
+    /// <param name="campo2">La segunda cadena a comprobar.</param>
+    /// <param name="buscar">El texto que debe estar entre las 2 cadenas.</param>
+    /// <returns>Una cadena con el contenido buscado o una cadena vacía.</returns>
+    private static string ExtraerEntre(string texto, string campo1, string campo2, string buscar)
+    {
+        int posIni = 0;
+        int i;
+        string ret = "";
+
+        do
+        {
+            i = texto.IndexOf(campo1, posIni, StringComparison.OrdinalIgnoreCase);
+            if (i > -1)
+            {
+                int j = texto.IndexOf(campo2, i + campo1.Length, StringComparison.OrdinalIgnoreCase);
+                if (j > -1)
+                {
+                    var res = texto.Substring(i + campo1.Length, j - i - campo1.Length);
+                    // Comprobar si tiene la cadena a buscar.
+                    if (res.IndexOf(buscar, StringComparison.OrdinalIgnoreCase) > -1)
+                    {
+                        ret = res;
+                        break;
+                    }
+                }
+                posIni += campo1.Length;
+            }
+        } while (i > -1);
+
+        return ret;
+    }
+
     // Extraer el texto entre lo indicado en campo1 y hasta campo2, devolverlo como array
-    
+
     /// <summary>
     /// Extrae una cadena entre dos textos.
     /// </summary>
@@ -48,7 +87,7 @@ public class MailGYG
         int i = texto.IndexOf(campo1, StringComparison.OrdinalIgnoreCase);
         if (i > -1)
         {
-            int j = texto.IndexOf(campo2, i + campo1.Length);
+            int j = texto.IndexOf(campo2, i + campo1.Length, StringComparison.OrdinalIgnoreCase);
             if (j > -1)
             {
                 string res = texto.Substring(i + campo1.Length, j - i - campo1.Length);
@@ -94,7 +133,7 @@ public class MailGYG
         int i = texto.IndexOf(campo, StringComparison.OrdinalIgnoreCase);
         if (i > -1)
         {
-            int j = texto.IndexOf("\n", i + campo.Length);
+            int j = texto.IndexOf("\n", i + campo.Length, StringComparison.OrdinalIgnoreCase);
             if (j == -1) { j = texto.Length + 2; }
             res = texto.Substring(i + campo.Length, j - i-campo.Length);
         }
@@ -364,4 +403,186 @@ The GetYourGuide Team
         }
         return $"Mensajes enviados correctamente a {para.Count} {para.Count.Plural("reserva")}.";
     }
+
+
+    // Extraer las horas del texto en TxtFotosDia.      (23/ago/23 11.57)
+
+
+    /// <summary>
+    /// Las Horas en que hay rutas, usando el separador punto.
+    /// </summary>
+    public static List<string> LasHoras { get; set; } = new List<string>()
+                { "09.30", "10.30", "11.00", "11.05", "11.45", "13.15", "13.30", "14.00", "15.30", "16.15", "16.30", "17.45", "18.30" };
+
+
+
+    /// <summary>
+    /// Extrae los textos de las fotos de las horas.
+    /// </summary>
+    /// <param name="texto">El texto con todas las fotos del día.</param>
+    /// <returns>Una lista con los textos a enviar en cada hora.</returns>
+    public static List<string> AnalizarTextoFotos(string texto)
+    {
+        List<string> col = new List<string>();
+
+        // Extraer HH.mm desde ¡Hola! hasta ¡Muchas gracias!
+        for(int i = 0; i < LasHoras.Count; i++)
+        {
+            var res = ExtraerEntre(texto, "Te paso el enlace a las fotos de la ruta:", "¡Muchas gracias!", LasHoras[i]);
+            
+            if (string.IsNullOrEmpty(res) == false)
+            {
+                col.Add($"¡Hola!{CrLf}Te paso el enlace a las fotos de la ruta:{CrLf}{res}{CrLf}¡Muchas gracias!{CrLf}");
+            }
+            else
+            {
+                // Si no está esa hora, añadir una cadena vacía. (23/ago/23 22.26)
+                col.Add("");
+            }
+        }
+
+        return col;
+    }
+
+    /// <summary>
+    /// Extraer la fecha para las fotos. El formato será 'Fotos rutas dd-mm-yyyy'
+    /// </summary>
+    /// <param name="texto">El texto a analizar.</param>
+    /// <returns>La cadena con la fecha después de 'Fotos rutas '</returns>
+    public static string FechaFotos(string texto)
+    {
+        // Buscar el texto "Fotos rutas" y lo que sigue es la fecha
+
+        return Extraer(texto, "Fotos rutas");
+    }
+
+    /*
+Fotos rutas 18-08-2023
+
+
+¡Hola!
+Te paso el enlace a las fotos de la ruta:
+
+Ruta Viernes 18.08.23 09.30h - Juanda
+https://photos.app.goo.gl/vsZqGK5VTVRKMgrP9
+
+Ruta Viernes 18.08.23 09.30h - Timmy
+https://photos.app.goo.gl/1hqzqiSTt8QtFLXf8
+
+¡Muchas gracias!
+
+
+¡Hola!
+Te paso el enlace a las fotos de la ruta:
+
+Ruta Viernes 18.08.23 10.30h - Mery
+https://photos.app.goo.gl/Hb6bUbyM3LV8s9s88
+
+¡Muchas gracias!
+
+
+¡Hola!
+Te paso el enlace a las fotos de la ruta:
+
+Ruta Viernes 18.08.23 11.00h - Perico
+https://photos.app.goo.gl/vxBeKQv5sesnCFv59
+
+¡Muchas gracias!
+
+
+¡Hola!
+Te paso el enlace a las fotos de la ruta:
+
+Ruta Viernes 18.08.23 11.45h - Joselu y Timmy
+https://photos.app.goo.gl/CbqH9BRxYmfU1UBk6
+
+¡Muchas gracias!
+
+
+¡Hola!
+Te paso el enlace a las fotos de la ruta:
+
+Ruta Viernes 18.08.23 13.15h - Juanda
+https://photos.app.goo.gl/Kj4eRWt4P9af1cJH8
+
+Ruta Viernes 18.08.23 13.15h - Paco
+https://photos.app.goo.gl/Lq5C6QU4v5ByD1FR6
+
+¡Muchas gracias!
+
+
+¡Hola!
+Te paso el enlace a las fotos de la ruta:
+
+Ruta Viernes 18.08.23 15.30h - Mery
+https://photos.app.goo.gl/cEnH2VYshf2GG8Hk8
+
+Ruta Viernes 18.08.23 15.30h - Paco
+https://photos.app.goo.gl/SZKCyG2hkqEgyPvN7
+
+¡Muchas gracias!
+
+
+¡Hola!
+Te paso el enlace a las fotos de la ruta:
+
+Ruta Viernes 18.08.23 16.15h - Joselu
+https://photos.app.goo.gl/uXkPzWrb5VTEd9Ua6
+
+Ruta Viernes 18.08.23 16.15h - Timmy
+https://photos.app.goo.gl/F5NFbFoyEbzYWMX17
+
+¡Muchas gracias!
+
+
+¡Hola!
+Te paso el enlace a las fotos de la ruta:
+
+Ruta Viernes 18.08.23 16.30h - Juanda
+https://photos.app.goo.gl/YXusGShNEu2KfmAe8
+
+¡Muchas gracias!
+
+
+¡Hola!
+Te paso el enlace a las fotos de la ruta:
+
+Ruta Viernes 18.08.23 17.45h - ⁬Michelle
+https://photos.app.goo.gl/31deS4WW8g1b6k5Q8
+
+Ruta Viernes 18.08.23 17.45h - Perico
+https://photos.app.goo.gl/qqxWBkVthdBGMjFEA
+
+¡Muchas gracias!
+    */
+
+    /// <summary>
+    /// Comprueba si las reservas de la fecha indicada tienen todas el email.
+    /// </summary>
+    /// <param name="fecha">Fecha con las reservas a comprobar.</param>
+    /// <returns>Una cadena vacía si todo está bien, si no, con los datos de las reservas que no tienen email.</returns>
+    public static string ComprobarEmails(DateTime fecha)
+    {
+        StringBuilder sb = new StringBuilder();
+        sb.Append("Select * from Reservas ");
+        sb.Append("where Activa = 1 and CanceladaCliente = 0 and idDistribuidor = 10 ");
+        sb.Append("and Email = '' and Nombre != 'Makarena (GYG)' ");
+        sb.Append($"and FechaActividad = '{fecha:yyyy-MM-dd}' ");
+        sb.Append("order by FechaActividad, HoraActividad, ID");
+
+        var colRes = Reservas.TablaCol(sb.ToString());
+
+        sb.Clear();
+
+        if (colRes.Count > 0)
+        {
+            sb.AppendLine($"Hay {colRes.Count} {colRes.Count.Plural("reserva")} del {fecha:dddd dd/MM/yyyy} sin email.");
+            for (int i = 0; i < colRes.Count; i++)
+            {
+                sb.AppendLine($"{colRes[i].Nombre}, {colRes[i].Notas}");
+            }
+        }
+        return sb.ToString();
+    }
+
 }
