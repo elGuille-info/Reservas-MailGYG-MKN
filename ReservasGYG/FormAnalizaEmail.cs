@@ -251,12 +251,12 @@ public partial class FormAnalizaEmail : Form
 
         // Buscar una reserva con este nombre, teléfono y actividad.
         var re2 = Reservas.ComprobarReservaMismaActividad(re.Nombre, re.Telefono, re.Actividad, re.FechaActividad, re.HoraActividad, 0);
-        // Esta reserva segurqamente tendrá el ID 0
-        //var reID = Reservas.Buscar(re.ID);
         if (re2 != null)
         {
-            MessageBox.Show("Ya hay una reserva para ese cliente y actividad.", "Ya existe esa reserva", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-            return true;
+            // Avisar, pero permitir continuar              (24/ago/23 06.22)
+            MessageBox.Show($"Ya hay una reserva para ese cliente y actividad.{CrLf}Se continúa pero habrá que contactar con el cliente y comprobar porqué hay más de una reserva.", 
+                            "Ya existe esa reserva", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+            //return true;
         }
 
         // Crer el cliente si no existe.                (21/ago/23 22.51)
@@ -275,6 +275,9 @@ public partial class FormAnalizaEmail : Form
                 return true;
             }
         }
+
+        // Asignar los kayaks.                              (24/ago/23 06.23)
+        CalcularPiraguas(re);
 
         // Crear la reserva
         string msg = re.Crear2();
@@ -298,6 +301,57 @@ public partial class FormAnalizaEmail : Form
 
         return false;
     }
+
+    /// <summary>
+    /// Calcular las piraguas según los pax.
+    /// </summary>
+    private void CalcularPiraguas(Reservas re)
+    {
+        var tPax = re.TotalPax();
+        int individuales = 0;
+        int tanques = 0;
+
+        // Si hay 2 adultos y 1 niño, poner 1 tanque
+        // sean que pagan o no
+        if ((re.Adultos == 2 || re.Adultos2 == 2)
+            && (re.Niños == 1 || re.Niños2 == 1))
+        {
+            tanques = 1;
+            tPax -= 3;
+        }
+
+        if (!tPax.EsPar())
+        {
+            tPax--;
+            individuales = 1;
+        }
+        int dobles = (int)Math.Ceiling(tPax / 2.0);
+
+        // poner tanque si:
+        //   Niños2 es > 1
+        //   Usar 2 adultos por cada 2 niños2 y se pone un tanque
+        if (re.Niños2 > 1)
+        {
+            var n2 = re.Niños2;
+            if (!n2.EsPar())
+                n2 -= 1;
+            while (re.Adultos + re.Adultos2 < n2)
+                n2 -= 2;
+            if (re.Adultos + re.Adultos2 >= 2)
+            {
+                tanques = (n2 / 2);
+                //if (tanques > KNDatos.Config.Current.MaxTanques)
+                //    tanques = KNDatos.Config.Current.MaxTanques;
+            }
+        }
+        if (dobles > 0)
+            dobles -= tanques;
+
+        re.Dobles = dobles;
+        re.Individuales = individuales;
+        re.Tanque = tanques;
+    }
+
 
     private bool EnviarMensajeConfirmacion()
     {
@@ -353,6 +407,20 @@ public partial class FormAnalizaEmail : Form
             else
             {
                 sb.Append(Properties.Resources.IMPORTANTE_ES_txt.Replace(CrLf, "<br/>"));
+            }
+        }
+
+        // Si es para el mismo día de la actividad.         (24/ago/23 06.24)
+        if (DateTime.Today == re.FechaActividad)
+        {
+            sb.Append("<br/>");
+            if (enIngles)
+            {
+                sb.Append("We would love to receive a review on the GetYourGuide website with your opinion on this activity, taking into account that <b>Kayak Makarena</b> is responsible for managing the reservations and <b>Maro - Kayak Nerja</b> carries out the routes.");
+            }
+            else
+            {
+                sb.Append("Nos encantaría recibir una reseña en el sitio de GetYourGuide con tu opinión sobre esta actividad, teniendo en cuenta que <b>Kayak Makarena</b> es la encargada de gestionar las reservas y <b>Maro - Kayak Nerja</b> realiza las rutas.");
             }
         }
 

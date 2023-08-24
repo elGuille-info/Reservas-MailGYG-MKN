@@ -21,7 +21,7 @@ namespace ReservasGYG;
 public partial class FormEnviarFotos : Form
 {
     private bool inicializando = true;
-    public static FormEnviarFotos Current;
+    public static FormEnviarFotos Current { get; set; }
     public FormEnviarFotos()
     {
         InitializeComponent();
@@ -231,7 +231,7 @@ public partial class FormEnviarFotos : Form
     /// <param name="enlacesFotos">El texto a enviar.</param>
     /// <param name="conAlertas">Si se muestra el MessageBox en caso de error.</param>
     /// <returns>True si hubo algún error, false si fue todo bien.</returns>
-    private bool EnviarFotos(DateTime fecha, TimeSpan hora, string enlacesFotos, bool conAlertas)
+    private static bool EnviarFotos(DateTime fecha, TimeSpan hora, string enlacesFotos, bool conAlertas)
     {
         if (string.IsNullOrWhiteSpace(enlacesFotos))
         {

@@ -25,12 +25,12 @@ public class MailGYG
     /// </summary>
     public static string CrLf => "\r\n";
 
-    public static List<string> CorreosRecibidos(DateTime fecha1, DateTime fecha2, bool soloNuevos)
-    {
-        List<string> col = new List<string>();
+    //public static List<string> CorreosRecibidos(DateTime fecha1, DateTime fecha2, bool soloNuevos)
+    //{
+    //    List<string> col = new List<string>();
 
-        return col;
-    }
+    //    return col;
+    //}
 
     // Extraer el contenido entre las partes indicadas en campo1 y campo2 que contenga buscar
 

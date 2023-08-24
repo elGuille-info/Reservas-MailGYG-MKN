@@ -12,6 +12,15 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="FormTextosEmail.cs" />
+    <Compile Remove="FormTextosEmail.Designer.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Remove="FormTextosEmail.resx" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Content Include="GYG_logo_blanco.ico" />
   </ItemGroup>
 
