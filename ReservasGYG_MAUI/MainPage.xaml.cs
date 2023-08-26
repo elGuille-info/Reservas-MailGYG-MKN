@@ -21,7 +21,7 @@ public partial class MainPage : ContentPage
 
     private bool inicializando = true;
     private string StatusAnt;
-    private object QueBoton;
+    //private object QueBoton;
 
     public static MainPage Current { get; set; }
 
@@ -54,7 +54,6 @@ public partial class MainPage : ContentPage
         // Limpiar los controles del grupo              (21/ago/23 08.30)
         foreach (View ctl in GrbReserva.Children)
         {
-            
             var txt = ctl as InputView;
             if (txt != null)
             {
@@ -95,7 +94,6 @@ public partial class MainPage : ContentPage
         if (re == null)
         {
             // Mostrar aviso de que algo no ha ido bien. (22/ago/23 20.24)
-            //MessageBox.Show("Parece que los datos analizados no son correctos.", "Analizar email de GYG", MessageBoxButtons.OK, MessageBoxIcon.Error);
             await DisplayAlert("Analizar email de GYG", "Parece que los datos analizados no son correctos.", "Aceptar");
             return;
         }
@@ -108,12 +106,12 @@ public partial class MainPage : ContentPage
         TxtNombre.Text = re.Nombre;
         TxtTelefono.Text = re.Telefono;
         TxtNotas.Text = re.GYGNotas;
-        TxtActividad.Text = re.ActividadMostrar; // re.GYGOption; // re.Actividad;
+        TxtActividad.Text = re.ActividadMostrar;
         TxtEmail.Text = re.Email;
         TxtAdultos.Text = re.Adultos.ToString();
         TxtMenores.Text = re.Niños.ToString();
         TxtMenoresG.Text = re.Niños2.ToString();
-        TxtFechaHora.Text = $"{re.FechaActividad:dd/MM/yyyy} {re.HoraActividad:hh\\:mm}"; //re.GYGFechaHora; // $"{re.FechaActividad:dd/MM/yyyy} {re.HoraActividad:hh\\mm}";
+        TxtFechaHora.Text = $"{re.FechaActividad:dd/MM/yyyy} {re.HoraActividad:hh\\:mm}";
         TxtPrice.Text = re.GYGPrice;
         TxtLanguage.Text = re.GYGLanguage;
         TxtReference.Text = re.GYGReference;
@@ -125,9 +123,35 @@ public partial class MainPage : ContentPage
         BtnCrearConEmail.IsEnabled = true;
     }
 
-    private void BtnCrearConEmail_Clicked(object sender, EventArgs e)
+    private async void BtnCrearConEmail_Clicked(object sender, EventArgs e)
     {
+        StatusAnt = LabelStatus.Text;
+        LabelStatus.Text = "Creando la reserva...";
 
+        // Si devuelve true, no continuar con el envío del email.   (26/ago/23 00.06)
+        bool res = await CrearReserva();
+
+        LabelStatus.Text = StatusAnt;
+
+        if (res)
+        {
+            await DisplayAlert("Crear reserva y enviar email", InfoCrearConEmail.ToString(), "Aceptar");
+            return;
+        }
+
+        // Parece que falla al manda el email.              (26/ago/23 07.10)
+
+        //StatusAnt = LabelStatus.Text;
+        //LabelStatus.Text = "Enviando el email de confirmación...";
+
+        //res = await EnviarMensajeConfirmacion();
+        //if (res)
+        //{
+        //    await DisplayAlert("Crear reserva y enviar email", InfoCrearConEmail.ToString(), "Aceptar");
+        //    return;
+        //}
+
+        await DisplayAlert("Crear reserva y enviar email", InfoCrearConEmail.ToString(), "Aceptar");
     }
 
     private void BtnCrearConEmail_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
@@ -150,19 +174,14 @@ public partial class MainPage : ContentPage
     {
         if (LaReserva == null)
         {
-            //MessageBox.Show("La reserva no está asignada.", "No hay reserva", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
             await DisplayAlert("No hay reserva", "La reserva no está asignada.", "Aceptar");
             return true;
         }
-        //https://kayakmaro.es/MKNReservasAPI?ta=3&id=10&user=makarena&bdp=0
-        //&fecha=16/09/2023&hora=15:30&actividad=RUTA CORTA&ad=6&cli=MAKARENA+(GYG)&tel=+34611825646
-        //&notas=pre-reservar+plazas&pago=1&modop=otro
 
         var re = LaReserva;
         if (re.ID > 0)
         {
             await DisplayAlert("Ya existe esa reserva", $"Ya hay una reserva con ese ID: {re.ID}.", "Aceptar");
-            //MessageBox.Show($"Ya hay una reserva con ese ID: {re.ID}.", "Ya existe esa reserva", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
             return true;
         }
 
@@ -174,10 +193,6 @@ public partial class MainPage : ContentPage
                                $"No existe un producto para la actividad indicada.{CrLf}" + 
                                $"{re.ActividadMostrar}, {re.FechaActividad:dd/MM/yyyy}, {re.HoraActividad:hh\\:mm}", 
                                "Aceptar");
-            //MessageBox.Show("No existe un producto para la actividad indicada." + CrLf +
-            //                $"{re.ActividadMostrar}, {re.FechaActividad:dd/MM/yyyy}, {re.HoraActividad:hh\\:mm}",
-            //                "No existe el producto",
-            //                MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
             return true;
         }
         // Actualizar el producto.                          (23/ago/23 20.06)
@@ -215,24 +230,6 @@ public partial class MainPage : ContentPage
 
                 return true;
             }
-            //// Avisar y dar la opción a crearla o no.
-            //var ret = MessageBox.Show($"Ya hay una reserva para ese cliente y actividad.{CrLf}" +
-            //                          "Pulsa ACEPTAR para continuar creándola por si es que el cliente se ha equivocado, " +
-            //                          $"pero habrá que contactar con el cliente y comprobar porqué hay más de una reserva.{CrLf}{CrLf}" +
-            //                          "Pulsa CANCELAR para no crear la reserva ni mandarle el mensaje de confirmación.",
-            //                          "Ya existe esa reserva",
-            //                          MessageBoxButtons.OKCancel, MessageBoxIcon.Exclamation);
-            //if (ret == DialogResult.Cancel)
-            //{
-            //    InfoCrearConEmail.Clear();
-            //    InfoCrearConEmail.AppendLine($"Ya existe una reserva con estos datos:{CrLf}Cliente: {re2.Nombre} ({re2.Telefono}){CrLf}Actividad: {re2.ActividadMostrar}, {re2.FechaActividad:dd/MM/yyyy}, {re2.HoraActividad:hh\\:mm}{CrLf}PAX: {re2.PaxsLargo}");
-            //    InfoCrearConEmail.AppendLine("Por favor comprueba que esa reserva ya existe.");
-            //    InfoCrearConEmail.AppendLine();
-
-            //    LabelStatus.Text = StatusAnt;
-
-            //    return true;
-            //}
         }
 
         // Crer el cliente si no existe.                (21/ago/23 22.51)
@@ -248,13 +245,12 @@ public partial class MainPage : ContentPage
             if (resCli.msg.StartsWith("ERROR"))
             {
                 await DisplayAlert("", "", "Aceptar");
-                //MessageBox.Show($"No se ha podido crear el nuevo cliente:{CrLf}{resCli.msg}", "Error al crear el cliente", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return true;
             }
         }
 
         // Asignar los kayaks.                              (24/ago/23 06.23)
-        CalcularPiraguas(re);
+        MainPage.CalcularPiraguas(re);
 
         // Crear la reserva
         string msg = re.Crear2();
@@ -272,18 +268,13 @@ public partial class MainPage : ContentPage
 
         LabelStatus.Text = StatusAnt;
 
-        //if (QueBoton == BtnCrearReserva)
-        //{
-        //    MessageBox.Show(InfoCrearConEmail.ToString(), "Reserva creada", MessageBoxButtons.OK, MessageBoxIcon.Information);
-        //}
-
         return false;
     }
 
     /// <summary>
     /// Calcular las piraguas según los pax.
     /// </summary>
-    private void CalcularPiraguas(Reservas re)
+    private static void CalcularPiraguas(Reservas re)
     {
         var tPax = re.TotalPax();
         int dobles = (int)Math.Ceiling(tPax / 2.0);
@@ -300,25 +291,31 @@ public partial class MainPage : ContentPage
         re.Tanque = tanques;
     }
 
-
-    private async Task<string> LeerAsset(string asset)
+    private static async Task<string> LeerAsset(string asset)
     {
-        using var stream = await FileSystem.OpenAppPackageFileAsync(asset);
-        using var reader = new StreamReader(stream);
+        try 
+        {
+            using var stream = await FileSystem.OpenAppPackageFileAsync(asset);
+            using var reader = new StreamReader(stream);
 
-        return reader.ReadToEnd();
+            return reader.ReadToEnd();
+        }
+        catch (Exception ex)
+        {
+            return $"ERROR: {ex.Message}";
+        }
     }
 
-    private bool EnviarMensajeConfirmacion()
+    private async Task<bool> EnviarMensajeConfirmacion()
     {
         StringBuilder sb = new StringBuilder();
 
         var re = LaReserva;
         if (re == null)
         {
-            //MessageBox.Show($"ERROR la reserva es nula. Debes generarla primero con 'Crear reserva'.",
-            //                "Error al enviar el email de la reserva",
-            //                MessageBoxButtons.OK, MessageBoxIcon.Error);
+            await DisplayAlert("Error al enviar el email de la reserva", 
+                               "ERROR la reserva es nula. Debes generarla primero con 'Crear reserva'.", 
+                               "Aceptar");
             return true;
         }
 
@@ -336,40 +333,41 @@ public partial class MainPage : ContentPage
         {
             if (enIngles)
             {
-                //sb.Append(Properties.Resources.IMPORTANTE_EN_09_30_txt.Replace(CrLf, "<br/>"));
+                sb.Append(await MainPage.LeerAsset("IMPORTANTE_EN_09_30.txt"));
             }
             else
             {
-                //sb.Append(Properties.Resources.IMPORTANTE_ES_09_30.Replace(CrLf, "<br/>"));
+                sb.Append(await MainPage.LeerAsset("IMPORTANTE_ES_09_30.txt"));
             }
         }
         else if (re.HoraActividad.Hours == 10 || re.HoraActividad == new TimeSpan(11, 0, 0))
         {
             if (enIngles)
             {
-                //sb.Append(Properties.Resources.IMPORTANTE_EN_10_30_11_00_txt.Replace(CrLf, "<br/>"));
+                sb.Append(await MainPage.LeerAsset("IMPORTANTE_EN_10_30_11_00.txt"));
             }
             else
             {
-                //sb.Append(Properties.Resources.IMPORTANTE_ES_10_30_11_00_txt.Replace(CrLf, "<br/>"));
+                sb.Append(await MainPage.LeerAsset("IMPORTANTE_ES_10_30_11_00.txt"));
             }
         }
         else
         {
             if (enIngles)
             {
-                //sb.Append(Properties.Resources.IMPORTANTE_EN_txt.Replace(CrLf, "<br/>"));
+                sb.Append(await MainPage.LeerAsset("IMPORTANTE_EN.txt"));
             }
             else
             {
-                //sb.Append(Properties.Resources.IMPORTANTE_ES_txt.Replace(CrLf, "<br/>"));
+                sb.Append(await MainPage.LeerAsset("IMPORTANTE_ES.txt"));
             }
         }
 
         // Si es para el mismo día de la actividad.         (24/ago/23 06.24)
         if (DateTime.Today == re.FechaActividad)
         {
-            sb.Append("<br/>");
+            //sb.Append("<br/>");
+            sb.AppendLine();
             if (enIngles)
             {
                 sb.Append("We would love to receive a review on the GetYourGuide website with your opinion on this activity, taking into account that <b>Kayak Makarena</b> is responsible for managing the reservations and <b>Maro - Kayak Nerja</b> carries out the routes.");
@@ -378,39 +376,38 @@ public partial class MainPage : ContentPage
             {
                 sb.Append("Nos encantaría recibir una reseña en el sitio de GetYourGuide con tu opinión sobre esta actividad, teniendo en cuenta que <b>Kayak Makarena</b> es la encargada de gestionar las reservas y <b>Maro - Kayak Nerja</b> realiza las rutas.");
             }
+            sb.AppendLine();
         }
 
-        sb.Append("<br/>");
-        sb.Append("<br/>");
+        sb.AppendLine();
+        sb.AppendLine();
+        //sb.Append("<br/>");
+        //sb.Append("<br/>");
         sb.Append("Kayak Makarena");
 
         var asunto = $"Booking - S271506 - {re.GYGReference}";
         var para = re.Email;
-        string body = sb.ToString().Replace(CrLf, "<br/>");
+        //string body = sb.ToString().Replace(CrLf, "<br/>");
         //var msg = ApiReservasMailGYG.MailGYG.EnviarMensaje(para, asunto, body, true);
-        var msg = MainPage.EnviarMensaje(para, asunto, body, true).Result;
+        string body = sb.ToString();
+        var msg = MainPage.EnviarMensaje(para, asunto, body).Result;
 
         InfoCrearConEmail.AppendLine(msg);
         InfoCrearConEmail.AppendLine();
 
-        //if (QueBoton == BtnEnviarConfirm)
-        //{
-        //    if (msg.StartsWith("ERROR"))
-        //    {
-        //        MessageBox.Show($"ERROR al enviar el email:{CrLf}{msg}.", "Error al enviar el email de la reserva", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-        //    }
-        //    else
-        //    {
-        //        MessageBox.Show($"{msg}", "Enviar email de la reserva", MessageBoxButtons.OK, MessageBoxIcon.Information);
-        //    }
-        //}
         LabelStatus.Text = StatusAnt;
-        //Application.DoEvents();
 
         return false;
     }
 
-    private static async Task<string> EnviarMensaje(string para, string asunto, string bodyMensaje, bool esHtml)
+    /// <summary>
+    /// Enviar un mensaje de correo.
+    /// </summary>
+    /// <param name="para"></param>
+    /// <param name="asunto"></param>
+    /// <param name="bodyMensaje"></param>
+    /// <returns></returns>
+    private static async Task<string> EnviarMensaje(string para, string asunto, string bodyMensaje)
     {
         var message = new EmailMessage
         {

@@ -44,7 +44,7 @@
                         HeightRequest="40" WidthRequest="160"
                         PropertyChanged="BtnCrearConEmail_PropertyChanged"
                         Clicked="BtnAnalizarEmail_Clicked"/>
-                <Button x:Name="BtnCrearConEmail" Text="Crear reserva y enviar email de confirmación"
+                <Button x:Name="BtnCrearConEmail" Text="Crear reserva (NO envia email de confirmación)"
                         Margin="{OnIdiom Phone=0, Desktop='24,0,0,0', Tablet='8,0,0,0'}" 
                         HorizontalOptions="{OnIdiom Phone=Start, Default=EndAndExpand}"
                         BackgroundColor="MistyRose" TextColor="Black"

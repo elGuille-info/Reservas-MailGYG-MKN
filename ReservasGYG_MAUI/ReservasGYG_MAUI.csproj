@@ -54,12 +54,12 @@
 	</ItemGroup>
 
     <ItemGroup>
-      <None Remove="Resources\Raw\IMPORTANTE_EN_09.30_txt.txt" />
-      <None Remove="Resources\Raw\IMPORTANTE_EN_10.30_11.00_txt.txt" />
-      <None Remove="Resources\Raw\IMPORTANTE_EN_txt.txt" />
-      <None Remove="Resources\Raw\IMPORTANTE_ES_09.30.txt" />
-      <None Remove="Resources\Raw\IMPORTANTE_ES_10.30_11.00_txt.txt" />
-      <None Remove="Resources\Raw\IMPORTANTE_ES_txt.txt" />
+      <None Remove="Resources\Raw\IMPORTANTE_EN.txt" />
+      <None Remove="Resources\Raw\IMPORTANTE_EN_09_30.txt" />
+      <None Remove="Resources\Raw\IMPORTANTE_EN_10.30_11_00.txt" />
+      <None Remove="Resources\Raw\IMPORTANTE_ES.txt" />
+      <None Remove="Resources\Raw\IMPORTANTE_ES_09_30.txt" />
+      <None Remove="Resources\Raw\IMPORTANTE_ES_10_30_11_00.txt" />
     </ItemGroup>
 
 	<ItemGroup>
