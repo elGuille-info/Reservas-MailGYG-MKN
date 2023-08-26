@@ -6,22 +6,28 @@
     <Nullable>disable</Nullable>
     <UseWindowsForms>true</UseWindowsForms>
     <ImplicitUsings>disable</ImplicitUsings>
-    <Description>Aplicación para gestionar las reservas de GetYourGuide con MKN Reservas</Description>
-    <PackageIcon></PackageIcon>
+    <Description>Aplicación para gestionar las reservas recibidas por email de GetYourGuide con MKN Reservas  (revisión del 24-ago-2023)</Description>
+    <PackageIcon>GYG_logo_naranja_265x265.png</PackageIcon>
     <ApplicationIcon>GYG_logo_blanco.ico</ApplicationIcon>
+    <Title>Analizar email de GetYourGuide</Title>
+    <Company>gSoft (elguille.info) para MKN Reservas</Company>
+    <Copyright>(c) gSoft (elguille.info) para MKN Reservas, 2023</Copyright>
+    <PackageReadmeFile>Readme.md</PackageReadmeFile>
+    <RepositoryType>git</RepositoryType>
+    <RepositoryUrl>https://github.com/elGuille-info/Reservas-MailGYG-MKN</RepositoryUrl>
+      <Version>1.0.1</Version>
+    <FileVersion>1.0.1.0</FileVersion>
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="FormTextosEmail.cs" />
-    <Compile Remove="FormTextosEmail.Designer.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <EmbeddedResource Remove="FormTextosEmail.resx" />
-  </ItemGroup>
-
-  <ItemGroup>
     <Content Include="GYG_logo_blanco.ico" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="Readme.md">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
   </ItemGroup>
 
   <ItemGroup>
@@ -41,6 +47,13 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Resources\GYG_logo_naranja_265x265.png">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
   </ItemGroup>
 
 </Project>

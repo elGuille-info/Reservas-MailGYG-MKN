@@ -258,6 +258,7 @@ namespace ReservasGYG
             TxtGYG.Location = new Point(207, 373);
             TxtGYG.Multiline = true;
             TxtGYG.Name = "TxtGYG";
+            TxtGYG.ScrollBars = ScrollBars.Both;
             TxtGYG.Size = new Size(530, 90);
             TxtGYG.TabIndex = 26;
             TxtGYG.Text = "Línea 1\r\nLínea 2\r\nLínea 3";
@@ -399,6 +400,7 @@ namespace ReservasGYG
             TxtNotas.Location = new Point(207, 189);
             TxtNotas.Multiline = true;
             TxtNotas.Name = "TxtNotas";
+            TxtNotas.ScrollBars = ScrollBars.Both;
             TxtNotas.Size = new Size(871, 64);
             TxtNotas.TabIndex = 15;
             TxtNotas.Text = "Las notas del wasap y edades\r\nSegunda línea";
@@ -589,7 +591,6 @@ namespace ReservasGYG
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Analizar Email de GYG y crear reserva con confirmación";
             Load += FormAnalizaEmailGYG_Load;
-            KeyUp += FormAnalizaEmail_KeyUp;
             GrbEmail.ResumeLayout(false);
             GrbReserva.ResumeLayout(false);
             GrbReserva.PerformLayout();

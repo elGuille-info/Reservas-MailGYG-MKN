@@ -28,10 +28,48 @@ public partial class Form1 : Form
 
     private void Form1_Load(object sender, EventArgs e)
     {
+        // No cargarlo.                                     (25/ago/23 14.11)
 
+        //// Cargar el programa de analizar emails.           (24/ago/23 15.38)
+        ////CargarAnalizarEmail();
+        //// Hacerlo con el timer.                            (24/ago/23 15.40)
+        //TimerCargarAnalizarEmail.Interval = 300;
+        //TimerCargarAnalizarEmail.Enabled = true;
+    }
+
+    private void Form1_FormClosing(object sender, FormClosingEventArgs e)
+    {
+        // Si la cierra el usuario
+        //if (e.CloseReason == CloseReason.UserClosing) 
+        //{
+        //    if (FormAnalizaEmail.Current != null && FormAnalizaEmail.Current.IsDisposed == false)
+        //    {
+        //        var ret = MessageBox.Show($"La ventana de analizar mails está abierta.{CrLf}¿Quieres cerrar todas las ventanas abiertas?", 
+        //                                  "Cerrar la ventana principal", 
+        //                                  MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+        //        if (ret != DialogResult.Yes)
+        //        {
+        //            e.Cancel = true;
+        //            TimerCargarAnalizarEmail.Enabled = true;
+        //            return;
+        //        }
+        //    }
+        //}
+    }
+
+
+    private void TimerCargarAnalizarEmail_Tick(object sender, EventArgs e)
+    {
+        TimerCargarAnalizarEmail.Enabled = false;
+        CargarAnalizarEmail();
     }
 
     private void BtnAnalizarEmail_Click(object sender, EventArgs e)
+    {
+        CargarAnalizarEmail();
+    }
+
+    private static void CargarAnalizarEmail()
     {
         if (FormAnalizaEmail.Current == null || FormAnalizaEmail.Current.IsDisposed)
         {
@@ -54,6 +92,23 @@ public partial class Form1 : Form
         {
             DateTimePickerGYG.Focus();
             return;
+        }
+
+        // Doble comprobación                               (25/ago/23 14.12)
+        // Si es el mismo día de la actividad... avisar que no se debe mandar salvo si es de madrugada
+        if (DateTime.Today == fecha)
+        {
+            ret = MessageBox.Show($"Los mensajes de 'Hoy es el día' para las reservas del día {fecha:F}" + CrLf +
+                                  "Solo se deben mandar en el mismo día si es antes de las 08:00." + CrLf +
+                                  "Pulsa ACEPTAR para mandar los mensajes." + CrLf +
+                                  $"Pulsa CANCELAR para no mandar nada y/o seleccionar otra fecha.",
+                                  "Mandar recordatorio de que hoy es el día.", 
+                                  MessageBoxButtons.OKCancel, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2);
+            if (ret == DialogResult.Cancel)
+            {
+                DateTimePickerGYG.Focus();
+                return;
+            }
         }
 
         // Comprobar que todos tengan email.                (24/ago/23 04.41)

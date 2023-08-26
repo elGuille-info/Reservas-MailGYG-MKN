@@ -21,6 +21,12 @@ namespace ApiReservasMailGYG;
 public class MailGYG
 {
     /// <summary>
+    /// El cambio de línea en las cajas de texto.
+    /// </summary>
+    /// <remarks>En aplicaciones de Windows Forms es \n en WinUI es \r en Android e iOS es </remarks>
+    public static string CambioLinea { get; set; } = "\n";
+
+    /// <summary>
     /// El retorno de carro.
     /// </summary>
     public static string CrLf => "\r\n";
@@ -91,11 +97,42 @@ public class MailGYG
             if (j > -1)
             {
                 string res = texto.Substring(i + campo1.Length, j - i - campo1.Length);
-                var lineas = res.Split("\n", StringSplitOptions.RemoveEmptyEntries);
+                var lineas = res.Split(CambioLinea, StringSplitOptions.RemoveEmptyEntries);
                 filas.AddRange(lineas.ToList());
             }
         }
         return filas;
+    }
+
+    /// <summary>
+    /// Extraer del texto indicado lo que haya entre los dos campos.
+    /// </summary>
+    /// <param name="texto">El texto a evaluar.</param>
+    /// <param name="campo1">La cadena a buscar.</param>
+    /// <param name="campo2">La segunda cadana a buscar.</param>
+    /// <returns>Lo que haya en el texto entre los dos campos indicados.</returns>
+    private static string Extraer(string texto, string campo1, string campo2)
+    {
+        string res = "";
+
+        int i = texto.IndexOf(campo1, StringComparison.OrdinalIgnoreCase);
+        if (i > -1)
+        {
+            int j = texto.IndexOf(campo2, i + campo1.Length, StringComparison.OrdinalIgnoreCase);
+            if (j == -1)
+            {
+                j = texto.Length + 2;
+            }
+            //res = texto.Substring(i + campo1.Length, j - i - campo1.Length).Replace("\n", "\r\n");
+            res = texto.Substring(i + campo1.Length, j - i - campo1.Length); //.Replace("\v", "\n");
+            // Esto es por si se añaden líneas manualmente. (25/ago/23 23.48)
+            int k = res.IndexOf("\v");
+            if (k>-1)
+            {
+                res = texto.Substring(i + campo1.Length, j - i - campo1.Length).Replace("\v", "\r\n");
+            }
+        }
+        return res.Trim();
     }
 
     /// <summary>
@@ -113,7 +150,7 @@ public class MailGYG
         if (i > -1)
         {
             var elTexto = texto.Substring(i);
-            var lineas = elTexto.Split("\n", StringSplitOptions.RemoveEmptyEntries);
+            var lineas = elTexto.Split(CambioLinea, StringSplitOptions.RemoveEmptyEntries);
             if (lineas.Length <= index) { return ""; }
             res = lineas[index];
         }
@@ -133,9 +170,9 @@ public class MailGYG
         int i = texto.IndexOf(campo, StringComparison.OrdinalIgnoreCase);
         if (i > -1)
         {
-            int j = texto.IndexOf("\n", i + campo.Length, StringComparison.OrdinalIgnoreCase);
+            int j = texto.IndexOf(CambioLinea, i + campo.Length, StringComparison.OrdinalIgnoreCase);
             if (j == -1) { j = texto.Length + 2; }
-            res = texto.Substring(i + campo.Length, j - i-campo.Length);
+            res = texto.Substring(i + campo.Length, j - i - campo.Length);
         }
         return res.Trim();
     }
@@ -208,7 +245,9 @@ public class MailGYG
             Nombre = ExtraerDespues(email, "Main customer:", 1).ToTitle(),
             GYGPais = ExtraerDespues(email, "Main customer:", 2),
             Email = ExtraerDespues(email, "Main customer:", 3),
-            GYGNotas = ExtraerDespues(email, "children in your group.:", 1),
+            //GYGNotas = ExtraerDespues(email, "children in your group.:", 1),
+            // Por si las notas están en varias líneas.     (25/ago/23 23.36)
+            GYGNotas = Extraer(email, "children in your group.:", "Tour language:"),
             GYGLanguage = Extraer(email, "Tour language:"),
         };
 
@@ -579,7 +618,30 @@ https://photos.app.goo.gl/qqxWBkVthdBGMjFEA
             sb.AppendLine($"Hay {colRes.Count} {colRes.Count.Plural("reserva")} del {fecha:dddd dd/MM/yyyy} sin email.");
             for (int i = 0; i < colRes.Count; i++)
             {
-                sb.AppendLine($"{colRes[i].Nombre}, {colRes[i].Notas}");
+                string nota = "";
+                // Poner solo los xx primeros caracteres de las notas. (25/ago/23 14.18)
+                //GetYourGuide - GYGLMWA85MXQ - (Spain) - Spanish (Live tour guide) -
+                //sb.AppendLine($"{colRes[i].Nombre}, {colRes[i].Notas}");
+                if (colRes[i].Notas.StartsWith("GetYourGuide"))
+                {
+                    int j = colRes[i].Notas.IndexOf("- GYG");
+                    if (j > -1)
+                    {
+                        nota = colRes[i].Notas.Substring(j+2, 12);
+                    }
+                }
+                else
+                {
+                    nota = colRes[i].Notas;
+                }
+                if (string.IsNullOrEmpty(nota))
+                {
+                    if (string.IsNullOrEmpty(colRes[i].Notas) == false)
+                    {
+                        nota = colRes[i].Notas.Substring(0, 28);
+                    }
+                }
+                sb.AppendLine($"{colRes[i].Nombre}, {nota}");
             }
         }
         return sb.ToString();

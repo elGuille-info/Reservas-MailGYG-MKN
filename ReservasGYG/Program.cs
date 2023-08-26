@@ -15,6 +15,9 @@ namespace ReservasGYG
             // see https://aka.ms/applicationconfiguration.
             ApplicationConfiguration.Initialize();
             //Application.Run(new Form1());
+            
+            // Volver a usar la de crear las reservas,      (25/ago/23 14.09)
+            // que Ana se lía :-)
             Application.Run(new FormAnalizaEmail());
         }
     }

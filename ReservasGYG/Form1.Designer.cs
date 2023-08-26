@@ -38,11 +38,12 @@ namespace ReservasGYG
             BtnFotos = new Button();
             BtnAnalizarEmail = new Button();
             groupBox1 = new GroupBox();
+            BtnMostrarReservas = new Button();
             DateTimePickerGYG = new DateTimePicker();
             label8 = new Label();
             BtnComprobarSinMail = new Button();
             BtnHoyEs = new Button();
-            BtnMostrarReservas = new Button();
+            TimerCargarAnalizarEmail = new Timer(components);
             GrbOpciones.SuspendLayout();
             groupBox1.SuspendLayout();
             SuspendLayout();
@@ -97,6 +98,18 @@ namespace ReservasGYG
             groupBox1.TabStop = false;
             groupBox1.Text = "Acciones con fecha";
             // 
+            // BtnMostrarReservas
+            // 
+            BtnMostrarReservas.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            BtnMostrarReservas.BackColor = Color.LightSkyBlue;
+            BtnMostrarReservas.Enabled = false;
+            BtnMostrarReservas.Location = new Point(9, 200);
+            BtnMostrarReservas.Name = "BtnMostrarReservas";
+            BtnMostrarReservas.Size = new Size(755, 40);
+            BtnMostrarReservas.TabIndex = 4;
+            BtnMostrarReservas.Text = "Mostrar Reservas";
+            BtnMostrarReservas.UseVisualStyleBackColor = false;
+            // 
             // DateTimePickerGYG
             // 
             DateTimePickerGYG.CustomFormat = "dd/MM/yyyy";
@@ -140,17 +153,10 @@ namespace ReservasGYG
             BtnHoyEs.UseVisualStyleBackColor = false;
             BtnHoyEs.Click += BtnHoyEs_Click;
             // 
-            // BtnMostrarReservas
+            // TimerCargarAnalizarEmail
             // 
-            BtnMostrarReservas.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            BtnMostrarReservas.BackColor = Color.LightSkyBlue;
-            BtnMostrarReservas.Enabled = false;
-            BtnMostrarReservas.Location = new Point(9, 200);
-            BtnMostrarReservas.Name = "BtnMostrarReservas";
-            BtnMostrarReservas.Size = new Size(755, 40);
-            BtnMostrarReservas.TabIndex = 4;
-            BtnMostrarReservas.Text = "Mostrar Reservas";
-            BtnMostrarReservas.UseVisualStyleBackColor = false;
+            TimerCargarAnalizarEmail.Interval = 300;
+            TimerCargarAnalizarEmail.Tick += TimerCargarAnalizarEmail_Tick;
             // 
             // Form1
             // 
@@ -163,6 +169,7 @@ namespace ReservasGYG
             Name = "Form1";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Opciones Reservas GetYourGuide";
+            FormClosing += Form1_FormClosing;
             Load += Form1_Load;
             GrbOpciones.ResumeLayout(false);
             groupBox1.ResumeLayout(false);
@@ -180,5 +187,6 @@ namespace ReservasGYG
         private Button BtnComprobarSinMail;
         private Button BtnHoyEs;
         private Button BtnMostrarReservas;
+        private Timer TimerCargarAnalizarEmail;
     }
 }

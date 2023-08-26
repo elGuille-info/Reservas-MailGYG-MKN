@@ -52,14 +52,15 @@ public partial class FormAnalizaEmail : Form
         LimpiarControlesReserva();
     }
 
-    private void FormAnalizaEmail_KeyUp(object sender, KeyEventArgs e)
-    {
-        // Si se pulsa Ctrl+C pegar el texto en RtfEmail.   (23/ago/23 11.51)
-        if (e.Control && e.KeyCode == Keys.C)
-        {
-            BtnPegarEmail_Click(null, null);
-        }
-    }
+    //private void FormAnalizaEmail_KeyUp(object sender, KeyEventArgs e)
+    //{
+    //    // No copiar nada...
+    //    //// Si se pulsa Ctrl+C pegar el texto en RtfEmail.   (23/ago/23 11.51)
+    //    //if (e.Control && e.KeyCode == Keys.C)
+    //    //{
+    //    //    BtnPegarEmail_Click(null, null);
+    //    //}
+    //}
 
     private void BtnPegarEmail_Click(object sender, EventArgs e)
     {
@@ -185,10 +186,21 @@ public partial class FormAnalizaEmail : Form
         LabelStatus.Text = "Creando la reserva...";
         Application.DoEvents();
 
-        CrearReserva();
+        // Si devuelve true, no continuar con el envío del email.   (26/ago/23 00.06)
+        bool res = CrearReserva();
 
         LabelStatus.Text = StatusAnt;
         Application.DoEvents();
+
+        if (res)
+        {
+            ChkCrearConEmail.Checked = false;
+            ChkEnviarConfirm.Checked = false;
+            HabilitarBotonesReservas();
+
+            MessageBox.Show(InfoCrearConEmail.ToString(), "Crear reserva y enviar email", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            return;
+        }
 
         QueBoton = sender;
 
@@ -254,9 +266,26 @@ public partial class FormAnalizaEmail : Form
         if (re2 != null)
         {
             // Avisar, pero permitir continuar              (24/ago/23 06.22)
-            MessageBox.Show($"Ya hay una reserva para ese cliente y actividad.{CrLf}Se continúa pero habrá que contactar con el cliente y comprobar porqué hay más de una reserva.", 
-                            "Ya existe esa reserva", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-            //return true;
+            //MessageBox.Show($"Ya hay una reserva para ese cliente y actividad.{CrLf}Se continúa pero habrá que contactar con el cliente y comprobar porqué hay más de una reserva.",
+            //                "Ya existe esa reserva", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+            // Avisar y dar la opción a crearla o no.
+            var ret = MessageBox.Show($"Ya hay una reserva para ese cliente y actividad.{CrLf}" +
+                                      "Pulsa ACEPTAR para continuar creándola por si es que el cliente se ha equivocado, " +
+                                      $"pero habrá que contactar con el cliente y comprobar porqué hay más de una reserva.{CrLf}{CrLf}" +
+                                      "Pulsa CANCELAR para no crear la reserva ni mandarle el mensaje de confirmación.",
+                                      "Ya existe esa reserva",
+                                      MessageBoxButtons.OKCancel, MessageBoxIcon.Exclamation);
+            if (ret == DialogResult.Cancel)
+            {
+                InfoCrearConEmail.Clear();
+                InfoCrearConEmail.AppendLine($"Ya existe una reserva con estos datos:{CrLf}Cliente: {re2.Nombre} ({re2.Telefono}){CrLf}Actividad: {re2.ActividadMostrar}, {re2.FechaActividad:dd/MM/yyyy}, {re2.HoraActividad:hh\\:mm}{CrLf}PAX: {re2.PaxsLargo}");
+                InfoCrearConEmail.AppendLine("Por favor comprueba que esa reserva ya existe.");
+                InfoCrearConEmail.AppendLine();
+
+                LabelStatus.Text = StatusAnt;
+
+                return true;
+            }
         }
 
         // Crer el cliente si no existe.                (21/ago/23 22.51)
@@ -308,44 +337,51 @@ public partial class FormAnalizaEmail : Form
     private void CalcularPiraguas(Reservas re)
     {
         var tPax = re.TotalPax();
+        int dobles = (int)Math.Ceiling(tPax / 2.0);
         int individuales = 0;
         int tanques = 0;
-
-        // Si hay 2 adultos y 1 niño, poner 1 tanque
-        // sean que pagan o no
-        if ((re.Adultos == 2 || re.Adultos2 == 2)
-            && (re.Niños == 1 || re.Niños2 == 1))
+        
+        if (dobles * 2 < tPax) 
         {
-            tanques = 1;
-            tPax -= 3;
-        }
-
-        if (!tPax.EsPar())
-        {
-            tPax--;
             individuales = 1;
         }
-        int dobles = (int)Math.Ceiling(tPax / 2.0);
+                
 
-        // poner tanque si:
-        //   Niños2 es > 1
-        //   Usar 2 adultos por cada 2 niños2 y se pone un tanque
-        if (re.Niños2 > 1)
-        {
-            var n2 = re.Niños2;
-            if (!n2.EsPar())
-                n2 -= 1;
-            while (re.Adultos + re.Adultos2 < n2)
-                n2 -= 2;
-            if (re.Adultos + re.Adultos2 >= 2)
-            {
-                tanques = (n2 / 2);
-                //if (tanques > KNDatos.Config.Current.MaxTanques)
-                //    tanques = KNDatos.Config.Current.MaxTanques;
-            }
-        }
-        if (dobles > 0)
-            dobles -= tanques;
+        //// Si hay 2 adultos y 1 niño, poner 1 tanque
+        //// sean que pagan o no
+        //if ((re.Adultos == 2 || re.Adultos2 == 2)
+        //    && (re.Niños == 1 || re.Niños2 == 1))
+        //{
+        //    tanques = 1;
+        //    tPax -= 3;
+        //}
+
+        //if (!tPax.EsPar())
+        //{
+        //    tPax--;
+        //    individuales = 1;
+        //}
+        ////int dobles = (int)Math.Ceiling(tPax / 2.0);
+
+        //// poner tanque si:
+        ////   Niños2 es > 1
+        ////   Usar 2 adultos por cada 2 niños2 y se pone un tanque
+        //if (re.Niños2 > 1)
+        //{
+        //    var n2 = re.Niños2;
+        //    if (!n2.EsPar())
+        //        n2 -= 1;
+        //    while (re.Adultos + re.Adultos2 < n2)
+        //        n2 -= 2;
+        //    if (re.Adultos + re.Adultos2 >= 2)
+        //    {
+        //        tanques = (n2 / 2);
+        //        //if (tanques > KNDatos.Config.Current.MaxTanques)
+        //        //    tanques = KNDatos.Config.Current.MaxTanques;
+        //    }
+        //}
+        //if (dobles > 0)
+        //    dobles -= tanques;
 
         re.Dobles = dobles;
         re.Individuales = individuales;
