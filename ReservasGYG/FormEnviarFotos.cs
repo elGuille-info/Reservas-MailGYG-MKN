@@ -21,6 +21,7 @@ namespace ReservasGYG;
 public partial class FormEnviarFotos : Form
 {
     private bool inicializando = true;
+
     public static FormEnviarFotos Current { get; set; }
     public FormEnviarFotos()
     {
@@ -28,7 +29,7 @@ public partial class FormEnviarFotos : Form
         Current = this;
     }
 
-    //private bool FaltanEmails { get; set; } = true;
+    public DateTime FechaFotos { get => DateTimePickerGYG.Value; set => DateTimePickerGYG.Value = value; }
 
     private void LimpiarTextosFotos()
     {
@@ -53,7 +54,7 @@ public partial class FormEnviarFotos : Form
         BtnPegar.Image = Properties.Resources.Paste;
         BtnLimpiar.Image = Properties.Resources.CleanData;
 
-        DateTimePickerGYG.Value = DateTime.Now;
+        //DateTimePickerGYG.Value = DateTime.Now;
 
         // Llenar el combo con las horas.
         CboHoras.Items.Clear();
@@ -78,55 +79,56 @@ public partial class FormEnviarFotos : Form
             TxtFotosSeleccionada.Text = "";
             return;
         }
-        //BtnEnviarFotos.Enabled = true;
+
+        if (CboHoras.Tag == null)
+        {
+            // No hay datos asignados.
+            MessageBox.Show("No hay datos con las fotos a enviar.", "Seleccionar hora con las fotos", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            return;
+        }
+
+        List<string> listaHoras = new();
+
+        listaHoras = (List<string>)CboHoras.Tag;
+
+        TxtFotosSeleccionada.Text = listaHoras[CboHoras.SelectedIndex];
+
         BtnEnviarFotos.Text = $"Enviar las fotos de {CboHoras.Text} {DateTimePickerGYG.Value:dd/MM/yyyy}";
         BtnEnviarFotosDia.Text = $"Enviar todas las fotos del día {DateTimePickerGYG.Value:dd/MM/yyyy}";
 
-        // Seleccionar el textBox de la hora seleccionada.
-        TextBox txt = null;
-        switch (index)
-        {
-            case 0: txt = TxtFotos0930; break;
-            case 1: txt = TxtFotos1030; break;
-            case 2: txt = TxtFotos1100; break;
-            case 3: txt = TxtFotos1105; break; // Ruta tablas
-            case 4: txt = TxtFotos1145; break;
-            case 5: txt = TxtFotos1315; break;
-            case 6: txt = TxtFotos1330; break;
-            case 7: txt = TxtFotos1400; break;
-            case 8: txt = TxtFotos1530; break;
-            case 9: txt = TxtFotos1615; break;
-            case 10: txt = TxtFotos1630; break;
-            case 11: txt = TxtFotos1745; break;
-            case 12: txt = TxtFotos1830; break;
-            default: break;
-        }
-        if (txt == null || string.IsNullOrEmpty(txt.Text))
-        {
-            //BtnEnviarFotos.Text = $"No hay fotos que enviar de {CboHoras.Text} {DateTimePickerGYG.Value:dd/MM/yyyy}";
-            BtnEnviarFotos.Enabled = false;
-            TxtFotosSeleccionada.Text = "";
-            //return;
-        }
-        else
-        {
-            BtnEnviarFotos.Enabled = true;
-            txt.Focus();
-        }
-
-        //if (txt == null) return;
-        //if (string.IsNullOrEmpty(txt.Text)) return;
-
-        //// Comprobar si en el texto está la fecha seleccionada. (23/ago/23 14.34)
-        //// El formato en el texto es dd.MM.yy
-        //var laFecha = DateTimePickerGYG.Value.ToString("dd.MM.yy");
-        //if (txt.Text.Contains(laFecha) == false)
+        //// Seleccionar el textBox de la hora seleccionada.
+        //TextBox txt = null;
+        //switch (index)
         //{
-        //    MessageBox.Show($"El texto no tiene la fecha seleccionada: '{laFecha:dd.MM.yy}'", "No coinciden las fechas", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+        //    case 0: txt = TxtFotos0930; break;
+        //    case 1: txt = TxtFotos1030; break;
+        //    case 2: txt = TxtFotos1100; break;
+        //    case 3: txt = TxtFotos1105; break; // Ruta tablas
+        //    case 4: txt = TxtFotos1145; break;
+        //    case 5: txt = TxtFotos1315; break;
+        //    case 6: txt = TxtFotos1330; break;
+        //    case 7: txt = TxtFotos1400; break;
+        //    case 8: txt = TxtFotos1530; break;
+        //    case 9: txt = TxtFotos1615; break;
+        //    case 10: txt = TxtFotos1630; break;
+        //    case 11: txt = TxtFotos1745; break;
+        //    case 12: txt = TxtFotos1830; break;
+        //    default: break;
+        //}
+        //if (txt == null || string.IsNullOrEmpty(txt.Text))
+        //{
+        //    //BtnEnviarFotos.Text = $"No hay fotos que enviar de {CboHoras.Text} {DateTimePickerGYG.Value:dd/MM/yyyy}";
+        //    BtnEnviarFotos.Enabled = false;
+        //    TxtFotosSeleccionada.Text = "";
+        //    //return;
+        //}
+        //else
+        //{
+        //    BtnEnviarFotos.Enabled = true;
+        //    txt.Focus();
         //}
 
-        //txt.Focus();
-        TxtFotosHoras_Enter(txt, null);
+        //TxtFotosHoras_Enter(txt, null);
     }
 
     private void DateTimePickerFotos_ValueChanged(object sender, EventArgs e)
@@ -297,47 +299,15 @@ public partial class FormEnviarFotos : Form
 
     private bool ComprobarTextoFotos()
     {
-        //string msg = "";
-
         var fecha = DateTimePickerGYG.Value.Date;
-
-        string res = ComprobarEmails(fecha);
+        string res = ComprobarEmails(fecha, conCabecera:true);
 
         if (string.IsNullOrWhiteSpace(res) == false)
         {
-            MessageBox.Show($"Hay reservas del {fecha:dddd dd/MM/yyyy} sin emails.\r\nSi envías los mensajes a esos clientes no les llegará.\r\n{res}", "Comprobar reservas sin email", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            MessageBox.Show($"Hay reservas del {fecha:dddd dd/MM/yyyy} sin emails.{CrLf}{CrLf}{res}", 
+                            "Comprobar reservas sin email", MessageBoxButtons.OK, MessageBoxIcon.Error);
             return true;
         }
-
-        //if (FaltanEmails)
-        //{
-        //    msg = "No se ha comprobado si faltan emails o faltan emails por meter.";
-        //}
-
-        //// Enviar el texto indicado en TxtFotosSeleccionada a las reservas de la fecha y hora seleccionada
-        //if (string.IsNullOrWhiteSpace(TxtFotosSeleccionada.Text))
-        //{
-        //    msg = "No hay texto de las fotos a enviar.";
-        //}
-        //if (string.IsNullOrEmpty(msg) == false)
-        //{
-        //    MessageBox.Show(msg, "No se pueden mandar las fotos", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-        //    return true;
-        //}
-
-        //// Comprobar si la fecha seleccionada es la del texto a enviar
-
-        //var txt = TxtFotosSeleccionada;
-        //// Comprobar si en el texto está la fecha seleccionada. (23/ago/23 14.34)
-        //// El formato en el texto es dd.MM.yy
-        //var laFecha = DateTimePickerGYG.Value.ToString("dd.MM.yy");
-        //if (txt.Text.Contains(laFecha) == false)
-        //{
-        //    MessageBox.Show($"El texto no tiene la fecha seleccionada: '{laFecha:dd.MM.yy}'",
-        //                    "No coinciden las fechas",
-        //                    MessageBoxButtons.OK, MessageBoxIcon.Error);
-        //    return true;
-        //}
 
         return false;
     }
@@ -351,11 +321,11 @@ public partial class FormEnviarFotos : Form
 
         var fecha = DateTimePickerGYG.Value.Date;
 
-        string res = ComprobarEmails(fecha);
+        string res = ComprobarEmails(fecha, conCabecera: true);
 
         if (string.IsNullOrWhiteSpace(res) == false)
         {
-            MessageBox.Show($"Hay reservas del {fecha:dddd dd/MM/yyyy} sin emails.\r\nSi envías los mensajes a esos clientes no les llegará.\r\n{res}", "Comprobar reservas sin email", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            MessageBox.Show($"Hay reservas del {fecha:dddd dd/MM/yyyy} sin emails.{CrLf}{res}", "Comprobar reservas sin email", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
         else
         {
@@ -363,33 +333,6 @@ public partial class FormEnviarFotos : Form
             BtnEnviarFotos.Enabled = true;
             BtnEnviarFotosDia.Enabled = true;
         }
-
-        //StringBuilder sb = new StringBuilder();
-        //sb.Append("Select * from Reservas ");
-        //sb.Append("where Activa = 1 and CanceladaCliente = 0 and idDistribuidor = 10 ");
-        //sb.Append("and Email = '' and Nombre != 'Makarena (GYG)' ");
-        //sb.Append($"and FechaActividad = '{fecha:yyyy-MM-dd}' ");
-        //sb.Append("order by FechaActividad, HoraActividad, ID");
-
-        //var colRes = Reservas.TablaCol(sb.ToString());
-
-        //if (colRes.Count > 0)
-        //{
-        //    sb.Clear();
-        //    for (int i = 0; i < colRes.Count; i++)
-        //    {
-        //        sb.AppendLine($"{colRes[i].Nombre}, {colRes[i].Notas}");
-        //    }
-        //    MessageBox.Show($"Hay {colRes.Count} {colRes.Count.Plural("reserva")} del {fecha:dddd dd/MM/yyyy} sin email.\r\nSi envías los mensajes a esos clientes no les llegará.\r\n" + sb.ToString(), "Comprobar reservas sin email", MessageBoxButtons.OK, MessageBoxIcon.Error);
-        //    //return;
-        //    FaltanEmails = true;
-        //}
-        //else
-        //{
-        //    MessageBox.Show($"Todas las reservas de la fecha '{fecha:dddd dd/MM/yyyy}' tiene asignado el email.", "Comprobar reservas sin email", MessageBoxButtons.OK, MessageBoxIcon.Information);
-        //    FaltanEmails = false;
-        //}
-        //BtnEnviarFotos.Enabled = true;
     }
 
     private void TimerColorearHoras_Tick(object sender, EventArgs e)
@@ -421,6 +364,8 @@ public partial class FormEnviarFotos : Form
     {
         LimpiarTextosFotos();
 
+        CboHoras.Tag = null;
+
         // Extraer las horas del texto en TxtFotosDia.      (23/ago/23 11.57)
         var fotosHoras = MailGYG.AnalizarTextoFotos(TxtFotosDia.Text);
 
@@ -429,6 +374,9 @@ public partial class FormEnviarFotos : Form
             MessageBox.Show("Parece que el texto de las fotos no tiene datos válidos.", "Extraer horas de las fotos", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
             return;
         }
+
+        // Asignar el array al tag del combo.               (27/ago/23 20.33)
+        CboHoras.Tag = fotosHoras;
 
         var laFechaFotos = MailGYG.FechaFotos(TxtFotosDia.Text);
         DateTime fechaFotos = DateTime.Today;
@@ -446,67 +394,69 @@ public partial class FormEnviarFotos : Form
             {
                 // La fecha no es correcta.
                 MessageBox.Show($"La fecha '{laFechaFotos}' no es correcta.", "Extraer horas de las fotos", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                CboHoras.Tag = null;
                 return;
             }
         }
         DateTimePickerGYG.Value = fechaFotos;
 
-        // Añadir cada hora a la caja de textos que corresponda.
-        for (int i = 0; i < fotosHoras.Count; i++)
-        {
-            if (fotosHoras[i].Contains("09.30"))
-            {
-                TxtFotos0930.Text = fotosHoras[i];
-            }
-            else if (fotosHoras[i].Contains("10.30"))
-            {
-                TxtFotos1030.Text = fotosHoras[i];
-            }
-            else if (fotosHoras[i].Contains("11.00"))
-            {
-                TxtFotos1100.Text = fotosHoras[i];
-            }
-            else if (fotosHoras[i].Contains("11.05")) // Ruta tablas
-            {
-                TxtFotos1105.Text = fotosHoras[i];
-            }
-            else if (fotosHoras[i].Contains("11.45"))
-            {
-                TxtFotos1145.Text = fotosHoras[i];
-            }
-            else if (fotosHoras[i].Contains("13.15"))
-            {
-                TxtFotos1315.Text = fotosHoras[i];
-            }
-            else if (fotosHoras[i].Contains("13.30"))
-            {
-                TxtFotos1330.Text = fotosHoras[i];
-            }
-            else if (fotosHoras[i].Contains("14.00"))
-            {
-                TxtFotos1400.Text = fotosHoras[i];
-            }
-            else if (fotosHoras[i].Contains("15.30"))
-            {
-                TxtFotos1530.Text = fotosHoras[i];
-            }
-            else if (fotosHoras[i].Contains("16.15"))
-            {
-                TxtFotos1615.Text = fotosHoras[i];
-            }
-            else if (fotosHoras[i].Contains("16.30"))
-            {
-                TxtFotos1630.Text = fotosHoras[i];
-            }
-            else if (fotosHoras[i].Contains("17.45"))
-            {
-                TxtFotos1745.Text = fotosHoras[i];
-            }
-            else if (fotosHoras[i].Contains("18.30"))
-            {
-                TxtFotos1830.Text = fotosHoras[i];
-            }
-        }
+        //// Añadir cada hora a la caja de textos que corresponda.
+        //for (int i = 0; i < fotosHoras.Count; i++)
+        //{
+        //    if (fotosHoras[i].Contains("09.30"))
+        //    {
+        //        TxtFotos0930.Text = fotosHoras[i];
+        //    }
+        //    else if (fotosHoras[i].Contains("10.30"))
+        //    {
+        //        TxtFotos1030.Text = fotosHoras[i];
+        //    }
+        //    else if (fotosHoras[i].Contains("11.00"))
+        //    {
+        //        TxtFotos1100.Text = fotosHoras[i];
+        //    }
+        //    else if (fotosHoras[i].Contains("11.05")) // Ruta tablas
+        //    {
+        //        TxtFotos1105.Text = fotosHoras[i];
+        //    }
+        //    else if (fotosHoras[i].Contains("11.45"))
+        //    {
+        //        TxtFotos1145.Text = fotosHoras[i];
+        //    }
+        //    else if (fotosHoras[i].Contains("13.15"))
+        //    {
+        //        TxtFotos1315.Text = fotosHoras[i];
+        //    }
+        //    else if (fotosHoras[i].Contains("13.30"))
+        //    {
+        //        TxtFotos1330.Text = fotosHoras[i];
+        //    }
+        //    else if (fotosHoras[i].Contains("14.00"))
+        //    {
+        //        TxtFotos1400.Text = fotosHoras[i];
+        //    }
+        //    else if (fotosHoras[i].Contains("15.30"))
+        //    {
+        //        TxtFotos1530.Text = fotosHoras[i];
+        //    }
+        //    else if (fotosHoras[i].Contains("16.15"))
+        //    {
+        //        TxtFotos1615.Text = fotosHoras[i];
+        //    }
+        //    else if (fotosHoras[i].Contains("16.30"))
+        //    {
+        //        TxtFotos1630.Text = fotosHoras[i];
+        //    }
+        //    else if (fotosHoras[i].Contains("17.45"))
+        //    {
+        //        TxtFotos1745.Text = fotosHoras[i];
+        //    }
+        //    else if (fotosHoras[i].Contains("18.30"))
+        //    {
+        //        TxtFotos1830.Text = fotosHoras[i];
+        //    }
+        //}
+
         // Seleccionar la primera hora
         CboHoras.SelectedIndex = 0;
 

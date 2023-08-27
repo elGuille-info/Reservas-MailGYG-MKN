@@ -73,14 +73,14 @@ namespace ReservasGYG.Properties {
         /// <summary>
         ///   Looks up a localized string similar to 
         ///Si tienes problemas para ver las fotos, intenta abrir el enlace nuevamente y si aún así no te funciona, 
-        ///por favor responde a este correo o mándame &lt;b&gt;un mensaje de WhatsApp al +34 645761689&lt;/b&gt; indicando tu nombre y el número de la reserva
+        ///por favor responde a este correo o mándame &lt;b&gt;un mensaje de WhatsApp al +34 645 76 16 89&lt;/b&gt; indicando tu nombre y el número de la reserva
         ///y te volveré a mandar el enlace o buscaré una solución para que tengas tus fotos.
         ///
-        ///&lt;b&gt;&lt;small&gt;Si no me facilitas esos datos, sea por WhatsApp o email, no responderé a los mensajes&lt;/small&gt;&lt;/b&gt;
+        ///&lt;b&gt;&lt;small&gt;Si no me facilitas esos datos, sea por WhatsApp o email, puede que tarde en responderte.&lt;/small&gt;&lt;/b&gt;
         ///
         ///
         ///
-        ///If you have trouble viewing the photos, try opening the link again  [rest of string was truncated]&quot;;.
+        ///If you have trouble viewing the photos, try opening the link  [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string Fotos_ruta {
             get {
@@ -111,7 +111,13 @@ namespace ReservasGYG.Properties {
         /// <summary>
         ///   Looks up a localized string similar to &lt;b&gt;¡Hoy es el gran día de tu actividad! &lt;/b&gt;
         ///
-        ///Te recuerdo que si te desplazas a la playa de Maro (en Nerja) en taxi, el taxi puede llevarte hasta cerca de la playa, si vas en tu propio vehículo tendrás que aparcarlo en algunos de los aparcamientos disponibles en el pueblo de Maro o en el de las Cuevas de Nerja. Pero como estamos en temporada alta, no habrá mucho sitio donde aparcar, por tanto, calcula bien el tiempo que necesitas para llegar a la playa de maro &lt;b&gt;15 minutos antes de la hora de la activida [rest of string was truncated]&quot;;.
+        ///&lt;b&gt;*IMPORTANTE*&lt;/b&gt;
+        ///El punto de encuentro es en la playa de Maro (https://goo.gl/wbLLFd).
+        ///Te recuerdo que &lt;b&gt;debes estar en el mostrador de la empresa de los kayaks 15 minutos antes de la hora de la actividad&lt;/b&gt;.
+        ///Si hay cola, NO la hagas, ve directamente al mostrador e indica que tienes una reserva de ruta.
+        ///Si llegas tarde tu reserva se cancelará.
+        ///
+        ///Los vehículos no pueden ir hasta la playa de Maro (porque es zona protegida) y debes aparcar antes de ir a [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string Hoy_es_el_dia_txt {
             get {
@@ -260,6 +266,23 @@ namespace ReservasGYG.Properties {
         internal static string IMPORTANTE_ES_txt {
             get {
                 return ResourceManager.GetString("IMPORTANTE_ES_txt", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &lt;b&gt;¡Mañana es el gran día de tu actividad!&lt;/b&gt;
+        ///
+        ///&lt;b&gt;*IMPORTANTE*&lt;/b&gt;
+        ///El punto de encuentro es en la playa de Maro (https://goo.gl/wbLLFd).
+        ///Te recuerdo que &lt;b&gt;debes estar en el mostrador de la empresa de los kayaks 15 minutos antes de la hora de la actividad&lt;/b&gt;.
+        ///Si hay cola, NO la hagas, ve directamente al mostrador e indica que tienes una reserva de ruta.
+        ///Si llegas tarde tu reserva se cancelará.
+        ///
+        ///Los vehículos no pueden ir hasta la playa de Maro (porque es zona protegida) y debes aparcar antes de ir [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string Mañana_es_el_dia {
+            get {
+                return ResourceManager.GetString("Mañana_es_el_dia", resourceCulture);
             }
         }
         

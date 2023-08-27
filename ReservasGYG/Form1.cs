@@ -13,11 +13,13 @@ using System.Drawing;
 using KNDatos;
 
 using static ApiReservasMailGYG.MailGYG;
+using ApiReservasMailGYG;
 
 namespace ReservasGYG;
 
 public partial class Form1 : Form
 {
+    private bool inicializando = true;
     public static Form1 Current { get; set; }
 
     public Form1()
@@ -28,6 +30,8 @@ public partial class Form1 : Form
 
     private void Form1_Load(object sender, EventArgs e)
     {
+        inicializando = false;
+
         // No cargarlo.                                     (25/ago/23 14.11)
 
         //// Cargar el programa de analizar emails.           (24/ago/23 15.38)
@@ -35,6 +39,12 @@ public partial class Form1 : Form
         //// Hacerlo con el timer.                            (24/ago/23 15.40)
         //TimerCargarAnalizarEmail.Interval = 300;
         //TimerCargarAnalizarEmail.Enabled = true;
+
+        HabilitarBotones(false);
+
+        DateTimePickerGYG.Value = DateTime.Today;
+
+        Form1_Resize(null, null);
     }
 
     private void Form1_FormClosing(object sender, FormClosingEventArgs e)
@@ -57,6 +67,36 @@ public partial class Form1 : Form
         //}
     }
 
+    private void Form1_Resize(object sender, EventArgs e)
+    {
+        if (inicializando) return;
+
+        // Ajustar el ancho de las columnas del listview.   (27/ago/23 17.54)
+        var w = (GrbOpcionesFecha.ClientSize.Width - 60) / 3;
+        LvwSinEmail.Columns[0].Width = (GrbOpcionesFecha.ClientSize.Width - 60) - w;
+        LvwSinEmail.Columns[1].Width = w;
+    }
+
+    private void DateTimePickerGYG_ValueChanged(object sender, EventArgs e)
+    {
+        if (inicializando) return;
+
+        //Comprobar clientes sin email en la fecha
+        BtnComprobarSinMail.Text = $"Comprobar reservas sin email en la fecha {DateTimePickerGYG.Value:dddd dd/MM/yyyy}";
+        BtnMostrarReservas.Text = $"Mostrar reservas del {DateTimePickerGYG.Value:dddd dd/MM/yyyy}";
+        BtnFotos.Text = $"Enviar las fotos de las reservas del {DateTimePickerGYG.Value:dddd dd/MM/yyyy}";
+
+        // Al cambiar de fecha, deshabilitar los botones, salvo el de comprobar. (27/ago/23 18.21)
+        HabilitarBotones(false);
+    }
+
+    private void HabilitarBotones(bool habilitar)
+    {
+        BtnFotos.Enabled = habilitar;
+        BtnMañanaEs.Enabled = habilitar;
+        BtnHoyEs.Enabled = habilitar;
+        BtnMostrarReservas.Enabled = habilitar;
+    }
 
     private void TimerCargarAnalizarEmail_Tick(object sender, EventArgs e)
     {
@@ -80,29 +120,104 @@ public partial class Form1 : Form
         FormAnalizaEmail.Current.Focus();
     }
 
-    private void BtnHoyEs_Click(object sender, EventArgs e)
+    private void BtnMañanaEs_Click(object sender, EventArgs e)
     {
         DateTime fecha = DateTimePickerGYG.Value.Date;
+        DialogResult ret;
 
-        var ret = MessageBox.Show($"¿Quieres mandar el mensaje de 'Hoy es el día' a las reservas del día {fecha:F}?" + CrLf +
-                                  "Pulsa SÍ para mandar el mensaje a las de esa fecha." + CrLf +
-                                  $"Pulsa NO no mandar nada y seleccionar otra fecha.",
-                                  "Mandar recordatorio de que hoy es el día.", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+        // Comprobar que la fecha no sea hoy.               (27/ago/23 14.11)
+        if (fecha.Date == DateTime.Today)
+        {
+            MessageBox.Show("No se pueden mandar el mensaje MANAÑA ES EL DÍA a las reservas de HOY." + CrLf + CrLf +
+                            $"Has indicado mandar el mensaje MAÑANA es el día a las reservas de hoy {fecha.Date:dddd dd/MM/yyyy}" + CrLf +
+                            "Debes elegir la opción HOY en el día para mandar en el mismo día de la actividad." + CrLf +
+                            "O bien cambiar la fecha seleccionada.",
+                            "Mandar recordatorio de que MAÑANA es el día.", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+            DateTimePickerGYG.Focus();
+            return;
+        }
+
+        ret = MessageBox.Show($"¿Quieres mandar el mensaje de 'Mañana es el día' a las reservas del {fecha.Date:dddd dd/MM/yyyy}?" + CrLf +
+                              "Pulsa SÍ para mandar el mensaje de MAÑANA ES EL DÍA a las reservas de esa fecha." + CrLf +
+                              $"Pulsa NO no mandar nada y seleccionar otra fecha.",
+                              "Mandar recordatorio de que MAÑANA es el día.", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
         if (ret == DialogResult.No)
         {
             DateTimePickerGYG.Focus();
             return;
         }
 
+
+        // Comprobar que todos tengan email.                (24/ago/23 04.41)
+        //string res = ComprobarEmails(fecha);
+        // Usando la nueva función.                         (27/ago/23 17.26)
+        var res = ComprobarEmailsReservas(fecha);
+
+        if (res > 0)
+        {
+            MessageBox.Show($"Hay {res} {res.Plural("reserva")} del {fecha:dddd dd/MM/yyyy} sin emails.{CrLf}No se puede continuar hasta que lo soluciones.",
+                            "Mandar recordatorio de que MAÑANA es el día.", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            return;
+        }
+
+        var lisRes = Reservas.TablaCol($"SELECT * FROM Reservas Where idDistribuidor=10 and Activa=1 and CanceladaCliente=0 and Confirmada=1 and FechaActividad ='{fecha:yyyy-MM-dd}' ORDER By FechaActividad, HoraActividad");
+        if (MessageBox.Show($"Se va a madar el mensaje a {lisRes.Count} {lisRes.Count.Plural("reserva")}",
+                             "Enviar MAÑANA es el día", MessageBoxButtons.OKCancel, MessageBoxIcon.Question) == DialogResult.Cancel)
+        {
+            return;
+        }
+
+        var colPara = new List<string>();
+        for (int i = 0; i < lisRes.Count; i++)
+        {
+            var re = lisRes[i];
+            if (re == null) continue;
+            // Ya se ha comprobado que todos tengan email.  (24/ago/23 04.47)
+            //if (string.IsNullOrEmpty(re.Email)) continue;
+            // Si no tiene @ no mandar el correo.           (24/ago/23 04.48)
+            if (re.Email.Contains('@') == false) continue;
+            colPara.Add(re.Email);
+        }
+
+        // Agregar el email de kayak.makarena@gmail.com     (23/ago/23 22.18)
+        colPara.Add("kayak.makarena@gmail.com");
+
+        StringBuilder sb = new StringBuilder();
+        sb.Append("");
+        sb.Append(Properties.Resources.Mañana_es_el_dia.Replace(CrLf, "<br/>"));
+        sb.Append("<br/>");
+        sb.Append("<br/>");
+        sb.Append("Kayak Makarena");
+
+        string body = sb.ToString().Replace(CrLf, "<br/>");
+        var msg = ApiReservasMailGYG.MailGYG.EnviarMensaje(colPara, "Mañana es el día / Tomorrow is the day", body, true);
+        if (msg.StartsWith("ERROR"))
+        {
+            MessageBox.Show($"ERROR al enviar el email:{CrLf}{msg}.", "Error al enviar el email de la reserva", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+        }
+        else
+        {
+            MessageBox.Show($"{msg}", "Enviar email de la reserva", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
+    }
+
+    private void BtnHoyEs_Click(object sender, EventArgs e)
+    {
+        DateTime fecha = DateTimePickerGYG.Value.Date;
+        DialogResult ret;
+
+        // Cambiar el orden de la comprobación.             (27/ago/23 13.22)
         // Doble comprobación                               (25/ago/23 14.12)
         // Si es el mismo día de la actividad... avisar que no se debe mandar salvo si es de madrugada
-        if (DateTime.Today == fecha)
+        if (DateTime.Today == fecha.Date && DateTime.Now.TimeOfDay.Hours > 8)
         {
-            ret = MessageBox.Show($"Los mensajes de 'Hoy es el día' para las reservas del día {fecha:F}" + CrLf +
-                                  "Solo se deben mandar en el mismo día si es antes de las 08:00." + CrLf +
+            ret = MessageBox.Show($"Los mensajes de 'Hoy es el día' para las reservas del {fecha.Date:dddd dd/MM/yyyy}" + CrLf +
+                                  "Solo se deben mandar en el mismo día si es antes de las 08:00." + CrLf + CrLf +
+                                  $"AHORA SON LAS {DateTime.Now:HH:mm} Y NO DEBERÍAS MANDARLAS." + CrLf + CrLf +
                                   "Pulsa ACEPTAR para mandar los mensajes." + CrLf +
                                   $"Pulsa CANCELAR para no mandar nada y/o seleccionar otra fecha.",
-                                  "Mandar recordatorio de que hoy es el día.", 
+                                  "Mandar recordatorio de que hoy es el día.",
                                   MessageBoxButtons.OKCancel, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2);
             if (ret == DialogResult.Cancel)
             {
@@ -111,31 +226,31 @@ public partial class Form1 : Form
             }
         }
 
-        // Comprobar que todos tengan email.                (24/ago/23 04.41)
-        string res = ComprobarEmails(fecha);
-
-        if (string.IsNullOrWhiteSpace(res) == false)
+        // Segundo aviso, sin más comprobaciones.
+        ret = MessageBox.Show($"¿Quieres mandar el mensaje de 'Hoy es el día' a las reservas del {fecha.Date:dddd dd/MM/yyyy}?" + CrLf +
+                              "Pulsa SÍ para mandar el mensaje a las reservas de esa fecha." + CrLf +
+                              $"Pulsa NO no mandar nada y seleccionar otra fecha.",
+                              "Mandar recordatorio de que hoy es el día.", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+        if (ret == DialogResult.No)
         {
-            MessageBox.Show($"Hay reservas del {fecha:dddd dd/MM/yyyy} sin emails:{CrLf}{res}",
+            DateTimePickerGYG.Focus();
+            return;
+        }
+
+
+        // Comprobar que todos tengan email.                (24/ago/23 04.41)
+        // Usando la nueva función.                         (27/ago/23 17.26)
+        var res = ComprobarEmailsReservas(fecha);
+
+        if (res > 0)
+        {
+            MessageBox.Show($"Hay {res} {res.Plural("reserva")} del {fecha:dddd dd/MM/yyyy} sin emails:{CrLf}No se puede continuar hasta que lo soluciones.",
                             "Mandar recordatorio de que hoy es el día.", MessageBoxButtons.OK, MessageBoxIcon.Error);
             return;
         }
 
-        //// Enviar el mensaje a todas las reservas de HOY.
-        //var res = MessageBox.Show($"¿Quieres mandar el mensaje de 'Hoy es el día' a las reservas de MAÑANA día {DateTime.Today.AddDays(1):F}" + CrLf +
-        //                          "Pulsa SÍ para mandar el mensaje a las de esa fecha." + CrLf +
-        //                          $"Pulsa NO para mandar el mensaje a las reservas de HOY: {DateTime.Today:F}" + CrLf +
-        //                          "Pulsa CANCELAR para no mandar nada.",
-        //                          "Mandar recordatorio de que hoy es el día.", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
-        //if (res == DialogResult.Cancel) return;
-        //fecha = DateTime.Today.AddDays(1);
-        //if (res == DialogResult.No)
-        //{
-        //    fecha = DateTime.Today;
-        //}
-
         var lisRes = Reservas.TablaCol($"SELECT * FROM Reservas Where idDistribuidor=10 and Activa=1 and CanceladaCliente=0 and Confirmada=1 and FechaActividad ='{fecha:yyyy-MM-dd}' ORDER By FechaActividad, HoraActividad");
-        if (MessageBox.Show($"Se va a madar el mensaje a {lisRes.Count} {lisRes.Count.Plural("reserva")}",
+        if (MessageBox.Show($"Se va a mandar el mensaje a {lisRes.Count} {lisRes.Count.Plural("reserva")}",
                              "Enviar Hoy es el día", MessageBoxButtons.OKCancel, MessageBoxIcon.Question) == DialogResult.Cancel)
         {
             return;
@@ -173,7 +288,6 @@ public partial class Form1 : Form
         {
             MessageBox.Show($"{msg}", "Enviar email de la reserva", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
-
     }
 
     private void BtnFotos_Click(object sender, EventArgs e)
@@ -182,6 +296,7 @@ public partial class Form1 : Form
         {
             FormEnviarFotos.Current = new FormEnviarFotos();
         }
+        FormEnviarFotos.Current.FechaFotos = DateTimePickerGYG.Value;
         FormEnviarFotos.Current.BringToFront();
         FormEnviarFotos.Current.Show();
         FormEnviarFotos.Current.Focus();
@@ -191,51 +306,77 @@ public partial class Form1 : Form
     {
         // Comprobar si hay clientes sin email en la fecha indicada. (24/ago/23 04.31)
         var fecha = DateTimePickerGYG.Value.Date;
-        string res = ComprobarEmails(fecha);
+        //string res = MailGYG.ComprobarEmails(fecha);
 
-        if (string.IsNullOrWhiteSpace(res) == false)
+        //if (string.IsNullOrWhiteSpace(res) == false)
+        //{
+        //    MessageBox.Show($"Hay reservas del {fecha:dddd dd/MM/yyyy} sin emails.\r\nSi envías los mensajes a esos clientes no les llegará.\r\n{res}", "Comprobar reservas sin email", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        //}
+        //else
+        //{
+        //    MessageBox.Show($"Todas las reservas de la fecha '{fecha:dddd dd/MM/yyyy}' tiene asignado el email.", "Comprobar reservas sin email", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        //}
+
+        var res = ComprobarEmailsReservas(fecha);
+        if (res > 0)
         {
-            MessageBox.Show($"Hay reservas del {fecha:dddd dd/MM/yyyy} sin emails.\r\nSi envías los mensajes a esos clientes no les llegará.\r\n{res}", "Comprobar reservas sin email", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            MessageBox.Show($"Hay {res} {res.Plural("reserva")} del {fecha:dddd dd/MM/yyyy} sin emails.{CrLf}No se debe continuar hasta que lo soluciones.", "Comprobar reservas sin email", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            HabilitarBotones(false);
         }
         else
         {
-            MessageBox.Show($"Todas las reservas de la fecha '{fecha:dddd dd/MM/yyyy}' tiene asignado el email.", "Comprobar reservas sin email", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            MessageBox.Show($"Todas las reservas del '{fecha:dddd dd/MM/yyyy}' tiene asignado el email.", "Comprobar reservas sin email", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            HabilitarBotones(true);
+        }
+    }
+
+    private int ComprobarEmailsReservas(DateTime fecha)
+    {
+        LvwSinEmail.Items.Clear();
+
+        var col = MailGYG.ComprobarEmails(fecha);
+
+        for (int i = 0; i < col.Count; i++)
+        {
+            var item = LvwSinEmail.Items.Add(col[i].Nombre);
+            item.SubItems.Add(col[i].Notas);
         }
 
-        //        // Mostrar ventana, elegir fecha                    (23/ago/23 07.55)
-        //        // y sacar una lista de los que no tienen email
+        return col.Count;
 
-        //        var fecha = DateTimePickerGYG.Value.Date;
+        //string res = MailGYG.ComprobarEmails(fecha, conCabecera: false);
 
-        //        /*
-        //Select ID, FechaActividad, HoraActividad, Nombre, Telefono, Email, Notas from reservas 
-        //where Activa = 1 and CanceladaCliente = 0 and idDistribuidor = 10
-        //and Email = '' and Nombre != 'Makarena (GYG)'
-        //and FechaActividad = '2023-08-23'
-        //order by FechaActividad, HoraActividad, ID
+        //var lista = res.Split('\n', StringSplitOptions.RemoveEmptyEntries);
 
-        //        */
-        //        StringBuilder sb = new StringBuilder();
-        //        sb.Append("Select ID, FechaActividad, HoraActividad, Nombre, Telefono, Email, Notas from reservas ");
-        //        sb.Append("where Activa = 1 and CanceladaCliente = 0 and idDistribuidor = 10 ");
-        //        sb.Append("and Email = '' and Nombre != 'Makarena (GYG)' ");
-        //        sb.Append($"and FechaActividad = '{fecha:yyyy-MM-dd}' ");
-        //        sb.Append("order by FechaActividad, HoraActividad, ID");
+        //for (int i = 0; i < lista.Length; i++)
+        //{
+        //    LvwSinEmail.Items.Add(lista[i]);
+        //}
 
-        //        var colRes = Reservas.TablaCol(sb.ToString());
+        //return lista.Length;
 
-        //        if (colRes.Count > 0)
-        //        {
-        //            sb.Clear();
-        //            for (int i = 0; i < colRes.Count; i++)
-        //            {
-        //                sb.AppendLine($"{colRes[i].Nombre}, {colRes[i].Notas}");
-        //            }
-        //            MessageBox.Show($"Hay {colRes.Count} {colRes.Count.Plural("reserva")} del {fecha:dddd dd/MM/yyyy} sin email.\r\n" + sb.ToString(), "Comprobar reservas sin email", MessageBoxButtons.OK, MessageBoxIcon.Error);
-        //        }
-        //        else
-        //        {
-        //            MessageBox.Show("Todas las reservas de la fecha tiene asignado el email.", "Comprobar reservas sin email", MessageBoxButtons.OK, MessageBoxIcon.Information);
-        //        }
+    }
+
+    private void MnuCopiarNombre_Click(object sender, EventArgs e)
+    {
+        if (LvwSinEmail.SelectedIndices.Count == 0) return;
+        string nombre = LvwSinEmail.Items[LvwSinEmail.SelectedIndices[0]].Text;
+        CopiarPortapapeles(nombre);
+    }
+
+    private void MnuCopiarNotas_Click(object sender, EventArgs e)
+    {
+        if (LvwSinEmail.SelectedIndices.Count == 0) return;
+        string notas = LvwSinEmail.Items[LvwSinEmail.SelectedIndices[0]].SubItems[1].Text;
+        CopiarPortapapeles(notas);
+    }
+
+    private void CopiarPortapapeles(string texto)
+    {
+        try
+        {
+            Clipboard.SetText(texto);
+        }
+        catch { }
     }
 }

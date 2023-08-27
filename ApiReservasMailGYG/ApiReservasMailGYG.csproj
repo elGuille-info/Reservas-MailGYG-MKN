@@ -4,7 +4,7 @@
     <TargetFramework>net6.0</TargetFramework>
     <RootNamespace>ApiReservasMailGYG</RootNamespace>
     <ImplicitUsings>disable</ImplicitUsings>
-    <Nullable>enable</Nullable>
+    <Nullable>disable</Nullable>
     <Title>ApiReservasMailGYG</Title>
     <Description>
 Analizar los correos de GetYourGuide para crear las nuevas reservas para MKN Reservas (Maro - Kayak Nerja)  (revisión del 23-ago-2023).

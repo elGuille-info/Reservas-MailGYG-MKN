@@ -1,4 +1,4 @@
-<b>¡Hoy es el gran día de tu actividad! </b>
+<b>¡Mañana es el gran día de tu actividad!</b>
 
 <b>*IMPORTANTE*</b>
 El punto de encuentro es en la playa de Maro (https://goo.gl/wbLLFd).
@@ -23,7 +23,7 @@ Si has reservado a través de GetYourGuide nos encantaría recibir una reseña con 
 
 
 
-<b>Today is the big day of your activity!</b>
+<b>Tomorrow is the big day of your activity!</b>
 
 <b>*IMPORTANT*</b>
 The meeting point is at Maro beach (https://goo.gl/wbLLFd). 

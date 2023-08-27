@@ -35,9 +35,16 @@ namespace ReservasGYG
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             toolTip1 = new ToolTip(components);
             GrbOpciones = new GroupBox();
-            BtnFotos = new Button();
             BtnAnalizarEmail = new Button();
-            groupBox1 = new GroupBox();
+            BtnFotos = new Button();
+            GrbOpcionesFecha = new GroupBox();
+            LvwSinEmail = new ListView();
+            columnHeader1 = new ColumnHeader();
+            columnHeader2 = new ColumnHeader();
+            ContextMenuListView = new ContextMenuStrip(components);
+            MnuCopiarNombre = new ToolStripMenuItem();
+            MnuCopiarNotas = new ToolStripMenuItem();
+            BtnMañanaEs = new Button();
             BtnMostrarReservas = new Button();
             DateTimePickerGYG = new DateTimePicker();
             label8 = new Label();
@@ -45,32 +52,20 @@ namespace ReservasGYG
             BtnHoyEs = new Button();
             TimerCargarAnalizarEmail = new Timer(components);
             GrbOpciones.SuspendLayout();
-            groupBox1.SuspendLayout();
+            GrbOpcionesFecha.SuspendLayout();
+            ContextMenuListView.SuspendLayout();
             SuspendLayout();
             // 
             // GrbOpciones
             // 
             GrbOpciones.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            GrbOpciones.Controls.Add(BtnFotos);
             GrbOpciones.Controls.Add(BtnAnalizarEmail);
             GrbOpciones.Location = new Point(12, 12);
             GrbOpciones.Name = "GrbOpciones";
-            GrbOpciones.Size = new Size(776, 496);
+            GrbOpciones.Size = new Size(1121, 496);
             GrbOpciones.TabIndex = 0;
             GrbOpciones.TabStop = false;
             GrbOpciones.Text = "Opciones";
-            // 
-            // BtnFotos
-            // 
-            BtnFotos.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            BtnFotos.BackColor = Color.LightCoral;
-            BtnFotos.Location = new Point(6, 90);
-            BtnFotos.Name = "BtnFotos";
-            BtnFotos.Size = new Size(764, 40);
-            BtnFotos.TabIndex = 1;
-            BtnFotos.Text = "Enviar fotos";
-            BtnFotos.UseVisualStyleBackColor = false;
-            BtnFotos.Click += BtnFotos_Click;
             // 
             // BtnAnalizarEmail
             // 
@@ -78,35 +73,113 @@ namespace ReservasGYG
             BtnAnalizarEmail.BackColor = Color.Honeydew;
             BtnAnalizarEmail.Location = new Point(6, 30);
             BtnAnalizarEmail.Name = "BtnAnalizarEmail";
-            BtnAnalizarEmail.Size = new Size(764, 40);
+            BtnAnalizarEmail.Size = new Size(1109, 40);
             BtnAnalizarEmail.TabIndex = 0;
             BtnAnalizarEmail.Text = "Analizar email y crear reserva";
             BtnAnalizarEmail.UseVisualStyleBackColor = false;
             BtnAnalizarEmail.Click += BtnAnalizarEmail_Click;
             // 
-            // groupBox1
+            // BtnFotos
             // 
-            groupBox1.Controls.Add(BtnMostrarReservas);
-            groupBox1.Controls.Add(DateTimePickerGYG);
-            groupBox1.Controls.Add(label8);
-            groupBox1.Controls.Add(BtnComprobarSinMail);
-            groupBox1.Controls.Add(BtnHoyEs);
-            groupBox1.Location = new Point(12, 180);
-            groupBox1.Name = "groupBox1";
-            groupBox1.Size = new Size(770, 328);
-            groupBox1.TabIndex = 1;
-            groupBox1.TabStop = false;
-            groupBox1.Text = "Acciones con fecha";
+            BtnFotos.Anchor = AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            BtnFotos.BackColor = Color.MistyRose;
+            BtnFotos.Location = new Point(6, 326);
+            BtnFotos.Margin = new Padding(3, 12, 3, 3);
+            BtnFotos.Name = "BtnFotos";
+            BtnFotos.Size = new Size(1103, 40);
+            BtnFotos.TabIndex = 1;
+            BtnFotos.Text = "Enviar fotos";
+            BtnFotos.UseVisualStyleBackColor = false;
+            BtnFotos.Click += BtnFotos_Click;
+            // 
+            // GrbOpcionesFecha
+            // 
+            GrbOpcionesFecha.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            GrbOpcionesFecha.Controls.Add(LvwSinEmail);
+            GrbOpcionesFecha.Controls.Add(BtnFotos);
+            GrbOpcionesFecha.Controls.Add(BtnMañanaEs);
+            GrbOpcionesFecha.Controls.Add(BtnMostrarReservas);
+            GrbOpcionesFecha.Controls.Add(DateTimePickerGYG);
+            GrbOpcionesFecha.Controls.Add(label8);
+            GrbOpcionesFecha.Controls.Add(BtnComprobarSinMail);
+            GrbOpcionesFecha.Controls.Add(BtnHoyEs);
+            GrbOpcionesFecha.Location = new Point(12, 180);
+            GrbOpcionesFecha.Name = "GrbOpcionesFecha";
+            GrbOpcionesFecha.Size = new Size(1115, 540);
+            GrbOpcionesFecha.TabIndex = 0;
+            GrbOpcionesFecha.TabStop = false;
+            GrbOpcionesFecha.Text = "Opciones con fecha";
+            // 
+            // LvwSinEmail
+            // 
+            LvwSinEmail.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            LvwSinEmail.Columns.AddRange(new ColumnHeader[] { columnHeader1, columnHeader2 });
+            LvwSinEmail.ContextMenuStrip = ContextMenuListView;
+            LvwSinEmail.FullRowSelect = true;
+            LvwSinEmail.GridLines = true;
+            LvwSinEmail.HeaderStyle = ColumnHeaderStyle.Nonclickable;
+            LvwSinEmail.Location = new Point(9, 129);
+            LvwSinEmail.Margin = new Padding(3, 6, 3, 12);
+            LvwSinEmail.MultiSelect = false;
+            LvwSinEmail.Name = "LvwSinEmail";
+            LvwSinEmail.Size = new Size(1100, 173);
+            LvwSinEmail.TabIndex = 6;
+            LvwSinEmail.UseCompatibleStateImageBehavior = false;
+            LvwSinEmail.View = View.Details;
+            // 
+            // columnHeader1
+            // 
+            columnHeader1.Text = "Nombre";
+            columnHeader1.Width = 400;
+            // 
+            // columnHeader2
+            // 
+            columnHeader2.Text = "Notas";
+            columnHeader2.Width = 200;
+            // 
+            // ContextMenuListView
+            // 
+            ContextMenuListView.ImageScalingSize = new Size(24, 24);
+            ContextMenuListView.Items.AddRange(new ToolStripItem[] { MnuCopiarNombre, MnuCopiarNotas });
+            ContextMenuListView.Name = "ContextMenuListView";
+            ContextMenuListView.Size = new Size(208, 68);
+            // 
+            // MnuCopiarNombre
+            // 
+            MnuCopiarNombre.Name = "MnuCopiarNombre";
+            MnuCopiarNombre.Size = new Size(207, 32);
+            MnuCopiarNombre.Text = "Copiar Nombre";
+            MnuCopiarNombre.Click += MnuCopiarNombre_Click;
+            // 
+            // MnuCopiarNotas
+            // 
+            MnuCopiarNotas.Name = "MnuCopiarNotas";
+            MnuCopiarNotas.Size = new Size(207, 32);
+            MnuCopiarNotas.Text = "Copiar Notas";
+            MnuCopiarNotas.Click += MnuCopiarNotas_Click;
+            // 
+            // BtnMañanaEs
+            // 
+            BtnMañanaEs.Anchor = AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            BtnMañanaEs.BackColor = Color.LightYellow;
+            BtnMañanaEs.Location = new Point(6, 381);
+            BtnMañanaEs.Margin = new Padding(3, 12, 3, 3);
+            BtnMañanaEs.Name = "BtnMañanaEs";
+            BtnMañanaEs.Size = new Size(1103, 40);
+            BtnMañanaEs.TabIndex = 2;
+            BtnMañanaEs.Text = "Enviar MAÑANA es el día";
+            BtnMañanaEs.UseVisualStyleBackColor = false;
+            BtnMañanaEs.Click += BtnMañanaEs_Click;
             // 
             // BtnMostrarReservas
             // 
-            BtnMostrarReservas.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            BtnMostrarReservas.Anchor = AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             BtnMostrarReservas.BackColor = Color.LightSkyBlue;
-            BtnMostrarReservas.Enabled = false;
-            BtnMostrarReservas.Location = new Point(9, 200);
+            BtnMostrarReservas.Location = new Point(6, 485);
+            BtnMostrarReservas.Margin = new Padding(3, 12, 3, 12);
             BtnMostrarReservas.Name = "BtnMostrarReservas";
-            BtnMostrarReservas.Size = new Size(755, 40);
-            BtnMostrarReservas.TabIndex = 4;
+            BtnMostrarReservas.Size = new Size(1103, 40);
+            BtnMostrarReservas.TabIndex = 5;
             BtnMostrarReservas.Text = "Mostrar Reservas";
             BtnMostrarReservas.UseVisualStyleBackColor = false;
             // 
@@ -118,6 +191,7 @@ namespace ReservasGYG
             DateTimePickerGYG.Name = "DateTimePickerGYG";
             DateTimePickerGYG.Size = new Size(171, 31);
             DateTimePickerGYG.TabIndex = 1;
+            DateTimePickerGYG.ValueChanged += DateTimePickerGYG_ValueChanged;
             // 
             // label8
             // 
@@ -133,23 +207,24 @@ namespace ReservasGYG
             // 
             BtnComprobarSinMail.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             BtnComprobarSinMail.BackColor = Color.FloralWhite;
-            BtnComprobarSinMail.Location = new Point(9, 140);
+            BtnComprobarSinMail.Location = new Point(6, 80);
             BtnComprobarSinMail.Name = "BtnComprobarSinMail";
-            BtnComprobarSinMail.Size = new Size(755, 40);
-            BtnComprobarSinMail.TabIndex = 3;
-            BtnComprobarSinMail.Text = "Comprobar si hay clientes sin email";
+            BtnComprobarSinMail.Size = new Size(1103, 40);
+            BtnComprobarSinMail.TabIndex = 4;
+            BtnComprobarSinMail.Text = "Comprobar reservas sin email en la fecha";
             BtnComprobarSinMail.UseVisualStyleBackColor = false;
             BtnComprobarSinMail.Click += BtnComprobarSinMail_Click;
             // 
             // BtnHoyEs
             // 
-            BtnHoyEs.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            BtnHoyEs.Anchor = AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             BtnHoyEs.BackColor = Color.Gold;
-            BtnHoyEs.Location = new Point(6, 80);
+            BtnHoyEs.Location = new Point(6, 430);
+            BtnHoyEs.Margin = new Padding(3, 6, 3, 3);
             BtnHoyEs.Name = "BtnHoyEs";
-            BtnHoyEs.Size = new Size(758, 40);
-            BtnHoyEs.TabIndex = 2;
-            BtnHoyEs.Text = "Enviar hoy es el día";
+            BtnHoyEs.Size = new Size(1103, 40);
+            BtnHoyEs.TabIndex = 3;
+            BtnHoyEs.Text = "Enviar HOY es el día";
             BtnHoyEs.UseVisualStyleBackColor = false;
             BtnHoyEs.Click += BtnHoyEs_Click;
             // 
@@ -162,8 +237,8 @@ namespace ReservasGYG
             // 
             AutoScaleDimensions = new SizeF(10F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(800, 520);
-            Controls.Add(groupBox1);
+            ClientSize = new Size(1145, 732);
+            Controls.Add(GrbOpcionesFecha);
             Controls.Add(GrbOpciones);
             Icon = (Icon)resources.GetObject("$this.Icon");
             Name = "Form1";
@@ -171,8 +246,10 @@ namespace ReservasGYG
             Text = "Opciones Reservas GetYourGuide";
             FormClosing += Form1_FormClosing;
             Load += Form1_Load;
+            Resize += Form1_Resize;
             GrbOpciones.ResumeLayout(false);
-            groupBox1.ResumeLayout(false);
+            GrbOpcionesFecha.ResumeLayout(false);
+            ContextMenuListView.ResumeLayout(false);
             ResumeLayout(false);
         }
 
@@ -181,12 +258,19 @@ namespace ReservasGYG
         private GroupBox GrbOpciones;
         private Button BtnAnalizarEmail;
         private Button BtnFotos;
-        private GroupBox groupBox1;
+        private GroupBox GrbOpcionesFecha;
         private DateTimePicker DateTimePickerGYG;
         private Label label8;
         private Button BtnComprobarSinMail;
         private Button BtnHoyEs;
         private Button BtnMostrarReservas;
         private Timer TimerCargarAnalizarEmail;
+        private Button BtnMañanaEs;
+        private ListView LvwSinEmail;
+        private ColumnHeader columnHeader1;
+        private ColumnHeader columnHeader2;
+        private ContextMenuStrip ContextMenuListView;
+        private ToolStripMenuItem MnuCopiarNombre;
+        private ToolStripMenuItem MnuCopiarNotas;
     }
 }

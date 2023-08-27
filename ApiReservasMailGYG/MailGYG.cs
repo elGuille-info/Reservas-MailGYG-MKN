@@ -217,7 +217,7 @@ public class MailGYG
     /// </summary>
     /// <param name="email">El texto del email a evaluar.</param>
     /// <returns>Un objeto Reservas si todo es correcto o nulo si no se pudo evaluar.</returns>
-    public static Reservas? AnalizarEmail(string  email) 
+    public static Reservas AnalizarEmail(string  email) 
     {
         if (ComprobarCamposEmailGYG(email))
         {
@@ -451,8 +451,10 @@ The GetYourGuide Team
     /// Las Horas en que hay rutas, usando el separador punto.
     /// </summary>
     public static List<string> LasHoras { get; set; } = new List<string>()
-                { "09.30", "10.30", "11.00", "11.05", "11.45", "13.15", "13.30", "14.00", "15.30", "16.15", "16.30", "17.45", "18.30" };
+                { "09.30", "10.30", "11.00", "11.05", "11.45", "12.00", "13.15", "13.30", 
+                  "14.00", "15.30", "16.00", "16.15", "16.30", "17.00","17.45", "18.30" };
 
+    //{ "09.30", "10.30", "11.00", "11.05", "11.45", "13.15", "13.30", "14.00", "15.30", "16.15", "16.30", "17.45", "18.30" };
 
 
     /// <summary>
@@ -599,8 +601,9 @@ https://photos.app.goo.gl/qqxWBkVthdBGMjFEA
     /// Comprueba si las reservas de la fecha indicada tienen todas el email.
     /// </summary>
     /// <param name="fecha">Fecha con las reservas a comprobar.</param>
+    /// <param name="conCabecera">True para añadir la cabecera con las reservas sin email.</param>
     /// <returns>Una cadena vacía si todo está bien, si no, con los datos de las reservas que no tienen email.</returns>
-    public static string ComprobarEmails(DateTime fecha)
+    public static string ComprobarEmails(DateTime fecha, bool conCabecera)
     {
         StringBuilder sb = new StringBuilder();
         sb.Append("Select * from Reservas ");
@@ -615,7 +618,10 @@ https://photos.app.goo.gl/qqxWBkVthdBGMjFEA
 
         if (colRes.Count > 0)
         {
-            sb.AppendLine($"Hay {colRes.Count} {colRes.Count.Plural("reserva")} del {fecha:dddd dd/MM/yyyy} sin email.");
+            if (conCabecera) 
+            {
+                sb.AppendLine($"Hay {colRes.Count} {colRes.Count.Plural("reserva")} del {fecha:dddd dd/MM/yyyy} sin email.");
+            }
             for (int i = 0; i < colRes.Count; i++)
             {
                 string nota = "";
@@ -645,6 +651,56 @@ https://photos.app.goo.gl/qqxWBkVthdBGMjFEA
             }
         }
         return sb.ToString();
+    }
+
+    /// <summary>
+    /// Comprueba las reservas sin email de la fecha indicada.
+    /// </summary>
+    /// <param name="fecha">Fecha con las reservas a comprobar.</param>
+    /// <returns>Una colección con las reservas que no tienen email o una colección vacía si todas tienen email.</returns>
+    public static List<ReservasSinEmail> ComprobarEmails(DateTime fecha)
+    {
+        StringBuilder sb = new StringBuilder();
+        sb.Append("Select * from Reservas ");
+        sb.Append("where Activa = 1 and CanceladaCliente = 0 and idDistribuidor = 10 ");
+        sb.Append("and Email = '' and Nombre != 'Makarena (GYG)' ");
+        sb.Append($"and FechaActividad = '{fecha:yyyy-MM-dd}' ");
+        sb.Append("order by FechaActividad, HoraActividad, ID");
+
+        var colRes = Reservas.TablaCol(sb.ToString());
+
+        List<ReservasSinEmail> col = new();
+
+        if (colRes.Count > 0)
+        {
+            for (int i = 0; i < colRes.Count; i++)
+            {
+                string nota = "";
+                // Poner solo los xx primeros caracteres de las notas. (25/ago/23 14.18)
+                //GetYourGuide - GYGLMWA85MXQ - (Spain) - Spanish (Live tour guide) -
+                if (colRes[i].Notas.StartsWith("GetYourGuide"))
+                {
+                    int j = colRes[i].Notas.IndexOf("- GYG");
+                    if (j > -1)
+                    {
+                        nota = colRes[i].Notas.Substring(j + 2, 12);
+                    }
+                }
+                else
+                {
+                    nota = colRes[i].Notas;
+                }
+                if (string.IsNullOrEmpty(nota))
+                {
+                    if (string.IsNullOrEmpty(colRes[i].Notas) == false)
+                    {
+                        nota = colRes[i].Notas.Substring(0, 28);
+                    }
+                }
+                col.Add(new ReservasSinEmail(colRes[i].Nombre, nota));
+            }
+        }
+        return col;
     }
 
 }
