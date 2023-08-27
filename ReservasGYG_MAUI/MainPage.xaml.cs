@@ -141,6 +141,9 @@ public partial class MainPage : ContentPage
 
         // Parece que falla al manda el email.              (26/ago/23 07.10)
 
+        // Probar en iPhone.                                (26/ago/23 08.44)
+        // También falla.
+
         //StatusAnt = LabelStatus.Text;
         //LabelStatus.Text = "Enviando el email de confirmación...";
 
@@ -150,8 +153,9 @@ public partial class MainPage : ContentPage
         //    await DisplayAlert("Crear reserva y enviar email", InfoCrearConEmail.ToString(), "Aceptar");
         //    return;
         //}
+        //await DisplayAlert("Crear reserva y enviar email", InfoCrearConEmail.ToString(), "Aceptar");
 
-        await DisplayAlert("Crear reserva y enviar email", InfoCrearConEmail.ToString(), "Aceptar");
+        await DisplayAlert("Crear reserva SIN enviar email", InfoCrearConEmail.ToString(), "Aceptar");
     }
 
     private void BtnCrearConEmail_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)

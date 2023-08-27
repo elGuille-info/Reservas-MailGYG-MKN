@@ -180,6 +180,10 @@ public partial class FormAnalizaEmail : Form
         //BtnCrearReserva_Click(sender, e);
         //BtnEnviarConfirm_Click(sender, e);
 
+        // Deshabilitar el botón hasta que finalice.        (27/ago/23 09.58)
+        ChkCrearConEmail.Checked = false;
+        //BtnCrearConEmail.Enabled = false;
+
         QueBoton = sender;
 
         StatusAnt = LabelStatus.Text;
