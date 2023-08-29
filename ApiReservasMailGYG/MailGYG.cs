@@ -212,6 +212,45 @@ public class MailGYG
         return false;
     }
 
+    /*
+    El contenido del email/mensaje será como este:
+
+Hi supply partner,
+
+Great news! The following offer has been booked:
+
+Nerja: Cliffs of Maro-Cerro Gordo Guided Kayak Tour (RutasKayak)
+Option: 2-Hour Tour (Ruta Corta)
+
+View booking
+Most important data for this booking:
+
+Date: 08 September 2023, 16:15 (04:15pm)
+
+Price: € 97.70
+
+Number of participants:
+1 x Child (Age 4 - 6 ) (€ 0.00)
+1 x Youth (Age 7 - 15 ) (€ 23.90)
+2 x Adults (Age 16 - 99 ) (€ 36.90)
+Reference number: GYG2RA2KZ692
+
+Main customer:
+Pedro Pacheco dominguez
+
+
+Spain
+customer-ewtbjjgqeoquqzyr@reply.getyourguide.com
+Phone: +34 607 68 95 93
+Please provide a phone number connected to Whatsapp. Please also provide the ages of all children in your group.:
+Una niña de 12 años, y otra de 5 años número de teléfono 607689593
+
+Tour language: Spanish (Live tour guide)
+
+Best regards,
+The GetYourGuide Team
+    */
+
     /// <summary>
     /// Crea una reserva a partir del texto del email de GYG
     /// </summary>
@@ -305,44 +344,144 @@ public class MailGYG
             re.Actividad = "RUTA TABLAS";
         }
 
-        /*
-        El contenido del mensaje será como este:
+        return re;
+    }
 
-Hi supply partner,
+    /*
+    Formato si se coge el texto desde la página Bookings
 
-Great news! The following offer has been booked:
-
-Nerja: Cliffs of Maro-Cerro Gordo Guided Kayak Tour (RutasKayak)
-Option: 2-Hour Tour (Ruta Corta)
-
-View booking
-Most important data for this booking:
-
-Date: 08 September 2023, 16:15 (04:15pm)
-
-Price: € 97.70
-
-Number of participants:
-1 x Child (Age 4 - 6 ) (€ 0.00)
-1 x Youth (Age 7 - 15 ) (€ 23.90)
-2 x Adults (Age 16 - 99 ) (€ 36.90)
-Reference number: GYG2RA2KZ692
-
-Main customer:
+RutasKayak | Nerja: Cliffs of Maro-Cerro Gordo Guided Kayak Tour 
+Option: Ruta Corta | 2-Hour Tour High Season
+Sep 8, 2023 - 4:15pm
+GYG2RA2KZ692
 Pedro Pacheco dominguez
+2x Adult 1x Youth · Spanish · €97.70
+Active
 
-
-Spain
+Hide details
+Request cancellation
+Contact Lead Traveler:
+Pedro Pacheco dominguez (Spain)
++34 607 68 95 93
 customer-ewtbjjgqeoquqzyr@reply.getyourguide.com
-Phone: +34 607 68 95 93
+Number of Travelers:
+1x 
+Child (Age 4 - 6) ( €0.00 )
+1x 
+Youth (Age 7 - 15) ( €23.90 )
+2x 
+Adults (Age 16 - 99) ( €73.80 )
+Total: 4 Persons
+Language(s):
+Spanish (LANGUAGE_LIVE)
 Please provide a phone number connected to Whatsapp. Please also provide the ages of all children in your group.:
 Una niña de 12 años, y otra de 5 años número de teléfono 607689593
+Tickets & supply partner reference numbers:
+2x Adult
 
-Tour language: Spanish (Live tour guide)
+DSXS48REY0YDMAZU3T0PMQKNHW6JK7KR-XCER0
+DSXS48REY0YDMAZU3T0PMQKNHW6JK7KR-CFZG0
+1x Youth
 
-Best regards,
-The GetYourGuide Team
-        */
+DSXS48REY0YDMAZU3T0PMQKNHW6JK7KR-WH7BG
+Edit
+Booked on:
+Aug 20, 2023
+    */
+
+    /// <summary>
+    /// Analizar la reserva si se coge el texto desde la página Bookings.
+    /// </summary>
+    /// <param name="email">El texto a analizar</param>
+    /// <returns></returns>
+    /// <remarks>Este texto contiene Booked on:</remarks>
+    public static Reservas AnalizarBooking(string email)
+    {
+        if (ComprobarCamposEmailGYG(email))
+        {
+            return null;
+        }
+
+        // Comprobar que estén los campos que deben estar.
+        //if (Comprobar)
+        Reservas re = new Reservas
+        {
+            idDistribuidor = 10,
+            Agente = "MAKARENA",
+            Usuario = "Makarena",
+            Comision = 20,
+            FechaApunte = DateTime.Today,
+            BusHora = DateTime.Now.TimeOfDay,
+            MedioContacto = "GetYourGuide", //KNDatos.Reservas.MedioContactoAPIWeb,
+            Confirmada = true,
+            //
+            GYGOption = Extraer(email, "Option:"),
+            GYGFechaHora = Extraer(email, "Date:"),
+            GYGPrice = Extraer(email, "Price:"),
+            GYGReference = Extraer(email, "Reference number:"),
+            Telefono = Extraer(email, "Phone:").ValidarTextoTelefono(añadirPais: true),
+            Nombre = ExtraerDespues(email, "Main customer:", 1).ToTitle(),
+            GYGPais = ExtraerDespues(email, "Main customer:", 2),
+            Email = ExtraerDespues(email, "Main customer:", 3),
+            //GYGNotas = ExtraerDespues(email, "children in your group.:", 1),
+            // Por si las notas están en varias líneas.     (25/ago/23 23.36)
+            GYGNotas = Extraer(email, "children in your group.:", "Tour language:"),
+            GYGLanguage = Extraer(email, "Tour language:"),
+        };
+
+        var pax = ExtraerEntre(email, "Number of participants:", "Reference number:");
+        for (int i = 0; i < pax.Count; i++)
+        {
+            if (string.IsNullOrEmpty(pax[i])) continue;
+            int j = pax[i].IndexOf('x');
+            if (j > -1)
+            {
+                var s = pax[i].Substring(0, j).Trim();
+                int.TryParse(s, out int n);
+                if (pax[i].Contains("Adult"))
+                {
+                    re.Adultos = n;
+                }
+                else if (pax[i].Contains("Youth"))
+                {
+                    re.Niños = n;
+                }
+                else if (pax[i].Contains("Child"))
+                {
+                    re.Niños2 = n;
+                }
+            }
+        }
+
+        var fecGYG = re.GYGFechaHora;
+        int k = re.GYGFechaHora.IndexOf("(");
+        if (k > -1)
+        {
+            fecGYG = re.GYGFechaHora.Substring(0, k).Trim();
+        }
+
+        // Si la fecha no tiene contenido válido, devolver nulo. (22/ago/23 20.22)
+        if (string.IsNullOrWhiteSpace(fecGYG))
+        {
+            return null;
+        }
+
+        var fec = DateTime.ParseExact(fecGYG, "dd MMMM yyyy, HH:mm", System.Globalization.CultureInfo.InvariantCulture);
+        re.FechaActividad = fec.Date;
+        re.HoraActividad = fec.TimeOfDay;
+
+        if (re.GYGOption.Contains("Corta"))
+        {
+            re.Actividad = "RUTA";
+        }
+        else if (re.GYGOption.Contains("Larga")) //Ruta 
+        {
+            re.Actividad = "RUTA VIP";
+        }
+        else
+        {
+            re.Actividad = "RUTA TABLAS";
+        }
 
         return re;
     }

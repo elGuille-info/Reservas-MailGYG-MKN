@@ -31,38 +31,16 @@ public partial class FormEnviarFotos : Form
 
     public DateTime FechaFotos { get => DateTimePickerGYG.Value; set => DateTimePickerGYG.Value = value; }
 
-    //private void LimpiarTextosFotos()
-    //{
-    //    // Limpiar el contenido de los textBox
-    //    foreach (var c in FlowLayoutPanelFotos.Controls)
-    //    {
-    //        var txt = c as TextBox;
-    //        if (txt == null) continue;
-
-    //        txt.Text = "";
-    //    }
-    //    TxtFotosSeleccionada.Text = "";
-    //    //TxtFotosDia.Text = "";
-    //}
-
     private void FormEnviarFotos_Load(object sender, EventArgs e)
     {
-
-        //LimpiarTextosFotos();
         TxtFotosDia.Text = "";
 
         BtnPegar.Image = Properties.Resources.Paste;
         BtnLimpiar.Image = Properties.Resources.CleanData;
 
-        //DateTimePickerGYG.Value = DateTime.Now;
-
         // Llenar el combo con las horas.
         CboHoras.Items.Clear();
         CboHoras.Items.AddRange(MailGYG.LasHoras.ToArray());
-
-        //// Colorear las cajas de textos de las horas.       (23/ago/23 11.47)
-        //TimerColorearHoras.Interval = 300;
-        //TimerColorearHoras.Enabled = true;
 
         inicializando = false;
     }
@@ -75,7 +53,6 @@ public partial class FormEnviarFotos : Form
         if (index < 0 || string.IsNullOrWhiteSpace(CboHoras.Text))
         {
             BtnEnviarFotos.Enabled = false;
-            //BtnEnviarFotosDia.Enabled = false;
             TxtFotosSeleccionada.Text = "";
             return;
         }
@@ -121,26 +98,6 @@ public partial class FormEnviarFotos : Form
         BtnEnviarFotos.Text = $"Enviar las fotos de {CboHoras.Text} {DateTimePickerGYG.Value:dd/MM/yyyy}";
         BtnEnviarFotosDia.Text = $"Enviar todas las fotos del día {DateTimePickerGYG.Value:dd/MM/yyyy}";
     }
-
-    //private void TxtFotosHoras_Enter(object sender, EventArgs e)
-    //{
-    //    if (inicializando) return;
-
-    //    // Seleccionar todo el texto,                   (22/ago/23 17.45)
-    //    // copiarlo en el portapapeles
-    //    // y si no es TxtFotosSeleccionada pegarlo en ese control
-    //    var txt = sender as TextBox;
-    //    if (txt == null) return;
-    //    if (string.IsNullOrWhiteSpace(txt.Text)) return;
-
-    //    if (sender != TxtFotosSeleccionada)
-    //    {
-    //        TxtFotosSeleccionada.Text = txt.Text;
-    //    }
-
-    //    txt.SelectAll();
-    //    Clipboard.SetText(txt.Text);
-    //}
 
     private void BtnEnviarFotos_Click(object sender, EventArgs e)
     {

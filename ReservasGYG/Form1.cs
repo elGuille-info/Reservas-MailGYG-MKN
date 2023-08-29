@@ -306,16 +306,6 @@ public partial class Form1 : Form
     {
         // Comprobar si hay clientes sin email en la fecha indicada. (24/ago/23 04.31)
         var fecha = DateTimePickerGYG.Value.Date;
-        //string res = MailGYG.ComprobarEmails(fecha);
-
-        //if (string.IsNullOrWhiteSpace(res) == false)
-        //{
-        //    MessageBox.Show($"Hay reservas del {fecha:dddd dd/MM/yyyy} sin emails.\r\nSi envías los mensajes a esos clientes no les llegará.\r\n{res}", "Comprobar reservas sin email", MessageBoxButtons.OK, MessageBoxIcon.Error);
-        //}
-        //else
-        //{
-        //    MessageBox.Show($"Todas las reservas de la fecha '{fecha:dddd dd/MM/yyyy}' tiene asignado el email.", "Comprobar reservas sin email", MessageBoxButtons.OK, MessageBoxIcon.Information);
-        //}
 
         var res = ComprobarEmailsReservas(fecha);
         if (res > 0)
@@ -330,31 +320,91 @@ public partial class Form1 : Form
         }
     }
 
-    private int ComprobarEmailsReservas(DateTime fecha)
+    private void BtnReservasSinSalida_Click(object sender, EventArgs e)
+    {
+        // Comprobar las reservas que no han salido         (29/ago/23 11.18)
+        // de la fecha indicada 
+        var fecha = DateTimePickerGYG.Value.Date;
+
+        StringBuilder sb = new StringBuilder();
+        sb.Append("Select * from Reservas ");
+        sb.Append("where Activa = 1 and CanceladaCliente = 0 and idDistribuidor = 10 ");
+        sb.Append("and Nombre != 'Makarena (GYG)' ");
+        sb.Append("and Control = 0 ");
+        sb.Append($"and FechaActividad = '{fecha:yyyy-MM-dd}' ");
+        sb.Append("order by FechaActividad, HoraActividad, ID");
+
+        var colRes = Reservas.TablaCol(sb.ToString());
+
+        List<ReservasSinEmail> col = new();
+
+        if (colRes.Count > 0)
+        {
+            for (int i = 0; i < colRes.Count; i++)
+            {
+                string nota = "";
+                // Poner solo los xx primeros caracteres de las notas. (25/ago/23 14.18)
+                //GetYourGuide - GYGLMWA85MXQ - (Spain) - Spanish (Live tour guide) -
+                if (colRes[i].Notas.StartsWith("GetYourGuide"))
+                {
+                    int j = colRes[i].Notas.IndexOf("- GYG");
+                    if (j > -1)
+                    {
+                        nota = colRes[i].Notas.Substring(j + 2, 12);
+                    }
+                }
+                else
+                {
+                    nota = colRes[i].Notas;
+                }
+                if (string.IsNullOrEmpty(nota))
+                {
+                    if (string.IsNullOrEmpty(colRes[i].Notas) == false)
+                    {
+                        nota = colRes[i].Notas.Substring(0, 28);
+                    }
+                }
+                col.Add(new ReservasSinEmail(colRes[i].Nombre, nota));
+            }
+        }
+        AsignarListView(col);
+
+        if (col.Count == 0)
+        {
+            MessageBox.Show($"Todas las reservas del {fecha:dddd dd/MM/yyyy} han salido.", "Comprobar reservas sin salida", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+        else
+        {
+            MessageBox.Show($"Hay {col.Count} {col.Count.Plural("reserva")} del {fecha:dddd dd/MM/yyyy} que no han salido.", "Comprobar reservas sin salida", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+    }
+
+    private void AsignarListView(List<ReservasSinEmail> col)
     {
         LvwSinEmail.Items.Clear();
-
-        var col = MailGYG.ComprobarEmails(fecha);
 
         for (int i = 0; i < col.Count; i++)
         {
             var item = LvwSinEmail.Items.Add(col[i].Nombre);
             item.SubItems.Add(col[i].Notas);
         }
+    }
 
-        return col.Count;
+    private int ComprobarEmailsReservas(DateTime fecha)
+    {
+        //LvwSinEmail.Items.Clear();
 
-        //string res = MailGYG.ComprobarEmails(fecha, conCabecera: false);
+        var col = MailGYG.ComprobarEmails(fecha);
 
-        //var lista = res.Split('\n', StringSplitOptions.RemoveEmptyEntries);
+        AsignarListView(col);
 
-        //for (int i = 0; i < lista.Length; i++)
+        //for (int i = 0; i < col.Count; i++)
         //{
-        //    LvwSinEmail.Items.Add(lista[i]);
+        //    var item = LvwSinEmail.Items.Add(col[i].Nombre);
+        //    item.SubItems.Add(col[i].Notas);
         //}
 
-        //return lista.Length;
-
+        return col.Count;
     }
 
     private void MnuCopiarNombre_Click(object sender, EventArgs e)
