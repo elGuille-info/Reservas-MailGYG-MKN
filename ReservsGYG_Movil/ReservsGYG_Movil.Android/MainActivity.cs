@@ -5,7 +5,7 @@ using Android.Content.PM;
 using Android.Runtime;
 using Android.OS;
 
-namespace ReservsGYG_Movil.Droid
+namespace ReservasGYG_Movil.Droid
 {
     [Activity(Label = "ReservsGYG_Movil", Icon = "@mipmap/icon", Theme = "@style/MainTheme", MainLauncher = true, ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation | ConfigChanges.UiMode | ConfigChanges.ScreenLayout | ConfigChanges.SmallestScreenSize )]
     public class MainActivity : global::Xamarin.Forms.Platform.Android.FormsAppCompatActivity

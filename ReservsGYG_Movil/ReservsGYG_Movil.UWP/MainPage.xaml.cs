@@ -13,7 +13,7 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 
-namespace ReservsGYG_Movil.UWP
+namespace ReservasGYG_Movil.UWP
 {
     public sealed partial class MainPage
     {
@@ -21,7 +21,7 @@ namespace ReservsGYG_Movil.UWP
         {
             this.InitializeComponent();
 
-            LoadApplication(new ReservsGYG_Movil.App());
+            LoadApplication(new ReservasGYG_Movil.App());
         }
     }
 }

@@ -3,16 +3,16 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
-using ReservsGYG_Movil.Models;
-using ReservsGYG_Movil.Services;
+//using ReservsGYG_Movil.Models;
+//using ReservsGYG_Movil.Services;
 
 using Xamarin.Forms;
 
-namespace ReservsGYG_Movil.ViewModels
+namespace ReservasGYG_Movil.ViewModels
 {
     public class BaseViewModel : INotifyPropertyChanged
     {
-        public IDataStore<Item> DataStore => DependencyService.Get<IDataStore<Item>>();
+        //public IDataStore<Item> DataStore => DependencyService.Get<IDataStore<Item>>();
 
         bool isBusy = false;
         public bool IsBusy

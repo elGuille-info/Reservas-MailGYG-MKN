@@ -9,22 +9,23 @@ using System.Threading.Tasks;
 
 using System.Runtime.CompilerServices;
 
-//using ApiReservasMailGYG;
+using ApiReservasMailGYG;
 using KNDatos;
-//using static ApiReservasMailGYG.MailGYG;
+using static ApiReservasMailGYG.MailGYG;
 
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
+using Xamarin.Essentials;
 
-namespace ReservsGYG_Movil
+namespace ReservasGYG_Movil
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class MainPage : ContentPage
     {
-        public MainPage()
-        {
-            InitializeComponent();
-        }
+        //public MainPage()
+        //{
+        //    InitializeComponent();
+        //}
 
         private Reservas LaReserva { get; set; }
         private StringBuilder InfoCrearConEmail { get; set; } = new StringBuilder();
@@ -46,7 +47,7 @@ namespace ReservsGYG_Movil
             BtnCrearConEmail.IsEnabled = false;
             BtnAnalizarEmail.IsEnabled = false;
 
-            if (DeviceInfo.Platform == DevicePlatform.WinUI)
+            if (DeviceInfo.Platform == DevicePlatform.UWP)
             {
                 MailGYG.CambioLinea = "\r";
             }
@@ -309,10 +310,15 @@ namespace ReservsGYG_Movil
         {
             try
             {
-                using var stream = await FileSystem.OpenAppPackageFileAsync(asset);
-                using var reader = new StreamReader(stream);
-
-                return reader.ReadToEnd();
+                //using var stream = await FileSystem.OpenAppPackageFileAsync(asset);
+                //using var reader = new System.IO.StreamReader(stream);
+                using (var stream = await FileSystem.OpenAppPackageFileAsync(asset))
+                {
+                    using (var reader = new System.IO.StreamReader(stream))
+                    {
+                        return reader.ReadToEnd();
+                    }
+                }
             }
             catch (Exception ex)
             {

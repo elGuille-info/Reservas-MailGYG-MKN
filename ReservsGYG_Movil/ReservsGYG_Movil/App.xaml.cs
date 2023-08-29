@@ -1,12 +1,12 @@
 ﻿using System;
 
-using ReservsGYG_Movil.Services;
-using ReservsGYG_Movil.Views;
+//using ReservasGYG_Movil.Services;
+using ReservasGYG_Movil.Views;
 
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
-namespace ReservsGYG_Movil
+namespace ReservasGYG_Movil
 {
     public partial class App : Application
     {
@@ -15,7 +15,7 @@ namespace ReservsGYG_Movil
         {
             InitializeComponent();
 
-            DependencyService.Register<MockDataStore>();
+            //DependencyService.Register<MockDataStore>();
             MainPage = new AppShell();
         }
 

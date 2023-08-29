@@ -1,13 +1,16 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net6.0</TargetFramework>
-    <RootNamespace>ApiReservasMailGYG</RootNamespace>
+    <!--<TargetFramework>net6.0</TargetFramework>-->
+      <TargetFramework>netstandard2.0</TargetFramework>
+      <LangVersion>latest</LangVersion>
+
+      <RootNamespace>ApiReservasMailGYG</RootNamespace>
     <ImplicitUsings>disable</ImplicitUsings>
     <Nullable>disable</Nullable>
     <Title>ApiReservasMailGYG</Title>
     <Description>
-Analizar los correos de GetYourGuide para crear las nuevas reservas para MKN Reservas (Maro - Kayak Nerja)  (revisión del 23-ago-2023).
+Analizar los correos de GetYourGuide para crear las nuevas reservas para MKN Reservas (Maro - Kayak Nerja)  (revisión del 29-ago-2023).
     </Description>
     <Copyright>(c) gSoft para Maro-Kayak Nerja</Copyright>
     <PackageReadmeFile>Readme.md</PackageReadmeFile>

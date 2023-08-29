@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -128,6 +129,7 @@ public partial class FormEnviarFotos : Form
         if (ComprobarTextoFotos()) return;
 
         int totalFotos = 0;
+        //int t2 = 0;
 
         var fecha = DateTimePickerGYG.Value;
 
@@ -144,8 +146,10 @@ public partial class FormEnviarFotos : Form
             if (EnviarFotos(fecha, hora, TxtFotosSeleccionada.Text, conAlertas: false))
             {
                 //return;
+                Debug.WriteLine("{0} {1}", fecha, hora);
             }
-            totalFotos++;
+            totalFotos +=1;
+            //t2++;
         }
 
         MessageBox.Show($"Se han enviado {totalFotos} {totalFotos.Plural("enlace")} con fotos de la fecha {fecha:dddd dd/MM/yyyy}.", "Enviar todas las fotos del día", MessageBoxButtons.OK, MessageBoxIcon.Information);

@@ -1,7 +1,7 @@
 ﻿<Application
-    x:Class="ReservsGYG_Movil.UWP.App"
+    x:Class="ReservasGYG_Movil.UWP.App"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="using:ReservsGYG_Movil.UWP">
+    xmlns:local="using:ReservasGYG_Movil.UWP">
 
 </Application>

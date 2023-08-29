@@ -93,9 +93,9 @@
     <AndroidResource Include="Resources\drawable\icon_feed.png" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\ReservsGYG_Movil\ReservsGYG_Movil.csproj">
-      <Project>{F672D8AD-0483-432B-915C-691ED6C43F44}</Project>
-      <Name>ReservsGYG_Movil</Name>
+    <ProjectReference Include="..\ReservsGYG_Movil\ReservasGYG_Movil.csproj">
+      <Project>{6F89F06C-2D48-4926-8D3B-FFADE4CBEBE1}</Project>
+      <Name>ReservasGYG_Movil</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />

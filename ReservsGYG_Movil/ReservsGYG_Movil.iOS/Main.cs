@@ -5,7 +5,7 @@ using System.Linq;
 using Foundation;
 using UIKit;
 
-namespace ReservsGYG_Movil.iOS
+namespace ReservasGYG_Movil.iOS
 {
     public class Application
     {

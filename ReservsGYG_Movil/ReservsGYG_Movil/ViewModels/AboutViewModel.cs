@@ -4,7 +4,7 @@ using System.Windows.Input;
 using Xamarin.Essentials;
 using Xamarin.Forms;
 
-namespace ReservsGYG_Movil.ViewModels
+namespace ReservasGYG_Movil.ViewModels
 {
     public class AboutViewModel : BaseViewModel
     {
