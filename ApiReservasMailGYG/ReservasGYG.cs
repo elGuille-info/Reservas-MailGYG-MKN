@@ -8,13 +8,9 @@ using System.Threading.Tasks;
 
 namespace ApiReservasMailGYG
 {
-    public class ReservasSinEmail
+    public class ReservasGYG
     {
-        //public ReservasSinEmail()
-        //{
-        //}
-
-        public ReservasSinEmail(KNDatos.Reservas re)
+        public ReservasGYG(KNDatos.Reservas re)
         {
             LaReserva = re.Clone();
             Nombre = re.Nombre;
@@ -24,28 +20,23 @@ namespace ApiReservasMailGYG
             Actividad = re.ActividadMostrar;
             Fecha = re.FechaActividad;
             Hora = re.HoraActividad;
-            ReservaGYG = AsignarReservaGYG(Notas);
+            BookingGYG = AsignarBookingGYG(Notas);
         }
-
-        public KNDatos.Reservas LaReserva { get; set; }
-
-        /// <summary>
-        /// Devuelve los datos de la actividad
-        /// </summary>
-        public string Reserva { get => $"{Fecha:dd/MM/yy} {Hora:hh\\:mm} {Actividad}"; }
-
-        public string Pax { get => LaReserva.Paxs; }
 
         // Las columnas a usar en esta clase.                   (29/ago/23 12.09)
         public static string[] Columnas { get; } = { "Booking", "Nombre", "Teléfono", "Reserva", "PAX", "Email", "Notas" };
 
+        /// <summary>
+        /// Devuelve el contenido de la columna indicada.
+        /// </summary>
+        /// <param name="columna"></param>
         public string ValorColumna(string columna)
         {
             columna = columna.ToLower();
             if (columna == "nombre") return Nombre;
             if (columna == "teléfono") return Telefono;
             if (columna == "reserva") return Reserva;
-            if (columna == "booking") return ReservaGYG;
+            if (columna == "booking") return BookingGYG;
             if (columna == "pax") return Pax;
             if (columna == "email") return Email;
             if (columna == "notas") return Notas;
@@ -57,7 +48,7 @@ namespace ApiReservasMailGYG
         /// </summary>
         /// <param name="notas">Las notas de la reserva</param>
         /// <returns>Una cadena con el código de booking o un trozo de las notas.</returns>
-        public static string AsignarReservaGYG(string notas)
+        public static string AsignarBookingGYG(string notas)
         {
             string nota = "";
             // Poner solo los xx primeros caracteres de las notas. (25/ago/23 14.18)
@@ -84,28 +75,25 @@ namespace ApiReservasMailGYG
             return nota;
         }
 
-        //public ReservasSinEmail(string nombre, string notas)
-        //{
-        //    Nombre = nombre;
-        //    Notas = notas;
-        //}
-
-        //public ReservasSinEmail(string nombre, string telefono, string email, string notas, string actividad, DateTime fecha, TimeSpan hora)
-        //{
-
-        //}
-
         public string Nombre { get; set; }
         public string Telefono { get; set; }
         public string Email { get; set; }
 
         public string Notas { get; set; }
-        public string ReservaGYG { get; set; }
+        public string BookingGYG { get; set; }
 
         public string Actividad { get; set; }
         public DateTime Fecha { get; set; }
 
         public TimeSpan Hora { get; set; }
 
+        public KNDatos.Reservas LaReserva { get; set; }
+
+        /// <summary>
+        /// Devuelve los datos de la actividad
+        /// </summary>
+        public string Reserva { get => $"{Fecha:dd/MM/yy} {Hora:hh\\:mm} {Actividad}"; }
+
+        public string Pax { get => LaReserva.Paxs; }
     }
 }

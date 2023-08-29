@@ -34,9 +34,9 @@ public partial class Form1 : Form
 
         LvwSinEmail.Items.Clear();
         LvwSinEmail.Columns.Clear();
-        for (int j = 0; j < ReservasSinEmail.Columnas.Length; j++)
+        for (int j = 0; j < ApiReservasMailGYG.ReservasGYG.Columnas.Length; j++)
         {
-            LvwSinEmail.Columns.Add(ReservasSinEmail.Columnas[j]);
+            LvwSinEmail.Columns.Add(ApiReservasMailGYG.ReservasGYG.Columnas[j]);
         }
         AsignarAnchocolumnas();
 
@@ -357,7 +357,7 @@ public partial class Form1 : Form
 
         var colRes = Reservas.TablaCol(sb.ToString());
 
-        List<ReservasSinEmail> col = new();
+        List<ApiReservasMailGYG.ReservasGYG> col = new();
 
         if (colRes.Count > 0)
         {
@@ -385,7 +385,7 @@ public partial class Form1 : Form
                 //        nota = colRes[i].Notas.Substring(0, 28);
                 //    }
                 //}
-                col.Add(new ReservasSinEmail(colRes[i]));
+                col.Add(new ApiReservasMailGYG.ReservasGYG(colRes[i]));
             }
         }
         AsignarListView(col);
@@ -414,7 +414,7 @@ public partial class Form1 : Form
 
         var colRes = Reservas.TablaCol(sb.ToString());
 
-        List<ReservasSinEmail> col = new();
+        List<ApiReservasMailGYG.ReservasGYG> col = new();
 
         if (colRes.Count > 0)
         {
@@ -442,7 +442,7 @@ public partial class Form1 : Form
                 //        nota = colRes[i].Notas.Substring(0, 28);
                 //    }
                 //}
-                col.Add(new ReservasSinEmail(colRes[i]));
+                col.Add(new ApiReservasMailGYG.ReservasGYG(colRes[i]));
             }
         }
         AsignarListView(col);
@@ -458,14 +458,14 @@ public partial class Form1 : Form
     }
 
 
-    private void AsignarListView(List<ReservasSinEmail> col)
+    private void AsignarListView(List<ApiReservasMailGYG.ReservasGYG> col)
     {
         LvwSinEmail.Items.Clear();
         LvwSinEmail.Columns.Clear();
 
-        for (int j = 0; j < ReservasSinEmail.Columnas.Length; j++)
+        for (int j = 0; j < ApiReservasMailGYG.ReservasGYG.Columnas.Length; j++)
         {
-            LvwSinEmail.Columns.Add(ReservasSinEmail.Columnas[j]);
+            LvwSinEmail.Columns.Add(ApiReservasMailGYG.ReservasGYG.Columnas[j]);
         }
         AsignarAnchocolumnas();
 
@@ -474,9 +474,9 @@ public partial class Form1 : Form
             //var item = LvwSinEmail.Items.Add(col[i].Nombre);
             //item.SubItems.Add(col[i].ReservaGYG);
             var item = LvwSinEmail.Items.Add(col[i].ValorColumna("booking"));
-            for (int j = 1; j < ReservasSinEmail.Columnas.Length; j++)
+            for (int j = 1; j < ApiReservasMailGYG.ReservasGYG.Columnas.Length; j++)
             {
-                item.SubItems.Add(col[i].ValorColumna(ReservasSinEmail.Columnas[j]));
+                item.SubItems.Add(col[i].ValorColumna(ApiReservasMailGYG.ReservasGYG.Columnas[j]));
             }
         }
     }
@@ -498,21 +498,45 @@ public partial class Form1 : Form
         return col.Count;
     }
 
-    private void MnuCopiarNombre_Click(object sender, EventArgs e)
+    private void ContextMenuListView_Opening(object sender, System.ComponentModel.CancelEventArgs e)
     {
-        if (LvwSinEmail.SelectedIndices.Count == 0) return;
-        string nombre = LvwSinEmail.Items[LvwSinEmail.SelectedIndices[0]].Text;
-        CopiarPortapapeles(nombre);
+        bool hab = LvwSinEmail.SelectedIndices.Count > 0;
+        foreach (var mnu in ContextMenuListView.Items)
+        {
+            (mnu as ToolStripMenuItem).Enabled = hab;
+        }
     }
 
-    private void MnuCopiarNotas_Click(object sender, EventArgs e)
+    private void MnuCopiarDeLvw_Click(object sender, EventArgs e)
     {
         if (LvwSinEmail.SelectedIndices.Count == 0) return;
-        string notas = LvwSinEmail.Items[LvwSinEmail.SelectedIndices[0]].SubItems[1].Text;
-        CopiarPortapapeles(notas);
+        //var mnu = sender as ToolStripMenuItem;
+        //if (mnu == null) return;
+        int index = -1;
+        if (sender == MnuCopiarBooking) index = 0;
+        if (sender == MnuCopiarNombre) index = 1;
+        if (sender == MnuCopiarTelefono) index = 2;
+        if (sender == MnuCopiarNotas) index = 6;
+        if (index == -1) return;
+
+        string texto = LvwSinEmail.Items[LvwSinEmail.SelectedIndices[0]].SubItems[index].Text;
+        CopiarPortapapeles(texto);
     }
 
-    private void CopiarPortapapeles(string texto)
+    //private void MnuCopiarNombre_Click(object sender, EventArgs e)
+    //{
+    //    if (LvwSinEmail.SelectedIndices.Count == 0) return;
+    //    string nombre = LvwSinEmail.Items[LvwSinEmail.SelectedIndices[0]].Text;
+    //    CopiarPortapapeles(nombre);
+    //}
+    //private void MnuCopiarNotas_Click(object sender, EventArgs e)
+    //{
+    //    if (LvwSinEmail.SelectedIndices.Count == 0) return;
+    //    string notas = LvwSinEmail.Items[LvwSinEmail.SelectedIndices[0]].SubItems[1].Text;
+    //    CopiarPortapapeles(notas);
+    //}
+
+    private static void CopiarPortapapeles(string texto)
     {
         try
         {

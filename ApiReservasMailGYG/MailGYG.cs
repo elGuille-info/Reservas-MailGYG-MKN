@@ -799,7 +799,7 @@ namespace ApiReservasMailGYG
         /// </summary>
         /// <param name="fecha">Fecha con las reservas a comprobar.</param>
         /// <returns>Una colección con las reservas que no tienen email o una colección vacía si todas tienen email.</returns>
-        public static List<ReservasSinEmail> ComprobarEmails(DateTime fecha)
+        public static List<ReservasGYG> ComprobarEmails(DateTime fecha)
         {
             StringBuilder sb = new StringBuilder();
             sb.Append("Select * from Reservas ");
@@ -810,7 +810,7 @@ namespace ApiReservasMailGYG
 
             var colRes = Reservas.TablaCol(sb.ToString());
 
-            List<ReservasSinEmail> col = new();
+            List<ReservasGYG> col = new();
 
             if (colRes.Count > 0)
             {
@@ -839,7 +839,7 @@ namespace ApiReservasMailGYG
                     //    }
                     //}
                     //col.Add(new ReservasSinEmail(colRes[i].Nombre, nota));
-                    col.Add(new ReservasSinEmail(colRes[i]));
+                    col.Add(new ReservasGYG(colRes[i]));
                 }
             }
             return col;

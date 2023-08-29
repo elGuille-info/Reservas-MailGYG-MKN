@@ -43,7 +43,9 @@ namespace ReservasGYG
             columnHeader1 = new ColumnHeader();
             columnHeader2 = new ColumnHeader();
             ContextMenuListView = new ContextMenuStrip(components);
+            MnuCopiarBooking = new ToolStripMenuItem();
             MnuCopiarNombre = new ToolStripMenuItem();
+            MnuCopiarTelefono = new ToolStripMenuItem();
             MnuCopiarNotas = new ToolStripMenuItem();
             BtnMañanaEs = new Button();
             BtnMostrarReservas = new Button();
@@ -155,23 +157,38 @@ namespace ReservasGYG
             // ContextMenuListView
             // 
             ContextMenuListView.ImageScalingSize = new Size(24, 24);
-            ContextMenuListView.Items.AddRange(new ToolStripItem[] { MnuCopiarNombre, MnuCopiarNotas });
+            ContextMenuListView.Items.AddRange(new ToolStripItem[] { MnuCopiarBooking, MnuCopiarNombre, MnuCopiarTelefono, MnuCopiarNotas });
             ContextMenuListView.Name = "ContextMenuListView";
-            ContextMenuListView.Size = new Size(208, 68);
+            ContextMenuListView.Size = new Size(209, 132);
+            ContextMenuListView.Opening += ContextMenuListView_Opening;
+            // 
+            // MnuCopiarBooking
+            // 
+            MnuCopiarBooking.Name = "MnuCopiarBooking";
+            MnuCopiarBooking.Size = new Size(208, 32);
+            MnuCopiarBooking.Text = "Copiar Booking";
+            MnuCopiarBooking.Click += MnuCopiarDeLvw_Click;
             // 
             // MnuCopiarNombre
             // 
             MnuCopiarNombre.Name = "MnuCopiarNombre";
-            MnuCopiarNombre.Size = new Size(207, 32);
+            MnuCopiarNombre.Size = new Size(208, 32);
             MnuCopiarNombre.Text = "Copiar Nombre";
-            MnuCopiarNombre.Click += MnuCopiarNombre_Click;
+            MnuCopiarNombre.Click += MnuCopiarDeLvw_Click;
+            // 
+            // MnuCopiarTelefono
+            // 
+            MnuCopiarTelefono.Name = "MnuCopiarTelefono";
+            MnuCopiarTelefono.Size = new Size(208, 32);
+            MnuCopiarTelefono.Text = "Copiar Teléfono";
+            MnuCopiarTelefono.Click += MnuCopiarDeLvw_Click;
             // 
             // MnuCopiarNotas
             // 
             MnuCopiarNotas.Name = "MnuCopiarNotas";
-            MnuCopiarNotas.Size = new Size(207, 32);
+            MnuCopiarNotas.Size = new Size(208, 32);
             MnuCopiarNotas.Text = "Copiar Notas";
-            MnuCopiarNotas.Click += MnuCopiarNotas_Click;
+            MnuCopiarNotas.Click += MnuCopiarDeLvw_Click;
             // 
             // BtnMañanaEs
             // 
@@ -289,5 +306,7 @@ namespace ReservasGYG
         private ToolStripMenuItem MnuCopiarNombre;
         private ToolStripMenuItem MnuCopiarNotas;
         private Button BtnReservasSinSalida;
+        private ToolStripMenuItem MnuCopiarBooking;
+        private ToolStripMenuItem MnuCopiarTelefono;
     }
 }

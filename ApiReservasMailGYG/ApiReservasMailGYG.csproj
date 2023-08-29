@@ -11,14 +11,18 @@
     <Title>ApiReservasMailGYG</Title>
     <Description>
 Analizar los correos de GetYourGuide para crear las nuevas reservas para MKN Reservas (Maro - Kayak Nerja)  (revisión del 29-ago-2023).
+Usando .NET Standard 2.0
     </Description>
-    <Copyright>(c) gSoft para Maro-Kayak Nerja</Copyright>
+    <Copyright>(c) 2023 gSoft para Maro-Kayak Nerja</Copyright>
     <PackageReadmeFile>Readme.md</PackageReadmeFile>
+    <Authors>gSoft (elguille.info)</Authors>
+    <Version>1.0.2</Version>
+    <FileVersion>1.0.2.0</FileVersion>
+    <AssemblyVersion>1.0.2.0</AssemblyVersion>
   </PropertyGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\..\..\MKNReservas\KNDLLs\KNDatos\KNDatos.vbproj" />
-    <ProjectReference Include="..\..\..\MKNReservas\KNDLLs\KNUtilidades\MKNUtilidades.vbproj" />
   </ItemGroup>
 
 </Project>
