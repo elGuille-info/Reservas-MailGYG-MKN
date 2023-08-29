@@ -1,0 +1,148 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="ReservsGYG_Movil.MainPage"
+             Title="Analizar Email de GYG y crear reserva con confirmación"
+             Appearing="ContentPage_Appearing"
+             >
+    <ContentPage.Resources>
+        <Style TargetType="Button">
+            <Setter Property="Padding" Value="8"/>
+        </Style>
+        <Style TargetType="StackLayout" x:Key="StackCampos">
+            <Setter Property="VerticalOptions" Value="Center"/>
+            <Setter Property="Spacing" Value="12"/>
+            <Setter Property="Orientation" Value="Horizontal"/>
+            <Setter Property="HorizontalOptions" Value="FillAndExpand"/>
+        </Style>
+        <Style TargetType="Entry">
+            <!--<Setter Property="HeightRequest" Value="50"/>-->
+            <Setter Property="WidthRequest" Value="200"/>
+        </Style>
+        <Style TargetType="Label" x:Key="LabelCampos">
+            <!--<Setter Property="HeightRequest" Value="50"/>-->
+            <Setter Property="WidthRequest" Value="120"/>
+            <Setter Property="VerticalOptions" Value="CenterAndExpand"/>
+            <Setter Property="Margin" Value="4,0"/>
+            <Setter Property="FontSize" Value="13"/>
+        </Style>
+    </ContentPage.Resources>
+
+    <ScrollView Padding="4">
+        <StackLayout Orientation="Vertical" Padding="6" Spacing="12">
+            <StackLayout Orientation="{OnIdiom Phone=Vertical, Default=Horizontal}" BackgroundColor="LightSteelBlue"
+                         Padding="6" Spacing="12" Margin="0,0,0,6">
+                <Button x:Name="BtnPegarMail" Text="Pegar texto" 
+                        HorizontalOptions="Start"
+                        BackgroundColor="Gold" TextColor="Black" 
+                        HeightRequest="40" WidthRequest="160"
+                        Clicked="BtnPegarMail_Clicked"/>
+                <Button x:Name="BtnAnalizarEmail" Text="Analizar email"
+                        HorizontalOptions="{OnIdiom Phone=Start, Default=CenterAndExpand}"
+                        BackgroundColor="Azure" TextColor="Black"
+                        HeightRequest="40" WidthRequest="160"
+                        PropertyChanged="BtnCrearConEmail_PropertyChanged"
+                        Clicked="BtnAnalizarEmail_Clicked"/>
+                <Button x:Name="BtnCrearConEmail" Text="Crear reserva (NO envia email de confirmación)"
+                        Margin="{OnIdiom Phone=0, Desktop='24,0,0,0', Tablet='8,0,0,0'}" 
+                        HorizontalOptions="{OnIdiom Phone=Start, Default=EndAndExpand}"
+                        BackgroundColor="MistyRose" TextColor="Black"
+                        HeightRequest="40" WidthRequest="350"
+                        PropertyChanged="BtnCrearConEmail_PropertyChanged"
+                        Clicked="BtnCrearConEmail_Clicked"/>
+            </StackLayout>
+            <Editor x:Name="RtfEmail" HorizontalOptions="FillAndExpand"
+                    HeightRequest="200"
+                    Text=""/>
+            <!--<BoxView BackgroundColor="SteelBlue" HeightRequest="4" Margin="0,6"/>-->
+            <ScrollView Orientation="Horizontal">
+                <StackLayout x:Name="GrbReserva" Spacing="12" Padding="4,6"
+                             BackgroundColor="WhiteSmoke">
+                    <StackLayout Style="{StaticResource StackCampos}">
+                        <StackLayout Orientation="Horizontal">
+                            <Label Text="Reference number:" Style="{StaticResource LabelCampos}"/>
+                            <Entry x:Name="TxtReference" />
+                        </StackLayout>
+                        <StackLayout Orientation="Horizontal">
+                            <Label Text="Tour Language:" Style="{StaticResource LabelCampos}"/>
+                            <Entry x:Name="TxtLanguage" />
+                        </StackLayout>
+                    </StackLayout>
+                    <StackLayout Style="{StaticResource StackCampos}">
+                        <StackLayout Orientation="Horizontal">
+                            <Label Text="Actividad:" Style="{StaticResource LabelCampos}"/>
+                            <Entry x:Name="TxtActividad" />
+                        </StackLayout>
+                        <StackLayout Orientation="Horizontal">
+                            <Label Text="Fecha/Hora:" Style="{StaticResource LabelCampos}"/>
+                            <Entry x:Name="TxtFechaHora" />
+                        </StackLayout>
+                    </StackLayout>
+                    <StackLayout Style="{StaticResource StackCampos}">
+                        <StackLayout Orientation="Horizontal">
+                            <Label Text="Nombre:" Style="{StaticResource LabelCampos}"/>
+                            <Entry x:Name="TxtNombre" />
+                        </StackLayout>
+                        <StackLayout Orientation="Horizontal">
+                            <Label Text="Teléfono:" Style="{StaticResource LabelCampos}"/>
+                            <Entry x:Name="TxtTelefono" />
+                        </StackLayout>
+                    </StackLayout>
+                    <StackLayout Style="{StaticResource StackCampos}">
+                        <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand">
+                            <Label Text="Email:" Style="{StaticResource LabelCampos}"/>
+                            <Entry x:Name="TxtEmail" WidthRequest="540"/>
+                        </StackLayout>
+                    </StackLayout>
+                    <StackLayout Style="{StaticResource StackCampos}">
+                        <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand">
+                            <Label Text="Notas:" Style="{StaticResource LabelCampos}"/>
+                            <Editor x:Name="TxtNotas" WidthRequest="540" HeightRequest="100" />
+                        </StackLayout>
+                    </StackLayout>
+                    <StackLayout Style="{StaticResource StackCampos}">
+                        <StackLayout Orientation="Horizontal">
+                            <Label Text="Adultos (16+):" Style="{StaticResource LabelCampos}"/>
+                            <Entry x:Name="TxtAdultos" />
+                        </StackLayout>
+                        <StackLayout Orientation="Horizontal">
+                            <Label Text="País:" Style="{StaticResource LabelCampos}"/>
+                            <Entry x:Name="TxtPais" />
+                        </StackLayout>
+                    </StackLayout>
+                    <StackLayout Style="{StaticResource StackCampos}">
+                        <StackLayout Orientation="Horizontal">
+                            <Label Text="Menores (4 a 6):" Style="{StaticResource LabelCampos}"/>
+                            <Entry x:Name="TxtMenoresG" />
+                        </StackLayout>
+                        <StackLayout Orientation="Horizontal">
+                            <Label Text="Price:" Style="{StaticResource LabelCampos}"/>
+                            <Entry x:Name="TxtPrice" />
+                        </StackLayout>
+                    </StackLayout>
+                    <StackLayout Style="{StaticResource StackCampos}">
+                        <StackLayout Orientation="Horizontal">
+                            <Label Text="Menores (7 a 15):" Style="{StaticResource LabelCampos}"/>
+                            <Entry x:Name="TxtMenores" />
+                        </StackLayout>
+                        <StackLayout Orientation="Horizontal">
+                            <Label Text="ID:" Style="{StaticResource LabelCampos}"/>
+                            <Entry x:Name="TxtID" />
+                        </StackLayout>
+                    </StackLayout>
+                    <StackLayout Style="{StaticResource StackCampos}">
+                        <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand">
+                            <Label Text="Otra info:" Style="{StaticResource LabelCampos}"/>
+                            <Editor x:Name="TxtGYG" WidthRequest="540" HeightRequest="100" />
+                        </StackLayout>
+                    </StackLayout>
+                    <StackLayout BackgroundColor="LightSteelBlue" Padding="4,2">
+                        <Label x:Name="LabelStatus" FontSize="12" TextColor="Black"
+                               HorizontalOptions="StartAndExpand" HorizontalTextAlignment="Start"
+                               Text="Información de la reserva."/>
+                    </StackLayout>
+                </StackLayout>
+            </ScrollView>
+        </StackLayout>
+    </ScrollView>
+</ContentPage>

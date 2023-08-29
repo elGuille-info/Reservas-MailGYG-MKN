@@ -814,29 +814,30 @@ https://photos.app.goo.gl/qqxWBkVthdBGMjFEA
         {
             for (int i = 0; i < colRes.Count; i++)
             {
-                string nota = "";
-                // Poner solo los xx primeros caracteres de las notas. (25/ago/23 14.18)
-                //GetYourGuide - GYGLMWA85MXQ - (Spain) - Spanish (Live tour guide) -
-                if (colRes[i].Notas.StartsWith("GetYourGuide"))
-                {
-                    int j = colRes[i].Notas.IndexOf("- GYG");
-                    if (j > -1)
-                    {
-                        nota = colRes[i].Notas.Substring(j + 2, 12);
-                    }
-                }
-                else
-                {
-                    nota = colRes[i].Notas;
-                }
-                if (string.IsNullOrEmpty(nota))
-                {
-                    if (string.IsNullOrEmpty(colRes[i].Notas) == false)
-                    {
-                        nota = colRes[i].Notas.Substring(0, 28);
-                    }
-                }
-                col.Add(new ReservasSinEmail(colRes[i].Nombre, nota));
+                //string nota = "";
+                //// Poner solo los xx primeros caracteres de las notas. (25/ago/23 14.18)
+                ////GetYourGuide - GYGLMWA85MXQ - (Spain) - Spanish (Live tour guide) -
+                //if (colRes[i].Notas.StartsWith("GetYourGuide"))
+                //{
+                //    int j = colRes[i].Notas.IndexOf("- GYG");
+                //    if (j > -1)
+                //    {
+                //        nota = colRes[i].Notas.Substring(j + 2, 12);
+                //    }
+                //}
+                //else
+                //{
+                //    nota = colRes[i].Notas;
+                //}
+                //if (string.IsNullOrEmpty(nota))
+                //{
+                //    if (string.IsNullOrEmpty(colRes[i].Notas) == false)
+                //    {
+                //        nota = colRes[i].Notas.Substring(0, 28);
+                //    }
+                //}
+                //col.Add(new ReservasSinEmail(colRes[i].Nombre, nota));
+                col.Add(new ReservasSinEmail(colRes[i]));
             }
         }
         return col;
