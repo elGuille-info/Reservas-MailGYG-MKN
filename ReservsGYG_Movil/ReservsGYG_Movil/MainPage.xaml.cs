@@ -44,6 +44,9 @@ namespace ReservasGYG_Movil
 
         private void ContentPage_Appearing(object sender, EventArgs e)
         {
+            GrbTextoEmail.IsVisible = false;
+            GrbDatosReserva.IsVisible = false;
+
             BtnCrearConEmail.IsEnabled = false;
             BtnAnalizarEmail.IsEnabled = false;
 
@@ -56,6 +59,8 @@ namespace ReservasGYG_Movil
                 MailGYG.CambioLinea = "\n";
             }
             inicializando = false;
+
+            ActualizarImagenExpander();
         }
 
         private void LimpiarControlesReserva()
@@ -109,6 +114,9 @@ namespace ReservasGYG_Movil
                 return;
             }
 
+            GrbDatosReserva.IsVisible = true;
+            ActualizarImagenExpander();
+
             LaReserva = re;
             re.Notas2 = $"Price: {re.GYGPrice}";
 
@@ -130,6 +138,14 @@ namespace ReservasGYG_Movil
 
             TxtGYG.Text = $"Option: {re.GYGOption}\r\nDate: {re.GYGFechaHora}\r\nPrice:{re.GYGPrice}";
             TxtID.Text = re.ID.ToString();
+
+            LabelAsuntoEmail.Text = $"Booking - S271506 - {re.GYGReference}";
+            LabelParaEmail.Text = re.Email;
+
+            _ = await EnviarMensajeConfirmacion();
+            
+            GrbTextoEmail.IsVisible = true;
+            ActualizarImagenExpander();
 
             BtnCrearConEmail.IsEnabled = true;
         }
@@ -405,15 +421,19 @@ namespace ReservasGYG_Movil
             //sb.Append("<br/>");
             sb.Append("Kayak Makarena");
 
-            var asunto = $"Booking - S271506 - {re.GYGReference}";
-            var para = re.Email;
-            //string body = sb.ToString().Replace(CrLf, "<br/>");
-            //var msg = ApiReservasMailGYG.MailGYG.EnviarMensaje(para, asunto, body, true);
-            string body = sb.ToString();
+            //var asunto = $"Booking - S271506 - {re.GYGReference}";
+            //var para = re.Email;
+            ////string body = sb.ToString().Replace(CrLf, "<br/>");
+            ////var msg = ApiReservasMailGYG.MailGYG.EnviarMensaje(para, asunto, body, true);
+            //string body = sb.ToString();
+
+            LabelAsuntoEmail.Text = $"Booking - S271506 - {re.GYGReference}";
+            LabelParaEmail.Text = re.Email;
+            TxtTextoEmail.Text = sb.ToString();
 
             // No enviar el email,                          (30/ago/23 02.49)
             // pegar el texto en otra parte para poder copiarlo y enviarlo manualmente.
-            
+
             //var msg = MainPage.EnviarMensaje(para, asunto, body).Result;
 
             //InfoCrearConEmail.AppendLine(msg);
@@ -422,6 +442,77 @@ namespace ReservasGYG_Movil
             LabelStatus.Text = StatusAnt;
 
             return false;
+        }
+
+        private void TapGestureRecognizer_Tapped(object sender, EventArgs e)
+        {
+            GrbDatosReserva.IsVisible = !GrbDatosReserva.IsVisible;
+            ActualizarImagenExpander();
+        }
+
+        private void TapGestureTextoEmail_Tapped(object sender, EventArgs e)
+        {
+            GrbTextoEmail.IsVisible = !GrbTextoEmail.IsVisible;
+            ActualizarImagenExpander();
+        }
+
+        /// <summary>
+        /// Muestra las imágenes que correspondan según estén visibles o no.
+        /// </summary>
+        private void ActualizarImagenExpander()
+        {
+            MostrarImagenExpander(ImgDatosReserva, GrbDatosReserva.IsVisible);
+            MostrarImagenExpander(ImgTextoEmail, GrbTextoEmail.IsVisible);
+            //MostrarImagenExpander(ImgComprobarCambios, grbComprobarCambiosContent.IsVisible);
+            //MostrarImagenExpander(ImgMostrarEdicionReservas, grbMostrarEdicionReservasContent.IsVisible);
+        }
+
+        /// <summary>
+        /// Mostrar la imagen que corresponde. (01/Nov/21 22.35)
+        /// </summary>
+        /// <param name="img">El control de imagen a asignar.</param>
+        /// <param name="expanded">si se debe mostrar expand o collapse.</param>
+        private void MostrarImagenExpander(Image img, bool expanded)
+        {
+            string imgSource;
+            if (expanded)
+            {
+                imgSource = "expand_white.png";
+            }
+            else
+            {
+                imgSource = "collapse_white.png";
+            }
+            img.Source = FileImageSource.FromResource($"ReservasGYG_Movil.Resources.{imgSource}", typeof(MainPage).Assembly);
+        }
+
+        private void ButtonCopiaAsunto_Clicked(object sender, EventArgs e)
+        {
+            CopiarClipBoard(LabelAsuntoEmail.Text);
+        }
+
+        private void ButtonCopiaEmail_Clicked(object sender, EventArgs e)
+        {
+            CopiarClipBoard(LabelParaEmail.Text);
+        }
+
+        private void ButtonCopiaTextoEmail_Clicked(object sender, EventArgs e)
+        {
+            CopiarClipBoard(TxtTextoEmail.Text);
+        }
+
+        private static async void CopiarClipBoard(string texto)
+        {
+            if (MainThread.IsMainThread)
+            {
+                try
+                {
+
+                    // Code to run if this is the main thread
+                    await Clipboard.SetTextAsync(texto);
+                }
+                catch { }
+            }
         }
 
         ///// <summary>

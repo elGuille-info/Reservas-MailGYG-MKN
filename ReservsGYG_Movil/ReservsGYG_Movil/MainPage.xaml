@@ -54,12 +54,34 @@
             <Editor x:Name="RtfEmail" HorizontalOptions="FillAndExpand"
                     HeightRequest="200"
                     Text=""/>
+            <StackLayout BackgroundColor="LightSteelBlue" Padding="4,2">
+                <Label x:Name="LabelStatus" FontSize="12" TextColor="Black"
+                       HorizontalOptions="StartAndExpand" HorizontalTextAlignment="Start"
+                       Text="Información de la reserva."/>
+            </StackLayout>
             <!--<BoxView BackgroundColor="SteelBlue" HeightRequest="4" Margin="0,6"/>-->
             <!-- Simular Expander -->
             <StackLayout>
-                
+                <StackLayout Orientation="Horizontal" Padding="4" BackgroundColor="{DynamicResource Primary}">
+                    <StackLayout.GestureRecognizers>
+                        <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="TapGestureRecognizer_Tapped" />
+                    </StackLayout.GestureRecognizers>
+                    <Label Text="Datos de la reserva"
+                           FontFamily="Consolas" TextColor="White" FontAttributes="Bold"
+                           HorizontalOptions="FillAndExpand">
+                        <Label.GestureRecognizers>
+                            <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="TapGestureRecognizer_Tapped" />
+                        </Label.GestureRecognizers>
+                    </Label>
+                    <Image x:Name="ImgDatosReserva" Style="{StaticResource ImgExpander}"
+                           Source="Resources\expand.png">
+                        <Image.GestureRecognizers>
+                            <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="TapGestureRecognizer_Tapped" />
+                        </Image.GestureRecognizers>
+                    </Image>
+                </StackLayout>
             </StackLayout>
-            <ScrollView Orientation="Horizontal">
+            <ScrollView x:Name="GrbDatosReserva" Orientation="Horizontal">
                 <StackLayout x:Name="GrbReserva" Spacing="12" Padding="4,6"
                              BackgroundColor="WhiteSmoke">
                     <StackLayout Style="{StaticResource StackCampos}">
@@ -140,13 +162,53 @@
                             <Editor x:Name="TxtGYG" WidthRequest="540" HeightRequest="100" />
                         </StackLayout>
                     </StackLayout>
-                    <StackLayout BackgroundColor="LightSteelBlue" Padding="4,2">
+                    <!--<StackLayout BackgroundColor="LightSteelBlue" Padding="4,2">
                         <Label x:Name="LabelStatus" FontSize="12" TextColor="Black"
                                HorizontalOptions="StartAndExpand" HorizontalTextAlignment="Start"
                                Text="Información de la reserva."/>
-                    </StackLayout>
+                    </StackLayout>-->
                 </StackLayout>
             </ScrollView>
+            <StackLayout>
+                <StackLayout Orientation="Horizontal" Padding="4" BackgroundColor="{DynamicResource Primary}">
+                    <StackLayout.GestureRecognizers>
+                        <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="TapGestureTextoEmail_Tapped" />
+                    </StackLayout.GestureRecognizers>
+                    <Label Text="Texto para el email"
+                           FontFamily="Consolas" TextColor="White" FontAttributes="Bold"
+                           HorizontalOptions="FillAndExpand">
+                        <Label.GestureRecognizers>
+                            <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="TapGestureTextoEmail_Tapped" />
+                        </Label.GestureRecognizers>
+                    </Label>
+                    <Image x:Name="ImgTextoEmail" Style="{StaticResource ImgExpander}"
+                           Source="Resources\expand.png">
+                        <Image.GestureRecognizers>
+                            <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="TapGestureTextoEmail_Tapped" />
+                        </Image.GestureRecognizers>
+                    </Image>
+                </StackLayout>
+            </StackLayout>
+            <StackLayout x:Name="GrbTextoEmail" HorizontalOptions="FillAndExpand">
+                <StackLayout BackgroundColor="SteelBlue">
+                    <Label x:Name="LabelAsuntoEmail" FontSize="13" TextColor="White" FontAttributes="Bold" />
+                    <Label x:Name="LabelParaEmail" FontSize="13" TextColor="White" />
+                    <StackLayout Orientation="Horizontal">
+                        <Button Text="Copia Asunto" 
+                                BackgroundColor="Goldenrod" TextColor="White"
+                                Clicked="ButtonCopiaAsunto_Clicked" />
+                        <Button Text="Copia Email" 
+                                BackgroundColor="Goldenrod" TextColor="White"
+                                Clicked="ButtonCopiaEmail_Clicked"/>
+                        <Button Text="Copia Texto" 
+                                BackgroundColor="Goldenrod" TextColor="White"
+                                Clicked="ButtonCopiaTextoEmail_Clicked"/>
+                    </StackLayout>
+                </StackLayout>
+                <Editor x:Name="TxtTextoEmail" HorizontalOptions="FillAndExpand"
+                        HeightRequest="200"
+                        Text=""/>
+            </StackLayout>
         </StackLayout>
     </ScrollView>
 </ContentPage>

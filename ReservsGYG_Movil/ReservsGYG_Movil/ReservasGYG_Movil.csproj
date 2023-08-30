@@ -34,6 +34,20 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="Resources\collapse.png" />
+    <None Remove="Resources\collapse_white.png" />
+    <None Remove="Resources\expand.png" />
+    <None Remove="Resources\expand_white.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\collapse.png" />
+    <EmbeddedResource Include="Resources\collapse_white.png" />
+    <EmbeddedResource Include="Resources\expand.png" />
+    <EmbeddedResource Include="Resources\expand_white.png" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Xamarin.Forms" Version="5.0.0.2196" />  
     <PackageReference Include="Xamarin.Essentials" Version="1.7.0" />
   </ItemGroup>

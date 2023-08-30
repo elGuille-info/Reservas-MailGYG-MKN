@@ -6,6 +6,23 @@
         Define global resources and styles here, that apply to all pages in your app.
     -->
     <Application.Resources>
+        <Style x:Key="ImgExpander" TargetType="{x:Type Image}">
+            <Setter Property="VerticalOptions" Value="Center"/>
+            <Setter Property="HorizontalOptions" Value="End"/>
+            <Setter Property="WidthRequest" Value="20"/>
+            <Setter Property="HeightRequest" Value="20"/>
+            <Setter Property="BackgroundColor" Value="Transparent"/>
+        </Style>
+        <Style x:Key="BtnOpciones" TargetType="{x:Type Button}" >
+            <Setter Property="FontAttributes" Value="None" />
+            <Setter Property="FontSize" Value="Small" />
+            <Setter Property="TextTransform" Value="None"/>
+            <Setter Property="HorizontalOptions" Value="Fill"/>
+            <Setter Property="HeightRequest" Value="50"/>
+            <Setter Property="VerticalOptions" Value="Center"/>
+            <Setter Property="CornerRadius" Value="4" />
+        </Style>
+
         <ResourceDictionary>
             <Color x:Key="Primary">#2196F3</Color>
             <Style TargetType="Button">
