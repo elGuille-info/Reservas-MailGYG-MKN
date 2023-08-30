@@ -43,7 +43,7 @@
                         HeightRequest="40" WidthRequest="160"
                         PropertyChanged="BtnCrearConEmail_PropertyChanged"
                         Clicked="BtnAnalizarEmail_Clicked"/>
-                <Button x:Name="BtnCrearConEmail" Text="Crear reserva (NO envia email de confirmación)"
+                <Button x:Name="BtnCrearConEmail" Text="Crear reserva y texto para email"
                         Margin="{OnIdiom Phone=0, Desktop='24,0,0,0', Tablet='8,0,0,0'}" 
                         HorizontalOptions="{OnIdiom Phone=Start, Default=EndAndExpand}"
                         BackgroundColor="MistyRose" TextColor="Black"
@@ -55,6 +55,10 @@
                     HeightRequest="200"
                     Text=""/>
             <!--<BoxView BackgroundColor="SteelBlue" HeightRequest="4" Margin="0,6"/>-->
+            <!-- Simular Expander -->
+            <StackLayout>
+                
+            </StackLayout>
             <ScrollView Orientation="Horizontal">
                 <StackLayout x:Name="GrbReserva" Spacing="12" Padding="4,6"
                              BackgroundColor="WhiteSmoke">

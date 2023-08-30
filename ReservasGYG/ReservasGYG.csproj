@@ -31,7 +31,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\ApiReservasMailGYG\ApiReservasMailGYG.csproj" />
+    <ProjectReference Include="..\..\..\MKNReservas\KNDLLs\KNDatos\KNDatos.vbproj" />
+    <ProjectReference Include="..\..\..\MKNReservas\KNDLLs\KNUtilidades\MKNUtilidades.vbproj" />
+    <ProjectReference Include="..\ApiReservasGYG\ApiReservasGYG.csproj" />
   </ItemGroup>
 
   <ItemGroup>

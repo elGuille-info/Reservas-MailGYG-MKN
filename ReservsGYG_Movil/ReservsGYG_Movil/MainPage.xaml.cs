@@ -155,18 +155,18 @@ namespace ReservasGYG_Movil
             // Probar en iPhone.                                (26/ago/23 08.44)
             // También falla.
 
-            //StatusAnt = LabelStatus.Text;
-            //LabelStatus.Text = "Enviando el email de confirmación...";
+            StatusAnt = LabelStatus.Text;
+            LabelStatus.Text = "Enviando el email de confirmación...";
 
-            //res = await EnviarMensajeConfirmacion();
-            //if (res)
-            //{
-            //    await DisplayAlert("Crear reserva y enviar email", InfoCrearConEmail.ToString(), "Aceptar");
-            //    return;
-            //}
-            //await DisplayAlert("Crear reserva y enviar email", InfoCrearConEmail.ToString(), "Aceptar");
+            res = await EnviarMensajeConfirmacion();
+            if (res)
+            {
+                await DisplayAlert("Crear reserva y enviar email", InfoCrearConEmail.ToString(), "Aceptar");
+                return;
+            }
+            await DisplayAlert("Crear reserva y enviar email", InfoCrearConEmail.ToString(), "Aceptar");
 
-            await DisplayAlert("Crear reserva SIN enviar email", InfoCrearConEmail.ToString(), "Aceptar");
+            //await DisplayAlert("Crear reserva SIN enviar email", InfoCrearConEmail.ToString(), "Aceptar");
         }
 
         private void BtnCrearConEmail_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
@@ -410,45 +410,49 @@ namespace ReservasGYG_Movil
             //string body = sb.ToString().Replace(CrLf, "<br/>");
             //var msg = ApiReservasMailGYG.MailGYG.EnviarMensaje(para, asunto, body, true);
             string body = sb.ToString();
-            var msg = MainPage.EnviarMensaje(para, asunto, body).Result;
 
-            InfoCrearConEmail.AppendLine(msg);
-            InfoCrearConEmail.AppendLine();
+            // No enviar el email,                          (30/ago/23 02.49)
+            // pegar el texto en otra parte para poder copiarlo y enviarlo manualmente.
+            
+            //var msg = MainPage.EnviarMensaje(para, asunto, body).Result;
+
+            //InfoCrearConEmail.AppendLine(msg);
+            //InfoCrearConEmail.AppendLine();
 
             LabelStatus.Text = StatusAnt;
 
             return false;
         }
 
-        /// <summary>
-        /// Enviar un mensaje de correo.
-        /// </summary>
-        /// <param name="para"></param>
-        /// <param name="asunto"></param>
-        /// <param name="bodyMensaje"></param>
-        /// <returns></returns>
-        private static async Task<string> EnviarMensaje(string para, string asunto, string bodyMensaje)
-        {
-            var message = new EmailMessage
-            {
-                Subject = asunto,
-                Body = bodyMensaje,
-            };
-            message.To.Add(para);
-            message.To.Add("reservas@kayakmakarena.com");
-            message.Bcc.Add("kayak.makarena@gmail.com");
+        ///// <summary>
+        ///// Enviar un mensaje de correo.
+        ///// </summary>
+        ///// <param name="para"></param>
+        ///// <param name="asunto"></param>
+        ///// <param name="bodyMensaje"></param>
+        ///// <returns></returns>
+        //private static async Task<string> EnviarMensaje(string para, string asunto, string bodyMensaje)
+        //{
+        //    var message = new EmailMessage
+        //    {
+        //        Subject = asunto,
+        //        Body = bodyMensaje,
+        //    };
+        //    message.To.Add(para);
+        //    message.To.Add("reservas@kayakmakarena.com");
+        //    message.Bcc.Add("kayak.makarena@gmail.com");
 
-            try
-            {
-                await Email.ComposeAsync(message);
-            }
-            catch (Exception ex)
-            {
-                return $"ERROR: {ex.Message}";
-                //await Browser.OpenAsync("mailto:reservas@kayakmakarena.com" +
-                //    $"?Subject={asunto.Replace(" ", "%20").Replace(".", "%2e").Replace("@", "%40")}");
-            }
-            return "Mensaje enviado correctamente a '" + para + "'";
-        }
+        //    try
+        //    {
+        //        await Email.ComposeAsync(message);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return $"ERROR: {ex.Message}";
+        //        //await Browser.OpenAsync("mailto:reservas@kayakmakarena.com" +
+        //        //    $"?Subject={asunto.Replace(" ", "%20").Replace(".", "%2e").Replace("@", "%40")}");
+        //    }
+        //    return "Mensaje enviado correctamente a '" + para + "'";
+        //}
     }
 }

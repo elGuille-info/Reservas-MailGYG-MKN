@@ -30,9 +30,10 @@
         </ResourceDictionary>
     </Shell.Resources>
 
+    <!-- La primera que se pone es con la que se inicia (29/ago/23 02.01) -->
     <TabBar>
-        <!--<ShellContent Title="About" Icon="icon_about.png" Route="AboutPage" ContentTemplate="{DataTemplate local:AboutPage}" />-->
         <ShellContent Title="Crear Reserva" Icon="icon_feed.png" ContentTemplate="{DataTemplate local2:MainPage}" />
+        <ShellContent Title="About" Icon="icon_about.png" Route="AboutPage" ContentTemplate="{DataTemplate local:AboutPage}" />
     </TabBar>
 
     <!--
