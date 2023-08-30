@@ -205,7 +205,7 @@ namespace ReservasGYG
             // 
             // BtnMostrarReservas
             // 
-            BtnMostrarReservas.Anchor = AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            BtnMostrarReservas.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             BtnMostrarReservas.BackColor = Color.LightSkyBlue;
             BtnMostrarReservas.Location = new Point(6, 190);
             BtnMostrarReservas.Margin = new Padding(3, 12, 3, 3);

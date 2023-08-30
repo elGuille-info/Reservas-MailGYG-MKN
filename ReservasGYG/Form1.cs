@@ -300,7 +300,7 @@ public partial class Form1 : Form
         sb.Append("Kayak Makarena");
 
         string body = sb.ToString().Replace(CrLf, "<br/>");
-        var msg = ApiReservasMailGYG.MailGYG.EnviarMensaje(colPara, "Hoy es el día / Today is the day", body, true);
+        var msg = MailGYG.EnviarMensaje(colPara, "Hoy es el día / Today is the day", body, true);
         if (msg.StartsWith("ERROR"))
         {
             MessageBox.Show($"ERROR al enviar el email:{CrLf}{msg}.", "Error al enviar el email de la reserva", MessageBoxButtons.OK, MessageBoxIcon.Warning);

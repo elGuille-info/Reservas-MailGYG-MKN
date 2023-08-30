@@ -581,7 +581,11 @@ namespace ApiReservasMailGYG
                     return "ERROR: " + ex.Message;
                 }
             }
-            return $"Mensajes enviados correctamente a {para.Count} {para.Count.Plural("reserva")}.";
+            // En realidad se debe contar uno menos,        (31/ago/23 01.43)
+            // ya que se añade el correo de kayak.makarena@gmail.com
+            int enBcc = para.Count - 1;
+            //return $"Mensajes enviados correctamente a {para.Count} {para.Count.Plural("reserva")}.";
+            return $"Mensajes enviados correctamente a {enBcc} {enBcc.Plural("reserva")}.";
         }
 
 
