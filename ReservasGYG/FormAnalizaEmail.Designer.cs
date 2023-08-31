@@ -47,12 +47,9 @@ namespace ReservasGYG
             TxtID = new TextBox();
             label13 = new Label();
             TxtGYG = new TextBox();
-            ChkEnviarConfirm = new CheckBox();
             ChkCrearConEmail = new CheckBox();
-            BtnEnviarConfirm = new Button();
             TxtPrice = new TextBox();
             label12 = new Label();
-            BtnCrearReserva = new Button();
             TxtMenoresG = new TextBox();
             label11 = new Label();
             TxtMenores = new TextBox();
@@ -162,12 +159,9 @@ namespace ReservasGYG
             GrbReserva.Controls.Add(TxtID);
             GrbReserva.Controls.Add(label13);
             GrbReserva.Controls.Add(TxtGYG);
-            GrbReserva.Controls.Add(ChkEnviarConfirm);
             GrbReserva.Controls.Add(ChkCrearConEmail);
-            GrbReserva.Controls.Add(BtnEnviarConfirm);
             GrbReserva.Controls.Add(TxtPrice);
             GrbReserva.Controls.Add(label12);
-            GrbReserva.Controls.Add(BtnCrearReserva);
             GrbReserva.Controls.Add(TxtMenoresG);
             GrbReserva.Controls.Add(label11);
             GrbReserva.Controls.Add(TxtMenores);
@@ -263,18 +257,6 @@ namespace ReservasGYG
             TxtGYG.TabIndex = 26;
             TxtGYG.Text = "Línea 1\r\nLínea 2\r\nLínea 3";
             // 
-            // ChkEnviarConfirm
-            // 
-            ChkEnviarConfirm.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            ChkEnviarConfirm.AutoSize = true;
-            ChkEnviarConfirm.Location = new Point(1135, 178);
-            ChkEnviarConfirm.Name = "ChkEnviarConfirm";
-            ChkEnviarConfirm.Size = new Size(171, 29);
-            ChkEnviarConfirm.TabIndex = 31;
-            ChkEnviarConfirm.Text = "Habilitar 2 pasos";
-            ChkEnviarConfirm.UseVisualStyleBackColor = true;
-            ChkEnviarConfirm.CheckedChanged += ChkEnviarConfirm_CheckedChanged;
-            // 
             // ChkCrearConEmail
             // 
             ChkCrearConEmail.Anchor = AnchorStyles.Top | AnchorStyles.Right;
@@ -286,19 +268,6 @@ namespace ReservasGYG
             ChkCrearConEmail.Text = "Habilitar crear+email";
             ChkCrearConEmail.UseVisualStyleBackColor = true;
             ChkCrearConEmail.CheckedChanged += ChkCrearReserva_CheckedChanged;
-            // 
-            // BtnEnviarConfirm
-            // 
-            BtnEnviarConfirm.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            BtnEnviarConfirm.BackColor = Color.LightBlue;
-            BtnEnviarConfirm.Location = new Point(1133, 292);
-            BtnEnviarConfirm.Margin = new Padding(12, 3, 3, 12);
-            BtnEnviarConfirm.Name = "BtnEnviarConfirm";
-            BtnEnviarConfirm.Size = new Size(205, 70);
-            BtnEnviarConfirm.TabIndex = 33;
-            BtnEnviarConfirm.Text = "Enviar email de confirmación";
-            BtnEnviarConfirm.UseVisualStyleBackColor = false;
-            BtnEnviarConfirm.Click += BtnEnviarConfirm_Click;
             // 
             // TxtPrice
             // 
@@ -315,19 +284,6 @@ namespace ReservasGYG
             label12.Size = new Size(180, 31);
             label12.TabIndex = 16;
             label12.Text = "Price:";
-            // 
-            // BtnCrearReserva
-            // 
-            BtnCrearReserva.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            BtnCrearReserva.BackColor = Color.Honeydew;
-            BtnCrearReserva.Location = new Point(1133, 213);
-            BtnCrearReserva.Margin = new Padding(12, 3, 3, 6);
-            BtnCrearReserva.Name = "BtnCrearReserva";
-            BtnCrearReserva.Size = new Size(205, 70);
-            BtnCrearReserva.TabIndex = 32;
-            BtnCrearReserva.Text = "Crear reserva";
-            BtnCrearReserva.UseVisualStyleBackColor = false;
-            BtnCrearReserva.Click += BtnCrearReserva_Click;
             // 
             // TxtMenoresG
             // 
@@ -626,16 +582,13 @@ namespace ReservasGYG
         private Label label8;
         private TextBox TxtAdultos;
         private Label label9;
-        private Button BtnCrearReserva;
         private TextBox TxtMenoresG;
         private Label label11;
         private TextBox TxtMenores;
         private Label label10;
         private TextBox TxtPrice;
         private Label label12;
-        private Button BtnEnviarConfirm;
         private CheckBox ChkCrearConEmail;
-        private CheckBox ChkEnviarConfirm;
         private TextBox TxtGYG;
         private TextBox TxtID;
         private Label label13;

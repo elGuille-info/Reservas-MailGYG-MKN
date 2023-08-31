@@ -14,7 +14,9 @@ using System.Windows.Forms;
 
 using KNDatos;
 
+using ApiReservasMailGYG;
 using static ApiReservasMailGYG.MailGYG;
+
 
 
 namespace ReservasGYG;
@@ -42,7 +44,6 @@ public partial class FormAnalizaEmail : Form
 
         BtnPegarEmail.Image = Properties.Resources.Paste; // Bitmap.FromFile("..\\Resources\\Paste.png");
         BtnLimpiarTexto.Image = Properties.Resources.CleanData; //Bitmap.FromFile("..\\Resources\\CleanData.png");
-        //
 
         timer1.Interval = 990;
         timer1.Enabled = true;
@@ -51,16 +52,6 @@ public partial class FormAnalizaEmail : Form
 
         LimpiarControlesReserva();
     }
-
-    //private void FormAnalizaEmail_KeyUp(object sender, KeyEventArgs e)
-    //{
-    //    // No copiar nada...
-    //    //// Si se pulsa Ctrl+C pegar el texto en RtfEmail.   (23/ago/23 11.51)
-    //    //if (e.Control && e.KeyCode == Keys.C)
-    //    //{
-    //    //    BtnPegarEmail_Click(null, null);
-    //    //}
-    //}
 
     private void BtnPegarEmail_Click(object sender, EventArgs e)
     {
@@ -86,9 +77,12 @@ public partial class FormAnalizaEmail : Form
 
     private void BtnAnalizarEmail_Click(object sender, EventArgs e)
     {
+        ChkCrearConEmail.Enabled = false;
+        ChkCrearConEmail.Checked = false;
+
         if (string.IsNullOrEmpty(RtfEmail.Text)) return;
 
-        Reservas re = ApiReservasMailGYG.MailGYG.AnalizarEmail(RtfEmail.Text);
+        Reservas re = MailGYG.AnalizarEmail(RtfEmail.Text);
         if (re == null)
         {
             // Mostrar aviso de que algo no ha ido bien. (22/ago/23 20.24)
@@ -119,7 +113,9 @@ public partial class FormAnalizaEmail : Form
         TxtID.Text = re.ID.ToString();
 
         ChkCrearConEmail.Enabled = true;
-        HabilitarBotonesReservas();
+        ChkCrearConEmail.Checked = true;
+        BtnCrearConEmail.Enabled = ChkCrearConEmail.Checked;
+        //HabilitarBotonesReservas();
     }
 
     private void BtnLimpiarReserva_Click(object sender, EventArgs e)
@@ -142,36 +138,37 @@ public partial class FormAnalizaEmail : Form
         }
 
         ChkCrearConEmail.Enabled = false;
-        ChkEnviarConfirm.Enabled = false;
+        //ChkEnviarConfirm.Enabled = false;
 
         ChkCrearConEmail.Checked = false;
-        ChkEnviarConfirm.Checked = false;
-        HabilitarBotonesReservas();
+        BtnCrearConEmail.Enabled = ChkCrearConEmail.Checked;
+        //ChkEnviarConfirm.Checked = false;
+        //HabilitarBotonesReservas();
     }
 
-    private void BtnCrearReserva_Click(object sender, EventArgs e)
-    {
-        QueBoton = sender;
+    //private void BtnCrearReserva_Click(object sender, EventArgs e)
+    //{
+    //    QueBoton = sender;
 
-        StatusAnt = LabelStatus.Text;
-        LabelStatus.Text = "Creando la reserva...";
-        Application.DoEvents();
+    //    StatusAnt = LabelStatus.Text;
+    //    LabelStatus.Text = "Creando la reserva...";
+    //    Application.DoEvents();
 
-        TimerCrearReserva.Interval = 200;
-        TimerCrearReserva.Enabled = true;
-    }
+    //    TimerCrearReserva.Interval = 200;
+    //    TimerCrearReserva.Enabled = true;
+    //}
 
-    private void BtnEnviarConfirm_Click(object sender, EventArgs e)
-    {
-        QueBoton = sender;
+    //private void BtnEnviarConfirm_Click(object sender, EventArgs e)
+    //{
+    //    QueBoton = sender;
 
-        StatusAnt = LabelStatus.Text;
-        LabelStatus.Text = "Enviando el email de confirmación...";
-        Application.DoEvents();
+    //    StatusAnt = LabelStatus.Text;
+    //    LabelStatus.Text = "Enviando el email de confirmación...";
+    //    Application.DoEvents();
 
-        TimerEnviarEmail.Interval = 200;
-        TimerEnviarEmail.Enabled = true;
-    }
+    //    TimerEnviarEmail.Interval = 200;
+    //    TimerEnviarEmail.Enabled = true;
+    //}
 
     private void BtnCrearConEmail_Click(object sender, EventArgs e)
     {
@@ -199,8 +196,10 @@ public partial class FormAnalizaEmail : Form
         if (res)
         {
             ChkCrearConEmail.Checked = false;
-            ChkEnviarConfirm.Checked = false;
-            HabilitarBotonesReservas();
+            ChkCrearConEmail.Enabled = false;
+            BtnCrearConEmail.Enabled = ChkCrearConEmail.Checked;
+            //ChkEnviarConfirm.Checked = false;
+            //HabilitarBotonesReservas();
 
             MessageBox.Show(InfoCrearConEmail.ToString(), "Crear reserva y enviar email", MessageBoxButtons.OK, MessageBoxIcon.Information);
             return;
@@ -217,8 +216,9 @@ public partial class FormAnalizaEmail : Form
         Application.DoEvents();
 
         ChkCrearConEmail.Checked = false;
-        ChkEnviarConfirm.Checked = false;
-        HabilitarBotonesReservas();
+        BtnCrearConEmail.Enabled = ChkCrearConEmail.Checked;
+        //ChkEnviarConfirm.Checked = false;
+        //HabilitarBotonesReservas();
 
         MessageBox.Show(InfoCrearConEmail.ToString(), "Crear reserva y enviar email", MessageBoxButtons.OK, MessageBoxIcon.Information);
     }
@@ -327,10 +327,10 @@ public partial class FormAnalizaEmail : Form
 
         LabelStatus.Text = StatusAnt;
 
-        if (QueBoton == BtnCrearReserva)
-        {
-            MessageBox.Show(InfoCrearConEmail.ToString(), "Reserva creada", MessageBoxButtons.OK, MessageBoxIcon.Information);
-        }
+        //if (QueBoton == BtnCrearReserva)
+        //{
+        //    MessageBox.Show(InfoCrearConEmail.ToString(), "Reserva creada", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        //}
 
         return false;
     }
@@ -344,12 +344,12 @@ public partial class FormAnalizaEmail : Form
         int dobles = (int)Math.Ceiling(tPax / 2.0);
         int individuales = 0;
         int tanques = 0;
-        
-        if (dobles * 2 < tPax) 
+
+        if (dobles * 2 < tPax)
         {
             individuales = 1;
         }
-                
+
 
         //// Si hay 2 adultos y 1 niño, poner 1 tanque
         //// sean que pagan o no
@@ -476,17 +476,17 @@ public partial class FormAnalizaEmail : Form
         InfoCrearConEmail.AppendLine(msg);
         InfoCrearConEmail.AppendLine();
 
-        if (QueBoton == BtnEnviarConfirm)
-        {
-            if (msg.StartsWith("ERROR"))
-            {
-                MessageBox.Show($"ERROR al enviar el email:{CrLf}{msg}.", "Error al enviar el email de la reserva", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-            }
-            else
-            {
-                MessageBox.Show($"{msg}", "Enviar email de la reserva", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            }
-        }
+        //if (QueBoton == BtnEnviarConfirm)
+        //{
+        //    if (msg.StartsWith("ERROR"))
+        //    {
+        //        MessageBox.Show($"ERROR al enviar el email:{CrLf}{msg}.", "Error al enviar el email de la reserva", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+        //    }
+        //    else
+        //    {
+        //        MessageBox.Show($"{msg}", "Enviar email de la reserva", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        //    }
+        //}
         LabelStatus.Text = StatusAnt;
         Application.DoEvents();
 
@@ -505,36 +505,37 @@ public partial class FormAnalizaEmail : Form
     {
         if (inicializando) return;
 
-        HabilitarBotonesReservas();
-    }
-
-    private void ChkEnviarConfirm_CheckedChanged(object sender, EventArgs e)
-    {
-        if (inicializando) return;
-
-        HabilitarBotonesReservas();
-    }
-
-    private void HabilitarBotonesReservas()
-    {
         BtnCrearConEmail.Enabled = ChkCrearConEmail.Checked;
-
-        // No habilitar los otros                       (22/ago/23 20.18)
-        // si el de hacer las dos cosas está habilitado
-        //ChkEnviarConfirm.Enabled = !ChkCrearConEmail.Checked;
-        if (ChkCrearConEmail.Checked == false)
-        {
-            ChkEnviarConfirm.Enabled = false;
-        }
-        if (ChkEnviarConfirm.Enabled == false)
-        {
-            ChkEnviarConfirm.Enabled = false;
-            ChkEnviarConfirm.Checked = false;
-        }
-
-        BtnCrearReserva.Enabled = ChkEnviarConfirm.Checked;
-        BtnEnviarConfirm.Enabled = ChkEnviarConfirm.Checked;
+        //HabilitarBotonesReservas();
     }
+
+    //private void ChkEnviarConfirm_CheckedChanged(object sender, EventArgs e)
+    //{
+    //    if (inicializando) return;
+
+    //    HabilitarBotonesReservas();
+    //}
+
+    //private void HabilitarBotonesReservas()
+    //{
+    //    BtnCrearConEmail.Enabled = ChkCrearConEmail.Checked;
+
+    //    //// No habilitar los otros                       (22/ago/23 20.18)
+    //    //// si el de hacer las dos cosas está habilitado
+    //    ////ChkEnviarConfirm.Enabled = !ChkCrearConEmail.Checked;
+    //    //if (ChkCrearConEmail.Checked == false)
+    //    //{
+    //    //    ChkEnviarConfirm.Enabled = false;
+    //    //}
+    //    //if (ChkEnviarConfirm.Enabled == false)
+    //    //{
+    //    //    ChkEnviarConfirm.Enabled = false;
+    //    //    ChkEnviarConfirm.Checked = false;
+    //    //}
+
+    //    //BtnCrearReserva.Enabled = ChkEnviarConfirm.Checked;
+    //    //BtnEnviarConfirm.Enabled = ChkEnviarConfirm.Checked;
+    //}
 
     private void BtnLimpiarTexto_Click(object sender, EventArgs e)
     {
