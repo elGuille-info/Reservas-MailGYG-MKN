@@ -6,7 +6,7 @@
         <ImplicitUsings>disable</ImplicitUsings>
         <Nullable>disable</Nullable>
         <Title>ApiReservasGYG</Title>
-        <Description>Analizar los correos de GetYourGuide para crear las nuevas reservas para MKN Reservas (Maro - Kayak Nerja)  (revisión del 29-ago-2023).
+        <Description>Analizar los correos de GetYourGuide para crear las nuevas reservas para MKN Reservas (Maro - Kayak Nerja)  (revisión del 31-ago-2023).
 Usando .NET Standard 2.0
         </Description>
         <Copyright>(c) 2023 gSoft para Maro-Kayak Nerja</Copyright>

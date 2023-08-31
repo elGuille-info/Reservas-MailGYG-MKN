@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 
 //using ReservasGYG_Movil.Services;
 using ReservasGYG_Movil.Views;
@@ -17,6 +18,39 @@ namespace ReservasGYG_Movil
 
             //DependencyService.Register<MockDataStore>();
             MainPage = new AppShell();
+        }
+
+        // La descripción para las copias de seguridad. (21/Oct/21)
+        // Se usará como descripción lo que esté entre comillas dobles (incluidos los espacios).
+        // Ya que se comprueba que empiece con: [COPIAR]AppDescripcionCopia = y unas comillas dobles.
+
+        // Intentar no pasar de estas marcas: 60 caracteres. 2         3         4         5         6
+        //                                ---------|---------|---------|---------|---------|---------|
+        //[COPIAR]AppDescripcionCopia = " al mostrar productos ocultar reservas"
+        // BuscarClientes mostrar reservas en la pagina
+
+        /// <summary>
+        /// La versión de la aplicación.
+        /// </summary>
+        public static string AppVersion { get; } = "1.0.0";
+
+        /// <summary>
+        /// La versión del fichero (la revisión)
+        /// </summary>
+        public static string AppFileVersion { get; } = "1.0.0.5";
+
+        /// <summary>
+        /// La fecha de última actualización
+        /// </summary>
+        public static string AppFechaVersion { get; } = "31-ago-2023";
+
+        /// <summary>
+        /// Hacer una pequeña pausa para refrescar.
+        /// </summary>
+        /// <param name="intervalo">El tiempo que hay que esperar (en milisegundos).</param>
+        public static async Task Refrescar(int intervalo = 300)
+        {
+            await Task.Delay(intervalo);
         }
 
         protected override void OnStart()

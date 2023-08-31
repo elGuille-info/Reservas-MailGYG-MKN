@@ -28,37 +28,66 @@
         </Style>
     </ContentPage.Resources>
 
+    <!-- <ScrollView Padding="4"> -->
     <ScrollView Padding="4">
         <StackLayout Orientation="Vertical" Padding="6" Spacing="12">
-            <StackLayout Orientation="{OnIdiom Phone=Vertical, Default=Horizontal}" BackgroundColor="LightSteelBlue"
-                         Padding="6" Spacing="12" Margin="0,0,0,6">
-                <Button x:Name="BtnPegarMail" Text="Pegar texto" 
-                        HorizontalOptions="Start"
-                        BackgroundColor="Gold" TextColor="Black" 
-                        HeightRequest="40" WidthRequest="160"
-                        Clicked="BtnPegarMail_Clicked"/>
-                <Button x:Name="BtnAnalizarEmail" Text="Analizar email"
-                        HorizontalOptions="{OnIdiom Phone=Start, Default=CenterAndExpand}"
-                        BackgroundColor="Azure" TextColor="Black"
-                        HeightRequest="40" WidthRequest="160"
-                        PropertyChanged="BtnCrearConEmail_PropertyChanged"
-                        Clicked="BtnAnalizarEmail_Clicked"/>
-                <Button x:Name="BtnCrearConEmail" Text="Crear reserva y texto para email"
-                        Margin="{OnIdiom Phone=0, Desktop='24,0,0,0', Tablet='8,0,0,0'}" 
-                        HorizontalOptions="{OnIdiom Phone=Start, Default=EndAndExpand}"
-                        BackgroundColor="MistyRose" TextColor="Black"
-                        HeightRequest="40" WidthRequest="350"
-                        PropertyChanged="BtnCrearConEmail_PropertyChanged"
-                        Clicked="BtnCrearConEmail_Clicked"/>
+            <!-- Expander -->
+            <StackLayout>
+                <StackLayout Orientation="Horizontal" Padding="4" BackgroundColor="{DynamicResource Primary}">
+                    <StackLayout.GestureRecognizers>
+                        <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="TapGestureRecognizer_Tapped_1" />
+                    </StackLayout.GestureRecognizers>
+                    <Label Text="Email de la reserva a Analizar"
+                       FontFamily="Consolas" TextColor="White" FontAttributes="Bold"
+                       HorizontalOptions="FillAndExpand">
+                        <Label.GestureRecognizers>
+                            <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="TapGestureRecognizer_Tapped_1" />
+                        </Label.GestureRecognizers>
+                    </Label>
+                    <Image x:Name="ImgEmailReserva" Style="{StaticResource ImgExpander}"
+                       Source="Resources\expand.png">
+                        <Image.GestureRecognizers>
+                            <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="TapGestureRecognizer_Tapped_1" />
+                        </Image.GestureRecognizers>
+                    </Image>
+                </StackLayout>
             </StackLayout>
-            <Editor x:Name="RtfEmail" HorizontalOptions="FillAndExpand"
-                    HeightRequest="200"
-                    Text=""/>
-            <StackLayout BackgroundColor="LightSteelBlue" Padding="4,2">
-                <Label x:Name="LabelStatus" FontSize="12" TextColor="Black"
-                       HorizontalOptions="StartAndExpand" HorizontalTextAlignment="Start"
-                       Text="Información de la reserva."/>
-            </StackLayout>
+            <ScrollView x:Name="GrbEmailReserva">
+                <StackLayout>
+                    <!-- <StackLayout Orientation="{OnIdiom Phone=Vertical, Default=Horizontal}" BackgroundColor="LightSteelBlue"-->
+                    <ScrollView Orientation="Horizontal">
+                        <StackLayout Orientation="Horizontal" BackgroundColor="LightSteelBlue"
+                                     Padding="6" Spacing="12" Margin="0,0,0,6">
+                            <Button x:Name="BtnPegarMail" Text="Pegar texto" 
+                                    HorizontalOptions="Start"
+                                    BackgroundColor="Gold" TextColor="Black" 
+                                    HeightRequest="40" WidthRequest="160"
+                                    Clicked="BtnPegarMail_Clicked"/>
+                            <Button x:Name="BtnAnalizarEmail" Text="Analizar email"
+                                    HorizontalOptions="{OnIdiom Phone=Start, Default=CenterAndExpand}"
+                                    BackgroundColor="Azure" TextColor="Black"
+                                    HeightRequest="40" WidthRequest="160"
+                                    PropertyChanged="BtnCrearConEmail_PropertyChanged"
+                                    Clicked="BtnAnalizarEmail_Clicked"/>
+                            <Button x:Name="BtnCrearConEmail" Text="Crear reserva y texto para email"
+                                    Margin="{OnIdiom Phone=0, Desktop='24,0,0,0', Tablet='8,0,0,0'}" 
+                                    HorizontalOptions="{OnIdiom Phone=Start, Default=EndAndExpand}"
+                                    BackgroundColor="MistyRose" TextColor="Black"
+                                    HeightRequest="40" WidthRequest="350"
+                                    PropertyChanged="BtnCrearConEmail_PropertyChanged"
+                                    Clicked="BtnCrearConEmail_Clicked"/>
+                        </StackLayout>
+                    </ScrollView>
+                    <Editor x:Name="RtfEmail" HorizontalOptions="FillAndExpand"
+                            HeightRequest="200"
+                            Text=""/>
+                    <StackLayout BackgroundColor="LightSteelBlue" Padding="4,2">
+                        <Label x:Name="LabelStatus" FontSize="12" TextColor="Black"
+                               HorizontalOptions="StartAndExpand" HorizontalTextAlignment="Start"
+                               Text="Información de la reserva."/>
+                    </StackLayout>
+                </StackLayout>
+            </ScrollView>
             <!--<BoxView BackgroundColor="SteelBlue" HeightRequest="4" Margin="0,6"/>-->
             <!-- Simular Expander -->
             <StackLayout>
@@ -189,25 +218,32 @@
                     </Image>
                 </StackLayout>
             </StackLayout>
-            <StackLayout x:Name="GrbTextoEmail" HorizontalOptions="FillAndExpand">
-                <StackLayout BackgroundColor="SteelBlue">
-                    <Label x:Name="LabelAsuntoEmail" FontSize="13" TextColor="White" FontAttributes="Bold" />
-                    <Label x:Name="LabelParaEmail" FontSize="13" TextColor="White" />
-                    <StackLayout Orientation="Horizontal">
-                        <Button Text="Copia Asunto" 
-                                BackgroundColor="Goldenrod" TextColor="White"
-                                Clicked="ButtonCopiaAsunto_Clicked" />
-                        <Button Text="Copia Email" 
-                                BackgroundColor="Goldenrod" TextColor="White"
-                                Clicked="ButtonCopiaEmail_Clicked"/>
-                        <Button Text="Copia Texto" 
-                                BackgroundColor="Goldenrod" TextColor="White"
-                                Clicked="ButtonCopiaTextoEmail_Clicked"/>
+            <StackLayout x:Name="GrbTextoEmail" Orientation="Horizontal">
+                <StackLayout Spacing="12" Padding="4,6"
+                             BackgroundColor="WhiteSmoke">
+                    <ScrollView>
+                        <StackLayout BackgroundColor="SteelBlue">
+                            <Label x:Name="LabelAsuntoEmail" FontSize="13" TextColor="White" FontAttributes="Bold" />
+                            <Label x:Name="LabelParaEmail" FontSize="13" TextColor="White" />
+                            <StackLayout Orientation="Horizontal" Spacing="12">
+                                <Button Text="Copia Asunto" 
+                                        BackgroundColor="Goldenrod" TextColor="White"
+                                        Clicked="ButtonCopiaAsunto_Clicked" />
+                                <Button Text="Copia Email" 
+                                        BackgroundColor="Goldenrod" TextColor="White"
+                                        Clicked="ButtonCopiaEmail_Clicked"/>
+                                <Button Text="Copia Texto" 
+                                        BackgroundColor="Goldenrod" TextColor="White"
+                                        Clicked="ButtonCopiaTextoEmail_Clicked"/>
+                            </StackLayout>
+                        </StackLayout>
+                    </ScrollView>
+                    <StackLayout Orientation="Vertical">
+                        <Editor x:Name="TxtTextoEmail" HorizontalOptions="FillAndExpand"
+                                HeightRequest="500"
+                                Text=""/>
                     </StackLayout>
                 </StackLayout>
-                <Editor x:Name="TxtTextoEmail" HorizontalOptions="FillAndExpand"
-                        HeightRequest="200"
-                        Text=""/>
             </StackLayout>
         </StackLayout>
     </ScrollView>

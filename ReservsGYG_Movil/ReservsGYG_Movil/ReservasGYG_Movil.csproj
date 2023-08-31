@@ -34,17 +34,43 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="Resources\CleanData.png" />
     <None Remove="Resources\collapse.png" />
     <None Remove="Resources\collapse_white.png" />
     <None Remove="Resources\expand.png" />
     <None Remove="Resources\expand_white.png" />
+    <None Remove="Resources\Fotos_ruta.txt" />
+    <None Remove="Resources\GYG_logo_blanco90x90.png" />
+    <None Remove="Resources\GYG_logo_naranja_265x265.png" />
+    <None Remove="Resources\Hoy_es_el_dia.txt" />
+    <None Remove="Resources\IMPORTANTE_EN.txt" />
+    <None Remove="Resources\IMPORTANTE_EN_09_30.txt" />
+    <None Remove="Resources\IMPORTANTE_EN_10_30_11_00.txt" />
+    <None Remove="Resources\IMPORTANTE_ES.txt" />
+    <None Remove="Resources\IMPORTANTE_ES_09_30.txt" />
+    <None Remove="Resources\IMPORTANTE_ES_10_30_11_00.txt" />
+    <None Remove="Resources\Mañana_es_el_dia.txt" />
+    <None Remove="Resources\Paste.png" />
   </ItemGroup>
 
   <ItemGroup>
+    <EmbeddedResource Include="Resources\CleanData.png" />
     <EmbeddedResource Include="Resources\collapse.png" />
     <EmbeddedResource Include="Resources\collapse_white.png" />
     <EmbeddedResource Include="Resources\expand.png" />
     <EmbeddedResource Include="Resources\expand_white.png" />
+    <EmbeddedResource Include="Resources\Fotos_ruta.txt" />
+    <EmbeddedResource Include="Resources\GYG_logo_blanco90x90.png" />
+    <EmbeddedResource Include="Resources\GYG_logo_naranja_265x265.png" />
+    <EmbeddedResource Include="Resources\Hoy_es_el_dia.txt" />
+    <EmbeddedResource Include="Resources\IMPORTANTE_EN_09_30.txt" />
+    <EmbeddedResource Include="Resources\IMPORTANTE_EN_10_30_11_00.txt" />
+    <EmbeddedResource Include="Resources\IMPORTANTE_EN.txt" />
+    <EmbeddedResource Include="Resources\IMPORTANTE_ES_09_30.txt" />
+    <EmbeddedResource Include="Resources\IMPORTANTE_ES_10_30_11_00.txt" />
+    <EmbeddedResource Include="Resources\IMPORTANTE_ES.txt" />
+    <EmbeddedResource Include="Resources\Mañana_es_el_dia.txt" />
+    <EmbeddedResource Include="Resources\Paste.png" />
   </ItemGroup>
 
   <ItemGroup>
@@ -53,8 +79,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\..\MKNReservas\KNDLLs\KNDatos\KNDatos.vbproj" />
-    <ProjectReference Include="..\..\..\..\MKNReservas\KNDLLs\KNUtilidades\MKNUtilidades.vbproj" />
+    <ProjectReference Include="..\..\..\..\MKNReservas\KNDLLs\Xamarin\KNDatos\KNDatos.vbproj" />
+    <ProjectReference Include="..\..\..\..\MKNReservas\KNDLLs\Xamarin\KNUtilidades\MKNUtilidades.vbproj" />
     <ProjectReference Include="..\..\ApiReservasGYG\ApiReservasGYG.csproj" />
   </ItemGroup>
 

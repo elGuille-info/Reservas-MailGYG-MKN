@@ -324,17 +324,29 @@ namespace ReservasGYG_Movil
 
         private static async Task<string> LeerAsset(string asset)
         {
+            //img.Source = FileImageSource.FromResource($"ReservasGYG_Movil.Resources.{imgSource}", typeof(MainPage).Assembly);
             try
             {
-                //using var stream = await FileSystem.OpenAppPackageFileAsync(asset);
-                //using var reader = new System.IO.StreamReader(stream);
-                using (var stream = await FileSystem.OpenAppPackageFileAsync(asset))
+                ////using var stream = await FileSystem.OpenAppPackageFileAsync(asset);
+                ////using var reader = new System.IO.StreamReader(stream);
+                //using (var stream = await FileSystem.OpenAppPackageFileAsync(asset))
+                //{
+                //    using (var reader = new System.IO.StreamReader(stream))
+                //    {
+                //        return reader.ReadToEnd();
+                //    }
+                //}
+                await App.Refrescar(10);
+
+                var assembly = typeof(MainPage).Assembly;
+                //System.IO.Stream stream = assembly.GetManifestResourceStream($"ReservasGYG_Movil.Resources.{asset}");
+                System.IO.Stream stream = assembly.GetManifestResourceStream($"ReservasGYG_Movil.Resources.{asset}");
+                string text = "";
+                using (var reader = new System.IO.StreamReader(stream))
                 {
-                    using (var reader = new System.IO.StreamReader(stream))
-                    {
-                        return reader.ReadToEnd();
-                    }
+                    text = reader.ReadToEnd();
                 }
+                return text;
             }
             catch (Exception ex)
             {
@@ -396,6 +408,7 @@ namespace ReservasGYG_Movil
                 else
                 {
                     sb.Append(await MainPage.LeerAsset("IMPORTANTE_ES.txt"));
+                    //sb.Append(await MainPage.LeerAsset("IMPORTANTE_ES.rtf"));
                 }
             }
 
@@ -456,6 +469,12 @@ namespace ReservasGYG_Movil
             ActualizarImagenExpander();
         }
 
+        private void TapGestureRecognizer_Tapped_1(object sender, EventArgs e)
+        {
+            GrbEmailReserva.IsVisible = !GrbEmailReserva.IsVisible;
+            ActualizarImagenExpander();
+        }
+
         /// <summary>
         /// Muestra las imágenes que correspondan según estén visibles o no.
         /// </summary>
@@ -463,6 +482,7 @@ namespace ReservasGYG_Movil
         {
             MostrarImagenExpander(ImgDatosReserva, GrbDatosReserva.IsVisible);
             MostrarImagenExpander(ImgTextoEmail, GrbTextoEmail.IsVisible);
+            MostrarImagenExpander(ImgEmailReserva, GrbEmailReserva.IsVisible);
             //MostrarImagenExpander(ImgComprobarCambios, grbComprobarCambiosContent.IsVisible);
             //MostrarImagenExpander(ImgMostrarEdicionReservas, grbMostrarEdicionReservasContent.IsVisible);
         }
@@ -514,36 +534,5 @@ namespace ReservasGYG_Movil
                 catch { }
             }
         }
-
-        ///// <summary>
-        ///// Enviar un mensaje de correo.
-        ///// </summary>
-        ///// <param name="para"></param>
-        ///// <param name="asunto"></param>
-        ///// <param name="bodyMensaje"></param>
-        ///// <returns></returns>
-        //private static async Task<string> EnviarMensaje(string para, string asunto, string bodyMensaje)
-        //{
-        //    var message = new EmailMessage
-        //    {
-        //        Subject = asunto,
-        //        Body = bodyMensaje,
-        //    };
-        //    message.To.Add(para);
-        //    message.To.Add("reservas@kayakmakarena.com");
-        //    message.Bcc.Add("kayak.makarena@gmail.com");
-
-        //    try
-        //    {
-        //        await Email.ComposeAsync(message);
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        return $"ERROR: {ex.Message}";
-        //        //await Browser.OpenAsync("mailto:reservas@kayakmakarena.com" +
-        //        //    $"?Subject={asunto.Replace(" ", "%20").Replace(".", "%2e").Replace("@", "%40")}");
-        //    }
-        //    return "Mensaje enviado correctamente a '" + para + "'";
-        //}
     }
 }
