@@ -18,7 +18,6 @@ using ApiReservasMailGYG;
 using static ApiReservasMailGYG.MailGYG;
 
 
-
 namespace ReservasGYG;
 
 public partial class FormAnalizaEmail : Form
@@ -115,7 +114,6 @@ public partial class FormAnalizaEmail : Form
         ChkCrearConEmail.Enabled = true;
         ChkCrearConEmail.Checked = true;
         BtnCrearConEmail.Enabled = ChkCrearConEmail.Checked;
-        //HabilitarBotonesReservas();
     }
 
     private void BtnLimpiarReserva_Click(object sender, EventArgs e)
@@ -138,50 +136,20 @@ public partial class FormAnalizaEmail : Form
         }
 
         ChkCrearConEmail.Enabled = false;
-        //ChkEnviarConfirm.Enabled = false;
 
         ChkCrearConEmail.Checked = false;
         BtnCrearConEmail.Enabled = ChkCrearConEmail.Checked;
-        //ChkEnviarConfirm.Checked = false;
-        //HabilitarBotonesReservas();
     }
-
-    //private void BtnCrearReserva_Click(object sender, EventArgs e)
-    //{
-    //    QueBoton = sender;
-
-    //    StatusAnt = LabelStatus.Text;
-    //    LabelStatus.Text = "Creando la reserva...";
-    //    Application.DoEvents();
-
-    //    TimerCrearReserva.Interval = 200;
-    //    TimerCrearReserva.Enabled = true;
-    //}
-
-    //private void BtnEnviarConfirm_Click(object sender, EventArgs e)
-    //{
-    //    QueBoton = sender;
-
-    //    StatusAnt = LabelStatus.Text;
-    //    LabelStatus.Text = "Enviando el email de confirmación...";
-    //    Application.DoEvents();
-
-    //    TimerEnviarEmail.Interval = 200;
-    //    TimerEnviarEmail.Enabled = true;
-    //}
 
     private void BtnCrearConEmail_Click(object sender, EventArgs e)
     {
         // Las dos cosas seguidas.                      (22/ago/23 10.28)
         // Si se hacen desde el temporizador no va bien.
-        //BtnCrearReserva_Click(sender, e);
-        //BtnEnviarConfirm_Click(sender, e);
 
         // Deshabilitar el botón hasta que finalice.        (27/ago/23 09.58)
         ChkCrearConEmail.Checked = false;
-        //BtnCrearConEmail.Enabled = false;
 
-        QueBoton = sender;
+        //QueBoton = sender;
 
         StatusAnt = LabelStatus.Text;
         LabelStatus.Text = "Creando la reserva...";
@@ -198,14 +166,12 @@ public partial class FormAnalizaEmail : Form
             ChkCrearConEmail.Checked = false;
             ChkCrearConEmail.Enabled = false;
             BtnCrearConEmail.Enabled = ChkCrearConEmail.Checked;
-            //ChkEnviarConfirm.Checked = false;
-            //HabilitarBotonesReservas();
 
             MessageBox.Show(InfoCrearConEmail.ToString(), "Crear reserva y enviar email", MessageBoxButtons.OK, MessageBoxIcon.Information);
             return;
         }
 
-        QueBoton = sender;
+        //QueBoton = sender;
 
         StatusAnt = LabelStatus.Text;
         LabelStatus.Text = "Enviando el email de confirmación...";
@@ -217,8 +183,6 @@ public partial class FormAnalizaEmail : Form
 
         ChkCrearConEmail.Checked = false;
         BtnCrearConEmail.Enabled = ChkCrearConEmail.Checked;
-        //ChkEnviarConfirm.Checked = false;
-        //HabilitarBotonesReservas();
 
         MessageBox.Show(InfoCrearConEmail.ToString(), "Crear reserva y enviar email", MessageBoxButtons.OK, MessageBoxIcon.Information);
     }
@@ -326,11 +290,6 @@ public partial class FormAnalizaEmail : Form
         InfoCrearConEmail.AppendLine();
 
         LabelStatus.Text = StatusAnt;
-
-        //if (QueBoton == BtnCrearReserva)
-        //{
-        //    MessageBox.Show(InfoCrearConEmail.ToString(), "Reserva creada", MessageBoxButtons.OK, MessageBoxIcon.Information);
-        //}
 
         return false;
     }
@@ -476,17 +435,6 @@ public partial class FormAnalizaEmail : Form
         InfoCrearConEmail.AppendLine(msg);
         InfoCrearConEmail.AppendLine();
 
-        //if (QueBoton == BtnEnviarConfirm)
-        //{
-        //    if (msg.StartsWith("ERROR"))
-        //    {
-        //        MessageBox.Show($"ERROR al enviar el email:{CrLf}{msg}.", "Error al enviar el email de la reserva", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-        //    }
-        //    else
-        //    {
-        //        MessageBox.Show($"{msg}", "Enviar email de la reserva", MessageBoxButtons.OK, MessageBoxIcon.Information);
-        //    }
-        //}
         LabelStatus.Text = StatusAnt;
         Application.DoEvents();
 
@@ -506,15 +454,7 @@ public partial class FormAnalizaEmail : Form
         if (inicializando) return;
 
         BtnCrearConEmail.Enabled = ChkCrearConEmail.Checked;
-        //HabilitarBotonesReservas();
     }
-
-    //private void ChkEnviarConfirm_CheckedChanged(object sender, EventArgs e)
-    //{
-    //    if (inicializando) return;
-
-    //    HabilitarBotonesReservas();
-    //}
 
     //private void HabilitarBotonesReservas()
     //{
@@ -558,24 +498,5 @@ public partial class FormAnalizaEmail : Form
     private void TimerHoraStatus_Tick(object sender, EventArgs e)
     {
         LabelFechaHora.Text = $"{DateTime.Now:dd/MM/yyyy HH:mm:ss}";
-    }
-
-    private void TimerCrearReserva_Tick(object sender, EventArgs e)
-    {
-        TimerCrearReserva.Stop();
-        TimerCrearReserva.Enabled = false;
-
-        CrearReserva();
-
-        LabelStatus.Text = StatusAnt;
-        Application.DoEvents();
-    }
-
-    private void TimerEnviarEmail_Tick(object sender, EventArgs e)
-    {
-        TimerEnviarEmail.Stop();
-        TimerEnviarEmail.Enabled = false;
-
-        EnviarMensajeConfirmacion();
     }
 }
