@@ -24,7 +24,7 @@ public partial class FormAnalizaEmail : Form
 {
     private bool inicializando = true;
     private string StatusAnt;
-    private object QueBoton;
+    //private object QueBoton;
 
     public static FormAnalizaEmail Current { get; set; }
     public FormAnalizaEmail()

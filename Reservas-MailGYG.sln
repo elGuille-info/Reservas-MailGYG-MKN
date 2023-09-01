@@ -24,9 +24,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Movil", "Movil", "{6EEDB6F4
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ApiReservasGYG", "ApiReservasGYG\ApiReservasGYG.csproj", "{CE187A2B-F505-437D-9C98-E2BA6644726D}"
 EndProject
-Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "KNDatos", "..\..\MKNReservas\KNDLLs\Xamarin\KNDatos\KNDatos.vbproj", "{C12C5E93-4C66-4F68-9BFD-44871A2C1579}"
+Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "KNDatos-Xamarin", "..\..\MKNReservas\KNDLLs\Xamarin\KNDatos\KNDatos-Xamarin.vbproj", "{C12C5E93-4C66-4F68-9BFD-44871A2C1579}"
 EndProject
-Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "MKNUtilidades", "..\..\MKNReservas\KNDLLs\Xamarin\KNUtilidades\MKNUtilidades.vbproj", "{F6E29084-346D-41B5-9DC1-08A2BBC41F79}"
+Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "MKNUtilidades-Xamarin", "..\..\MKNReservas\KNDLLs\Xamarin\KNUtilidades\MKNUtilidades-Xamarin.vbproj", "{F6E29084-346D-41B5-9DC1-08A2BBC41F79}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -326,7 +326,8 @@ Global
 		{F6E29084-346D-41B5-9DC1-08A2BBC41F79} = {5D6D2572-8368-4517-9BDD-F35899409051}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		        SolutionGuid = {55CA764C-5E8A-43A5-9A24-215304A9B227}
-		SolutionGuid = {780930A6-9C3C-4129-809E-3714AD2DE37A}
+		        SolutionGuid = {780930A6-9C3C-4129-809E-3714AD2DE37A}
+		                SolutionGuid = {55CA764C-5E8A-43A5-9A24-215304A9B227}
+		SolutionGuid = {11FCA5CB-A569-43F6-95B6-F3425C8FF4CD}
 	EndGlobalSection
 EndGlobal

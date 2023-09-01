@@ -198,6 +198,7 @@
                     </StackLayout>-->
                 </StackLayout>
             </ScrollView>
+            <!-- Simular Expander -->
             <StackLayout>
                 <StackLayout Orientation="Horizontal" Padding="4" BackgroundColor="{DynamicResource Primary}">
                     <StackLayout.GestureRecognizers>
@@ -218,10 +219,9 @@
                     </Image>
                 </StackLayout>
             </StackLayout>
-            <StackLayout x:Name="GrbTextoEmail" Orientation="Horizontal">
-                <StackLayout Spacing="12" Padding="4,6"
-                             BackgroundColor="WhiteSmoke">
-                    <ScrollView>
+            <StackLayout x:Name="GrbTextoEmail" HorizontalOptions="FillAndExpand">
+                <StackLayout Spacing="12" Padding="4,6" BackgroundColor="WhiteSmoke">
+                    <ScrollView HorizontalOptions="FillAndExpand">
                         <StackLayout BackgroundColor="SteelBlue">
                             <Label x:Name="LabelAsuntoEmail" FontSize="13" TextColor="White" FontAttributes="Bold" />
                             <Label x:Name="LabelParaEmail" FontSize="13" TextColor="White" />
@@ -238,7 +238,7 @@
                             </StackLayout>
                         </StackLayout>
                     </ScrollView>
-                    <StackLayout Orientation="Vertical">
+                    <StackLayout Orientation="Vertical" HorizontalOptions="FillAndExpand">
                         <Editor x:Name="TxtTextoEmail" HorizontalOptions="FillAndExpand"
                                 HeightRequest="500"
                                 Text=""/>

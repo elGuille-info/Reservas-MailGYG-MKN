@@ -1,8 +1,10 @@
-﻿using System;
+﻿// No cargar Shell, cargar directamente la página.          (01/sep/23 17.42)
+
+using System;
 using System.Threading.Tasks;
 
-//using ReservasGYG_Movil.Services;
-using ReservasGYG_Movil.Views;
+
+//using ReservasGYG_Movil.Views;
 
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -17,7 +19,8 @@ namespace ReservasGYG_Movil
             InitializeComponent();
 
             //DependencyService.Register<MockDataStore>();
-            MainPage = new AppShell();
+            //MainPage = new AppShell();
+            MainPage = new MainPage();
         }
 
         // La descripción para las copias de seguridad. (21/Oct/21)
@@ -26,7 +29,7 @@ namespace ReservasGYG_Movil
 
         // Intentar no pasar de estas marcas: 60 caracteres. 2         3         4         5         6
         //                                ---------|---------|---------|---------|---------|---------|
-        //[COPIAR]AppDescripcionCopia = " al mostrar productos ocultar reservas"
+        //[COPIAR]AppDescripcionCopia = " no usar shell"
         // BuscarClientes mostrar reservas en la pagina
 
         /// <summary>
@@ -37,12 +40,12 @@ namespace ReservasGYG_Movil
         /// <summary>
         /// La versión del fichero (la revisión)
         /// </summary>
-        public static string AppFileVersion { get; } = "1.0.0.5";
+        public static string AppFileVersion { get; } = "1.0.0.6";
 
         /// <summary>
         /// La fecha de última actualización
         /// </summary>
-        public static string AppFechaVersion { get; } = "31-ago-2023";
+        public static string AppFechaVersion { get; } = "01-sep-2023";
 
         /// <summary>
         /// Hacer una pequeña pausa para refrescar.

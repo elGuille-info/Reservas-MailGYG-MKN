@@ -23,7 +23,8 @@ namespace ReservasGYG_Movil.iOS
         public override bool FinishedLaunching(UIApplication app, NSDictionary options)
         {
             global::Xamarin.Forms.Forms.Init();
-            LoadApplication(new App());
+            //LoadApplication(new App());
+            LoadApplication(new ReservasGYG_Movil.App());
 
             return base.FinishedLaunching(app, options);
         }

@@ -134,11 +134,22 @@
     <Reference Include="System.Numerics.Vectors" />
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="System.Data.SqlClient">
+      <Version>4.8.5</Version>
+    </PackageReference>
     <PackageReference Include="Xamarin.Forms" Version="5.0.0.2196" />
     <PackageReference Include="Xamarin.Essentials" Version="1.7.0" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
   <ItemGroup>
+    <ProjectReference Include="..\..\..\..\MKNReservas\KNDLLs\Xamarin\KNDatos\KNDatos-Xamarin.vbproj">
+      <Project>{c12c5e93-4c66-4f68-9bfd-44871a2c1579}</Project>
+      <Name>KNDatos-Xamarin</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\MKNReservas\KNDLLs\Xamarin\KNUtilidades\MKNUtilidades-Xamarin.vbproj">
+      <Project>{f6e29084-346d-41b5-9dc1-08a2bbc41f79}</Project>
+      <Name>MKNUtilidades-Xamarin</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ReservsGYG_Movil\ReservasGYG_Movil.csproj">
       <Project>{6F89F06C-2D48-4926-8D3B-FFADE4CBEBE1}</Project>
       <Name>ReservasGYG_Movil</Name>

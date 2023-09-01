@@ -22,17 +22,11 @@ namespace ReservasGYG_Movil
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class MainPage : ContentPage
     {
-        //public MainPage()
-        //{
-        //    InitializeComponent();
-        //}
-
         private Reservas LaReserva { get; set; }
         private StringBuilder InfoCrearConEmail { get; set; } = new StringBuilder();
 
         private bool inicializando = true;
         private string StatusAnt;
-        //private object QueBoton;
 
         public static MainPage Current { get; set; }
 
@@ -63,6 +57,9 @@ namespace ReservasGYG_Movil
             ActualizarImagenExpander();
         }
 
+        /// <summary>
+        /// Limpiar los controles con los datos de la reserva.
+        /// </summary>
         private void LimpiarControlesReserva()
         {
             if (inicializando) return;

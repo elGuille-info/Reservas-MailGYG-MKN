@@ -95,7 +95,7 @@ namespace ReservasGYG
             GrbEmail.Size = new Size(1346, 328);
             GrbEmail.TabIndex = 0;
             GrbEmail.TabStop = false;
-            GrbEmail.Text = "Correo a procesar";
+            GrbEmail.Text = "Texto del correo a analizar";
             // 
             // BtnLimpiarTexto
             // 
