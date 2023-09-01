@@ -1,4 +1,8 @@
 ﻿// Para mandar las fotos a los del día y hora indicada.     (22/ago/23 16.50)
+//
+// Hay que mirar las reservas que hay y ponerlas por horas. (01/sep/23 19.44)
+// Comprobar las fotos que hay (horas) y avisar si hay reservas y no hay fotos,
+// al revés no es necesario.
 
 using System;
 using System.Collections.Generic;
@@ -148,7 +152,7 @@ public partial class FormEnviarFotos : Form
                 //return;
                 Debug.WriteLine("{0} {1}", fecha, hora);
             }
-            totalFotos +=1;
+            totalFotos += 1;
             //t2++;
         }
 
@@ -176,6 +180,10 @@ public partial class FormEnviarFotos : Form
         sb.Append("Select * from Reservas ");
         sb.Append("where Activa = 1 and CanceladaCliente = 0 and idDistribuidor = 10 ");
         //sb.Append("and Nombre != 'Makarena (GYG)' ");
+        // Solo las reservas confirmadas, por si las moscas (01/sep/23 19.49)
+        sb.Append($"and Confirmada = 1 ");
+        // Solo las rutas                                   (01/sep/23 21.15)
+        sb.Append($"and Actividad like 'ruta%' ");
         sb.Append($"and FechaActividad = '{fecha:yyyy-MM-dd}' and HoraActividad = '{hora:hh\\:mm}' ");
         sb.Append("order by FechaActividad, HoraActividad, ID");
 
@@ -441,5 +449,73 @@ https://photos.app.goo.gl/qqxWBkVthdBGMjFEA
     private void TxtFotosDia_TextChanged(object sender, EventArgs e)
     {
         TxtFotosSeleccionada.Text = TxtFotosDia.Text;
+    }
+
+    private void BuscarHorasReservas(DateTime fecha)
+    {
+        StringBuilder sb = new StringBuilder();
+        sb.Append("Select * from Reservas ");
+        sb.Append("where Activa = 1 and CanceladaCliente = 0 and idDistribuidor = 10 ");
+        // Solo las reservas confirmadas, por si las moscas (01/sep/23 19.49)
+        sb.Append($"and Confirmada = 1 ");
+        // Solo las rutas                                   (01/sep/23 21.15)
+        sb.Append($"and Actividad like 'ruta%' ");
+        sb.Append($"and FechaActividad = '{fecha:yyyy-MM-dd}' ");
+        sb.Append("order by FechaActividad, HoraActividad, ID");
+
+        var colRes = Reservas.TablaCol(sb.ToString());
+
+        // Extraer las reservas de cada hora
+        var hora = new TimeSpan(0, 0, 0);
+        List<string> listHoras = new List<string>();
+        for (int i = 0; i < colRes.Count; i++)
+        {
+            if (colRes[i].HoraActividad != hora)
+            {
+                //if (hora.Hours != 0)
+                //{
+                //    listHoras.Add($"{colRes[i].HoraActividad:hh\\:mm}");
+                //}
+                hora = colRes[i].HoraActividad;
+                listHoras.Add($"{colRes[i].HoraActividad:hh\\:mm}");
+            }
+        }
+        // Las horas en las que hay reservas
+        //Debug.WriteLine("{0}", listHoras.Count);
+
+        var fotosHoras = MailGYG.AnalizarTextoFotos(TxtFotosDia.Text);
+        //Debug.WriteLine("{0}", fotosHoras.Count);
+
+        // contar las horas con fotos.                      (01/sep/23 21.02)
+        int horasFotos = 0;
+        foreach (var s in fotosHoras) 
+        { 
+            if (string.IsNullOrWhiteSpace(s) == false)
+            {
+                horasFotos++;
+            }
+        }
+        if (horasFotos != listHoras.Count)
+        {
+            MessageBox.Show("La cantidad de horas de las reservas y el de las fotos no coincide." + CrLf +
+                            $"Horas diferentes en las reserva: {listHoras.Count}." + CrLf +
+                            $"Horas diferentes en las fotos: {horasFotos}.", 
+                            "Comprobar horas de reservas y fotos", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+        }
+        else
+        {
+            MessageBox.Show("La cantidad de horas de las reservas y el de las fotos son iguales:" + CrLf +
+                           $"Horas diferentes en las reserva: {listHoras.Count}." + CrLf +
+                           $"Horas diferentes en las fotos: {horasFotos}.",
+                           "Comprobar horas de reservas y fotos", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+    }
+
+    private void BtnComprobarReservasHoras_Click(object sender, EventArgs e)
+    {
+        var fecha = DateTimePickerGYG.Value.Date;
+
+        BuscarHorasReservas(fecha);
+
     }
 }

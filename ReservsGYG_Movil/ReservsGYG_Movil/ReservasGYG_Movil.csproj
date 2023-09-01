@@ -9,28 +9,24 @@
   <ItemGroup>
     <Compile Remove="Models\**" />
     <Compile Remove="Services\**" />
+    <Compile Remove="ViewModels\**" />
+    <Compile Remove="Views\**" />
     <EmbeddedResource Remove="Models\**" />
     <EmbeddedResource Remove="Services\**" />
+    <EmbeddedResource Remove="ViewModels\**" />
+    <EmbeddedResource Remove="Views\**" />
     <None Remove="Models\**" />
     <None Remove="Services\**" />
+    <None Remove="ViewModels\**" />
+    <None Remove="Views\**" />
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Remove="ViewModels\ItemDetailViewModel.cs" />
-    <Compile Remove="ViewModels\ItemsViewModel.cs" />
-    <Compile Remove="ViewModels\LoginViewModel.cs" />
-    <Compile Remove="ViewModels\NewItemViewModel.cs" />
-    <Compile Remove="Views\ItemDetailPage.xaml.cs" />
-    <Compile Remove="Views\ItemsPage.xaml.cs" />
-    <Compile Remove="Views\LoginPage.xaml.cs" />
-    <Compile Remove="Views\NewItemPage.xaml.cs" />
+    <Compile Remove="AppShell.xaml.cs" />
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Remove="Views\ItemDetailPage.xaml" />
-    <EmbeddedResource Remove="Views\ItemsPage.xaml" />
-    <EmbeddedResource Remove="Views\LoginPage.xaml" />
-    <EmbeddedResource Remove="Views\NewItemPage.xaml" />
+    <EmbeddedResource Remove="AppShell.xaml" />
   </ItemGroup>
 
   <ItemGroup>

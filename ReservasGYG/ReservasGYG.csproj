@@ -31,8 +31,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\MKNReservas\KNDLLs\KNDatos\KNDatos.vbproj" />
-    <ProjectReference Include="..\..\..\MKNReservas\KNDLLs\KNUtilidades\MKNUtilidades.vbproj" />
+    <ProjectReference Include="..\..\..\MKNReservas\KNDLLs\Xamarin\KNDatos\KNDatos-Xamarin.vbproj" />
+    <ProjectReference Include="..\..\..\MKNReservas\KNDLLs\Xamarin\KNUtilidades\MKNUtilidades-Xamarin.vbproj" />
     <ProjectReference Include="..\ApiReservasGYG\ApiReservasGYG.csproj" />
   </ItemGroup>
 

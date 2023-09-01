@@ -41,6 +41,7 @@
             BtnLimpiar = new System.Windows.Forms.Button();
             BtnPegar = new System.Windows.Forms.Button();
             BtnEnviarFotosDia = new System.Windows.Forms.Button();
+            BtnComprobarReservasHoras = new System.Windows.Forms.Button();
             SuspendLayout();
             // 
             // TxtFotosSeleccionada
@@ -54,7 +55,7 @@
             TxtFotosSeleccionada.ReadOnly = true;
             TxtFotosSeleccionada.ScrollBars = System.Windows.Forms.ScrollBars.Both;
             TxtFotosSeleccionada.Size = new System.Drawing.Size(654, 338);
-            TxtFotosSeleccionada.TabIndex = 8;
+            TxtFotosSeleccionada.TabIndex = 7;
             TxtFotosSeleccionada.Text = resources.GetString("TxtFotosSeleccionada.Text");
             // 
             // label8
@@ -63,7 +64,7 @@
             label8.Margin = new System.Windows.Forms.Padding(6, 3, 3, 3);
             label8.Name = "label8";
             label8.Size = new System.Drawing.Size(180, 31);
-            label8.TabIndex = 5;
+            label8.TabIndex = 4;
             label8.Text = "Selecciona la hora:";
             // 
             // CboHoras
@@ -74,13 +75,14 @@
             CboHoras.Location = new System.Drawing.Point(817, 12);
             CboHoras.Name = "CboHoras";
             CboHoras.Size = new System.Drawing.Size(251, 33);
-            CboHoras.TabIndex = 6;
+            CboHoras.TabIndex = 5;
             CboHoras.SelectedIndexChanged += CboHoras_SelectedIndexChanged;
             // 
             // BtnEnviarFotos
             // 
             BtnEnviarFotos.BackColor = System.Drawing.Color.Honeydew;
-            BtnEnviarFotos.Location = new System.Drawing.Point(633, 510);
+            BtnEnviarFotos.Location = new System.Drawing.Point(633, 584);
+            BtnEnviarFotos.Margin = new System.Windows.Forms.Padding(3, 12, 3, 3);
             BtnEnviarFotos.Name = "BtnEnviarFotos";
             BtnEnviarFotos.Size = new System.Drawing.Size(654, 60);
             BtnEnviarFotos.TabIndex = 10;
@@ -95,16 +97,17 @@
             DateTimePickerGYG.Location = new System.Drawing.Point(1074, 10);
             DateTimePickerGYG.Name = "DateTimePickerGYG";
             DateTimePickerGYG.Size = new System.Drawing.Size(213, 31);
-            DateTimePickerGYG.TabIndex = 7;
+            DateTimePickerGYG.TabIndex = 6;
             DateTimePickerGYG.ValueChanged += DateTimePickerFotos_ValueChanged;
             // 
             // BtnComprobarEmails
             // 
             BtnComprobarEmails.BackColor = System.Drawing.Color.MistyRose;
             BtnComprobarEmails.Location = new System.Drawing.Point(633, 420);
+            BtnComprobarEmails.Margin = new System.Windows.Forms.Padding(3, 12, 3, 3);
             BtnComprobarEmails.Name = "BtnComprobarEmails";
             BtnComprobarEmails.Size = new System.Drawing.Size(654, 60);
-            BtnComprobarEmails.TabIndex = 9;
+            BtnComprobarEmails.TabIndex = 8;
             BtnComprobarEmails.Text = "Comprobar si faltan emails";
             BtnComprobarEmails.UseVisualStyleBackColor = false;
             BtnComprobarEmails.Click += BtnComprobarEmails_Click;
@@ -118,7 +121,7 @@
             label1.Name = "label1";
             label1.Padding = new System.Windows.Forms.Padding(12);
             label1.Size = new System.Drawing.Size(669, 107);
-            label1.TabIndex = 11;
+            label1.TabIndex = 12;
             label1.Text = "Si 'Enviar las fotos...' no está seleccionado, pulsa en 'Comprobar si faltan emails' y asegúrate de elegir una hora con contenido y una fecha anterior a hoy.";
             label1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
@@ -173,19 +176,33 @@
             // BtnEnviarFotosDia
             // 
             BtnEnviarFotosDia.BackColor = System.Drawing.Color.Honeydew;
-            BtnEnviarFotosDia.Location = new System.Drawing.Point(633, 590);
+            BtnEnviarFotosDia.Location = new System.Drawing.Point(633, 659);
+            BtnEnviarFotosDia.Margin = new System.Windows.Forms.Padding(3, 12, 3, 3);
             BtnEnviarFotosDia.Name = "BtnEnviarFotosDia";
             BtnEnviarFotosDia.Size = new System.Drawing.Size(654, 60);
-            BtnEnviarFotosDia.TabIndex = 12;
+            BtnEnviarFotosDia.TabIndex = 11;
             BtnEnviarFotosDia.Text = "Enviar todas las fotos del día";
             BtnEnviarFotosDia.UseVisualStyleBackColor = false;
             BtnEnviarFotosDia.Click += BtnEnviarFotosDia_Click;
+            // 
+            // BtnComprobarReservasHoras
+            // 
+            BtnComprobarReservasHoras.BackColor = System.Drawing.Color.Moccasin;
+            BtnComprobarReservasHoras.Location = new System.Drawing.Point(633, 495);
+            BtnComprobarReservasHoras.Margin = new System.Windows.Forms.Padding(3, 12, 3, 3);
+            BtnComprobarReservasHoras.Name = "BtnComprobarReservasHoras";
+            BtnComprobarReservasHoras.Size = new System.Drawing.Size(654, 60);
+            BtnComprobarReservasHoras.TabIndex = 9;
+            BtnComprobarReservasHoras.Text = "Comprobar las horas de reservas y fotos";
+            BtnComprobarReservasHoras.UseVisualStyleBackColor = false;
+            BtnComprobarReservasHoras.Click += BtnComprobarReservasHoras_Click;
             // 
             // FormEnviarFotos
             // 
             AutoScaleDimensions = new System.Drawing.SizeF(10F, 25F);
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             ClientSize = new System.Drawing.Size(1308, 869);
+            Controls.Add(BtnComprobarReservasHoras);
             Controls.Add(BtnEnviarFotosDia);
             Controls.Add(BtnPegar);
             Controls.Add(BtnLimpiar);
@@ -219,5 +236,6 @@
         private System.Windows.Forms.Button BtnLimpiar;
         private System.Windows.Forms.Button BtnPegar;
         private System.Windows.Forms.Button BtnEnviarFotosDia;
+        private System.Windows.Forms.Button BtnComprobarReservasHoras;
     }
 }
