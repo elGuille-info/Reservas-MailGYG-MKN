@@ -426,6 +426,7 @@ public partial class FormAnalizaEmail : Form
         sb.Append("<br/>");
         sb.Append("<br/>");
         sb.Append("Kayak Makarena");
+        sb.Append("https://kayakmakarena.com");
 
         var asunto = $"Booking - S271506 - {re.GYGReference}";
         var para = re.Email;

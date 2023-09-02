@@ -241,6 +241,7 @@ public partial class FormEnviarFotos : Form
         sb.Append("<br/>");
         sb.Append("<br/>");
         sb.Append("Kayak Makarena");
+        sb.Append("https://kayakmakarena.com");
 
         string body = sb.ToString().Replace(CrLf, "<br/>");
 

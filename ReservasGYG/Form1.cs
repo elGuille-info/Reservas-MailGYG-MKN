@@ -190,7 +190,7 @@ public partial class Form1 : Form
                             $"Has indicado mandar el mensaje MAÑANA es el día a las reservas de hoy {fecha.Date:dddd dd/MM/yyyy}" + CrLf +
                             "Debes elegir la opción HOY en el día para mandar en el mismo día de la actividad." + CrLf +
                             "O bien cambiar la fecha seleccionada.",
-                            "Mandar recordatorio de que MAÑANA es el día.", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                            "Mandar recordatorio de que MAÑANA es el día", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
             DateTimePickerGYG.Focus();
             return;
         }
@@ -198,7 +198,7 @@ public partial class Form1 : Form
         ret = MessageBox.Show($"¿Quieres mandar el mensaje de 'Mañana es el día' a las reservas del {fecha.Date:dddd dd/MM/yyyy}?" + CrLf +
                               "Pulsa SÍ para mandar el mensaje de MAÑANA ES EL DÍA a las reservas de esa fecha." + CrLf +
                               $"Pulsa NO no mandar nada y seleccionar otra fecha.",
-                              "Mandar recordatorio de que MAÑANA es el día.", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                              "Mandar recordatorio de que MAÑANA es el día", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
         if (ret == DialogResult.No)
         {
             DateTimePickerGYG.Focus();
@@ -214,13 +214,14 @@ public partial class Form1 : Form
         if (res > 0)
         {
             MessageBox.Show($"Hay {res} {res.Plural("reserva")} del {fecha:dddd dd/MM/yyyy} sin emails.{CrLf}No se puede continuar hasta que lo soluciones.",
-                            "Mandar recordatorio de que MAÑANA es el día.", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            "Mandar recordatorio de que MAÑANA es el día", MessageBoxButtons.OK, MessageBoxIcon.Error);
             return;
         }
 
-        var lisRes = Reservas.TablaCol($"SELECT * FROM Reservas Where idDistribuidor=10 and Activa=1 and CanceladaCliente=0 and Confirmada=1 and FechaActividad ='{fecha:yyyy-MM-dd}' ORDER By FechaActividad, HoraActividad");
+        //var lisRes = Reservas.TablaCol($"SELECT * FROM Reservas Where idDistribuidor=10 and Activa=1 and CanceladaCliente=0 and Confirmada=1 and FechaActividad ='{fecha:yyyy-MM-dd}' ORDER By FechaActividad, HoraActividad");
+        var lisRes = ApiReservasMailGYG.MailGYG.DatosReservas(fecha, new TimeSpan(0, 0, 0));
         if (MessageBox.Show($"Se va a madar el mensaje a {lisRes.Count} {lisRes.Count.Plural("reserva")}",
-                             "Enviar MAÑANA es el día", MessageBoxButtons.OKCancel, MessageBoxIcon.Question) == DialogResult.Cancel)
+                             "Mandar recordatorio de que MAÑANA es el día", MessageBoxButtons.OKCancel, MessageBoxIcon.Question) == DialogResult.Cancel)
         {
             return;
         }
@@ -246,6 +247,7 @@ public partial class Form1 : Form
         sb.Append("<br/>");
         sb.Append("<br/>");
         sb.Append("Kayak Makarena");
+        sb.Append("https://kayakmakarena.com");
 
         string body = sb.ToString().Replace(CrLf, "<br/>");
         var msg = ApiReservasMailGYG.MailGYG.EnviarMensaje(colPara, "Mañana es el día / Tomorrow is the day", body, true);
@@ -275,7 +277,7 @@ public partial class Form1 : Form
                                   $"AHORA SON LAS {DateTime.Now:HH:mm} Y NO DEBERÍAS MANDARLAS." + CrLf + CrLf +
                                   "Pulsa ACEPTAR para mandar los mensajes." + CrLf +
                                   $"Pulsa CANCELAR para no mandar nada y/o seleccionar otra fecha.",
-                                  "Mandar recordatorio de que hoy es el día.",
+                                  "Mandar recordatorio de que hoy es el día",
                                   MessageBoxButtons.OKCancel, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2);
             if (ret == DialogResult.Cancel)
             {
@@ -288,7 +290,7 @@ public partial class Form1 : Form
         ret = MessageBox.Show($"¿Quieres mandar el mensaje de 'Hoy es el día' a las reservas del {fecha.Date:dddd dd/MM/yyyy}?" + CrLf +
                               "Pulsa SÍ para mandar el mensaje a las reservas de esa fecha." + CrLf +
                               $"Pulsa NO no mandar nada y seleccionar otra fecha.",
-                              "Mandar recordatorio de que hoy es el día.", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                              "Mandar recordatorio de que hoy es el día", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
         if (ret == DialogResult.No)
         {
             DateTimePickerGYG.Focus();
@@ -303,13 +305,14 @@ public partial class Form1 : Form
         if (res > 0)
         {
             MessageBox.Show($"Hay {res} {res.Plural("reserva")} del {fecha:dddd dd/MM/yyyy} sin emails:{CrLf}No se puede continuar hasta que lo soluciones.",
-                            "Mandar recordatorio de que hoy es el día.", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            "Mandar recordatorio de que hoy es el día", MessageBoxButtons.OK, MessageBoxIcon.Error);
             return;
         }
 
-        var lisRes = Reservas.TablaCol($"SELECT * FROM Reservas Where idDistribuidor=10 and Activa=1 and CanceladaCliente=0 and Confirmada=1 and FechaActividad ='{fecha:yyyy-MM-dd}' ORDER By FechaActividad, HoraActividad");
+        //var lisRes = Reservas.TablaCol($"SELECT * FROM Reservas Where idDistribuidor=10 and Activa=1 and CanceladaCliente=0 and Confirmada=1 and FechaActividad ='{fecha:yyyy-MM-dd}' ORDER By FechaActividad, HoraActividad");
+        var lisRes = ApiReservasMailGYG.MailGYG.DatosReservas(fecha, new TimeSpan(0, 0, 0));
         if (MessageBox.Show($"Se va a mandar el mensaje a {lisRes.Count} {lisRes.Count.Plural("reserva")}",
-                             "Enviar Hoy es el día", MessageBoxButtons.OKCancel, MessageBoxIcon.Question) == DialogResult.Cancel)
+                             "Mandar recordatorio de que hoy es el día", MessageBoxButtons.OKCancel, MessageBoxIcon.Question) == DialogResult.Cancel)
         {
             return;
         }
@@ -335,6 +338,7 @@ public partial class Form1 : Form
         sb.Append("<br/>");
         sb.Append("<br/>");
         sb.Append("Kayak Makarena");
+        sb.Append("https://kayakmakarena.com");
 
         string body = sb.ToString().Replace(CrLf, "<br/>");
         var msg = MailGYG.EnviarMensaje(colPara, "Hoy es el día / Today is the day", body, true);
@@ -540,7 +544,76 @@ public partial class Form1 : Form
 
     private void BtnAlerta1_Click(object sender, EventArgs e)
     {
+        DateTime fecha = DateTimePickerGYG.Value.Date;
+        DialogResult ret;
 
+        ret = MessageBox.Show($"¿Quieres mandar el mensaje de 'Alerta 1' a las reservas del {fecha.Date:dddd dd/MM/yyyy}?" + CrLf +
+                              "Pulsa SÍ para mandar el mensaje de ALERTA 1 a las reservas de esa fecha." + CrLf +
+                              $"Pulsa NO no mandar nada y seleccionar otra fecha.",
+                              "Mandar aviso de Alerta 1", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+        if (ret == DialogResult.No)
+        {
+            DateTimePickerGYG.Focus();
+            return;
+        }
+
+
+        // Comprobar que todos tengan email.                (24/ago/23 04.41)
+        // Usando la nueva función.                         (27/ago/23 17.26)
+        var res = ComprobarEmailsReservas(fecha, LvwSinEmail);
+
+        if (res > 0)
+        {
+            MessageBox.Show($"Hay {res} {res.Plural("reserva")} del {fecha:dddd dd/MM/yyyy} sin emails.{CrLf}No se puede continuar hasta que lo soluciones.",
+                            "Mandar aviso de Alerta 1", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            return;
+        }
+
+        //var lisRes = Reservas.TablaCol($"SELECT * FROM Reservas Where idDistribuidor=10 and Activa=1 and CanceladaCliente=0 and Confirmada=1 and FechaActividad ='{fecha:yyyy-MM-dd}' ORDER By FechaActividad, HoraActividad");
+        var lisRes = ApiReservasMailGYG.MailGYG.DatosReservas(fecha, new TimeSpan(0, 0, 0));
+
+        if (MessageBox.Show($"Se va a madar el mensaje a {lisRes.Count} {lisRes.Count.Plural("reserva")}",
+                             "Mandar aviso de Alerta 1", MessageBoxButtons.OKCancel, MessageBoxIcon.Question) == DialogResult.Cancel)
+        {
+            return;
+        }
+
+        var colPara = new List<string>();
+        for (int i = 0; i < lisRes.Count; i++)
+        {
+            var re = lisRes[i];
+            if (re == null) continue;
+            // Ya se ha comprobado que todos tengan email.  (24/ago/23 04.47)
+            // Si no tiene @ no mandar el correo.           (24/ago/23 04.48)
+            if (re.Email.Contains('@') == false) continue;
+            colPara.Add(re.Email);
+        }
+
+        // Agregar el email de kayak.makarena@gmail.com     (23/ago/23 22.18)
+        colPara.Add("kayak.makarena@gmail.com");
+
+        StringBuilder sb = new StringBuilder();
+        sb.Append("");
+        sb.Append(Properties.Resources.Alerta1_es_en.Replace(CrLf, "<br/>"));
+        sb.Append("<br/>");
+        sb.Append("<br/>");
+        sb.Append("Kayak Makarena");
+        sb.Append("https://kayakmakarena.com");
+
+        // La fecha en español e inglés.                    (02/sep/23 21.05)
+        var fechaES = $"{fecha.Date.ToString("dddd dd/MM/yyyy", System.Globalization.CultureInfo.CreateSpecificCulture("es-ES"))}";
+        var fechaEN = $"{fecha.Date.ToString("dddd dd/MM/yyyy", System.Globalization.CultureInfo.CreateSpecificCulture("en-US"))}";
+
+        string body = sb.ToString().Replace(CrLf, "<br/>");
+        var msg = ApiReservasMailGYG.MailGYG.EnviarMensaje(colPara, $"Alerta 1 para {fechaES} / Alert 1 for {fechaEN}", body, true);
+        if (msg.StartsWith("ERROR"))
+        {
+            MessageBox.Show($"ERROR al enviar el email:{CrLf}{msg}.", "Error al enviar el email de la reserva", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+        }
+        else
+        {
+            MessageBox.Show($"{msg}", "Enviar email de la reserva", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
     }
 
     private void BtnAlerta2_Click(object sender, EventArgs e)

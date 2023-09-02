@@ -61,6 +61,26 @@ namespace ReservasGYG.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Hola, este mensaje es para informarte que la previsión del mar para el día de tu actividad indica que habrá pequeñas olas.
+        ///
+        ///*Tu actividad sigue adelante*, pero como habrá un poco de movimiento, te avisamos solamente en caso que tú o alguien de tu grupo se suela marear, para darte la oportunidad de cambiar la reserva para otra fecha.
+        ///
+        ///Si no puedes cambiar para otra fecha y no quieres arriesgarte a venir, no hay problema, te devolveremos el dinero pagado.
+        ///
+        ///Muchas gracias.
+        ///
+        ///
+        ///
+        ///
+        ///Hi, this message is to [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string Alerta1_es_en {
+            get {
+                return ResourceManager.GetString("Alerta1_es_en", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
         internal static System.Drawing.Bitmap CleanData {

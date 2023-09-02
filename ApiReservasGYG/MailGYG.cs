@@ -878,6 +878,8 @@ namespace ApiReservasMailGYG
             StringBuilder sb = new StringBuilder();
             sb.Append("Select * from Reservas ");
             sb.Append("where Activa = 1 and CanceladaCliente = 0 and idDistribuidor = 10 ");
+            // Que estén confirmadas                        (02/sep/23 20.55)
+            sb.Append("and Confirmada = 1 ");
             //sb.Append("and Email = '' and Nombre != 'Makarena (GYG)' ");
             sb.Append("and Nombre != 'Makarena (GYG)' ");
             // Solo las rutas                               (02/sep/23 13.54)
