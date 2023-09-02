@@ -3,9 +3,6 @@
 using System;
 using System.Threading.Tasks;
 
-
-//using ReservasGYG_Movil.Views;
-
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -35,17 +32,17 @@ namespace ReservasGYG_Movil
         /// <summary>
         /// La versión de la aplicación.
         /// </summary>
-        public static string AppVersion { get; } = "1.0.0";
+        public static string AppVersion { get; } = "1.0.2";
 
         /// <summary>
         /// La versión del fichero (la revisión)
         /// </summary>
-        public static string AppFileVersion { get; } = "1.0.0.6";
+        public static string AppFileVersion { get; } = "1.0.2.0";
 
         /// <summary>
         /// La fecha de última actualización
         /// </summary>
-        public static string AppFechaVersion { get; } = "01-sep-2023";
+        public static string AppFechaVersion { get; } = "02-sep-2023";
 
         /// <summary>
         /// Hacer una pequeña pausa para refrescar.
