@@ -83,7 +83,24 @@ public partial class Form1 : Form
         //var w = (GrbOpcionesFecha.ClientSize.Width - 60) / 3;
         //LvwSinEmail.Columns[0].Width = (GrbOpcionesFecha.ClientSize.Width - 60) - w;
         //LvwSinEmail.Columns[1].Width = w;
-        AsignarColumnasLvw(LvwSinEmail, asignarColumnas:false);
+        AsignarColumnasLvw(LvwSinEmail, asignarColumnas: false);
+
+        // Ajustar el tamaño de MañanaEs y HoyEs.           (02/sep/23 19.20)
+        int w = (GrbOpcionesFecha.ClientSize.Width - 30) / 2;
+        BtnMañanaEs.Width = w;
+        BtnHoyEs.Width = w;
+        BtnHoyEs.Left = BtnMañanaEs.Left + w + 12;
+
+        BtnReservasSinSalida.Width = w;
+        BtnMostrarReservas.Width = w;
+        BtnMostrarReservas.Left = BtnReservasSinSalida.Left + w + 12;
+
+        w = (GrbOpcionesFecha.ClientSize.Width - 45) / 3;
+        BtnAlerta1.Width = w;
+        BtnAlerta2.Width = w;
+        BtnAlerta3.Width = w;
+        BtnAlerta2.Left = BtnAlerta1.Left + w + 12;
+        BtnAlerta3.Left = BtnAlerta2.Left + w + 12;
     }
 
     /// <summary>
@@ -118,21 +135,25 @@ public partial class Form1 : Form
         if (inicializando) return;
 
         //Comprobar clientes sin email en la fecha
-        BtnComprobarSinMail.Text = $"Comprobar reservas sin email en la fecha {DateTimePickerGYG.Value:dddd dd/MM/yyyy}";
+        BtnComprobarSinMail.Text = $"Comprobar reservas sin email del {DateTimePickerGYG.Value:dddd dd/MM/yyyy}";
         BtnMostrarReservas.Text = $"Mostrar reservas del {DateTimePickerGYG.Value:dddd dd/MM/yyyy}";
         BtnFotos.Text = $"Enviar las fotos de las reservas del {DateTimePickerGYG.Value:dddd dd/MM/yyyy}";
 
-        BtnReservasSinSalida.Text = $"Comprobar reservas sin salida del {DateTimePickerGYG.Value:dddd dd/MM/yyyy}";
+        BtnReservasSinSalida.Text = $"Mostrar las reservas sin salida del {DateTimePickerGYG.Value:dddd dd/MM/yyyy}";
+
+        BtnMostrarReservas.Text = $"Mostrar Reservas del {DateTimePickerGYG.Value:dddd dd/MM/yyyy}";
+
         // Al cambiar de fecha, deshabilitar los botones, salvo el de comprobar. (27/ago/23 18.21)
         HabilitarBotones(false);
     }
 
     private void HabilitarBotones(bool habilitar)
     {
-        BtnFotos.Enabled = habilitar;
         BtnMañanaEs.Enabled = habilitar;
         BtnHoyEs.Enabled = habilitar;
-        //BtnMostrarReservas.Enabled = habilitar;
+        BtnAlerta1.Enabled = habilitar;
+        BtnAlerta2.Enabled = habilitar;
+        BtnAlerta3.Enabled = habilitar;
     }
 
     private void TimerCargarAnalizarEmail_Tick(object sender, EventArgs e)
@@ -363,47 +384,28 @@ public partial class Form1 : Form
         // de la fecha indicada 
         var fecha = DateTimePickerGYG.Value.Date;
 
-        StringBuilder sb = new StringBuilder();
-        sb.Append("Select * from Reservas ");
-        sb.Append("where Activa = 1 and CanceladaCliente = 0 and idDistribuidor = 10 ");
-        sb.Append("and Nombre != 'Makarena (GYG)' ");
-        sb.Append("and Control = 0 ");
-        sb.Append($"and FechaActividad = '{fecha:yyyy-MM-dd}' ");
-        sb.Append("order by FechaActividad, HoraActividad, ID");
+        //StringBuilder sb = new StringBuilder();
+        //sb.Append("Select * from Reservas ");
+        //sb.Append("where Activa = 1 and CanceladaCliente = 0 and idDistribuidor = 10 ");
+        //sb.Append("and Nombre != 'Makarena (GYG)' ");
+        //sb.Append("and Control = 0 ");
+        //sb.Append($"and FechaActividad = '{fecha:yyyy-MM-dd}' ");
+        //sb.Append("order by FechaActividad, HoraActividad, ID");
 
-        var colRes = Reservas.TablaCol(sb.ToString());
+        //var colRes = Reservas.TablaCol(sb.ToString());
 
-        List<ApiReservasMailGYG.ReservasGYG> col = new();
+        //List<ApiReservasMailGYG.ReservasGYG> col = new();
 
-        if (colRes.Count > 0)
-        {
-            for (int i = 0; i < colRes.Count; i++)
-            {
-                //string nota = "";
-                //// Poner solo los xx primeros caracteres de las notas. (25/ago/23 14.18)
-                ////GetYourGuide - GYGLMWA85MXQ - (Spain) - Spanish (Live tour guide) -
-                //if (colRes[i].Notas.StartsWith("GetYourGuide"))
-                //{
-                //    int j = colRes[i].Notas.IndexOf("- GYG");
-                //    if (j > -1)
-                //    {
-                //        nota = colRes[i].Notas.Substring(j + 2, 12);
-                //    }
-                //}
-                //else
-                //{
-                //    nota = colRes[i].Notas;
-                //}
-                //if (string.IsNullOrEmpty(nota))
-                //{
-                //    if (string.IsNullOrEmpty(colRes[i].Notas) == false)
-                //    {
-                //        nota = colRes[i].Notas.Substring(0, 28);
-                //    }
-                //}
-                col.Add(new ApiReservasMailGYG.ReservasGYG(colRes[i]));
-            }
-        }
+        //if (colRes.Count > 0)
+        //{
+        //    for (int i = 0; i < colRes.Count; i++)
+        //    {
+        //        col.Add(new ApiReservasMailGYG.ReservasGYG(colRes[i]));
+        //    }
+        //}
+
+        var col = ApiReservasMailGYG.MailGYG.ReservasSinSalida(fecha);
+
         AsignarListView(col, LvwSinEmail);
 
         if (col.Count == 0)
@@ -471,7 +473,7 @@ public partial class Form1 : Form
         //{
         //    LvwSinEmail.Columns.Add(ApiReservasMailGYG.ReservasGYG.Columnas[j]);
         //}
-        AsignarColumnasLvw(LvwSinEmail, asignarColumnas:true);
+        AsignarColumnasLvw(LvwSinEmail, asignarColumnas: true);
 
         for (int i = 0; i < col.Count; i++)
         {
@@ -534,5 +536,20 @@ public partial class Form1 : Form
             Clipboard.SetText(texto);
         }
         catch { }
+    }
+
+    private void BtnAlerta1_Click(object sender, EventArgs e)
+    {
+
+    }
+
+    private void BtnAlerta2_Click(object sender, EventArgs e)
+    {
+
+    }
+
+    private void BtnAlerta3_Click(object sender, EventArgs e)
+    {
+
     }
 }

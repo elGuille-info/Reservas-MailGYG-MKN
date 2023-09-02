@@ -872,7 +872,7 @@ namespace ApiReservasMailGYG
         /// </summary>
         /// <param name="fecha">La fecha de las reservas a comprobar.</param>
         /// <param name="hora">La hora de las reservas a comprobar, si la hora es cero, no se comprueba la hora.</param>
-        /// <returns></returns>
+        /// <returns>Una colección con las reservas de la fecha y hora indicada. Si no se indica la hora, todas las de la fecha.</returns>
         public static List<ReservasGYG> DatosReservas(DateTime fecha, TimeSpan hora)
         {
             StringBuilder sb = new StringBuilder();
@@ -903,6 +903,33 @@ namespace ApiReservasMailGYG
             return col;
         }
 
+        /// <summary>
+        /// Reservas sin salida en la fecha indicada.
+        /// </summary>
+        /// <param name="fecha">La fecha de las reservas a comprobar.</param>
+        /// <returns>Una colección con las reservas sin salida de la fecha indicada.</returns>
+        public static List<ReservasGYG> ReservasSinSalida(DateTime fecha)
+        {
+            StringBuilder sb = new StringBuilder();
+            sb.Append("Select * from Reservas ");
+            sb.Append("where Activa = 1 and CanceladaCliente = 0 and idDistribuidor = 10 ");
+            sb.Append("and Nombre != 'Makarena (GYG)' ");
+            sb.Append("and Control = 0 ");
+            sb.Append($"and FechaActividad = '{fecha:yyyy-MM-dd}' ");
+            sb.Append("order by FechaActividad, HoraActividad, ID");
 
+            var colRes = Reservas.TablaCol(sb.ToString());
+
+            List<ApiReservasMailGYG.ReservasGYG> col = new();
+
+            if (colRes.Count > 0)
+            {
+                for (int i = 0; i < colRes.Count; i++)
+                {
+                    col.Add(new ApiReservasMailGYG.ReservasGYG(colRes[i]));
+                }
+            }
+            return col;
+        }
     }
 }
