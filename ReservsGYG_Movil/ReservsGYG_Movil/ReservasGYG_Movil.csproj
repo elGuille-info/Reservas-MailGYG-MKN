@@ -1,88 +1,100 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
-    <ProduceReferenceAssembly>true</ProduceReferenceAssembly>
-    <ProduceReferenceAssemblyInOutDir>true</ProduceReferenceAssemblyInOutDir>
-  </PropertyGroup>
+    <PropertyGroup>
+        <TargetFramework>netstandard2.0</TargetFramework>
+        <ProduceReferenceAssembly>true</ProduceReferenceAssembly>
+        <ProduceReferenceAssemblyInOutDir>true</ProduceReferenceAssemblyInOutDir>
+        <Title>ReservasGYG Movil</Title>
+        <Version>1.0.2</Version>
+        <AssemblyVersion>1.0.2.0</AssemblyVersion>
+        <FileVersion>1.0.2.1</FileVersion>
+        <Authors>gSoft (elguille.nfo)</Authors>
+        <Product>ReservasGYG Movil</Product>
+        <Description>Aplicación móvil para gestionar las reservas de GetYourGuide para MKN Reservas  (revisión del 02-sep-2023)</Description>
+        <Copyright>(c) gSoft (elguille.info) para Kayak Makarena</Copyright>
+        <RepositoryUrl>https://github.com/elGuille-info/Reservas-MailGYG-MKN</RepositoryUrl>
+        <RepositoryType>git</RepositoryType>
+        <PackageLicenseExpression>MIT</PackageLicenseExpression>
 
-  <ItemGroup>
-    <Compile Remove="Models\**" />
-    <Compile Remove="Services\**" />
-    <Compile Remove="ViewModels\**" />
-    <Compile Remove="Views\**" />
-    <EmbeddedResource Remove="Models\**" />
-    <EmbeddedResource Remove="Services\**" />
-    <EmbeddedResource Remove="ViewModels\**" />
-    <EmbeddedResource Remove="Views\**" />
-    <None Remove="Models\**" />
-    <None Remove="Services\**" />
-    <None Remove="ViewModels\**" />
-    <None Remove="Views\**" />
-  </ItemGroup>
+    </PropertyGroup>
 
-  <ItemGroup>
-    <Compile Remove="AppShell.xaml.cs" />
-  </ItemGroup>
+    <ItemGroup>
+        <Compile Remove="Models\**" />
+        <Compile Remove="Services\**" />
+        <Compile Remove="ViewModels\**" />
+        <Compile Remove="Views\**" />
+        <EmbeddedResource Remove="Models\**" />
+        <EmbeddedResource Remove="Services\**" />
+        <EmbeddedResource Remove="ViewModels\**" />
+        <EmbeddedResource Remove="Views\**" />
+        <None Remove="Models\**" />
+        <None Remove="Services\**" />
+        <None Remove="ViewModels\**" />
+        <None Remove="Views\**" />
+    </ItemGroup>
 
-  <ItemGroup>
-    <EmbeddedResource Remove="AppShell.xaml" />
-  </ItemGroup>
+    <ItemGroup>
+        <Compile Remove="AppShell.xaml.cs" />
+    </ItemGroup>
 
-  <ItemGroup>
-    <None Remove="Resources\CleanData.png" />
-    <None Remove="Resources\collapse.png" />
-    <None Remove="Resources\collapse_white.png" />
-    <None Remove="Resources\expand.png" />
-    <None Remove="Resources\expand_white.png" />
-    <None Remove="Resources\Fotos_ruta.txt" />
-    <None Remove="Resources\GYG_logo_blanco90x90.png" />
-    <None Remove="Resources\GYG_logo_naranja_265x265.png" />
-    <None Remove="Resources\Hoy_es_el_dia.txt" />
-    <None Remove="Resources\IMPORTANTE_EN.txt" />
-    <None Remove="Resources\IMPORTANTE_EN_09_30.txt" />
-    <None Remove="Resources\IMPORTANTE_EN_10_30_11_00.txt" />
-    <None Remove="Resources\IMPORTANTE_ES.txt" />
-    <None Remove="Resources\IMPORTANTE_ES_09_30.txt" />
-    <None Remove="Resources\IMPORTANTE_ES_10_30_11_00.txt" />
-    <None Remove="Resources\Mañana_es_el_dia.txt" />
-    <None Remove="Resources\Paste.png" />
-  </ItemGroup>
+    <ItemGroup>
+        <EmbeddedResource Remove="AppShell.xaml" />
+    </ItemGroup>
 
-  <ItemGroup>
-    <EmbeddedResource Include="Resources\CleanData.png" />
-    <EmbeddedResource Include="Resources\collapse.png" />
-    <EmbeddedResource Include="Resources\collapse_white.png" />
-    <EmbeddedResource Include="Resources\expand.png" />
-    <EmbeddedResource Include="Resources\expand_white.png" />
-    <EmbeddedResource Include="Resources\Fotos_ruta.txt" />
-    <EmbeddedResource Include="Resources\GYG_logo_blanco90x90.png" />
-    <EmbeddedResource Include="Resources\GYG_logo_naranja_265x265.png" />
-    <EmbeddedResource Include="Resources\Hoy_es_el_dia.txt" />
-    <EmbeddedResource Include="Resources\IMPORTANTE_EN_09_30.txt" />
-    <EmbeddedResource Include="Resources\IMPORTANTE_EN_10_30_11_00.txt" />
-    <EmbeddedResource Include="Resources\IMPORTANTE_EN.txt" />
-    <EmbeddedResource Include="Resources\IMPORTANTE_ES_09_30.txt" />
-    <EmbeddedResource Include="Resources\IMPORTANTE_ES_10_30_11_00.txt" />
-    <EmbeddedResource Include="Resources\IMPORTANTE_ES.txt" />
-    <EmbeddedResource Include="Resources\Mañana_es_el_dia.txt" />
-    <EmbeddedResource Include="Resources\Paste.png" />
-  </ItemGroup>
+    <ItemGroup>
+        <None Remove="Resources\CleanData.png" />
+        <None Remove="Resources\collapse.png" />
+        <None Remove="Resources\collapse_white.png" />
+        <None Remove="Resources\expand.png" />
+        <None Remove="Resources\expand_white.png" />
+        <None Remove="Resources\Fotos_ruta.txt" />
+        <None Remove="Resources\GYG_logo_blanco90x90.png" />
+        <None Remove="Resources\GYG_logo_naranja_265x265.png" />
+        <None Remove="Resources\Hoy_es_el_dia.txt" />
+        <None Remove="Resources\IMPORTANTE_EN.txt" />
+        <None Remove="Resources\IMPORTANTE_EN_09_30.txt" />
+        <None Remove="Resources\IMPORTANTE_EN_10_30_11_00.txt" />
+        <None Remove="Resources\IMPORTANTE_ES.txt" />
+        <None Remove="Resources\IMPORTANTE_ES_09_30.txt" />
+        <None Remove="Resources\IMPORTANTE_ES_10_30_11_00.txt" />
+        <None Remove="Resources\Mañana_es_el_dia.txt" />
+        <None Remove="Resources\Paste.png" />
+    </ItemGroup>
 
-  <ItemGroup>
-    <PackageReference Include="Xamarin.Forms" Version="5.0.0.2196" />  
-    <PackageReference Include="Xamarin.Essentials" Version="1.7.0" />
-  </ItemGroup>
+    <ItemGroup>
+        <EmbeddedResource Include="Resources\CleanData.png" />
+        <EmbeddedResource Include="Resources\collapse.png" />
+        <EmbeddedResource Include="Resources\collapse_white.png" />
+        <EmbeddedResource Include="Resources\expand.png" />
+        <EmbeddedResource Include="Resources\expand_white.png" />
+        <EmbeddedResource Include="Resources\Fotos_ruta.txt" />
+        <EmbeddedResource Include="Resources\GYG_logo_blanco90x90.png" />
+        <EmbeddedResource Include="Resources\GYG_logo_naranja_265x265.png" />
+        <EmbeddedResource Include="Resources\Hoy_es_el_dia.txt" />
+        <EmbeddedResource Include="Resources\IMPORTANTE_EN_09_30.txt" />
+        <EmbeddedResource Include="Resources\IMPORTANTE_EN_10_30_11_00.txt" />
+        <EmbeddedResource Include="Resources\IMPORTANTE_EN.txt" />
+        <EmbeddedResource Include="Resources\IMPORTANTE_ES_09_30.txt" />
+        <EmbeddedResource Include="Resources\IMPORTANTE_ES_10_30_11_00.txt" />
+        <EmbeddedResource Include="Resources\IMPORTANTE_ES.txt" />
+        <EmbeddedResource Include="Resources\Mañana_es_el_dia.txt" />
+        <EmbeddedResource Include="Resources\Paste.png" />
+    </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\..\..\..\MKNReservas\KNDLLs\Xamarin\KNDatos\KNDatos-Xamarin.vbproj" />
-    <ProjectReference Include="..\..\..\..\MKNReservas\KNDLLs\Xamarin\KNUtilidades\MKNUtilidades-Xamarin.vbproj" />
-    <ProjectReference Include="..\..\ApiReservasGYG\ApiReservasGYG.csproj" />
-  </ItemGroup>
+    <ItemGroup>
+        <PackageReference Include="Xamarin.Forms" Version="5.0.0.2196" />
+        <PackageReference Include="Xamarin.Essentials" Version="1.7.0" />
+    </ItemGroup>
 
-  <ItemGroup>
-    <EmbeddedResource Update="MainPage.xaml">
-      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
-    </EmbeddedResource>
-  </ItemGroup>
+    <ItemGroup>
+        <ProjectReference Include="..\..\..\..\MKNReservas\KNDLLs\Xamarin\KNDatos\KNDatos-Xamarin.vbproj" />
+        <ProjectReference Include="..\..\..\..\MKNReservas\KNDLLs\Xamarin\KNUtilidades\MKNUtilidades-Xamarin.vbproj" />
+        <ProjectReference Include="..\..\ApiReservasGYG\ApiReservasGYG.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <EmbeddedResource Update="MainPage.xaml">
+            <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+        </EmbeddedResource>
+    </ItemGroup>
 </Project>

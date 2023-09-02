@@ -421,25 +421,30 @@ public partial class Form1 : Form
         // Lista de las reservas de la fecha indicada.      (29/ago/23 11.32)
         var fecha = DateTimePickerGYG.Value.Date;
 
-        StringBuilder sb = new StringBuilder();
-        sb.Append("Select * from Reservas ");
-        sb.Append("where Activa = 1 and CanceladaCliente = 0 and idDistribuidor = 10 ");
-        sb.Append("and Nombre != 'Makarena (GYG)' ");
-        sb.Append($"and FechaActividad = '{fecha:yyyy-MM-dd}' ");
-        sb.Append("order by FechaActividad, HoraActividad, ID");
-
-        var colRes = Reservas.TablaCol(sb.ToString());
-
-        List<ApiReservasMailGYG.ReservasGYG> col = new();
-
-        if (colRes.Count > 0)
-        {
-            for (int i = 0; i < colRes.Count; i++)
-            {
-                col.Add(new ApiReservasMailGYG.ReservasGYG(colRes[i]));
-            }
-        }
+        var col = ApiReservasMailGYG.MailGYG.DatosReservas(fecha, new TimeSpan(0, 0, 0));
         AsignarListView(col, LvwSinEmail);
+
+        //StringBuilder sb = new StringBuilder();
+        //sb.Append("Select * from Reservas ");
+        //sb.Append("where Activa = 1 and CanceladaCliente = 0 and idDistribuidor = 10 ");
+        //sb.Append("and Nombre != 'Makarena (GYG)' ");
+        //// Solo las rutas                               (02/sep/23 18.20)
+        //sb.Append($"and Actividad like 'ruta%' ");
+        //sb.Append($"and FechaActividad = '{fecha:yyyy-MM-dd}' ");
+        //sb.Append("order by FechaActividad, HoraActividad, ID");
+
+        //var colRes = Reservas.TablaCol(sb.ToString());
+
+        //List<ApiReservasMailGYG.ReservasGYG> col = new();
+
+        //if (colRes.Count > 0)
+        //{
+        //    for (int i = 0; i < colRes.Count; i++)
+        //    {
+        //        col.Add(new ApiReservasMailGYG.ReservasGYG(colRes[i]));
+        //    }
+        //}
+        //AsignarListView(col, LvwSinEmail);
 
         if (col.Count == 0)
         {

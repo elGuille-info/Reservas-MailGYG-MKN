@@ -808,27 +808,28 @@ namespace ApiReservasMailGYG
         /// <returns>Una colección con las reservas que no tienen email o una colección vacía si todas tienen email.</returns>
         public static List<ReservasGYG> ComprobarEmails(DateTime fecha)
         {
-            StringBuilder sb = new StringBuilder();
-            sb.Append("Select * from Reservas ");
-            sb.Append("where Activa = 1 and CanceladaCliente = 0 and idDistribuidor = 10 ");
-            sb.Append("and Email = '' and Nombre != 'Makarena (GYG)' ");
-            // Solo las rutas                               (02/sep/23 13.54)
-            sb.Append($"and Actividad like 'ruta%' ");
-            sb.Append($"and FechaActividad = '{fecha:yyyy-MM-dd}' ");
-            sb.Append("order by FechaActividad, HoraActividad, ID");
+            //StringBuilder sb = new StringBuilder();
+            //sb.Append("Select * from Reservas ");
+            //sb.Append("where Activa = 1 and CanceladaCliente = 0 and idDistribuidor = 10 ");
+            //sb.Append("and Email = '' and Nombre != 'Makarena (GYG)' ");
+            //// Solo las rutas                               (02/sep/23 13.54)
+            //sb.Append($"and Actividad like 'ruta%' ");
+            //sb.Append($"and FechaActividad = '{fecha:yyyy-MM-dd}' ");
+            //sb.Append("order by FechaActividad, HoraActividad, ID");
 
-            var colRes = Reservas.TablaCol(sb.ToString());
+            //var colRes = Reservas.TablaCol(sb.ToString());
 
-            List<ReservasGYG> col = new();
+            //List<ReservasGYG> col = new();
 
-            if (colRes.Count > 0)
-            {
-                for (int i = 0; i < colRes.Count; i++)
-                {
-                    col.Add(new ReservasGYG(colRes[i]));
-                }
-            }
-            return col;
+            //if (colRes.Count > 0)
+            //{
+            //    for (int i = 0; i < colRes.Count; i++)
+            //    {
+            //        col.Add(new ReservasGYG(colRes[i]));
+            //    }
+            //}
+            //return col;
+            return ComprobarEmails(fecha, new TimeSpan(0, 0, 0));
         }
         
         /// <summary>
@@ -865,5 +866,43 @@ namespace ApiReservasMailGYG
             }
             return col;
         }
+
+        /// <summary>
+        /// Devuelve una lista de las reservas de la fecha y hora indicadas tengan o no email.
+        /// </summary>
+        /// <param name="fecha">La fecha de las reservas a comprobar.</param>
+        /// <param name="hora">La hora de las reservas a comprobar, si la hora es cero, no se comprueba la hora.</param>
+        /// <returns></returns>
+        public static List<ReservasGYG> DatosReservas(DateTime fecha, TimeSpan hora)
+        {
+            StringBuilder sb = new StringBuilder();
+            sb.Append("Select * from Reservas ");
+            sb.Append("where Activa = 1 and CanceladaCliente = 0 and idDistribuidor = 10 ");
+            //sb.Append("and Email = '' and Nombre != 'Makarena (GYG)' ");
+            sb.Append("and Nombre != 'Makarena (GYG)' ");
+            // Solo las rutas                               (02/sep/23 13.54)
+            sb.Append($"and Actividad like 'ruta%' ");
+            sb.Append($"and FechaActividad = '{fecha:yyyy-MM-dd}' ");
+            if (hora.Hours > 0)
+            {
+                sb.Append($"and HoraActividad = '{hora:hh\\:mm}' ");
+            }
+            sb.Append("order by FechaActividad, HoraActividad, ID");
+
+            var colRes = Reservas.TablaCol(sb.ToString());
+
+            List<ReservasGYG> col = new();
+
+            if (colRes.Count > 0)
+            {
+                for (int i = 0; i < colRes.Count; i++)
+                {
+                    col.Add(new ReservasGYG(colRes[i]));
+                }
+            }
+            return col;
+        }
+
+
     }
 }

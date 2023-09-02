@@ -517,6 +517,18 @@ https://photos.app.goo.gl/qqxWBkVthdBGMjFEA
 
         var colRes = Reservas.TablaCol(sb.ToString());
 
+        // Crear una lista de reservas para el listview
+        List<ApiReservasMailGYG.ReservasGYG> col = new();
+
+        if (colRes.Count > 0)
+        {
+            for (int i = 0; i < colRes.Count; i++)
+            {
+                col.Add(new ApiReservasMailGYG.ReservasGYG(colRes[i]));
+            }
+        }
+        Form1.AsignarListView(col, LvwSinEmail);
+
         // Extraer las reservas de cada hora
         var hora = new TimeSpan(0, 0, 0);
         List<string> listHoras = new List<string>();
@@ -533,10 +545,8 @@ https://photos.app.goo.gl/qqxWBkVthdBGMjFEA
             }
         }
         // Las horas en las que hay reservas
-        //Debug.WriteLine("{0}", listHoras.Count);
 
         var fotosHoras = MailGYG.AnalizarTextoFotos(TxtFotosDia.Text);
-        //Debug.WriteLine("{0}", fotosHoras.Count);
 
         // contar las horas con fotos.                      (01/sep/23 21.02)
         int horasFotos = 0;
@@ -572,6 +582,8 @@ https://photos.app.goo.gl/qqxWBkVthdBGMjFEA
         var fecha = DateTimePickerGYG.Value.Date;
 
         ComprobarHorasFotosReservas(fecha, conAlertas: true);
+
+        // Mostrar las reservas que hay por si alguna de las fotos no hay reservas en esa hora.
 
     }
 }
