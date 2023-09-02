@@ -8,8 +8,8 @@
     <TemplateGuid>{98C37F10-6541-44BE-B1E6-7EB3EB8C08F1}</TemplateGuid>
     <OutputType>AppContainerExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>ReservsGYG_Movil.UWP</RootNamespace>
-    <AssemblyName>ReservsGYG_Movil.UWP</AssemblyName>
+    <RootNamespace>ReservasGYG_Movil.UWP</RootNamespace>
+    <AssemblyName>ReservasGYG_Movil.UWP</AssemblyName>
     <DefaultLanguage>en-US</DefaultLanguage>
     <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
     <TargetPlatformVersion>10.0.22621.0</TargetPlatformVersion>
@@ -152,7 +152,7 @@
     <PackageReference Include="Xamarin.Essentials" Version="1.7.0" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\ReservsGYG_Movil\ReservasGYG_Movil.csproj">
+    <ProjectReference Include="..\ReservasGYG_Movil\ReservasGYG_Movil.csproj">
       <Project>{6F89F06C-2D48-4926-8D3B-FFADE4CBEBE1}</Project>
       <Name>ReservasGYG_Movil</Name>
     </ProjectReference>

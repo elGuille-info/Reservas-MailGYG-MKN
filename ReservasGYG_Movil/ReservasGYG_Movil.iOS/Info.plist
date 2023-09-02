@@ -23,11 +23,11 @@
 	<key>MinimumOSVersion</key>
 	<string>8.0</string>
 	<key>CFBundleDisplayName</key>
-	<string>ReservsGYG_Movil</string>
+	<string>ReservasGYG_Movil</string>
 	<key>CFBundleIdentifier</key>
-	<string>com.elguille.ReservsGYG_Movil</string>
+	<string>com.elguille.ReservasGYG_Movil</string>
 	<key>CFBundleVersion</key>
-	<string>1.0.0.0</string>
+	<string>1.0.3.0</string>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>CFBundleName</key>
@@ -35,6 +35,6 @@
 	<key>XSAppIconAssets</key>
 	<string>Assets.xcassets/AppIcon.appiconset</string>
 	<key>CFBundleShortVersionString</key>
-	<string>1.0.0</string>
+	<string>1.0.3</string>
 </dict>
 </plist>

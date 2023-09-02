@@ -6,13 +6,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ReservasGYG", "ReservasGYG\
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DLLs", "DLLs", "{5D6D2572-8368-4517-9BDD-F35899409051}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReservsGYG_Movil.UWP", "ReservsGYG_Movil\ReservsGYG_Movil.UWP\ReservsGYG_Movil.UWP.csproj", "{76EF1FE1-08B3-470A-99D3-F170FEA04173}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReservasGYG_Movil.UWP", "ReservasGYG_Movil\ReservasGYG_Movil.UWP\ReservasGYG_Movil.UWP.csproj", "{76EF1FE1-08B3-470A-99D3-F170FEA04173}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReservsGYG_Movil.Android", "ReservsGYG_Movil\ReservsGYG_Movil.Android\ReservsGYG_Movil.Android.csproj", "{544CE92B-C6DD-4BD9-848A-884CFC443AA1}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReservasGYG_Movil.Android", "ReservasGYG_Movil\ReservasGYG_Movil.Android\ReservasGYG_Movil.Android.csproj", "{544CE92B-C6DD-4BD9-848A-884CFC443AA1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReservsGYG_Movil.iOS", "ReservsGYG_Movil\ReservsGYG_Movil.iOS\ReservsGYG_Movil.iOS.csproj", "{7F713BA3-13A0-46B5-B018-BC7C67A6F74B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReservasGYG_Movil.iOS", "ReservasGYG_Movil\ReservasGYG_Movil.iOS\ReservasGYG_Movil.iOS.csproj", "{7F713BA3-13A0-46B5-B018-BC7C67A6F74B}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ReservasGYG_Movil", "ReservsGYG_Movil\ReservsGYG_Movil\ReservasGYG_Movil.csproj", "{6F89F06C-2D48-4926-8D3B-FFADE4CBEBE1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ReservasGYG_Movil", "ReservasGYG_Movil\ReservasGYG_Movil\ReservasGYG_Movil.csproj", "{6F89F06C-2D48-4926-8D3B-FFADE4CBEBE1}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Xamarin", "Xamarin", "{5787E3BA-CF77-4B1A-9A95-E4FA19C3A5BC}"
 EndProject
@@ -272,8 +272,9 @@ Global
 		{F6E29084-346D-41B5-9DC1-08A2BBC41F79} = {5D6D2572-8368-4517-9BDD-F35899409051}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		        SolutionGuid = {780930A6-9C3C-4129-809E-3714AD2DE37A}
-		                SolutionGuid = {55CA764C-5E8A-43A5-9A24-215304A9B227}
-		SolutionGuid = {11FCA5CB-A569-43F6-95B6-F3425C8FF4CD}
+		        SolutionGuid = {11FCA5CB-A569-43F6-95B6-F3425C8FF4CD}
+		                        SolutionGuid = {55CA764C-5E8A-43A5-9A24-215304A9B227}
+		                SolutionGuid = {780930A6-9C3C-4129-809E-3714AD2DE37A}
+		SolutionGuid = {19E37782-653E-4617-A50F-06867ECE870E}
 	EndGlobalSection
 EndGlobal
