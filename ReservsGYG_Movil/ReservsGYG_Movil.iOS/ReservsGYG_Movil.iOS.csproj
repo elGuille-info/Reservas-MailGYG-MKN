@@ -28,6 +28,8 @@
     <MtouchLink>None</MtouchLink>
     <MtouchDebug>true</MtouchDebug>
     <MtouchI18n>west</MtouchI18n>
+    <CodesignKey>Apple Development: Created via API (4SX49RMF23)</CodesignKey>
+    <CodesignProvision>VS: WildCard Development</CodesignProvision>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|iPhoneSimulator' ">
     <DebugType>none</DebugType>

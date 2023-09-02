@@ -106,7 +106,10 @@ public partial class FormEnviarFotos : Form
 
     private void BtnEnviarFotos_Click(object sender, EventArgs e)
     {
-        if (ComprobarTextoFotos()) return;
+        //TODO: Solo comprobar las reservas de la hora           (02/sep/23 13.50
+        // que se va a mandar.
+
+        if (ComprobarReservasSinEmail()) return;
 
         // Mandar los mensaje con las fotos.
         // Mandar el de la hora indicada en el combo.
@@ -130,12 +133,25 @@ public partial class FormEnviarFotos : Form
 
     private void BtnEnviarFotosDia_Click(object sender, EventArgs e)
     {
-        if (ComprobarTextoFotos()) return;
-
-        int totalFotos = 0;
-        //int t2 = 0;
+        if (ComprobarReservasSinEmail()) return;
 
         var fecha = DateTimePickerGYG.Value;
+
+        // Comprobar si están todas las horas.              (02/sep/23 13.44)
+        if (ComprobarHorasFotosReservas(fecha, conAlertas: false))
+        {
+            var ret = MessageBox.Show("Hay horas de fotos y de reservas que no coinciden." + CrLf +
+                                      "¿Quieres mandarlas de todas formas?",
+                                      "Hay reservas sin fotos",
+                                      MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            if (ret == DialogResult.No)
+            {
+                return;
+            }
+        }
+
+        int totalFotos = 0;
+
 
         // Mandar todos los mensajes con todas las fotos del día.
         for (int i = 0; i < CboHoras.Items.Count; i++)
@@ -149,11 +165,9 @@ public partial class FormEnviarFotos : Form
             var hora = CboHoras.Items[i].ToString().AsTimeSpan();
             if (EnviarFotos(fecha, hora, TxtFotosSeleccionada.Text, conAlertas: false))
             {
-                //return;
                 Debug.WriteLine("{0} {1}", fecha, hora);
             }
             totalFotos += 1;
-            //t2++;
         }
 
         MessageBox.Show($"Se han enviado {totalFotos} {totalFotos.Plural("enlace")} con fotos de la fecha {fecha:dddd dd/MM/yyyy}.", "Enviar todas las fotos del día", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -235,17 +249,31 @@ public partial class FormEnviarFotos : Form
         return false;
     }
 
-    private bool ComprobarTextoFotos()
+    private bool ComprobarReservasSinEmail()
     {
+        // Comprobar si hay clientes sin email en la fecha indicada. (24/ago/23 04.31)
         var fecha = DateTimePickerGYG.Value.Date;
-        string res = ComprobarEmails(fecha, conCabecera: true);
 
-        if (string.IsNullOrWhiteSpace(res) == false)
+        var res = Form1.ComprobarEmailsReservas(fecha, LvwSinEmail);
+        if (res > 0)
         {
-            MessageBox.Show($"Hay reservas del {fecha:dddd dd/MM/yyyy} sin emails.{CrLf}{CrLf}{res}",
-                            "Comprobar reservas sin email", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            MessageBox.Show($"Hay {res} {res.Plural("reserva")} del {fecha:dddd dd/MM/yyyy} sin emails.{CrLf}No se debe continuar hasta que lo soluciones.", "Comprobar reservas sin email", MessageBoxButtons.OK, MessageBoxIcon.Error);
             return true;
         }
+        //else
+        //{
+        //    MessageBox.Show($"Todas las reservas del '{fecha:dddd dd/MM/yyyy}' tiene asignado el email.", "Comprobar reservas sin email", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        //}
+
+        //var fecha = DateTimePickerGYG.Value.Date;
+        //string res = ComprobarEmails(fecha, conCabecera: true);
+
+        //if (string.IsNullOrWhiteSpace(res) == false)
+        //{
+        //    MessageBox.Show($"Hay reservas del {fecha:dddd dd/MM/yyyy} sin emails.{CrLf}{CrLf}{res}",
+        //                    "Comprobar reservas sin email", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        //    return true;
+        //}
 
         return false;
     }
@@ -255,22 +283,41 @@ public partial class FormEnviarFotos : Form
         BtnEnviarFotos.Enabled = false;
         BtnEnviarFotosDia.Enabled = false;
 
-        // Habilitar enviar fotos solo si todos tienen email y hay seleccionado algo
-
+        // Comprobar si hay clientes sin email en la fecha indicada. (24/ago/23 04.31)
         var fecha = DateTimePickerGYG.Value.Date;
 
-        string res = ComprobarEmails(fecha, conCabecera: true);
-
-        if (string.IsNullOrWhiteSpace(res) == false)
+        var res = Form1.ComprobarEmailsReservas(fecha, LvwSinEmail);
+        if (res > 0)
         {
-            MessageBox.Show($"Hay reservas del {fecha:dddd dd/MM/yyyy} sin emails.{CrLf}{res}", "Comprobar reservas sin email", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            MessageBox.Show($"Hay {res} {res.Plural("reserva")} del {fecha:dddd dd/MM/yyyy} sin emails.{CrLf}No se debe continuar hasta que lo soluciones.", "Comprobar reservas sin email", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
         else
         {
-            MessageBox.Show($"Todas las reservas de la fecha '{fecha:dddd dd/MM/yyyy}' tiene asignado el email.", "Comprobar reservas sin email", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            MessageBox.Show($"Todas las reservas del '{fecha:dddd dd/MM/yyyy}' tiene asignado el email.", "Comprobar reservas sin email", MessageBoxButtons.OK, MessageBoxIcon.Information);
             BtnEnviarFotos.Enabled = true;
             BtnEnviarFotosDia.Enabled = true;
         }
+
+
+        //BtnEnviarFotos.Enabled = false;
+        //BtnEnviarFotosDia.Enabled = false;
+
+        //// Habilitar enviar fotos solo si todos tienen email y hay seleccionado algo
+
+        //var fecha = DateTimePickerGYG.Value.Date;
+
+        //string res = ComprobarEmails(fecha, conCabecera: true);
+
+        //if (string.IsNullOrWhiteSpace(res) == false)
+        //{
+        //    MessageBox.Show($"Hay reservas del {fecha:dddd dd/MM/yyyy} sin emails.{CrLf}{res}", "Comprobar reservas sin email", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        //}
+        //else
+        //{
+        //    MessageBox.Show($"Todas las reservas de la fecha '{fecha:dddd dd/MM/yyyy}' tiene asignado el email.", "Comprobar reservas sin email", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        //    BtnEnviarFotos.Enabled = true;
+        //    BtnEnviarFotosDia.Enabled = true;
+        //}
     }
 
     private void BtnExtraerHoras_Click(object sender, EventArgs e)
@@ -451,7 +498,12 @@ https://photos.app.goo.gl/qqxWBkVthdBGMjFEA
         TxtFotosSeleccionada.Text = TxtFotosDia.Text;
     }
 
-    private void BuscarHorasReservas(DateTime fecha)
+    /// <summary>
+    /// Comprobar si las horas de las reservas y la de las fotos coinciden.
+    /// </summary>
+    /// <param name="fecha"></param>
+    /// <param name="conAlertas"></param>
+    private bool ComprobarHorasFotosReservas(DateTime fecha, bool conAlertas)
     {
         StringBuilder sb = new StringBuilder();
         sb.Append("Select * from Reservas ");
@@ -488,8 +540,8 @@ https://photos.app.goo.gl/qqxWBkVthdBGMjFEA
 
         // contar las horas con fotos.                      (01/sep/23 21.02)
         int horasFotos = 0;
-        foreach (var s in fotosHoras) 
-        { 
+        foreach (var s in fotosHoras)
+        {
             if (string.IsNullOrWhiteSpace(s) == false)
             {
                 horasFotos++;
@@ -497,25 +549,29 @@ https://photos.app.goo.gl/qqxWBkVthdBGMjFEA
         }
         if (horasFotos != listHoras.Count)
         {
-            MessageBox.Show("La cantidad de horas de las reservas y el de las fotos no coincide." + CrLf +
-                            $"Horas diferentes en las reserva: {listHoras.Count}." + CrLf +
-                            $"Horas diferentes en las fotos: {horasFotos}.", 
-                            "Comprobar horas de reservas y fotos", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+            if (conAlertas)
+                MessageBox.Show("La cantidad de horas de las reservas y el de las fotos no coincide." + CrLf +
+                                $"Horas diferentes en las reserva: {listHoras.Count}." + CrLf +
+                                $"Horas diferentes en las fotos: {horasFotos}.",
+                                "Comprobar horas de reservas y fotos", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+            return true;
         }
         else
         {
-            MessageBox.Show("La cantidad de horas de las reservas y el de las fotos son iguales:" + CrLf +
-                           $"Horas diferentes en las reserva: {listHoras.Count}." + CrLf +
-                           $"Horas diferentes en las fotos: {horasFotos}.",
-                           "Comprobar horas de reservas y fotos", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            if (conAlertas)
+                MessageBox.Show("La cantidad de horas de las reservas y el de las fotos son iguales:" + CrLf +
+                               $"Horas diferentes en las reserva: {listHoras.Count}." + CrLf +
+                               $"Horas diferentes en las fotos: {horasFotos}.",
+                               "Comprobar horas de reservas y fotos", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
+        return false;
     }
 
     private void BtnComprobarReservasHoras_Click(object sender, EventArgs e)
     {
         var fecha = DateTimePickerGYG.Value.Date;
 
-        BuscarHorasReservas(fecha);
+        ComprobarHorasFotosReservas(fecha, conAlertas: true);
 
     }
 }

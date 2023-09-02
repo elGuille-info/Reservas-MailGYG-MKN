@@ -32,13 +32,13 @@ public partial class Form1 : Form
     {
         inicializando = false;
 
-        LvwSinEmail.Items.Clear();
-        LvwSinEmail.Columns.Clear();
-        for (int j = 0; j < ApiReservasMailGYG.ReservasGYG.Columnas.Length; j++)
-        {
-            LvwSinEmail.Columns.Add(ApiReservasMailGYG.ReservasGYG.Columnas[j]);
-        }
-        AsignarAnchocolumnas();
+        //LvwSinEmail.Items.Clear();
+        //LvwSinEmail.Columns.Clear();
+        //for (int j = 0; j < ApiReservasMailGYG.ReservasGYG.Columnas.Length; j++)
+        //{
+        //    LvwSinEmail.Columns.Add(ApiReservasMailGYG.ReservasGYG.Columnas[j]);
+        //}
+        AsignarColumnasLvw(LvwSinEmail, asignarColumnas: true);
 
         // No cargarlo.                                     (25/ago/23 14.11)
 
@@ -83,11 +83,27 @@ public partial class Form1 : Form
         //var w = (GrbOpcionesFecha.ClientSize.Width - 60) / 3;
         //LvwSinEmail.Columns[0].Width = (GrbOpcionesFecha.ClientSize.Width - 60) - w;
         //LvwSinEmail.Columns[1].Width = w;
-        AsignarAnchocolumnas();
+        AsignarColumnasLvw(LvwSinEmail, asignarColumnas:false);
     }
 
-    private void AsignarAnchocolumnas()
+    /// <summary>
+    /// Asignar las columnas y el ancho al listview indicado.
+    /// </summary>
+    /// <param name="LvwSinEmail"></param>
+    /// <param name="asignarColumnas">True para asignar columnas y limpiar contenido, false para cambiar el ancho.</param>
+    public static void AsignarColumnasLvw(ListView LvwSinEmail, bool asignarColumnas)
     {
+        if (asignarColumnas)
+        {
+            LvwSinEmail.Items.Clear();
+            LvwSinEmail.Columns.Clear();
+
+            for (int j = 0; j < ApiReservasMailGYG.ReservasGYG.Columnas.Length; j++)
+            {
+                LvwSinEmail.Columns.Add(ApiReservasMailGYG.ReservasGYG.Columnas[j]);
+            }
+        }
+
         LvwSinEmail.Columns[0].Width = 160; // booking
         LvwSinEmail.Columns[1].Width = 400; // Nombre
         LvwSinEmail.Columns[2].Width = 150; // Teléfono
@@ -172,7 +188,7 @@ public partial class Form1 : Form
         // Comprobar que todos tengan email.                (24/ago/23 04.41)
         //string res = ComprobarEmails(fecha);
         // Usando la nueva función.                         (27/ago/23 17.26)
-        var res = ComprobarEmailsReservas(fecha);
+        var res = ComprobarEmailsReservas(fecha, LvwSinEmail);
 
         if (res > 0)
         {
@@ -261,7 +277,7 @@ public partial class Form1 : Form
 
         // Comprobar que todos tengan email.                (24/ago/23 04.41)
         // Usando la nueva función.                         (27/ago/23 17.26)
-        var res = ComprobarEmailsReservas(fecha);
+        var res = ComprobarEmailsReservas(fecha, LvwSinEmail);
 
         if (res > 0)
         {
@@ -328,7 +344,7 @@ public partial class Form1 : Form
         // Comprobar si hay clientes sin email en la fecha indicada. (24/ago/23 04.31)
         var fecha = DateTimePickerGYG.Value.Date;
 
-        var res = ComprobarEmailsReservas(fecha);
+        var res = ComprobarEmailsReservas(fecha, LvwSinEmail);
         if (res > 0)
         {
             MessageBox.Show($"Hay {res} {res.Plural("reserva")} del {fecha:dddd dd/MM/yyyy} sin emails.{CrLf}No se debe continuar hasta que lo soluciones.", "Comprobar reservas sin email", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -388,7 +404,7 @@ public partial class Form1 : Form
                 col.Add(new ApiReservasMailGYG.ReservasGYG(colRes[i]));
             }
         }
-        AsignarListView(col);
+        AsignarListView(col, LvwSinEmail);
 
         if (col.Count == 0)
         {
@@ -420,32 +436,10 @@ public partial class Form1 : Form
         {
             for (int i = 0; i < colRes.Count; i++)
             {
-                //string nota = "";
-                //// Poner solo los xx primeros caracteres de las notas. (25/ago/23 14.18)
-                ////GetYourGuide - GYGLMWA85MXQ - (Spain) - Spanish (Live tour guide) -
-                //if (colRes[i].Notas.StartsWith("GetYourGuide"))
-                //{
-                //    int j = colRes[i].Notas.IndexOf("- GYG");
-                //    if (j > -1)
-                //    {
-                //        nota = colRes[i].Notas.Substring(j + 2, 12);
-                //    }
-                //}
-                //else
-                //{
-                //    nota = colRes[i].Notas;
-                //}
-                //if (string.IsNullOrEmpty(nota))
-                //{
-                //    if (string.IsNullOrEmpty(colRes[i].Notas) == false)
-                //    {
-                //        nota = colRes[i].Notas.Substring(0, 28);
-                //    }
-                //}
                 col.Add(new ApiReservasMailGYG.ReservasGYG(colRes[i]));
             }
         }
-        AsignarListView(col);
+        AsignarListView(col, LvwSinEmail);
 
         if (col.Count == 0)
         {
@@ -458,21 +452,24 @@ public partial class Form1 : Form
     }
 
 
-    private void AsignarListView(List<ApiReservasMailGYG.ReservasGYG> col)
+    /// <summary>
+    /// Asignar los datos de las reservas sin email al listView indicado.
+    /// </summary>
+    /// <param name="col"></param>
+    /// <param name="LvwSinEmail"></param>
+    public static void AsignarListView(List<ApiReservasMailGYG.ReservasGYG> col, ListView LvwSinEmail)
     {
-        LvwSinEmail.Items.Clear();
-        LvwSinEmail.Columns.Clear();
+        //LvwSinEmail.Items.Clear();
+        //LvwSinEmail.Columns.Clear();
 
-        for (int j = 0; j < ApiReservasMailGYG.ReservasGYG.Columnas.Length; j++)
-        {
-            LvwSinEmail.Columns.Add(ApiReservasMailGYG.ReservasGYG.Columnas[j]);
-        }
-        AsignarAnchocolumnas();
+        //for (int j = 0; j < ApiReservasMailGYG.ReservasGYG.Columnas.Length; j++)
+        //{
+        //    LvwSinEmail.Columns.Add(ApiReservasMailGYG.ReservasGYG.Columnas[j]);
+        //}
+        AsignarColumnasLvw(LvwSinEmail, asignarColumnas:true);
 
         for (int i = 0; i < col.Count; i++)
         {
-            //var item = LvwSinEmail.Items.Add(col[i].Nombre);
-            //item.SubItems.Add(col[i].ReservaGYG);
             var item = LvwSinEmail.Items.Add(col[i].ValorColumna("booking"));
             for (int j = 1; j < ApiReservasMailGYG.ReservasGYG.Columnas.Length; j++)
             {
@@ -481,19 +478,17 @@ public partial class Form1 : Form
         }
     }
 
-    private int ComprobarEmailsReservas(DateTime fecha)
+    /// <summary>
+    /// Comprueba las reservas de la fecha indicada sin email y las añade al listview.
+    /// </summary>
+    /// <param name="fecha"></param>
+    /// <param name="LvwSinEmail"></param>
+    /// <returns></returns>
+    public static int ComprobarEmailsReservas(DateTime fecha, ListView LvwSinEmail)
     {
-        //LvwSinEmail.Items.Clear();
-
         var col = MailGYG.ComprobarEmails(fecha);
 
-        AsignarListView(col);
-
-        //for (int i = 0; i < col.Count; i++)
-        //{
-        //    var item = LvwSinEmail.Items.Add(col[i].Nombre);
-        //    item.SubItems.Add(col[i].Notas);
-        //}
+        AsignarListView(col, LvwSinEmail);
 
         return col.Count;
     }
@@ -523,20 +518,11 @@ public partial class Form1 : Form
         CopiarPortapapeles(texto);
     }
 
-    //private void MnuCopiarNombre_Click(object sender, EventArgs e)
-    //{
-    //    if (LvwSinEmail.SelectedIndices.Count == 0) return;
-    //    string nombre = LvwSinEmail.Items[LvwSinEmail.SelectedIndices[0]].Text;
-    //    CopiarPortapapeles(nombre);
-    //}
-    //private void MnuCopiarNotas_Click(object sender, EventArgs e)
-    //{
-    //    if (LvwSinEmail.SelectedIndices.Count == 0) return;
-    //    string notas = LvwSinEmail.Items[LvwSinEmail.SelectedIndices[0]].SubItems[1].Text;
-    //    CopiarPortapapeles(notas);
-    //}
-
-    private static void CopiarPortapapeles(string texto)
+    /// <summary>
+    /// Copiar el texto indicado en el portapapeles.
+    /// </summary>
+    /// <param name="texto">el texto a copiar en el portapapeles.</param>
+    public static void CopiarPortapapeles(string texto)
     {
         try
         {

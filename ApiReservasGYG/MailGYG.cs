@@ -748,12 +748,15 @@ namespace ApiReservasMailGYG
         /// <param name="fecha">Fecha con las reservas a comprobar.</param>
         /// <param name="conCabecera">True para añadir la cabecera con las reservas sin email.</param>
         /// <returns>Una cadena vacía si todo está bien, si no, con los datos de las reservas que no tienen email.</returns>
+        [Obsolete("No usar este método, usar el que devuelve la colección")]
         public static string ComprobarEmails(DateTime fecha, bool conCabecera)
         {
             StringBuilder sb = new StringBuilder();
             sb.Append("Select * from Reservas ");
             sb.Append("where Activa = 1 and CanceladaCliente = 0 and idDistribuidor = 10 ");
             sb.Append("and Email = '' and Nombre != 'Makarena (GYG)' ");
+            // Solo las rutas                               (02/sep/23 13.52)
+            sb.Append($"and Actividad like 'ruta%' ");
             sb.Append($"and FechaActividad = '{fecha:yyyy-MM-dd}' ");
             sb.Append("order by FechaActividad, HoraActividad, ID");
 
@@ -809,6 +812,8 @@ namespace ApiReservasMailGYG
             sb.Append("Select * from Reservas ");
             sb.Append("where Activa = 1 and CanceladaCliente = 0 and idDistribuidor = 10 ");
             sb.Append("and Email = '' and Nombre != 'Makarena (GYG)' ");
+            // Solo las rutas                               (02/sep/23 13.54)
+            sb.Append($"and Actividad like 'ruta%' ");
             sb.Append($"and FechaActividad = '{fecha:yyyy-MM-dd}' ");
             sb.Append("order by FechaActividad, HoraActividad, ID");
 
@@ -820,34 +825,45 @@ namespace ApiReservasMailGYG
             {
                 for (int i = 0; i < colRes.Count; i++)
                 {
-                    //string nota = "";
-                    //// Poner solo los xx primeros caracteres de las notas. (25/ago/23 14.18)
-                    ////GetYourGuide - GYGLMWA85MXQ - (Spain) - Spanish (Live tour guide) -
-                    //if (colRes[i].Notas.StartsWith("GetYourGuide"))
-                    //{
-                    //    int j = colRes[i].Notas.IndexOf("- GYG");
-                    //    if (j > -1)
-                    //    {
-                    //        nota = colRes[i].Notas.Substring(j + 2, 12);
-                    //    }
-                    //}
-                    //else
-                    //{
-                    //    nota = colRes[i].Notas;
-                    //}
-                    //if (string.IsNullOrEmpty(nota))
-                    //{
-                    //    if (string.IsNullOrEmpty(colRes[i].Notas) == false)
-                    //    {
-                    //        nota = colRes[i].Notas.Substring(0, 28);
-                    //    }
-                    //}
-                    //col.Add(new ReservasSinEmail(colRes[i].Nombre, nota));
                     col.Add(new ReservasGYG(colRes[i]));
                 }
             }
             return col;
         }
+        
+        /// <summary>
+        /// Comprueba si hay reservas de rutas sin email en la fecha y hora indicada.
+        /// </summary>
+        /// <param name="fecha">La fecha de las reservas a comprobar.</param>
+        /// <param name="hora">La hora de las reservas a comprobar, si la hora es cero, no se comprueba la hora.</param>
+        /// <returns>Una colección con los datos de las reservas sin email.</returns>
+        public static List<ReservasGYG> ComprobarEmails(DateTime fecha, TimeSpan hora)
+        {
+            StringBuilder sb = new StringBuilder();
+            sb.Append("Select * from Reservas ");
+            sb.Append("where Activa = 1 and CanceladaCliente = 0 and idDistribuidor = 10 ");
+            sb.Append("and Email = '' and Nombre != 'Makarena (GYG)' ");
+            // Solo las rutas                               (02/sep/23 13.54)
+            sb.Append($"and Actividad like 'ruta%' ");
+            sb.Append($"and FechaActividad = '{fecha:yyyy-MM-dd}' ");
+            if (hora.Hours > 0)
+            {
+                sb.Append($"and HoraActividad = '{hora:hh\\:mm}' ");
+            }
+            sb.Append("order by FechaActividad, HoraActividad, ID");
 
+            var colRes = Reservas.TablaCol(sb.ToString());
+
+            List<ReservasGYG> col = new();
+
+            if (colRes.Count > 0)
+            {
+                for (int i = 0; i < colRes.Count; i++)
+                {
+                    col.Add(new ReservasGYG(colRes[i]));
+                }
+            }
+            return col;
+        }
     }
 }
