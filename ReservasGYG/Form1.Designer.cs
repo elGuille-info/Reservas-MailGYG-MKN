@@ -49,6 +49,7 @@ namespace ReservasGYG
             MnuCopiarBooking = new ToolStripMenuItem();
             MnuCopiarNombre = new ToolStripMenuItem();
             MnuCopiarTelefono = new ToolStripMenuItem();
+            MnuCopiarEmail = new ToolStripMenuItem();
             MnuCopiarNotas = new ToolStripMenuItem();
             BtnMañanaEs = new Button();
             BtnMostrarReservas = new Button();
@@ -57,7 +58,7 @@ namespace ReservasGYG
             BtnComprobarSinMail = new Button();
             BtnHoyEs = new Button();
             TimerCargarAnalizarEmail = new Timer(components);
-            MnuCopiarEmail = new ToolStripMenuItem();
+            ChkConAlquileres = new CheckBox();
             GrbOpciones.SuspendLayout();
             GrbOpcionesFecha.SuspendLayout();
             ContextMenuListView.SuspendLayout();
@@ -94,7 +95,7 @@ namespace ReservasGYG
             BtnFotos.Margin = new Padding(3, 12, 3, 3);
             BtnFotos.Name = "BtnFotos";
             BtnFotos.Size = new Size(1097, 40);
-            BtnFotos.TabIndex = 6;
+            BtnFotos.TabIndex = 7;
             BtnFotos.Text = "Enviar fotos";
             BtnFotos.UseVisualStyleBackColor = false;
             BtnFotos.Click += BtnFotos_Click;
@@ -102,6 +103,7 @@ namespace ReservasGYG
             // GrbOpcionesFecha
             // 
             GrbOpcionesFecha.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            GrbOpcionesFecha.Controls.Add(ChkConAlquileres);
             GrbOpcionesFecha.Controls.Add(BtnAlerta3);
             GrbOpcionesFecha.Controls.Add(BtnAlerta1);
             GrbOpcionesFecha.Controls.Add(BtnAlerta2);
@@ -129,7 +131,7 @@ namespace ReservasGYG
             BtnAlerta3.Margin = new Padding(3, 6, 3, 3);
             BtnAlerta3.Name = "BtnAlerta3";
             BtnAlerta3.Size = new Size(356, 40);
-            BtnAlerta3.TabIndex = 11;
+            BtnAlerta3.TabIndex = 12;
             BtnAlerta3.Text = "Enviar Alerta 3";
             BtnAlerta3.UseVisualStyleBackColor = false;
             BtnAlerta3.Click += BtnAlerta3_Click;
@@ -142,7 +144,7 @@ namespace ReservasGYG
             BtnAlerta1.Margin = new Padding(3, 12, 3, 3);
             BtnAlerta1.Name = "BtnAlerta1";
             BtnAlerta1.Size = new Size(356, 40);
-            BtnAlerta1.TabIndex = 9;
+            BtnAlerta1.TabIndex = 10;
             BtnAlerta1.Text = "Enviar Alerta 1";
             BtnAlerta1.UseVisualStyleBackColor = false;
             BtnAlerta1.Click += BtnAlerta1_Click;
@@ -155,7 +157,7 @@ namespace ReservasGYG
             BtnAlerta2.Margin = new Padding(3, 6, 3, 3);
             BtnAlerta2.Name = "BtnAlerta2";
             BtnAlerta2.Size = new Size(356, 40);
-            BtnAlerta2.TabIndex = 10;
+            BtnAlerta2.TabIndex = 11;
             BtnAlerta2.Text = "Enviar Alerta 2";
             BtnAlerta2.UseVisualStyleBackColor = false;
             BtnAlerta2.Click += BtnAlerta2_Click;
@@ -168,7 +170,7 @@ namespace ReservasGYG
             BtnReservasSinSalida.Margin = new Padding(3, 12, 3, 3);
             BtnReservasSinSalida.Name = "BtnReservasSinSalida";
             BtnReservasSinSalida.Size = new Size(544, 40);
-            BtnReservasSinSalida.TabIndex = 3;
+            BtnReservasSinSalida.TabIndex = 4;
             BtnReservasSinSalida.Text = "Comprobar reservas sin salida (not show)";
             BtnReservasSinSalida.UseVisualStyleBackColor = false;
             BtnReservasSinSalida.Click += BtnReservasSinSalida_Click;
@@ -186,7 +188,7 @@ namespace ReservasGYG
             LvwSinEmail.MultiSelect = false;
             LvwSinEmail.Name = "LvwSinEmail";
             LvwSinEmail.Size = new Size(1100, 353);
-            LvwSinEmail.TabIndex = 5;
+            LvwSinEmail.TabIndex = 6;
             LvwSinEmail.UseCompatibleStateImageBehavior = false;
             LvwSinEmail.View = View.Details;
             // 
@@ -205,34 +207,41 @@ namespace ReservasGYG
             ContextMenuListView.ImageScalingSize = new Size(24, 24);
             ContextMenuListView.Items.AddRange(new ToolStripItem[] { MnuCopiarBooking, MnuCopiarNombre, MnuCopiarTelefono, MnuCopiarEmail, MnuCopiarNotas });
             ContextMenuListView.Name = "ContextMenuListView";
-            ContextMenuListView.Size = new Size(241, 197);
+            ContextMenuListView.Size = new Size(209, 164);
             ContextMenuListView.Opening += ContextMenuListView_Opening;
             // 
             // MnuCopiarBooking
             // 
             MnuCopiarBooking.Name = "MnuCopiarBooking";
-            MnuCopiarBooking.Size = new Size(240, 32);
+            MnuCopiarBooking.Size = new Size(208, 32);
             MnuCopiarBooking.Text = "Copiar Booking";
             MnuCopiarBooking.Click += MnuCopiarDeLvw_Click;
             // 
             // MnuCopiarNombre
             // 
             MnuCopiarNombre.Name = "MnuCopiarNombre";
-            MnuCopiarNombre.Size = new Size(240, 32);
+            MnuCopiarNombre.Size = new Size(208, 32);
             MnuCopiarNombre.Text = "Copiar Nombre";
             MnuCopiarNombre.Click += MnuCopiarDeLvw_Click;
             // 
             // MnuCopiarTelefono
             // 
             MnuCopiarTelefono.Name = "MnuCopiarTelefono";
-            MnuCopiarTelefono.Size = new Size(240, 32);
+            MnuCopiarTelefono.Size = new Size(208, 32);
             MnuCopiarTelefono.Text = "Copiar Teléfono";
             MnuCopiarTelefono.Click += MnuCopiarDeLvw_Click;
+            // 
+            // MnuCopiarEmail
+            // 
+            MnuCopiarEmail.Name = "MnuCopiarEmail";
+            MnuCopiarEmail.Size = new Size(208, 32);
+            MnuCopiarEmail.Text = "Copiar Email";
+            MnuCopiarEmail.Click += MnuCopiarDeLvw_Click;
             // 
             // MnuCopiarNotas
             // 
             MnuCopiarNotas.Name = "MnuCopiarNotas";
-            MnuCopiarNotas.Size = new Size(240, 32);
+            MnuCopiarNotas.Size = new Size(208, 32);
             MnuCopiarNotas.Text = "Copiar Notas";
             MnuCopiarNotas.Click += MnuCopiarDeLvw_Click;
             // 
@@ -244,7 +253,7 @@ namespace ReservasGYG
             BtnMañanaEs.Margin = new Padding(3, 12, 3, 3);
             BtnMañanaEs.Name = "BtnMañanaEs";
             BtnMañanaEs.Size = new Size(544, 40);
-            BtnMañanaEs.TabIndex = 7;
+            BtnMañanaEs.TabIndex = 8;
             BtnMañanaEs.Text = "Enviar MAÑANA es el día";
             BtnMañanaEs.UseVisualStyleBackColor = false;
             BtnMañanaEs.Click += BtnMañanaEs_Click;
@@ -257,7 +266,7 @@ namespace ReservasGYG
             BtnMostrarReservas.Margin = new Padding(3, 12, 3, 3);
             BtnMostrarReservas.Name = "BtnMostrarReservas";
             BtnMostrarReservas.Size = new Size(544, 40);
-            BtnMostrarReservas.TabIndex = 4;
+            BtnMostrarReservas.TabIndex = 5;
             BtnMostrarReservas.Text = "Mostrar Reservas";
             BtnMostrarReservas.UseVisualStyleBackColor = false;
             BtnMostrarReservas.Click += BtnMostrarReservas_Click;
@@ -289,7 +298,7 @@ namespace ReservasGYG
             BtnComprobarSinMail.Location = new Point(6, 80);
             BtnComprobarSinMail.Name = "BtnComprobarSinMail";
             BtnComprobarSinMail.Size = new Size(1103, 40);
-            BtnComprobarSinMail.TabIndex = 2;
+            BtnComprobarSinMail.TabIndex = 3;
             BtnComprobarSinMail.Text = "Comprobar reservas sin email en la fecha";
             BtnComprobarSinMail.UseVisualStyleBackColor = false;
             BtnComprobarSinMail.Click += BtnComprobarSinMail_Click;
@@ -302,7 +311,7 @@ namespace ReservasGYG
             BtnHoyEs.Margin = new Padding(3, 6, 3, 3);
             BtnHoyEs.Name = "BtnHoyEs";
             BtnHoyEs.Size = new Size(529, 40);
-            BtnHoyEs.TabIndex = 8;
+            BtnHoyEs.TabIndex = 9;
             BtnHoyEs.Text = "Enviar HOY es el día";
             BtnHoyEs.UseVisualStyleBackColor = false;
             BtnHoyEs.Click += BtnHoyEs_Click;
@@ -312,12 +321,18 @@ namespace ReservasGYG
             TimerCargarAnalizarEmail.Interval = 300;
             TimerCargarAnalizarEmail.Tick += TimerCargarAnalizarEmail_Tick;
             // 
-            // MnuCopiarEmail
+            // ChkConAlquileres
             // 
-            MnuCopiarEmail.Name = "MnuCopiarEmail";
-            MnuCopiarEmail.Size = new Size(240, 32);
-            MnuCopiarEmail.Text = "Copiar Email";
-            MnuCopiarEmail.Click += MnuCopiarDeLvw_Click;
+            ChkConAlquileres.AutoSize = true;
+            ChkConAlquileres.Checked = true;
+            ChkConAlquileres.CheckState = CheckState.Checked;
+            ChkConAlquileres.Location = new Point(451, 30);
+            ChkConAlquileres.Name = "ChkConAlquileres";
+            ChkConAlquileres.Size = new Size(164, 29);
+            ChkConAlquileres.TabIndex = 2;
+            ChkConAlquileres.Text = "Incluir alquileres";
+            toolTip1.SetToolTip(ChkConAlquileres, "Incluir los alquileres al comprobar los emails y mostrar las reservas");
+            ChkConAlquileres.UseVisualStyleBackColor = true;
             // 
             // Form1
             // 
@@ -335,6 +350,7 @@ namespace ReservasGYG
             Resize += Form1_Resize;
             GrbOpciones.ResumeLayout(false);
             GrbOpcionesFecha.ResumeLayout(false);
+            GrbOpcionesFecha.PerformLayout();
             ContextMenuListView.ResumeLayout(false);
             ResumeLayout(false);
         }
@@ -365,5 +381,6 @@ namespace ReservasGYG
         private Button BtnAlerta1;
         private Button BtnAlerta2;
         private ToolStripMenuItem MnuCopiarEmail;
+        private CheckBox ChkConAlquileres;
     }
 }

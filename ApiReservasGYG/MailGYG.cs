@@ -877,15 +877,21 @@ Sep 5, 2023
         /// <param name="conCabecera">True para añadir la cabecera con las reservas sin email.</param>
         /// <returns>Una cadena vacía si todo está bien, si no, con los datos de las reservas que no tienen email.</returns>
         [Obsolete("No usar este método, usar el que devuelve la colección")]
-        public static string ComprobarEmails(DateTime fecha, bool conCabecera)
+        public static string ComprobarEmails(DateTime fecha, bool conAlquileres, bool conCabecera)
         {
             StringBuilder sb = new StringBuilder();
             sb.Append("Select * from Reservas ");
             sb.Append("where Activa = 1 and CanceladaCliente = 0 and idDistribuidor = 10 ");
             sb.Append("and Email = '' and Nombre != 'Makarena (GYG)' ");
             // Solo las rutas                               (02/sep/23 13.52)
-            // también los alquileres...                    (05/sep/23 23.47)
             //sb.Append($"and Actividad like 'ruta%' ");
+            // también los alquileres...                    (05/sep/23 23.47)
+            // Ahora como parámetro.                        (05/sep/23 23.58)
+            if (conAlquileres == false)
+            {
+                sb.Append($"and Actividad like 'ruta%' ");
+            }
+                        
             sb.Append($"and FechaActividad = '{fecha:yyyy-MM-dd}' ");
             sb.Append("order by FechaActividad, HoraActividad, ID");
 
@@ -935,9 +941,9 @@ Sep 5, 2023
         /// </summary>
         /// <param name="fecha">Fecha con las reservas a comprobar.</param>
         /// <returns>Una colección con las reservas que no tienen email o una colección vacía si todas tienen email.</returns>
-        public static List<ReservasGYG> ComprobarEmails(DateTime fecha)
+        public static List<ReservasGYG> ComprobarEmails(DateTime fecha, bool conAlquileres)
         {
-            return ComprobarEmails(fecha, new TimeSpan(0, 0, 0));
+            return ComprobarEmails(fecha, new TimeSpan(0, 0, 0), conAlquileres);
         }
 
         /// <summary>
@@ -946,15 +952,21 @@ Sep 5, 2023
         /// <param name="fecha">La fecha de las reservas a comprobar.</param>
         /// <param name="hora">La hora de las reservas a comprobar, si la hora es cero, no se comprueba la hora.</param>
         /// <returns>Una colección con los datos de las reservas sin email.</returns>
-        public static List<ReservasGYG> ComprobarEmails(DateTime fecha, TimeSpan hora)
+        public static List<ReservasGYG> ComprobarEmails(DateTime fecha, TimeSpan hora, bool conAlquileres)
         {
             StringBuilder sb = new StringBuilder();
             sb.Append("Select * from Reservas ");
             sb.Append("where Activa = 1 and CanceladaCliente = 0 and idDistribuidor = 10 ");
             sb.Append("and Email = '' and Nombre != 'Makarena (GYG)' ");
             // Solo las rutas                               (02/sep/23 13.54)
-            // también los alquileres...                    (05/sep/23 23.47)
             //sb.Append($"and Actividad like 'ruta%' ");
+            // también los alquileres...                    (05/sep/23 23.47)
+            // Ahora como parámetro.                        (05/sep/23 23.58)
+            if (conAlquileres == false)
+            {
+                sb.Append($"and Actividad like 'ruta%' ");
+            }
+            
             sb.Append($"and FechaActividad = '{fecha:yyyy-MM-dd}' ");
             if (hora.Hours > 0)
             {
@@ -982,7 +994,7 @@ Sep 5, 2023
         /// <param name="fecha">La fecha de las reservas a comprobar.</param>
         /// <param name="hora">La hora de las reservas a comprobar, si la hora es cero, no se comprueba la hora.</param>
         /// <returns>Una colección con las reservas de la fecha y hora indicada. Si no se indica la hora, todas las de la fecha.</returns>
-        public static List<ReservasGYG> DatosReservas(DateTime fecha, TimeSpan hora)
+        public static List<ReservasGYG> DatosReservas(DateTime fecha, TimeSpan hora, bool conAlquileres)
         {
             StringBuilder sb = new StringBuilder();
             sb.Append("Select * from Reservas ");
@@ -992,8 +1004,14 @@ Sep 5, 2023
             //sb.Append("and Email = '' and Nombre != 'Makarena (GYG)' ");
             sb.Append("and Nombre != 'Makarena (GYG)' ");
             // Solo las rutas                               (02/sep/23 13.54)
-            // también los alquileres...                    (05/sep/23 23.47)
             //sb.Append($"and Actividad like 'ruta%' ");
+            // también los alquileres...                    (05/sep/23 23.47)
+            // Ahora como parámetro.                        (05/sep/23 23.58)
+            if (conAlquileres == false)
+            {
+                sb.Append($"and Actividad like 'ruta%' ");
+            }
+
             sb.Append($"and FechaActividad = '{fecha:yyyy-MM-dd}' ");
             if (hora.Hours > 0)
             {
@@ -1020,6 +1038,7 @@ Sep 5, 2023
         /// </summary>
         /// <param name="fecha">La fecha de las reservas a comprobar.</param>
         /// <returns>Una colección con las reservas sin salida de la fecha indicada.</returns>
+        /// <remarks>Aquí no se mira si es con o sin alquileres.</remarks>
         public static List<ReservasGYG> ReservasSinSalida(DateTime fecha)
         {
             StringBuilder sb = new StringBuilder();

@@ -255,26 +255,13 @@ public partial class FormEnviarFotos : Form
         // Comprobar si hay clientes sin email en la fecha indicada. (24/ago/23 04.31)
         var fecha = DateTimePickerGYG.Value.Date;
 
-        var res = Form1.ComprobarEmailsReservas(fecha, LvwSinEmail);
+        // No se mandan fotos a los alquileres.             (06/sep/23 00.04)
+        var res = Form1.ComprobarEmailsReservas(fecha, LvwSinEmail, conAlquileres:false);
         if (res > 0)
         {
-            MessageBox.Show($"Hay {res} {res.Plural("reserva")} del {fecha:dddd dd/MM/yyyy} sin emails.{CrLf}No se debe continuar hasta que lo soluciones.", "Comprobar reservas sin email", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            MessageBox.Show($"Hay {res} {res.Plural("reserva")} (de rutas) del {fecha:dddd dd/MM/yyyy} sin emails.{CrLf}No se debe continuar hasta que lo soluciones.", "Comprobar reservas sin email", MessageBoxButtons.OK, MessageBoxIcon.Error);
             return true;
         }
-        //else
-        //{
-        //    MessageBox.Show($"Todas las reservas del '{fecha:dddd dd/MM/yyyy}' tiene asignado el email.", "Comprobar reservas sin email", MessageBoxButtons.OK, MessageBoxIcon.Information);
-        //}
-
-        //var fecha = DateTimePickerGYG.Value.Date;
-        //string res = ComprobarEmails(fecha, conCabecera: true);
-
-        //if (string.IsNullOrWhiteSpace(res) == false)
-        //{
-        //    MessageBox.Show($"Hay reservas del {fecha:dddd dd/MM/yyyy} sin emails.{CrLf}{CrLf}{res}",
-        //                    "Comprobar reservas sin email", MessageBoxButtons.OK, MessageBoxIcon.Error);
-        //    return true;
-        //}
 
         return false;
     }
@@ -287,38 +274,18 @@ public partial class FormEnviarFotos : Form
         // Comprobar si hay clientes sin email en la fecha indicada. (24/ago/23 04.31)
         var fecha = DateTimePickerGYG.Value.Date;
 
-        var res = Form1.ComprobarEmailsReservas(fecha, LvwSinEmail);
+        // Para las fotos son sin alquiler.                 (06/sep/23 00.03)
+        var res = Form1.ComprobarEmailsReservas(fecha, LvwSinEmail, conAlquileres:false);
         if (res > 0)
         {
-            MessageBox.Show($"Hay {res} {res.Plural("reserva")} del {fecha:dddd dd/MM/yyyy} sin emails.{CrLf}No se debe continuar hasta que lo soluciones.", "Comprobar reservas sin email", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            MessageBox.Show($"Hay {res} {res.Plural("reserva")} (de rutas) del {fecha:dddd dd/MM/yyyy} sin emails.{CrLf}No se debe continuar hasta que lo soluciones.", "Comprobar reservas sin email", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
         else
         {
-            MessageBox.Show($"Todas las reservas del '{fecha:dddd dd/MM/yyyy}' tiene asignado el email.", "Comprobar reservas sin email", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            MessageBox.Show($"Todas las reservas de rutas del '{fecha:dddd dd/MM/yyyy}' tiene asignado el email.", "Comprobar reservas sin email", MessageBoxButtons.OK, MessageBoxIcon.Information);
             BtnEnviarFotos.Enabled = true;
             BtnEnviarFotosDia.Enabled = true;
         }
-
-
-        //BtnEnviarFotos.Enabled = false;
-        //BtnEnviarFotosDia.Enabled = false;
-
-        //// Habilitar enviar fotos solo si todos tienen email y hay seleccionado algo
-
-        //var fecha = DateTimePickerGYG.Value.Date;
-
-        //string res = ComprobarEmails(fecha, conCabecera: true);
-
-        //if (string.IsNullOrWhiteSpace(res) == false)
-        //{
-        //    MessageBox.Show($"Hay reservas del {fecha:dddd dd/MM/yyyy} sin emails.{CrLf}{res}", "Comprobar reservas sin email", MessageBoxButtons.OK, MessageBoxIcon.Error);
-        //}
-        //else
-        //{
-        //    MessageBox.Show($"Todas las reservas de la fecha '{fecha:dddd dd/MM/yyyy}' tiene asignado el email.", "Comprobar reservas sin email", MessageBoxButtons.OK, MessageBoxIcon.Information);
-        //    BtnEnviarFotos.Enabled = true;
-        //    BtnEnviarFotosDia.Enabled = true;
-        //}
     }
 
     private void BtnExtraerHoras_Click(object sender, EventArgs e)
@@ -506,45 +473,54 @@ https://photos.app.goo.gl/qqxWBkVthdBGMjFEA
     /// <param name="conAlertas"></param>
     private bool ComprobarHorasFotosReservas(DateTime fecha, bool conAlertas)
     {
-        StringBuilder sb = new StringBuilder();
-        sb.Append("Select * from Reservas ");
-        sb.Append("where Activa = 1 and CanceladaCliente = 0 and idDistribuidor = 10 ");
-        // Solo las reservas confirmadas, por si las moscas (01/sep/23 19.49)
-        sb.Append($"and Confirmada = 1 ");
-        // Solo las rutas                                   (01/sep/23 21.15)
-        sb.Append($"and Actividad like 'ruta%' ");
-        sb.Append($"and FechaActividad = '{fecha:yyyy-MM-dd}' ");
-        sb.Append("order by FechaActividad, HoraActividad, ID");
+        //StringBuilder sb = new StringBuilder();
+        //sb.Append("Select * from Reservas ");
+        //sb.Append("where Activa = 1 and CanceladaCliente = 0 and idDistribuidor = 10 ");
+        //// Solo las reservas confirmadas, por si las moscas (01/sep/23 19.49)
+        //sb.Append($"and Confirmada = 1 ");
+        //// Solo las rutas                                   (01/sep/23 21.15)
+        //sb.Append($"and Actividad like 'ruta%' ");
+        //sb.Append($"and FechaActividad = '{fecha:yyyy-MM-dd}' ");
+        //sb.Append("order by FechaActividad, HoraActividad, ID");
 
-        var colRes = Reservas.TablaCol(sb.ToString());
+        //var colRes = Reservas.TablaCol(sb.ToString());
 
-        // Crear una lista de reservas para el listview
-        List<ApiReservasMailGYG.ReservasGYG> col = new();
+        //// Crear una lista de reservas para el listview
+        //List<ApiReservasMailGYG.ReservasGYG> col = new();
 
-        if (colRes.Count > 0)
-        {
-            for (int i = 0; i < colRes.Count; i++)
-            {
-                col.Add(new ApiReservasMailGYG.ReservasGYG(colRes[i]));
-            }
-        }
+        //if (colRes.Count > 0)
+        //{
+        //    for (int i = 0; i < colRes.Count; i++)
+        //    {
+        //        col.Add(new ApiReservasMailGYG.ReservasGYG(colRes[i]));
+        //    }
+        //}
+        //Form1.AsignarListView(col, LvwSinEmail);
+
+        var col = ApiReservasMailGYG.MailGYG.DatosReservas(fecha, new TimeSpan(0, 0, 0), conAlquileres:false);
         Form1.AsignarListView(col, LvwSinEmail);
+
 
         // Extraer las reservas de cada hora
         var hora = new TimeSpan(0, 0, 0);
         List<string> listHoras = new List<string>();
-        for (int i = 0; i < colRes.Count; i++)
+        //for (int i = 0; i < colRes.Count; i++)
+        //{
+        //    if (colRes[i].HoraActividad != hora)
+        //    {
+        //        hora = colRes[i].HoraActividad;
+        //        listHoras.Add($"{colRes[i].HoraActividad:hh\\:mm}");
+        //    }
+        //}
+        for (int i = 0; i < col.Count; i++)
         {
-            if (colRes[i].HoraActividad != hora)
+            if (col[i].Hora != hora)
             {
-                //if (hora.Hours != 0)
-                //{
-                //    listHoras.Add($"{colRes[i].HoraActividad:hh\\:mm}");
-                //}
-                hora = colRes[i].HoraActividad;
-                listHoras.Add($"{colRes[i].HoraActividad:hh\\:mm}");
+                hora = col[i].Hora;
+                listHoras.Add($"{col[i].Hora:hh\\:mm}");
             }
         }
+
         // Las horas en las que hay reservas
 
         var fotosHoras = MailGYG.AnalizarTextoFotos(TxtFotosDia.Text);
@@ -600,20 +576,6 @@ https://photos.app.goo.gl/qqxWBkVthdBGMjFEA
     //public static string[] Columnas { get; } = { "Booking", "Nombre", "Teléfono", "Reserva", "PAX", "Email", "Notas" };
     private void MnuCopiarDeLvw_Click(object sender, EventArgs e)
     {
-        //if (LvwSinEmail.SelectedIndices.Count == 0) return;
-        ////var mnu = sender as ToolStripMenuItem;
-        ////if (mnu == null) return;
-        //int index = -1;
-        //if (sender == MnuCopiarBooking) index = 0;
-        //if (sender == MnuCopiarNombre) index = 1;
-        //if (sender == MnuCopiarTelefono) index = 2;
-        //if (sender == MnuCopiarEmail) index = 5;
-        //if (sender == MnuCopiarNotas) index = 6;
-        //if (index == -1) return;
-
-        //string texto = LvwSinEmail.Items[LvwSinEmail.SelectedIndices[0]].SubItems[index].Text;
-        //Form1.CopiarPortapapeles(texto);
-
         Form1.CopiarDeLvw(sender, LvwSinEmail);
     }
 }

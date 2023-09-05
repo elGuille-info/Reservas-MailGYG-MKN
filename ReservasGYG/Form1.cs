@@ -209,7 +209,7 @@ public partial class Form1 : Form
         // Comprobar que todos tengan email.                (24/ago/23 04.41)
         //string res = ComprobarEmails(fecha);
         // Usando la nueva función.                         (27/ago/23 17.26)
-        var res = ComprobarEmailsReservas(fecha, LvwSinEmail);
+        var res = ComprobarEmailsReservas(fecha, LvwSinEmail, ChkConAlquileres.Checked);
 
         if (res > 0)
         {
@@ -219,7 +219,7 @@ public partial class Form1 : Form
         }
 
         //var lisRes = Reservas.TablaCol($"SELECT * FROM Reservas Where idDistribuidor=10 and Activa=1 and CanceladaCliente=0 and Confirmada=1 and FechaActividad ='{fecha:yyyy-MM-dd}' ORDER By FechaActividad, HoraActividad");
-        var lisRes = ApiReservasMailGYG.MailGYG.DatosReservas(fecha, new TimeSpan(0, 0, 0));
+        var lisRes = ApiReservasMailGYG.MailGYG.DatosReservas(fecha, new TimeSpan(0, 0, 0), ChkConAlquileres.Checked);
         if (MessageBox.Show($"Se va a madar el mensaje a {lisRes.Count} {lisRes.Count.Plural("reserva")}",
                              "Mandar recordatorio de que MAÑANA es el día", MessageBoxButtons.OKCancel, MessageBoxIcon.Question) == DialogResult.Cancel)
         {
@@ -300,7 +300,7 @@ public partial class Form1 : Form
 
         // Comprobar que todos tengan email.                (24/ago/23 04.41)
         // Usando la nueva función.                         (27/ago/23 17.26)
-        var res = ComprobarEmailsReservas(fecha, LvwSinEmail);
+        var res = ComprobarEmailsReservas(fecha, LvwSinEmail, ChkConAlquileres.Checked);
 
         if (res > 0)
         {
@@ -310,7 +310,7 @@ public partial class Form1 : Form
         }
 
         //var lisRes = Reservas.TablaCol($"SELECT * FROM Reservas Where idDistribuidor=10 and Activa=1 and CanceladaCliente=0 and Confirmada=1 and FechaActividad ='{fecha:yyyy-MM-dd}' ORDER By FechaActividad, HoraActividad");
-        var lisRes = ApiReservasMailGYG.MailGYG.DatosReservas(fecha, new TimeSpan(0, 0, 0));
+        var lisRes = ApiReservasMailGYG.MailGYG.DatosReservas(fecha, new TimeSpan(0, 0, 0), ChkConAlquileres.Checked);
         if (MessageBox.Show($"Se va a mandar el mensaje a {lisRes.Count} {lisRes.Count.Plural("reserva")}",
                              "Mandar recordatorio de que hoy es el día", MessageBoxButtons.OKCancel, MessageBoxIcon.Question) == DialogResult.Cancel)
         {
@@ -369,7 +369,7 @@ public partial class Form1 : Form
         // Comprobar si hay clientes sin email en la fecha indicada. (24/ago/23 04.31)
         var fecha = DateTimePickerGYG.Value.Date;
 
-        var res = ComprobarEmailsReservas(fecha, LvwSinEmail);
+        var res = ComprobarEmailsReservas(fecha, LvwSinEmail, ChkConAlquileres.Checked);
         if (res > 0)
         {
             MessageBox.Show($"Hay {res} {res.Plural("reserva")} del {fecha:dddd dd/MM/yyyy} sin emails.{CrLf}No se debe continuar hasta que lo soluciones.", "Comprobar reservas sin email", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -387,26 +387,6 @@ public partial class Form1 : Form
         // Comprobar las reservas que no han salido         (29/ago/23 11.18)
         // de la fecha indicada 
         var fecha = DateTimePickerGYG.Value.Date;
-
-        //StringBuilder sb = new StringBuilder();
-        //sb.Append("Select * from Reservas ");
-        //sb.Append("where Activa = 1 and CanceladaCliente = 0 and idDistribuidor = 10 ");
-        //sb.Append("and Nombre != 'Makarena (GYG)' ");
-        //sb.Append("and Control = 0 ");
-        //sb.Append($"and FechaActividad = '{fecha:yyyy-MM-dd}' ");
-        //sb.Append("order by FechaActividad, HoraActividad, ID");
-
-        //var colRes = Reservas.TablaCol(sb.ToString());
-
-        //List<ApiReservasMailGYG.ReservasGYG> col = new();
-
-        //if (colRes.Count > 0)
-        //{
-        //    for (int i = 0; i < colRes.Count; i++)
-        //    {
-        //        col.Add(new ApiReservasMailGYG.ReservasGYG(colRes[i]));
-        //    }
-        //}
 
         var col = ApiReservasMailGYG.MailGYG.ReservasSinSalida(fecha);
 
@@ -427,7 +407,7 @@ public partial class Form1 : Form
         // Lista de las reservas de la fecha indicada.      (29/ago/23 11.32)
         var fecha = DateTimePickerGYG.Value.Date;
 
-        var col = ApiReservasMailGYG.MailGYG.DatosReservas(fecha, new TimeSpan(0, 0, 0));
+        var col = ApiReservasMailGYG.MailGYG.DatosReservas(fecha, new TimeSpan(0, 0, 0), ChkConAlquileres.Checked);
         AsignarListView(col, LvwSinEmail);
 
         //StringBuilder sb = new StringBuilder();
@@ -470,13 +450,6 @@ public partial class Form1 : Form
     /// <param name="LvwSinEmail"></param>
     public static void AsignarListView(List<ApiReservasMailGYG.ReservasGYG> col, ListView LvwSinEmail)
     {
-        //LvwSinEmail.Items.Clear();
-        //LvwSinEmail.Columns.Clear();
-
-        //for (int j = 0; j < ApiReservasMailGYG.ReservasGYG.Columnas.Length; j++)
-        //{
-        //    LvwSinEmail.Columns.Add(ApiReservasMailGYG.ReservasGYG.Columnas[j]);
-        //}
         AsignarColumnasLvw(LvwSinEmail, asignarColumnas: true);
 
         for (int i = 0; i < col.Count; i++)
@@ -495,9 +468,9 @@ public partial class Form1 : Form
     /// <param name="fecha"></param>
     /// <param name="LvwSinEmail"></param>
     /// <returns></returns>
-    public static int ComprobarEmailsReservas(DateTime fecha, ListView LvwSinEmail)
+    public static int ComprobarEmailsReservas(DateTime fecha, ListView LvwSinEmail, bool conAlquileres)
     {
-        var col = MailGYG.ComprobarEmails(fecha);
+        var col = MailGYG.ComprobarEmails(fecha, conAlquileres);
 
         AsignarListView(col, LvwSinEmail);
 
@@ -593,7 +566,7 @@ public partial class Form1 : Form
 
         // Comprobar que todos tengan email.                (24/ago/23 04.41)
         // Usando la nueva función.                         (27/ago/23 17.26)
-        var res = ComprobarEmailsReservas(fecha, LvwSinEmail);
+        var res = ComprobarEmailsReservas(fecha, LvwSinEmail, ChkConAlquileres.Checked);
 
         if (res > 0)
         {
@@ -603,7 +576,7 @@ public partial class Form1 : Form
         }
 
         //var lisRes = Reservas.TablaCol($"SELECT * FROM Reservas Where idDistribuidor=10 and Activa=1 and CanceladaCliente=0 and Confirmada=1 and FechaActividad ='{fecha:yyyy-MM-dd}' ORDER By FechaActividad, HoraActividad");
-        var lisRes = ApiReservasMailGYG.MailGYG.DatosReservas(fecha, new TimeSpan(0, 0, 0));
+        var lisRes = ApiReservasMailGYG.MailGYG.DatosReservas(fecha, new TimeSpan(0, 0, 0), ChkConAlquileres.Checked);
 
         if (MessageBox.Show($"Se va a madar el mensaje a {lisRes.Count} {lisRes.Count.Plural("reserva")}",
                             $"Mandar aviso de Alerta {alerta}", MessageBoxButtons.OKCancel, MessageBoxIcon.Question) == DialogResult.Cancel)
