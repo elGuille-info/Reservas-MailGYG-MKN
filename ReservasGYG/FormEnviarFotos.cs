@@ -587,4 +587,33 @@ https://photos.app.goo.gl/qqxWBkVthdBGMjFEA
         // Mostrar las reservas que hay por si alguna de las fotos no hay reservas en esa hora.
 
     }
+
+    private void ContextMenuListView_Opening(object sender, System.ComponentModel.CancelEventArgs e)
+    {
+        bool hab = LvwSinEmail.SelectedIndices.Count > 0;
+        foreach (var mnu in ContextMenuListView.Items)
+        {
+            (mnu as ToolStripMenuItem).Enabled = hab;
+        }
+    }
+
+    //public static string[] Columnas { get; } = { "Booking", "Nombre", "Teléfono", "Reserva", "PAX", "Email", "Notas" };
+    private void MnuCopiarDeLvw_Click(object sender, EventArgs e)
+    {
+        //if (LvwSinEmail.SelectedIndices.Count == 0) return;
+        ////var mnu = sender as ToolStripMenuItem;
+        ////if (mnu == null) return;
+        //int index = -1;
+        //if (sender == MnuCopiarBooking) index = 0;
+        //if (sender == MnuCopiarNombre) index = 1;
+        //if (sender == MnuCopiarTelefono) index = 2;
+        //if (sender == MnuCopiarEmail) index = 5;
+        //if (sender == MnuCopiarNotas) index = 6;
+        //if (index == -1) return;
+
+        //string texto = LvwSinEmail.Items[LvwSinEmail.SelectedIndices[0]].SubItems[index].Text;
+        //Form1.CopiarPortapapeles(texto);
+
+        Form1.CopiarDeLvw(sender, LvwSinEmail);
+    }
 }

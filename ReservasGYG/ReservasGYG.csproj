@@ -1,61 +1,62 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <OutputType>WinExe</OutputType>
-    <TargetFramework>net6.0-windows</TargetFramework>
-    <Nullable>disable</Nullable>
-    <UseWindowsForms>true</UseWindowsForms>
-    <ImplicitUsings>disable</ImplicitUsings>
-    <Description>Aplicación para gestionar las reservas recibidas por email de GetYourGuide con MKN Reservas  (revisión del 02-sep-2023)</Description>
-    <PackageIcon>GYG_logo_naranja_265x265.png</PackageIcon>
-    <ApplicationIcon>GYG_logo_blanco.ico</ApplicationIcon>
-    <Title>Analizar email de GetYourGuide</Title>
-    <Company>gSoft (elguille.info) para MKN Reservas</Company>
-    <Copyright>(c) gSoft (elguille.info) para MKN Reservas, 2023</Copyright>
-    <PackageReadmeFile>Readme.md</PackageReadmeFile>
-    <RepositoryType>git</RepositoryType>
-    <RepositoryUrl>https://github.com/elGuille-info/Reservas-MailGYG-MKN</RepositoryUrl>
-      <Version>1.0.3</Version>
-    <FileVersion>1.0.3.0</FileVersion>
-  </PropertyGroup>
+    <PropertyGroup>
+        <OutputType>WinExe</OutputType>
+        <TargetFramework>net6.0-windows</TargetFramework>
+        <Nullable>disable</Nullable>
+        <UseWindowsForms>true</UseWindowsForms>
+        <ImplicitUsings>disable</ImplicitUsings>
+        <Description>Aplicación para gestionar las reservas recibidas por email de GetYourGuide con MKN Reservas  (revisión del 05-sep-2023)</Description>
+        <PackageIcon>GYG_logo_naranja_265x265.png</PackageIcon>
+        <ApplicationIcon>GYG_logo_blanco.ico</ApplicationIcon>
+        <Title>Analizar email de GetYourGuide</Title>
+        <Company>gSoft (elguille.info) para MKN Reservas</Company>
+        <Copyright>(c) gSoft (elguille.info) para MKN Reservas, 2023</Copyright>
+        <PackageReadmeFile>Readme.md</PackageReadmeFile>
+        <RepositoryType>git</RepositoryType>
+        <RepositoryUrl>https://github.com/elGuille-info/Reservas-MailGYG-MKN</RepositoryUrl>
+        <Version>1.0.7</Version>
+        <AssemblyVersion>1.0.7.0</AssemblyVersion>
+        <FileVersion>1.0.7.0</FileVersion>
+    </PropertyGroup>
 
-  <ItemGroup>
-    <Content Include="GYG_logo_blanco.ico" />
-  </ItemGroup>
+    <ItemGroup>
+        <Content Include="GYG_logo_blanco.ico" />
+    </ItemGroup>
 
-  <ItemGroup>
-    <None Include="Readme.md">
-      <Pack>True</Pack>
-      <PackagePath>\</PackagePath>
-    </None>
-  </ItemGroup>
+    <ItemGroup>
+        <None Include="Readme.md">
+            <Pack>True</Pack>
+            <PackagePath>\</PackagePath>
+        </None>
+    </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\..\..\MKNReservas\KNDLLs\Xamarin\KNDatos\KNDatos-Xamarin.vbproj" />
-    <ProjectReference Include="..\..\..\MKNReservas\KNDLLs\Xamarin\KNUtilidades\MKNUtilidades-Xamarin.vbproj" />
-    <ProjectReference Include="..\ApiReservasGYG\ApiReservasGYG.csproj" />
-  </ItemGroup>
+    <ItemGroup>
+        <ProjectReference Include="..\..\..\MKNReservas\KNDLLs\Xamarin\KNDatos\KNDatos-Xamarin.vbproj" />
+        <ProjectReference Include="..\..\..\MKNReservas\KNDLLs\Xamarin\KNUtilidades\MKNUtilidades-Xamarin.vbproj" />
+        <ProjectReference Include="..\ApiReservasGYG\ApiReservasGYG.csproj" />
+    </ItemGroup>
 
-  <ItemGroup>
-    <Compile Update="Properties\Resources.Designer.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Resources.resx</DependentUpon>
-    </Compile>
-  </ItemGroup>
+    <ItemGroup>
+        <Compile Update="Properties\Resources.Designer.cs">
+            <DesignTime>True</DesignTime>
+            <AutoGen>True</AutoGen>
+            <DependentUpon>Resources.resx</DependentUpon>
+        </Compile>
+    </ItemGroup>
 
-  <ItemGroup>
-    <EmbeddedResource Update="Properties\Resources.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-  </ItemGroup>
+    <ItemGroup>
+        <EmbeddedResource Update="Properties\Resources.resx">
+            <Generator>ResXFileCodeGenerator</Generator>
+            <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+        </EmbeddedResource>
+    </ItemGroup>
 
-  <ItemGroup>
-    <None Update="Resources\GYG_logo_naranja_265x265.png">
-      <Pack>True</Pack>
-      <PackagePath>\</PackagePath>
-    </None>
-  </ItemGroup>
+    <ItemGroup>
+        <None Update="Resources\GYG_logo_naranja_265x265.png">
+            <Pack>True</Pack>
+            <PackagePath>\</PackagePath>
+        </None>
+    </ItemGroup>
 
 </Project>

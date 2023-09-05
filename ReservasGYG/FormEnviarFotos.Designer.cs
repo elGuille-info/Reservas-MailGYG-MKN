@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormEnviarFotos));
             TxtFotosSeleccionada = new System.Windows.Forms.TextBox();
             label8 = new System.Windows.Forms.Label();
@@ -45,6 +46,13 @@
             LvwSinEmail = new System.Windows.Forms.ListView();
             columnHeader1 = new System.Windows.Forms.ColumnHeader();
             columnHeader2 = new System.Windows.Forms.ColumnHeader();
+            ContextMenuListView = new System.Windows.Forms.ContextMenuStrip(components);
+            MnuCopiarBooking = new System.Windows.Forms.ToolStripMenuItem();
+            MnuCopiarNombre = new System.Windows.Forms.ToolStripMenuItem();
+            MnuCopiarTelefono = new System.Windows.Forms.ToolStripMenuItem();
+            MnuCopiarEmail = new System.Windows.Forms.ToolStripMenuItem();
+            MnuCopiarNotas = new System.Windows.Forms.ToolStripMenuItem();
+            ContextMenuListView.SuspendLayout();
             SuspendLayout();
             // 
             // TxtFotosSeleccionada
@@ -205,6 +213,7 @@
             // 
             LvwSinEmail.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
             LvwSinEmail.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] { columnHeader1, columnHeader2 });
+            LvwSinEmail.ContextMenuStrip = ContextMenuListView;
             LvwSinEmail.FullRowSelect = true;
             LvwSinEmail.GridLines = true;
             LvwSinEmail.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
@@ -226,6 +235,49 @@
             // 
             columnHeader2.Text = "Nombre";
             columnHeader2.Width = 400;
+            // 
+            // ContextMenuListView
+            // 
+            ContextMenuListView.ImageScalingSize = new System.Drawing.Size(24, 24);
+            ContextMenuListView.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { MnuCopiarBooking, MnuCopiarNombre, MnuCopiarTelefono, MnuCopiarEmail, MnuCopiarNotas });
+            ContextMenuListView.Name = "ContextMenuListView";
+            ContextMenuListView.Size = new System.Drawing.Size(209, 164);
+            ContextMenuListView.Opening += ContextMenuListView_Opening;
+            // 
+            // MnuCopiarBooking
+            // 
+            MnuCopiarBooking.Name = "MnuCopiarBooking";
+            MnuCopiarBooking.Size = new System.Drawing.Size(208, 32);
+            MnuCopiarBooking.Text = "Copiar Booking";
+            MnuCopiarBooking.Click += MnuCopiarDeLvw_Click;
+            // 
+            // MnuCopiarNombre
+            // 
+            MnuCopiarNombre.Name = "MnuCopiarNombre";
+            MnuCopiarNombre.Size = new System.Drawing.Size(208, 32);
+            MnuCopiarNombre.Text = "Copiar Nombre";
+            MnuCopiarNombre.Click += MnuCopiarDeLvw_Click;
+            // 
+            // MnuCopiarTelefono
+            // 
+            MnuCopiarTelefono.Name = "MnuCopiarTelefono";
+            MnuCopiarTelefono.Size = new System.Drawing.Size(208, 32);
+            MnuCopiarTelefono.Text = "Copiar Teléfono";
+            MnuCopiarTelefono.Click += MnuCopiarDeLvw_Click;
+            // 
+            // MnuCopiarEmail
+            // 
+            MnuCopiarEmail.Name = "MnuCopiarEmail";
+            MnuCopiarEmail.Size = new System.Drawing.Size(208, 32);
+            MnuCopiarEmail.Text = "Copiar Email";
+            MnuCopiarEmail.Click += MnuCopiarDeLvw_Click;
+            // 
+            // MnuCopiarNotas
+            // 
+            MnuCopiarNotas.Name = "MnuCopiarNotas";
+            MnuCopiarNotas.Size = new System.Drawing.Size(208, 32);
+            MnuCopiarNotas.Text = "Copiar Notas";
+            MnuCopiarNotas.Click += MnuCopiarDeLvw_Click;
             // 
             // FormEnviarFotos
             // 
@@ -250,6 +302,7 @@
             StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             Text = "Enviar Fotos de las Rutas";
             Load += FormEnviarFotos_Load;
+            ContextMenuListView.ResumeLayout(false);
             ResumeLayout(false);
             PerformLayout();
         }
@@ -271,5 +324,11 @@
         private System.Windows.Forms.ListView LvwSinEmail;
         private System.Windows.Forms.ColumnHeader columnHeader1;
         private System.Windows.Forms.ColumnHeader columnHeader2;
+        private System.Windows.Forms.ContextMenuStrip ContextMenuListView;
+        private System.Windows.Forms.ToolStripMenuItem MnuCopiarBooking;
+        private System.Windows.Forms.ToolStripMenuItem MnuCopiarNombre;
+        private System.Windows.Forms.ToolStripMenuItem MnuCopiarTelefono;
+        private System.Windows.Forms.ToolStripMenuItem MnuCopiarEmail;
+        private System.Windows.Forms.ToolStripMenuItem MnuCopiarNotas;
     }
 }

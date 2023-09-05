@@ -81,7 +81,35 @@ public partial class FormAnalizaEmail : Form
 
         if (string.IsNullOrEmpty(RtfEmail.Text)) return;
 
-        Reservas re = MailGYG.AnalizarEmail(RtfEmail.Text);
+        Reservas re;
+        DialogResult ret = DialogResult.No;
+
+        // Comprobar si se usa desde la página de Bookings  (05/sep/23 09.02)
+        // o desde el email.
+        bool desdeBooking = RtfEmail.Text.Contains("Booked on", StringComparison.OrdinalIgnoreCase);
+
+        if (desdeBooking)
+        {
+            ret = MessageBox.Show("El texto de la reserva se ha tomado desde la página Bookings." + CrLf +
+                                  "Pulsa SÍ para analizarla con el formato de Bookings." + CrLf +
+                                  "Pulsa NO para analizarla con el formato de email (no recomendable)." + CrLf +
+                                  "Pulsa CANCELAR para no analizar nada.",
+                                  "Analizar email de GYG", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
+            if (ret == DialogResult.Cancel)
+            {
+                return;
+            }
+        }
+
+        if (ret == DialogResult.No)
+        {
+            re = MailGYG.AnalizarEmail(RtfEmail.Text);
+        }
+        else
+        {
+            re = MailGYG.AnalizarBooking(RtfEmail.Text);
+        }
+
         if (re == null)
         {
             // Mostrar aviso de que algo no ha ido bien. (22/ago/23 20.24)
@@ -112,7 +140,20 @@ public partial class FormAnalizaEmail : Form
         TxtID.Text = re.ID.ToString();
 
         ChkCrearConEmail.Enabled = true;
-        ChkCrearConEmail.Checked = true;
+        ChkCrearConEmail.Checked = false;
+
+        // Si es desde booking a visar que revise las cosas antes de guardar.
+        if (desdeBooking)
+        {
+            MessageBox.Show("El texto de la reserva se ha tomado desde la página Bookings." + CrLf +
+                            "Comprueba que los datos son correctos antes de guardar y enviar el mensaje.",
+                            "Analizar email de GYG", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+        }
+        else
+        {
+            ChkCrearConEmail.Checked = true;
+        }
+
         BtnCrearConEmail.Enabled = ChkCrearConEmail.Checked;
     }
 
@@ -145,6 +186,28 @@ public partial class FormAnalizaEmail : Form
     {
         // Las dos cosas seguidas.                      (22/ago/23 10.28)
         // Si se hacen desde el temporizador no va bien.
+
+        // Comprobar si es alquiler y hay como mínimo 2 adultos. (05/sep/23 10.53)
+        if (KNDatos.BaseKayak.ActividadesAlquiler().Contains(LaReserva.Actividad))
+        {
+            DialogResult ret;
+            if (LaReserva.Adultos < 2)
+            {
+                ret = MessageBox.Show("Es un alquiler para menos de 2 pax (adultos)." + CrLf +
+                                      "NO se debe aceptar esta reserva." + CrLf + CrLf +
+                                      "Hay que contactar con el cliente por wasap y email y avisarle que el mínimo es 2 personas de 7 años o más." + CrLf + CrLf +
+                                      "Esta reserva hay que cancelarla." + CrLf + CrLf +
+                                      "¿Quieres continuar creando la reserva?",
+                                      "Nueva reserva de alquiler",
+                                      MessageBoxButtons.YesNo, MessageBoxIcon.Error, MessageBoxDefaultButton.Button2);
+                if (ret != DialogResult.Yes)
+                    return;
+            }
+            if (MessageBox.Show("Es un alquiler antes de continuar comprueba que esté correcta la reserva.",
+                                "Nueva reserva de alquiler", 
+                                MessageBoxButtons.OKCancel, MessageBoxIcon.Exclamation) == DialogResult.Cancel) 
+                return;
+        }
 
         // Deshabilitar el botón hasta que finalice.        (27/ago/23 09.58)
         ChkCrearConEmail.Checked = false;

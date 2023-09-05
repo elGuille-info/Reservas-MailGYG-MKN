@@ -81,6 +81,45 @@ namespace ReservasGYG.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to 
+        ///Hola buenas, este mensaje es para informarte que las previsiones de oleaje y viento para el día de tu actividad no son buenas.
+        ///
+        ///*Las actividades siguen adelante por el momento*, pero es probable que se puedan cancelar. Por lo tanto, te recomendamos cambiar la actividad a otra fecha.
+        ///
+        ///En caso que no puedas cambiar de fecha y no quieras arriesgarte a venir, no hay problema, te devolveremos el dinero pagado.
+        ///
+        ///Muchas gracias.
+        ///
+        ///
+        ///
+        ///Hi, this message is to inform you that the forecasts for waves and wind [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string Alerta2_es_en {
+            get {
+                return ResourceManager.GetString("Alerta2_es_en", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Hola buenas, lamentamos comunicarte que por motivos de seguridad y las malas condiciones del mar, pasamos a cancelar todas las actividades programadas para el día de tu actividad.
+        ///
+        ///Por favor, indícanos si tienes la posibilidad de cambiar a otra fecha la actividad.
+        ///
+        ///En caso que no puedas cambiar de fecha, no hay problema, te devolveremos el dinero que has pagado.
+        ///
+        ///Muchas gracias por tu compresión.
+        ///
+        ///
+        ///
+        ///Hi, we regret to inform you that, for security reasons and the expected bad wave conditions, we are [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string Alerta3_es_en {
+            get {
+                return ResourceManager.GetString("Alerta3_es_en", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
         internal static System.Drawing.Bitmap CleanData {

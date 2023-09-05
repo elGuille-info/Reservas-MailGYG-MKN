@@ -513,16 +513,43 @@ public partial class Form1 : Form
         }
     }
 
+    //public static string[] Columnas { get; } = { "Booking", "Nombre", "Teléfono", "Reserva", "PAX", "Email", "Notas" };
     private void MnuCopiarDeLvw_Click(object sender, EventArgs e)
     {
+        //if (LvwSinEmail.SelectedIndices.Count == 0) return;
+        ////var mnu = sender as ToolStripMenuItem;
+        ////if (mnu == null) return;
+        //int index = -1;
+        //if (sender == MnuCopiarBooking) index = 0;
+        //if (sender == MnuCopiarNombre) index = 1;
+        //if (sender == MnuCopiarTelefono) index = 2;
+        //if (sender == MnuCopiarEmail) index = 5;
+        //if (sender == MnuCopiarNotas) index = 6;
+        //if (index == -1) return;
+
+        //string texto = LvwSinEmail.Items[LvwSinEmail.SelectedIndices[0]].SubItems[index].Text;
+        //CopiarPortapapeles(texto);
+
+        CopiarDeLvw(sender, LvwSinEmail);
+    }
+
+    /// <summary>
+    /// Copiar en el portapales el campo correspondiente al menú indicado.
+    /// </summary>
+    /// <param name="sender">El menú usado para saber qué copiar.</param>
+    /// <param name="LvwSinEmail">El listview con el contenido a copiar.</param>
+    public static void CopiarDeLvw(object sender, ListView LvwSinEmail)
+    {
         if (LvwSinEmail.SelectedIndices.Count == 0) return;
-        //var mnu = sender as ToolStripMenuItem;
-        //if (mnu == null) return;
+
+        if (sender is not ToolStripMenuItem mnu) return;
+
         int index = -1;
-        if (sender == MnuCopiarBooking) index = 0;
-        if (sender == MnuCopiarNombre) index = 1;
-        if (sender == MnuCopiarTelefono) index = 2;
-        if (sender == MnuCopiarNotas) index = 6;
+        if (mnu.Name == "MnuCopiarBooking") index = 0;
+        if (mnu.Name == "MnuCopiarNombre") index = 1;
+        if (mnu.Name == "MnuCopiarTelefono") index = 2;
+        if (mnu.Name == "MnuCopiarEmail") index = 5;
+        if (mnu.Name == "MnuCopiarNotas") index = 6;
         if (index == -1) return;
 
         string texto = LvwSinEmail.Items[LvwSinEmail.SelectedIndices[0]].SubItems[index].Text;
@@ -542,15 +569,21 @@ public partial class Form1 : Form
         catch { }
     }
 
-    private void BtnAlerta1_Click(object sender, EventArgs e)
+    /// <summary>
+    /// Enviar el mensaje de alerta indicado en el parámetro, valores válidos: 1, 2 o 3.
+    /// </summary>
+    /// <param name="alerta">Número de la alerta (1, 2 3)</param>
+    private void EnviarAlerta(int alerta)
     {
+        if (alerta < 1 || alerta > 3) alerta = 1;
+
         DateTime fecha = DateTimePickerGYG.Value.Date;
         DialogResult ret;
 
-        ret = MessageBox.Show($"¿Quieres mandar el mensaje de 'Alerta 1' a las reservas del {fecha.Date:dddd dd/MM/yyyy}?" + CrLf +
-                              "Pulsa SÍ para mandar el mensaje de ALERTA 1 a las reservas de esa fecha." + CrLf +
+        ret = MessageBox.Show($"¿Quieres mandar el mensaje de 'Alerta {alerta}' a las reservas del {fecha.Date:dddd dd/MM/yyyy}?" + CrLf +
+                              $"Pulsa SÍ para mandar el mensaje de ALERTA {alerta} a las reservas de esa fecha." + CrLf +
                               $"Pulsa NO no mandar nada y seleccionar otra fecha.",
-                              "Mandar aviso de Alerta 1", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                              $"Mandar aviso de Alerta {alerta}", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
         if (ret == DialogResult.No)
         {
             DateTimePickerGYG.Focus();
@@ -565,7 +598,7 @@ public partial class Form1 : Form
         if (res > 0)
         {
             MessageBox.Show($"Hay {res} {res.Plural("reserva")} del {fecha:dddd dd/MM/yyyy} sin emails.{CrLf}No se puede continuar hasta que lo soluciones.",
-                            "Mandar aviso de Alerta 1", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            $"Mandar aviso de Alerta {alerta}", MessageBoxButtons.OK, MessageBoxIcon.Error);
             return;
         }
 
@@ -573,7 +606,7 @@ public partial class Form1 : Form
         var lisRes = ApiReservasMailGYG.MailGYG.DatosReservas(fecha, new TimeSpan(0, 0, 0));
 
         if (MessageBox.Show($"Se va a madar el mensaje a {lisRes.Count} {lisRes.Count.Plural("reserva")}",
-                             "Mandar aviso de Alerta 1", MessageBoxButtons.OKCancel, MessageBoxIcon.Question) == DialogResult.Cancel)
+                            $"Mandar aviso de Alerta {alerta}", MessageBoxButtons.OKCancel, MessageBoxIcon.Question) == DialogResult.Cancel)
         {
             return;
         }
@@ -594,7 +627,14 @@ public partial class Form1 : Form
 
         StringBuilder sb = new StringBuilder();
         sb.Append("");
-        sb.Append(Properties.Resources.Alerta1_es_en.Replace(CrLf, "<br/>"));
+
+        if (alerta == 1)
+            sb.Append(Properties.Resources.Alerta1_es_en.Replace(CrLf, "<br/>"));
+        else if (alerta == 2)
+            sb.Append(Properties.Resources.Alerta2_es_en.Replace(CrLf, "<br/>"));
+        else if (alerta == 3)
+            sb.Append(Properties.Resources.Alerta3_es_en.Replace(CrLf, "<br/>"));
+
         sb.Append("<br/>");
         sb.Append("<br/>");
         sb.Append("Kayak Makarena");
@@ -605,7 +645,7 @@ public partial class Form1 : Form
         var fechaEN = $"{fecha.Date.ToString("dddd dd/MM/yyyy", System.Globalization.CultureInfo.CreateSpecificCulture("en-US"))}";
 
         string body = sb.ToString().Replace(CrLf, "<br/>");
-        var msg = ApiReservasMailGYG.MailGYG.EnviarMensaje(colPara, $"Alerta 1 para {fechaES} / Alert 1 for {fechaEN}", body, true);
+        var msg = ApiReservasMailGYG.MailGYG.EnviarMensaje(colPara, $"Alerta {alerta} para {fechaES} / Alert {alerta} for {fechaEN}", body, true);
         if (msg.StartsWith("ERROR"))
         {
             MessageBox.Show($"ERROR al enviar el email:{CrLf}{msg}.", "Error al enviar el email de la reserva", MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -616,13 +656,18 @@ public partial class Form1 : Form
         }
     }
 
+    private void BtnAlerta1_Click(object sender, EventArgs e)
+    {
+        EnviarAlerta(1);
+    }
+
     private void BtnAlerta2_Click(object sender, EventArgs e)
     {
-
+        EnviarAlerta(2);
     }
 
     private void BtnAlerta3_Click(object sender, EventArgs e)
     {
-
+        EnviarAlerta(3);
     }
 }

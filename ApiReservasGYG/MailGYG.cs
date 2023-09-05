@@ -188,6 +188,7 @@ namespace ApiReservasMailGYG
         {
             int i;
 
+            // Cuando es alquiler, algunos campos no se indican. (05/sep/23 11.30)
             i = texto.IndexOf("Option:");
             if (i == -1) { return true; }
             i = texto.IndexOf("Date:");
@@ -200,15 +201,13 @@ namespace ApiReservasMailGYG
             if (i == -1) { return true; }
             i = texto.IndexOf("Main customer:");
             if (i == -1) { return true; }
-            i = texto.IndexOf("children in your group.:");
-            if (i == -1) { return true; }
-            i = texto.IndexOf("Tour language:");
-            if (i == -1) { return true; }
+            // Esto no está en los alquileres               (05/sep/23 11.32)
+            //i = texto.IndexOf("children in your group.:");
+            //if (i == -1) { return true; }
+            // Esto no está en los alquileres               (05/sep/23 11.33)
+            //i = texto.IndexOf("Tour language:");
+            //if (i == -1) { return true; }
             i = texto.IndexOf("Number of participants:");
-            if (i == -1) { return true; }
-            i = texto.IndexOf("Option:");
-            if (i == -1) { return true; }
-            i = texto.IndexOf("Option:");
             if (i == -1) { return true; }
 
             return false;
@@ -333,24 +332,40 @@ namespace ApiReservasMailGYG
             re.FechaActividad = fec.Date;
             re.HoraActividad = fec.TimeOfDay;
 
+            // Ahora puede haber alquileres.                (05/sep/23 08.46)
+            //Option: Nerja: Cliffs of Maro-Cerro Gordo Kayak Rental (AlquilerKayak 1h)
+            //Option: 2-Hour Tour (Ruta Corta)
+            //Option: 2-Hour Tour Low Season (RutaCortaTBaja)
+            //Option: 2.5-Hour Tour (Ruta Larga)
+            //Option: 2.5-Hour Tour Low Season (RutaLargaTBaja)
+            //Option: Disfruta de los acantilados de Nerja-Maro-Cerro Gordo (RutaTabla)
+
             if (re.GYGOption.Contains("Corta"))
             {
                 re.Actividad = "RUTA";
             }
-            else if (re.GYGOption.Contains("Larga")) //Ruta 
+            else if (re.GYGOption.Contains("Larga"))
             {
                 re.Actividad = "RUTA VIP";
             }
-            else
+            else if (re.GYGOption.Contains("AlquilerKayak"))
+            {
+                re.Actividad = "KAYAK";
+            }
+            else if (re.GYGOption.Contains("RutaTabla"))
             {
                 re.Actividad = "RUTA TABLAS";
+            }
+            else
+            {
+                re.Actividad = "RUTA";
             }
 
             return re;
         }
 
         /*
-        Formato si se coge el texto desde la página Bookings
+        Formato rutas si se coge el texto desde la página Bookings
 
     RutasKayak | Nerja: Cliffs of Maro-Cerro Gordo Guided Kayak Tour 
     Option: Ruta Corta | 2-Hour Tour High Season
@@ -391,21 +406,112 @@ namespace ApiReservasMailGYG
     Aug 20, 2023
         */
 
+        /*
+Formato Alquiler desde la página de Bookings
+        
+AlquilerKayak 2pax | Nerja: Cliffs of Maro-Cerro Gordo Kayak Rental for 2 pax 
+Option: AlquilerKayak 1h | Nerja: Cliffs of Maro-Cerro Gordo Kayak Rental for 2 persons
+Sep 25, 2023 - 4:00pm
+GYG998GKNNZN
+Guillermo Som Cerezo
+2x Adult · €30.00
+Active
+
+Hide details
+Request cancellation
+Contact Lead Traveler:
+Guillermo Som Cerezo (Spain)
++34651940855
+customer-rq44z7oygij7mri5@reply.getyourguide.com
+Number of Travelers:
+2x 
+Adults (Age 7 - 99) ( €30.00 )
+1x 
+Child (Age 4 - 6) ( €0.00 )
+Total: 3 Persons
+Tickets & supply partner reference numbers:
+2x Adult
+
+UQA3A80GTRIQ0MDR6UBY8RK6NYW1CV5P-A7D4A
+UQA3A80GTRIQ0MDR6UBY8RK6NYW1CV5P-QSOA6
+Edit
+Booked on:
+Sep 5, 2023
+        */
+
         /// <summary>
-        /// Analizar la reserva si se coge el texto desde la página Bookings.
+        /// TODO: Analizar la reserva si se coge el texto desde la página Bookings.
         /// </summary>
         /// <param name="email">El texto a analizar</param>
-        /// <returns></returns>
+        /// <returns>Un objeto Reservas si todo es correcto o nulo si no se pudo evaluar.</returns>
         /// <remarks>Este texto contiene Booked on:</remarks>
         public static Reservas AnalizarBooking(string email)
         {
-            if (ComprobarCamposEmailGYG(email))
+            // Si no contiene Booked on: no es válido.
+            if (email.ToLower().Contains("booked on") == false)
             {
                 return null;
             }
+            // Option: AlquilerKayak 1h | Nerja: Cliffs of Maro-Cerro Gordo Kayak Rental for 2 persons
+            // Sep 25, 2023 - 4:00pm
+            // GYG998GKNNZN
+            // Guillermo Som Cerezo
+            // 2x Adult · €30.00
+            // 2x Adult 1x Youth · Spanish · €97.70
+            string opGYG = Extraer(email, "Option:");
+            string fechaHoraGYG = ExtraerDespues(email, "Option:", 1);
+            string refGYG = ExtraerDespues(email, "Option:", 2);
+            string paxGYG = ExtraerDespues(email, "Option:", 4);
+            string priceGYG = "€15.00";
+            int i, j, k, n;
+            n = paxGYG.IndexOf("·");
+            if (n > -1)
+            {
+                priceGYG = paxGYG.Substring(n + 1).Trim();
+                paxGYG = paxGYG.Substring(0, n).Trim();
+            }
+            //...
+            // Contact Lead Traveler:
+            // Guillermo Som Cerezo (Spain)
+            // Pedro Pacheco dominguez (Spain)
+            // +34651940855
+            // customer-rq44z7oygij7mri5@reply.getyourguide.com
+            string nombreGYG = ExtraerDespues(email, "Contact Lead Traveler:", 1);
+            string telefonoGYG = ExtraerDespues(email, "Contact Lead Traveler:", 2);
+            string emailGYG = ExtraerDespues(email, "Contact Lead Traveler:", 3);
+            string paisGYG = "";
+            // El nombre siempre lleva después del país entre paréntesis.
+            n = nombreGYG.IndexOf("(");
+            if (n > - 1)
+            {
+                paisGYG = nombreGYG.Substring(n + 1).Trim();
+                nombreGYG = nombreGYG.Substring(0, n).Trim();
+            }
+            string languageGYG, notasGYG;
+            // Si es alquiler no se indica el idioma ni las notas,
+            // si es ruta sí.
+            if (opGYG.Contains("AlquilerKayak"))
+            {
+                notasGYG = "";
+                languageGYG = paisGYG;
+            }
+            else
+            {
+                //Language(s):
+                //Spanish (LANGUAGE_LIVE)
+                languageGYG = ExtraerDespues(email, "Language(s):", 1);
+                //Please provide a phone number connected to Whatsapp. Please also provide the ages of all children in your group.:
+                //Una niña de 12 años, y otra de 5 años número de teléfono 607689593
+                notasGYG = ExtraerDespues(email, "children in your group.:", 1);
+            }
 
-            // Comprobar que estén los campos que deben estar.
-            //if (Comprobar)
+            // Number of Travelers:
+            // 2x 
+            // Adults (Age 7 - 99) ( €30.00 )
+            // 1x 
+            // Child (Age 4 - 6) ( €0.00 )
+            // Total: 3 Persons
+
             Reservas re = new Reservas
             {
                 idDistribuidor = 10,
@@ -417,72 +523,94 @@ namespace ApiReservasMailGYG
                 MedioContacto = "GetYourGuide", //KNDatos.Reservas.MedioContactoAPIWeb,
                 Confirmada = true,
                 //
-                GYGOption = Extraer(email, "Option:"),
-                GYGFechaHora = Extraer(email, "Date:"),
-                GYGPrice = Extraer(email, "Price:"),
-                GYGReference = Extraer(email, "Reference number:"),
-                Telefono = Extraer(email, "Phone:").ValidarTextoTelefono(añadirPais: true),
-                Nombre = ExtraerDespues(email, "Main customer:", 1).ToTitle(),
+                GYGOption = opGYG,
+                GYGFechaHora = fechaHoraGYG,
+                GYGPrice = priceGYG,
+                GYGReference = refGYG,
+                Telefono = telefonoGYG.ValidarTextoTelefono(añadirPais: true),
+                Nombre = nombreGYG.ToTitle(),
                 GYGPais = ExtraerDespues(email, "Main customer:", 2),
-                Email = ExtraerDespues(email, "Main customer:", 3),
-                //GYGNotas = ExtraerDespues(email, "children in your group.:", 1),
-                // Por si las notas están en varias líneas.     (25/ago/23 23.36)
-                GYGNotas = Extraer(email, "children in your group.:", "Tour language:"),
-                GYGLanguage = Extraer(email, "Tour language:"),
+                Email = emailGYG,
+                GYGNotas = notasGYG,
+                GYGLanguage = languageGYG,
             };
 
-            var pax = ExtraerEntre(email, "Number of participants:", "Reference number:");
-            for (int i = 0; i < pax.Count; i++)
+            // Usar lo que haya en paxGYG                   (05/sep/23 10.18)
+            // 2x Adult · €30.00
+            // 2x Adult 1x Youth · Spanish · €97.70
+            i = paxGYG.IndexOf("x Adult");
+            n = 0;
+            if (i > -1)
             {
-                if (string.IsNullOrEmpty(pax[i])) continue;
-                int j = pax[i].IndexOf('x');
-                if (j > -1)
+                j = i - 2;
+                if (j < 0) j = 0;
+                n = paxGYG.Substring(j, i - j).AsInteger();
+            }
+            re.Adultos = n;
+            i = paxGYG.IndexOf("x Youth");
+            n = 0;
+            if (i > -1)
+            {
+                j = i - 2;
+                if (j < 0) j = 0;
+                n = paxGYG.Substring(j, i - j).AsInteger();
+            }
+            re.Niños = n;
+
+            // Comprobar si hay menores de 7
+            // Number of Travelers:
+            // 2x 
+            // Adults (Age 7 - 99) ( €30.00 )
+            // 1x 
+            // Child (Age 4 - 6) ( €0.00 )
+            i = email.IndexOf("Child");
+            n = 0;
+            if (i > -1)
+            {
+                j = i - 6;
+                if (j < 0) j = 0;
+                k = email.IndexOf("x", j);
+                if (k > -1)
                 {
-                    var s = pax[i].Substring(0, j).Trim();
-                    int.TryParse(s, out int n);
-                    if (pax[i].Contains("Adult"))
-                    {
-                        re.Adultos = n;
-                    }
-                    else if (pax[i].Contains("Youth"))
-                    {
-                        re.Niños = n;
-                    }
-                    else if (pax[i].Contains("Child"))
-                    {
-                        re.Niños2 = n;
-                    }
+                    n = paxGYG.Substring(j, k - j).AsInteger();
                 }
             }
+            re.Niños2 = n;
 
+            // El formato de fechaHora es: MMM d, yyyy - H:mm
+            // Sep 25, 2023 - 4:00pm
+            // Sep 8, 2023 - 4:15pm
             var fecGYG = re.GYGFechaHora;
-            int k = re.GYGFechaHora.IndexOf("(");
-            if (k > -1)
-            {
-                fecGYG = re.GYGFechaHora.Substring(0, k).Trim();
-            }
 
-            // Si la fecha no tiene contenido válido, devolver nulo. (22/ago/23 20.22)
-            if (string.IsNullOrWhiteSpace(fecGYG))
-            {
-                return null;
-            }
-
-            var fec = DateTime.ParseExact(fecGYG, "dd MMMM yyyy, HH:mm", System.Globalization.CultureInfo.InvariantCulture);
+            var fec = DateTime.ParseExact(fecGYG, "MMM d, yyyy - h:mm", System.Globalization.CultureInfo.GetCultureInfo("en-US"));
             re.FechaActividad = fec.Date;
             re.HoraActividad = fec.TimeOfDay;
+
+            // Ahora puede haber alquileres.                (05/sep/23 08.36)
+            //Option: Nerja: Cliffs of Maro-Cerro Gordo Kayak Rental (AlquilerKayak 1h)
+            //Option: 2-Hour Tour Low Season (RutaCortaTBaja)
+            //Option: 2.5-Hour Tour Low Season (RutaLargaTBaja)
+            //Option: Disfruta de los acantilados de Nerja-Maro-Cerro Gordo (RutaTabla)
 
             if (re.GYGOption.Contains("Corta"))
             {
                 re.Actividad = "RUTA";
             }
-            else if (re.GYGOption.Contains("Larga")) //Ruta 
+            else if (re.GYGOption.Contains("Larga"))
             {
                 re.Actividad = "RUTA VIP";
             }
-            else
+            else if (re.GYGOption.Contains("AlquilerKayak"))
+            {
+                re.Actividad = "KAYAK";
+            }
+            else if (re.GYGOption.Contains("RutaTabla"))
             {
                 re.Actividad = "RUTA TABLAS";
+            }
+            else
+            {
+                re.Actividad = "RUTA";
             }
 
             return re;
@@ -756,7 +884,8 @@ namespace ApiReservasMailGYG
             sb.Append("where Activa = 1 and CanceladaCliente = 0 and idDistribuidor = 10 ");
             sb.Append("and Email = '' and Nombre != 'Makarena (GYG)' ");
             // Solo las rutas                               (02/sep/23 13.52)
-            sb.Append($"and Actividad like 'ruta%' ");
+            // también los alquileres...                    (05/sep/23 23.47)
+            //sb.Append($"and Actividad like 'ruta%' ");
             sb.Append($"and FechaActividad = '{fecha:yyyy-MM-dd}' ");
             sb.Append("order by FechaActividad, HoraActividad, ID");
 
@@ -808,30 +937,9 @@ namespace ApiReservasMailGYG
         /// <returns>Una colección con las reservas que no tienen email o una colección vacía si todas tienen email.</returns>
         public static List<ReservasGYG> ComprobarEmails(DateTime fecha)
         {
-            //StringBuilder sb = new StringBuilder();
-            //sb.Append("Select * from Reservas ");
-            //sb.Append("where Activa = 1 and CanceladaCliente = 0 and idDistribuidor = 10 ");
-            //sb.Append("and Email = '' and Nombre != 'Makarena (GYG)' ");
-            //// Solo las rutas                               (02/sep/23 13.54)
-            //sb.Append($"and Actividad like 'ruta%' ");
-            //sb.Append($"and FechaActividad = '{fecha:yyyy-MM-dd}' ");
-            //sb.Append("order by FechaActividad, HoraActividad, ID");
-
-            //var colRes = Reservas.TablaCol(sb.ToString());
-
-            //List<ReservasGYG> col = new();
-
-            //if (colRes.Count > 0)
-            //{
-            //    for (int i = 0; i < colRes.Count; i++)
-            //    {
-            //        col.Add(new ReservasGYG(colRes[i]));
-            //    }
-            //}
-            //return col;
             return ComprobarEmails(fecha, new TimeSpan(0, 0, 0));
         }
-        
+
         /// <summary>
         /// Comprueba si hay reservas de rutas sin email en la fecha y hora indicada.
         /// </summary>
@@ -845,7 +953,8 @@ namespace ApiReservasMailGYG
             sb.Append("where Activa = 1 and CanceladaCliente = 0 and idDistribuidor = 10 ");
             sb.Append("and Email = '' and Nombre != 'Makarena (GYG)' ");
             // Solo las rutas                               (02/sep/23 13.54)
-            sb.Append($"and Actividad like 'ruta%' ");
+            // también los alquileres...                    (05/sep/23 23.47)
+            //sb.Append($"and Actividad like 'ruta%' ");
             sb.Append($"and FechaActividad = '{fecha:yyyy-MM-dd}' ");
             if (hora.Hours > 0)
             {
@@ -883,7 +992,8 @@ namespace ApiReservasMailGYG
             //sb.Append("and Email = '' and Nombre != 'Makarena (GYG)' ");
             sb.Append("and Nombre != 'Makarena (GYG)' ");
             // Solo las rutas                               (02/sep/23 13.54)
-            sb.Append($"and Actividad like 'ruta%' ");
+            // también los alquileres...                    (05/sep/23 23.47)
+            //sb.Append($"and Actividad like 'ruta%' ");
             sb.Append($"and FechaActividad = '{fecha:yyyy-MM-dd}' ");
             if (hora.Hours > 0)
             {
