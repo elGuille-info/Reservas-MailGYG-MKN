@@ -136,8 +136,8 @@ Global
 		{544CE92B-C6DD-4BD9-848A-884CFC443AA1}.Release|x86.ActiveCfg = Release|Any CPU
 		{544CE92B-C6DD-4BD9-848A-884CFC443AA1}.Release|x86.Build.0 = Release|Any CPU
 		{544CE92B-C6DD-4BD9-848A-884CFC443AA1}.Release|x86.Deploy.0 = Release|Any CPU
-		{7F713BA3-13A0-46B5-B018-BC7C67A6F74B}.Debug|Any CPU.ActiveCfg = Debug|iPhoneSimulator
-		{7F713BA3-13A0-46B5-B018-BC7C67A6F74B}.Debug|Any CPU.Build.0 = Debug|iPhoneSimulator
+		{7F713BA3-13A0-46B5-B018-BC7C67A6F74B}.Debug|Any CPU.ActiveCfg = Debug|iPhone
+		{7F713BA3-13A0-46B5-B018-BC7C67A6F74B}.Debug|Any CPU.Build.0 = Debug|iPhone
 		{7F713BA3-13A0-46B5-B018-BC7C67A6F74B}.Debug|ARM.ActiveCfg = Debug|iPhoneSimulator
 		{7F713BA3-13A0-46B5-B018-BC7C67A6F74B}.Debug|ARM.Build.0 = Debug|iPhoneSimulator
 		{7F713BA3-13A0-46B5-B018-BC7C67A6F74B}.Debug|iPhone.ActiveCfg = Debug|iPhone
@@ -272,9 +272,9 @@ Global
 		{F6E29084-346D-41B5-9DC1-08A2BBC41F79} = {5D6D2572-8368-4517-9BDD-F35899409051}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		        SolutionGuid = {11FCA5CB-A569-43F6-95B6-F3425C8FF4CD}
-		                        SolutionGuid = {55CA764C-5E8A-43A5-9A24-215304A9B227}
-		                SolutionGuid = {780930A6-9C3C-4129-809E-3714AD2DE37A}
 		SolutionGuid = {19E37782-653E-4617-A50F-06867ECE870E}
+		                SolutionGuid = {780930A6-9C3C-4129-809E-3714AD2DE37A}
+		                        SolutionGuid = {55CA764C-5E8A-43A5-9A24-215304A9B227}
+		        SolutionGuid = {11FCA5CB-A569-43F6-95B6-F3425C8FF4CD}
 	EndGlobalSection
 EndGlobal

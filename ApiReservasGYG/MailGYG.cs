@@ -184,6 +184,7 @@ namespace ApiReservasMailGYG
         /// </summary>
         /// <param name="texto">El texto a evaluar.</param>
         /// <returns>True si algunas de los campos buscados no está en el texto.</returns>
+        /// <remarks>Esto es para las reservas, no las modificaciones ni cancelaciones.</remarks>
         private static bool ComprobarCamposEmailGYG(string texto)
         {
             int i;
@@ -216,41 +217,127 @@ namespace ApiReservasMailGYG
         /*
         El contenido del email/mensaje será como este:
 
-    Hi supply partner,
+        Hi supply partner,
 
-    Great news! The following offer has been booked:
+        Great news! The following offer has been booked:
 
-    Nerja: Cliffs of Maro-Cerro Gordo Guided Kayak Tour (RutasKayak)
-    Option: 2-Hour Tour (Ruta Corta)
+        Nerja: Cliffs of Maro-Cerro Gordo Guided Kayak Tour (RutasKayak)
+        Option: 2-Hour Tour (Ruta Corta)
 
-    View booking
-    Most important data for this booking:
+        View booking
+        Most important data for this booking:
 
-    Date: 08 September 2023, 16:15 (04:15pm)
+        Date: 08 September 2023, 16:15 (04:15pm)
 
-    Price: € 97.70
+        Price: € 97.70
 
-    Number of participants:
-    1 x Child (Age 4 - 6 ) (€ 0.00)
-    1 x Youth (Age 7 - 15 ) (€ 23.90)
-    2 x Adults (Age 16 - 99 ) (€ 36.90)
-    Reference number: GYG2RA2KZ692
+        Number of participants:
+        1 x Child (Age 4 - 6 ) (€ 0.00)
+        1 x Youth (Age 7 - 15 ) (€ 23.90)
+        2 x Adults (Age 16 - 99 ) (€ 36.90)
+        Reference number: GYG2RA2KZ692
 
-    Main customer:
-    Pedro Pacheco dominguez
+        Main customer:
+        Pedro Pacheco dominguez
 
 
-    Spain
-    customer-ewtbjjgqeoquqzyr@reply.getyourguide.com
-    Phone: +34 607 68 95 93
-    Please provide a phone number connected to Whatsapp. Please also provide the ages of all children in your group.:
-    Una niña de 12 años, y otra de 5 años número de teléfono 607689593
+        Spain
+        customer-ewtbjjgqeoquqzyr@reply.getyourguide.com
+        Phone: +34 607 68 95 93
+        Please provide a phone number connected to Whatsapp. Please also provide the ages of all children in your group.:
+        Una niña de 12 años, y otra de 5 años número de teléfono 607689593
 
-    Tour language: Spanish (Live tour guide)
+        Tour language: Spanish (Live tour guide)
 
-    Best regards,
-    The GetYourGuide Team
+        Best regards,
+        The GetYourGuide Team
         */
+
+        /*
+        We would like to inform you that the following booking has changed:
+        GYGX7QWFLGXX
+
+        Name: Mathilde Sabouni
+
+        Tour: Nerja: Cliffs of Maro-Cerro Gordo Guided Kayak Tour
+
+        Date: September 9, 2023 , 10:30 AM
+
+        Number of participants: 2
+
+        Language: English
+
+        Comment: -
+
+        Answer to your question: No children    
+        */
+
+        /// <summary>
+        /// Comprueba si es una modificación de reserva.
+        /// </summary>
+        /// <param name="email"></param>
+        /// <returns>Nulo si no es modificación o los datos de la reserva a cambiar.</returns>
+        private static Reservas EsModificar(string email)
+        {
+            if (email.Contains("following booking has changed") == false)
+            {
+                return null;
+            }
+            return new Reservas();
+        }
+
+        /*
+        We’re writing to let you know that the following booking has been canceled.
+
+        Reference Number:	GYG998GKNNZN 
+        Name:	Guillermo Som Cerezo
+        Date:	September 25, 2023 4:00 PM
+        Activity:	Nerja: Cliffs of Maro-Cerro Gordo Kayak Rental for 2 pax
+        Please remove this customer from your list.
+
+
+        We’re writing to let you know that the following booking has been canceled.
+
+        Reference Number:	GYGN6GHXM5R3 
+        Name:	Raquel Sánchez Rubio
+        Date:	September 10, 2023 12:00 PM
+        Activity:	Nerja: Cliffs of Maro-Cerro Gordo Guided Kayak Tour
+        Please remove this customer from your list.
+        
+        */
+
+        /// <summary>
+        /// Comprueba si es una cancelación.
+        /// </summary>
+        /// <param name="email"></param>
+        /// <returns>Nulo si no es cancelación o los datos de la reserva a cancelar.</returns>
+        private static Reservas EsCancelacion(string email)
+        {
+            if (email.Contains("following booking has been canceled") == false)
+            {
+                return null;
+            }
+            
+            var refGyG = Extraer(email, "Reference Number:");
+            var nombre = Extraer(email, "Name:");
+            var fecGYG = Extraer(email, "Date:");
+            var actividad = Extraer(email, "Activity:");
+            var fec = DateTime.ParseExact(fecGYG, "MMMM dd, yyyy h:mm", System.Globalization.CultureInfo.InvariantCulture);
+
+            Reservas re = new Reservas
+            {
+                GYGTipo = Reservas.GYGTipos.Cancelada, 
+                GYGFechaHora = fecGYG,
+                GYGOption = actividad,
+                GYGReference = refGyG, // El número de booking
+                Nombre = nombre,
+                FechaActividad = fec.Date,
+                HoraActividad = fec.TimeOfDay
+            };
+
+            return re;
+        }
+
 
         /// <summary>
         /// Crea una reserva a partir del texto del email de GYG
@@ -259,6 +346,32 @@ namespace ApiReservasMailGYG
         /// <returns>Un objeto Reservas si todo es correcto o nulo si no se pudo evaluar.</returns>
         public static Reservas AnalizarEmail(string email)
         {
+            // Comprobar si es un cambio de reserva o       (06/sep/23 21.09)
+            // si es una cancelación.
+            Reservas re;
+
+            // Si se ha copiado el texto de la página de bookings
+            if (email.ToLower().Contains("booked on:"))
+            {
+                return AnalizarBooking(email);
+            }
+
+            re = EsCancelacion(email);
+            if (re != null)
+            {
+                // Procesar la cancelación
+                return re;
+            }
+
+            re = EsModificar(email);
+            if (re != null)
+            {
+                // Procesar la modificación
+                return re;
+            }
+
+            // Si llega aquí es que es nueva reserva.
+
             if (ComprobarCamposEmailGYG(email))
             {
                 return null;
@@ -266,7 +379,7 @@ namespace ApiReservasMailGYG
 
             // Comprobar que estén los campos que deben estar.
             //if (Comprobar)
-            Reservas re = new Reservas
+            re = new Reservas
             {
                 idDistribuidor = 10,
                 Agente = "MAKARENA",
@@ -289,6 +402,7 @@ namespace ApiReservasMailGYG
                 // Por si las notas están en varias líneas.     (25/ago/23 23.36)
                 GYGNotas = Extraer(email, "children in your group.:", "Tour language:"),
                 GYGLanguage = Extraer(email, "Tour language:"),
+                GYGTipo = Reservas.GYGTipos.Email,
             };
 
             var pax = ExtraerEntre(email, "Number of participants:", "Reference number:");
@@ -359,6 +473,15 @@ namespace ApiReservasMailGYG
             else
             {
                 re.Actividad = "RUTA";
+            }
+
+            // Si GYGLanguage está en blanco,               (06/sep/23 21.13)
+            // asignar el idioma según el código internacional o el país (GYGPais).
+            // Mostrar la actividad                         (07/sep/23 08.29)
+            // en vez de XXX (Live tour guide)
+            if (string.IsNullOrWhiteSpace(re.GYGLanguage))
+            {
+                re.GYGLanguage = $"({re.ActividadMostrar.ToTitle()})";
             }
 
             return re;
@@ -448,7 +571,7 @@ Sep 5, 2023
         public static Reservas AnalizarBooking(string email)
         {
             // Si no contiene Booked on: no es válido.
-            if (email.ToLower().Contains("booked on") == false)
+            if (email.ToLower().Contains("booked on:") == false)
             {
                 return null;
             }
@@ -482,7 +605,7 @@ Sep 5, 2023
             string paisGYG = "";
             // El nombre siempre lleva después del país entre paréntesis.
             n = nombreGYG.IndexOf("(");
-            if (n > - 1)
+            if (n > -1)
             {
                 paisGYG = nombreGYG.Substring(n + 1).Trim();
                 nombreGYG = nombreGYG.Substring(0, n).Trim();
@@ -533,6 +656,7 @@ Sep 5, 2023
                 Email = emailGYG,
                 GYGNotas = notasGYG,
                 GYGLanguage = languageGYG,
+                GYGTipo = Reservas.GYGTipos.Booking,
             };
 
             // Usar lo que haya en paxGYG                   (05/sep/23 10.18)
@@ -891,7 +1015,7 @@ Sep 5, 2023
             {
                 sb.Append($"and Actividad like 'ruta%' ");
             }
-                        
+
             sb.Append($"and FechaActividad = '{fecha:yyyy-MM-dd}' ");
             sb.Append("order by FechaActividad, HoraActividad, ID");
 
@@ -966,7 +1090,7 @@ Sep 5, 2023
             {
                 sb.Append($"and Actividad like 'ruta%' ");
             }
-            
+
             sb.Append($"and FechaActividad = '{fecha:yyyy-MM-dd}' ");
             if (hora.Hours > 0)
             {
@@ -1061,6 +1185,145 @@ Sep 5, 2023
                 }
             }
             return col;
+        }
+
+        // El nombre del país según el código internacional del teléfono. (06/sep/23 23.35)
+
+        /// <summary>
+        /// Averiguar el país según el código internacional del teléfono.
+        /// </summary>
+        /// <param name="telefono">El número de teléfono con el código internacional.</param>
+        /// <returns>El nombre del país correspondiente al código internacional.</returns>
+        public static string PaisTelefono(string telefono)
+        {
+            if (string.IsNullOrWhiteSpace(telefono)) { return ""; }
+
+            string elPais;
+
+            if (telefono.StartsWith("+1"))
+                elPais = "United States/Canada";
+            else if (telefono.StartsWith("+7"))
+                elPais = "Russia";
+            else if (telefono.StartsWith("+30"))
+                elPais = "Greece";
+            else if (telefono.StartsWith("+31"))
+                elPais = "Netherlands";
+            else if (telefono.StartsWith("+32"))
+                elPais = "Belgium";
+            else if (telefono.StartsWith("+33"))
+                elPais = "France";
+            else if (telefono.StartsWith("+34"))
+                elPais = "Spain";
+            else if (telefono.StartsWith("+36"))
+                elPais = "Hungary";
+            else if (telefono.StartsWith("+39"))
+                elPais = "Italy";
+            else if (telefono.StartsWith("+40"))
+                elPais = "Romania";
+            else if (telefono.StartsWith("+41"))
+                elPais = "Switzerland";
+            else if (telefono.StartsWith("+43"))
+                elPais = "Austria";
+            else if (telefono.StartsWith("+44"))
+                elPais = "United Kingdom";
+            else if (telefono.StartsWith("+45"))
+                elPais = "Denmark";
+            else if (telefono.StartsWith("+46"))
+                elPais = "Sweden";
+            else if (telefono.StartsWith("+47"))
+                elPais = "Norway";
+            else if (telefono.StartsWith("+48"))
+                elPais = "Poland";
+            else if (telefono.StartsWith("+49"))
+                elPais = "Germany";
+            else if (telefono.StartsWith("+52"))
+                elPais = "Mexico";
+            else if (telefono.StartsWith("+54"))
+                elPais = "Argentina";
+            else if (telefono.StartsWith("+61"))
+                elPais = "Australia";
+            else if (telefono.StartsWith("+81"))
+                elPais = "Japan";
+            else if (telefono.StartsWith("+212"))
+                elPais = "Morocco";
+            else if (telefono.StartsWith("+350"))
+                elPais = "Gibraltar";
+            else if (telefono.StartsWith("+351"))
+                elPais = "Portugal";
+            else if (telefono.StartsWith("+352"))
+                elPais = "Luxembourg";
+            else if (telefono.StartsWith("+353"))
+                elPais = "Ireland";
+            else if (telefono.StartsWith("+354"))
+                elPais = "Iceland";
+            else if (telefono.StartsWith("+355"))
+                elPais = "Albania";
+            else if (telefono.StartsWith("+356"))
+                elPais = "Malta";
+            else if (telefono.StartsWith("+357"))
+                elPais = "Cyprus";
+            else if (telefono.StartsWith("+358"))
+                elPais = "Findland";
+            else if (telefono.StartsWith("+359"))
+                elPais = "Bulgaria";
+            else if (telefono.StartsWith("+370"))
+                elPais = "Lithuania";
+            else if (telefono.StartsWith("+371"))
+                elPais = "Latvia";
+            else if (telefono.StartsWith("+372"))
+                elPais = "Estonia";
+            else if (telefono.StartsWith("+373"))
+                elPais = "Moldova";
+            else if (telefono.StartsWith("+374"))
+                elPais = "Armenia";
+            else if (telefono.StartsWith("+375"))
+                elPais = "Belarus";
+            else if (telefono.StartsWith("+376"))
+                elPais = "Andorra";
+            else if (telefono.StartsWith("+377"))
+                elPais = "Monaco";
+            else if (telefono.StartsWith("+378"))
+                elPais = "San Marino";
+            else if (telefono.StartsWith("+379"))
+                elPais = "Vatican City";
+            else if (telefono.StartsWith("+380"))
+                elPais = "Ukraine";
+            else if (telefono.StartsWith("+381"))
+                elPais = "Serbia";
+            else if (telefono.StartsWith("+382"))
+                elPais = "Montenegro";
+            else if (telefono.StartsWith("+383"))
+                elPais = "Kosovo";
+            else if (telefono.StartsWith("+385"))
+                elPais = "Croatia";
+            else if (telefono.StartsWith("+386"))
+                elPais = "Slovenia";
+            else if (telefono.StartsWith("+387"))
+                elPais = "Bosnia and Herzegovina";
+            else if (telefono.StartsWith("+389"))
+                elPais = "North Macedonia";
+            else if (telefono.StartsWith("+420"))
+                elPais = "Czechia";
+            else if (telefono.StartsWith("+421"))
+                elPais = "Slovakia";
+            else if (telefono.StartsWith("+423"))
+                elPais = "Liechtenstein";
+            else if (telefono.StartsWith("+82"))
+                elPais = "South Korea";
+            else if (telefono.StartsWith("+852"))
+                elPais = "Hong Kong";
+            else if (telefono.StartsWith("+965"))
+                elPais = "Kuwait";
+            else if (telefono.StartsWith("+966"))
+                elPais = "Saudi Arabia";
+            else if (telefono.StartsWith("+972"))
+                elPais = "Israel";
+            else if (telefono.StartsWith("+974"))
+                elPais = "Qatar";
+            else
+                elPais = "";
+
+            return elPais;
         }
     }
 }

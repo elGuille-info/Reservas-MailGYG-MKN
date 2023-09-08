@@ -82,33 +82,37 @@ public partial class FormAnalizaEmail : Form
         if (string.IsNullOrEmpty(RtfEmail.Text)) return;
 
         Reservas re;
-        DialogResult ret = DialogResult.No;
+        //DialogResult ret = DialogResult.No;
 
-        // Comprobar si se usa desde la página de Bookings  (05/sep/23 09.02)
-        // o desde el email.
-        bool desdeBooking = RtfEmail.Text.Contains("Booked on", StringComparison.OrdinalIgnoreCase);
+        //// Comprobar si se usa desde la página de Bookings  (05/sep/23 09.02)
+        //// o desde el email.
+        //bool desdeBooking = RtfEmail.Text.Contains("Booked on:", StringComparison.OrdinalIgnoreCase);
 
-        if (desdeBooking)
-        {
-            ret = MessageBox.Show("El texto de la reserva se ha tomado desde la página Bookings." + CrLf +
-                                  "Pulsa SÍ para analizarla con el formato de Bookings." + CrLf +
-                                  "Pulsa NO para analizarla con el formato de email (no recomendable)." + CrLf +
-                                  "Pulsa CANCELAR para no analizar nada.",
-                                  "Analizar email de GYG", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
-            if (ret == DialogResult.Cancel)
-            {
-                return;
-            }
-        }
+        //if (desdeBooking)
+        //{
+        //    ret = MessageBox.Show("El texto de la reserva se ha tomado desde la página Bookings." + CrLf +
+        //                          "Pulsa SÍ para analizarla con el formato de Bookings." + CrLf +
+        //                          "Pulsa NO para analizarla con el formato de email (no recomendable)." + CrLf +
+        //                          "Pulsa CANCELAR para no analizar nada.",
+        //                          "Analizar email de GYG", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
+        //    if (ret == DialogResult.Cancel)
+        //    {
+        //        return;
+        //    }
+        //}
 
-        if (ret == DialogResult.No)
-        {
-            re = MailGYG.AnalizarEmail(RtfEmail.Text);
-        }
-        else
-        {
-            re = MailGYG.AnalizarBooking(RtfEmail.Text);
-        }
+        //if (ret == DialogResult.No)
+        //{
+        //    re = MailGYG.AnalizarEmail(RtfEmail.Text);
+        //}
+        //else
+        //{
+        //    re = MailGYG.AnalizarBooking(RtfEmail.Text);
+        //}
+
+        // En AnalizarEmail se comprueba si es desde        (08/sep/23 15.14)
+        // la página de bookings.
+        re = MailGYG.AnalizarEmail(RtfEmail.Text);
 
         if (re == null)
         {
@@ -116,6 +120,10 @@ public partial class FormAnalizaEmail : Form
             MessageBox.Show("Parece que los datos analizados no son correctos.", "Analizar email de GYG", MessageBoxButtons.OK, MessageBoxIcon.Error);
             return;
         }
+
+        // Si es una cancelación 
+        //re.GYGCambio contendrá 
+
 
         LaReserva = re;
         re.Notas2 = $"Price: {re.GYGPrice}";
@@ -143,7 +151,8 @@ public partial class FormAnalizaEmail : Form
         ChkCrearConEmail.Checked = false;
 
         // Si es desde booking a visar que revise las cosas antes de guardar.
-        if (desdeBooking)
+        //if (desdeBooking)
+        if (re.GYGTipo == Reservas.GYGTipos.Booking)
         {
             MessageBox.Show("El texto de la reserva se ha tomado desde la página Bookings." + CrLf +
                             "Comprueba que los datos son correctos antes de guardar y enviar el mensaje.",
@@ -268,20 +277,49 @@ public partial class FormAnalizaEmail : Form
             return true;
         }
 
+        Producto pr;
+        TimeSpan hora = re.HoraActividad;
+
+        // Si es alquiler no habrá producto a las :05,      (07/sep/23 08.10)
+        // buscar a las 00
+        if (re.Actividad == "KAYAK")
+        {
+            hora = new TimeSpan(re.HoraActividad.Hours, 0, 0);
+        }
         // Buscar el producto.
-        var pr = Producto.Buscar(re.FechaActividad, re.HoraActividad, re.Actividad);
+        pr = Producto.Buscar(re.FechaActividad, hora, re.Actividad);
         if (pr == null)
         {
-            MessageBox.Show("No existe un producto para la actividad indicada." + CrLf +
-                            $"{re.ActividadMostrar}, {re.FechaActividad:dd/MM/yyyy}, {re.HoraActividad:hh\\:mm}",
-                            "No existe el producto",
-                            MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-            return true;
+            // Si no existe el producto, ponerlo por libre. (07/sep/23 08.13)
+            pr = new Producto
+            {
+                ID = -2,
+                Actividad = re.Actividad,
+                Hora = hora, // re.HoraActividad;
+                Fecha = re.FechaActividad,
+                Activo = true,
+                TotalPax = 0,
+                MaxPax = re.TotalPax(),
+                Duracion = BaseKayak.DuracionActividad(re.Actividad),
+                PrecioAdulto = BaseKayak.PrecioAdultoActividad(re.Actividad),
+                PrecioNiño = BaseKayak.PrecioNiñoActividad(re.Actividad)
+            };
+
+            //MessageBox.Show("No existe un producto para la actividad indicada." + CrLf +
+            //                $"{re.ActividadMostrar}, {re.FechaActividad:dd/MM/yyyy}, {re.HoraActividad:hh\\:mm}",
+            //                "No existe el producto",
+            //                MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+            //return true;
         }
         // Actualizar el producto.                          (23/ago/23 20.06)
         pr.TotalPax += re.TotalPax();
-        pr.Actualizar2();
+        if (pr.ID > 0)
+        {
+            pr.Actualizar2();
+        }
 
+        // Poner la hora por si es alquiler.                (08/sep/23 15.36)
+        re.HoraActividad = pr.Hora;
         re.idProducto = pr.ID;
         re.Duracion = pr.Duracion;
         re.PrecioAdulto = pr.PrecioAdulto;
@@ -488,8 +526,10 @@ public partial class FormAnalizaEmail : Form
 
         sb.Append("<br/>");
         sb.Append("<br/>");
-        sb.Append("Kayak Makarena");
-        sb.Append("https://kayakmakarena.com");
+        // No tenía los cambios de línea, añado el teléfono (08/sep/23 13.55)
+        sb.Append("Kayak Makarena<br/>");
+        sb.Append("WhatsApp: +34 645 76 16 89<br/>");
+        sb.Append("https://kayakmakarena.com<br/>");
 
         var asunto = $"Booking - S271506 - {re.GYGReference}";
         var para = re.Email;

@@ -246,8 +246,10 @@ public partial class Form1 : Form
         sb.Append(Properties.Resources.Mañana_es_el_dia.Replace(CrLf, "<br/>"));
         sb.Append("<br/>");
         sb.Append("<br/>");
-        sb.Append("Kayak Makarena");
-        sb.Append("https://kayakmakarena.com");
+        // No tenía los cambios de línea, añado el teléfono (08/sep/23 13.55)
+        sb.Append("Kayak Makarena<br/>");
+        sb.Append("WhatsApp: +34 645 76 16 89<br/>");
+        sb.Append("https://kayakmakarena.com<br/>");
 
         string body = sb.ToString().Replace(CrLf, "<br/>");
         var msg = ApiReservasMailGYG.MailGYG.EnviarMensaje(colPara, "Mañana es el día / Tomorrow is the day", body, true);
@@ -337,8 +339,10 @@ public partial class Form1 : Form
         sb.Append(Properties.Resources.Hoy_es_el_dia_txt.Replace(CrLf, "<br/>"));
         sb.Append("<br/>");
         sb.Append("<br/>");
-        sb.Append("Kayak Makarena");
-        sb.Append("https://kayakmakarena.com");
+        // No tenía los cambios de línea, añado el teléfono (08/sep/23 13.55)
+        sb.Append("Kayak Makarena<br/>");
+        sb.Append("WhatsApp: +34 645 76 16 89<br/>");
+        sb.Append("https://kayakmakarena.com<br/>");
 
         string body = sb.ToString().Replace(CrLf, "<br/>");
         var msg = MailGYG.EnviarMensaje(colPara, "Hoy es el día / Today is the day", body, true);
@@ -610,8 +614,12 @@ public partial class Form1 : Form
 
         sb.Append("<br/>");
         sb.Append("<br/>");
-        sb.Append("Kayak Makarena");
-        sb.Append("https://kayakmakarena.com");
+        //sb.Append("Kayak Makarena");
+        //sb.Append("https://kayakmakarena.com");
+        // No tenía los cambios de línea, añado el teléfono (08/sep/23 13.55)
+        sb.Append("Kayak Makarena<br/>");
+        sb.Append("WhatsApp: +34 645 76 16 89<br/>");
+        sb.Append("https://kayakmakarena.com<br/>");
 
         // La fecha en español e inglés.                    (02/sep/23 21.05)
         var fechaES = $"{fecha.Date.ToString("dddd dd/MM/yyyy", System.Globalization.CultureInfo.CreateSpecificCulture("es-ES"))}";

@@ -240,8 +240,10 @@ public partial class FormEnviarFotos : Form
         sb.Append(Properties.Resources.Fotos_ruta.Replace(CrLf, "<br/>"));
         sb.Append("<br/>");
         sb.Append("<br/>");
-        sb.Append("Kayak Makarena");
-        sb.Append("https://kayakmakarena.com");
+        // No tenía los cambios de línea, añado el teléfono (08/sep/23 13.55)
+        sb.Append("Kayak Makarena<br/>");
+        sb.Append("WhatsApp: +34 645 76 16 89<br/>");
+        sb.Append("https://kayakmakarena.com<br/>");
 
         string body = sb.ToString().Replace(CrLf, "<br/>");
 
