@@ -212,44 +212,44 @@ public partial class FormAnalizaEmail : Form
     private void BtnCrearConEmail_Click(object sender, EventArgs e)
     {
         // Las dos cosas seguidas.                      (22/ago/23 10.28)
-        // Si se hacen desde el temporizador no va bien.
-
-        // Esto se hace en Analizar.                        (08/sep/23 23.54)
-        //// Comprobar si es alquiler y hay como mínimo 2 adultos. (05/sep/23 10.53)
-        //if (KNDatos.BaseKayak.ActividadesAlquiler().Contains(LaReserva.Actividad))
-        //{
-        //    DialogResult ret;
-        //    if (LaReserva.Adultos < 2)
-        //    {
-        //        ret = MessageBox.Show("Es un alquiler para menos de 2 pax (adultos o menores mayor de 6 años)." + CrLf +
-        //                              "NO se debe aceptar esta reserva." + CrLf + CrLf +
-        //                              "Hay que contactar con el cliente por wasap y email y avisarle que el mínimo es 2 personas de 7 años o más." + CrLf + CrLf +
-        //                              "Esta reserva hay que cancelarla." + CrLf + CrLf +
-        //                              "¿Quieres continuar creando la reserva?",
-        //                              "Nueva reserva de alquiler",
-        //                              MessageBoxButtons.YesNo, MessageBoxIcon.Error, MessageBoxDefaultButton.Button2);
-        //        if (ret != DialogResult.Yes)
-        //            return;
-        //    }
-        //    if (MessageBox.Show("Es un alquiler antes de continuar comprueba que esté correcta la reserva.",
-        //                        "Nueva reserva de alquiler",
-        //                        MessageBoxButtons.OKCancel, MessageBoxIcon.Exclamation) == DialogResult.Cancel)
-        //        return;
-        //}
 
         // Deshabilitar el botón hasta que finalice.        (27/ago/23 09.58)
         ChkCrearConEmail.Checked = false;
+        ChkCrearConEmail.Enabled = false;
+        BtnCrearConEmail.Enabled = ChkCrearConEmail.Checked;
+
+        if (LaReserva == null)
+        {
+            MessageBox.Show("La reserva no está asignada.", "No hay reserva", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+            return;
+        }
+
+        bool res = false;
 
         StatusAnt = LabelStatus.Text;
         LabelStatus.Text = "Creando la reserva...";
         Application.DoEvents();
 
-        // Si devuelve true, no continuar con el envío del email.   (26/ago/23 00.06)
-        bool res = CrearReserva();
+        // Comporbar si es crear, cancelar y modificar      (09/sep/23 00.20)
+        if (LaReserva.GYGTipo == Reservas.GYGTipos.Cancelada) 
+        {
+            // Cancelar la reserva
+            res = CancelarReserva();
+        }
+        else if (LaReserva.GYGTipo == Reservas.GYGTipos.Modificada)
+        {
+            // Modificar la reserva
+        }
+        else
+        {
+            // Crear la reserva
+            res = CrearReserva();
+        }
 
         LabelStatus.Text = StatusAnt;
         Application.DoEvents();
 
+        // Si devuelve true, no continuar con el envío del email.   (26/ago/23 00.06)
         if (res)
         {
             ChkCrearConEmail.Checked = false;
@@ -274,6 +274,114 @@ public partial class FormAnalizaEmail : Form
         BtnCrearConEmail.Enabled = ChkCrearConEmail.Checked;
 
         MessageBox.Show(InfoCrearConEmail.ToString(), "Crear reserva y enviar email", MessageBoxButtons.OK, MessageBoxIcon.Information);
+    }
+
+    private bool ModificarReserva()
+    {
+        // Buscar la reserva con el booking indicado.
+        var re = Reservas.Buscar($"Notas like '%{LaReserva.GYGReference}%'");
+        if (re == null)
+        {
+            MessageBox.Show("No existe la reserva a modificar:" + CrLf +
+                            $"Booking: '{LaReserva.GYGReference}'", "No hay reserva", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+            return true;
+        }
+        /*
+        var refGyG = ExtraerDespues(email, "following booking has changed:", 1);
+        var nombre = Extraer(email, "Name:");
+        var fecGYG = Extraer(email, "Date:");
+        var actividad = Extraer(email, "Tour:");
+        var fec = DateTime.ParseExact(fecGYG, "MMMM dd, yyyy , h:mm", System.Globalization.CultureInfo.InvariantCulture);
+        var pax = Extraer(email, "Number of participants:");
+
+        Reservas re = new Reservas
+        {
+            GYGTipo = Reservas.GYGTipos.Modificada,
+            GYGFechaHora = fecGYG,
+            GYGOption = actividad,
+            GYGReference = refGyG, // El número de booking
+            Nombre = nombre,
+            FechaActividad = fec.Date,
+            HoraActividad = fec.TimeOfDay,
+            Adultos = pax.AsInteger(),
+        };
+        */
+        // Puede cambiar la fecha y hora.
+        // Puede cambiar el número de pax.
+        Producto pr;
+
+        // Actualizar el producto de la reserva original
+        if (re.idProducto != -2)
+        {
+            pr = Producto.Buscar(re.idProducto);
+            if (pr == null)
+            {
+                MessageBox.Show("El producto de la reserva no existe:" + CrLf +
+                                $"ID producto: '{re.idProducto}'" + CrLf +
+                                $"Actividad: {re.ActividadMostrar} {re.FechaActividad:dd/MM/yyyy} {re.HoraActividad:hh\\:mm}",
+                                "No hay producto", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                return true;
+            }
+            pr.TotalPax -= re.TotalPax();
+            pr.Actualizar2();
+        }
+        // Buscar el producto para la nueva fecha y hora
+        pr = Producto.Buscar(LaReserva.FechaActividad, LaReserva.HoraActividad, LaReserva.Actividad);
+        if (pr == null)
+        {
+            // Asignarlo por libre
+            pr = new Producto();
+            pr.ID = -2;
+            pr.Fecha = LaReserva.FechaActividad;
+            pr.Hora = LaReserva.HoraActividad;
+            pr.Actividad = LaReserva.Actividad;
+        }
+        re.idProducto = pr.ID;
+        // Si ha cambiado el número de pax:
+        if (LaReserva.Adultos != re.TotalPax())
+        {
+
+        }
+
+        return false;
+    }
+
+    private bool CancelarReserva()
+    {
+        // Buscar la reserva con el booking indicado.
+        var re = Reservas.Buscar($"Notas like '%{LaReserva.GYGReference}%'");
+        if (re == null)
+        {
+            MessageBox.Show("No existe la reserva a cancelar:" + CrLf +
+                            $"Booking: '{LaReserva.GYGReference}'", "No hay reserva", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+            return true;
+        }
+        // Cancelar la reserva
+        re.PagoACta = 0;
+        re.ModoPagoACta = "";
+        re.Documento = "";
+        re.Notas2 = string.Concat("Cancelada y devolución por GYG //", re.Notas2);
+        re.CanceladaCliente = true;
+
+        // Actualizar los pax.
+        // Solo si el id no es -2
+        if (re.idProducto != -2)
+        {
+            var pr = Producto.Buscar(re.idProducto);
+            if (pr == null)
+            {
+                MessageBox.Show("El producto de la reserva no existe:" + CrLf +
+                                $"ID producto: '{re.idProducto}'" + CrLf +
+                                $"Actividad: {re.ActividadMostrar} {re.FechaActividad:dd/MM/yyyy} {re.HoraActividad:hh\\:mm}", 
+                                "No hay producto", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                return true;
+            }
+            pr.TotalPax -= re.TotalPax();
+            pr.Actualizar2();
+        }
+        re.Actualizar2();
+
+        return false;
     }
 
     private bool CrearReserva()
@@ -321,12 +429,6 @@ public partial class FormAnalizaEmail : Form
                 PrecioAdulto = BaseKayak.PrecioAdultoActividad(re.Actividad),
                 PrecioNiño = BaseKayak.PrecioNiñoActividad(re.Actividad)
             };
-
-            //MessageBox.Show("No existe un producto para la actividad indicada." + CrLf +
-            //                $"{re.ActividadMostrar}, {re.FechaActividad:dd/MM/yyyy}, {re.HoraActividad:hh\\:mm}",
-            //                "No existe el producto",
-            //                MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-            //return true;
         }
         // Actualizar el producto.                          (23/ago/23 20.06)
         pr.TotalPax += re.TotalPax();
@@ -426,43 +528,6 @@ public partial class FormAnalizaEmail : Form
         {
             individuales = 1;
         }
-
-
-        //// Si hay 2 adultos y 1 niño, poner 1 tanque
-        //// sean que pagan o no
-        //if ((re.Adultos == 2 || re.Adultos2 == 2)
-        //    && (re.Niños == 1 || re.Niños2 == 1))
-        //{
-        //    tanques = 1;
-        //    tPax -= 3;
-        //}
-
-        //if (!tPax.EsPar())
-        //{
-        //    tPax--;
-        //    individuales = 1;
-        //}
-        ////int dobles = (int)Math.Ceiling(tPax / 2.0);
-
-        //// poner tanque si:
-        ////   Niños2 es > 1
-        ////   Usar 2 adultos por cada 2 niños2 y se pone un tanque
-        //if (re.Niños2 > 1)
-        //{
-        //    var n2 = re.Niños2;
-        //    if (!n2.EsPar())
-        //        n2 -= 1;
-        //    while (re.Adultos + re.Adultos2 < n2)
-        //        n2 -= 2;
-        //    if (re.Adultos + re.Adultos2 >= 2)
-        //    {
-        //        tanques = (n2 / 2);
-        //        //if (tanques > KNDatos.Config.Current.MaxTanques)
-        //        //    tanques = KNDatos.Config.Current.MaxTanques;
-        //    }
-        //}
-        //if (dobles > 0)
-        //    dobles -= tanques;
 
         re.Dobles = dobles;
         re.Individuales = individuales;

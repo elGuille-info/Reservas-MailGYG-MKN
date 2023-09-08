@@ -26,23 +26,22 @@ namespace ReservasGYG_Movil
 
         // Intentar no pasar de estas marcas: 60 caracteres. 2         3         4         5         6
         //                                ---------|---------|---------|---------|---------|---------|
-        //[COPIAR]AppDescripcionCopia = " no usar shell"
-        // BuscarClientes mostrar reservas en la pagina
+        //[COPIAR]AppDescripcionCopia = " version de ApiReservasGYG"
 
         /// <summary>
         /// La versión de la aplicación.
         /// </summary>
-        public static string AppVersion { get; } = "1.0.3";
+        public static string AppVersion { get; } = "1.0.11";
 
         /// <summary>
         /// La versión del fichero (la revisión)
         /// </summary>
-        public static string AppFileVersion { get; } = "1.0.3.0";
+        public static string AppFileVersion { get; } = "1.0.11.0";
 
         /// <summary>
         /// La fecha de última actualización
         /// </summary>
-        public static string AppFechaVersion { get; } = "02-sep-2023";
+        public static string AppFechaVersion { get; } = "09-sep-2023";
 
         /// <summary>
         /// Hacer una pequeña pausa para refrescar.

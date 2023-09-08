@@ -19,6 +19,31 @@ namespace ReservasGYG;
 
 public partial class Form1 : Form
 {
+
+    // La descripción para las copias de seguridad. (21/Oct/21)
+    // Se usará como descripción lo que esté entre comillas dobles (incluidos los espacios).
+    // Ya que se comprueba que empiece con: [COPIAR]AppDescripcionCopia = y unas comillas dobles.
+
+    // Intentar no pasar de estas marcas: 60 caracteres. 2         3         4         5         6
+    //                                ---------|---------|---------|---------|---------|---------|
+    //[COPIAR]AppDescripcionCopia = " cancelar y modificar"
+    // BuscarClientes mostrar reservas en la pagina
+
+    /// <summary>
+    /// La versión de la aplicación.
+    /// </summary>
+    public static string AppVersion { get; } = "1.0.11";
+
+    /// <summary>
+    /// La versión del fichero (la revisión)
+    /// </summary>
+    public static string AppFileVersion { get; } = "1.0.11.0";
+
+    /// <summary>
+    /// La fecha de última actualización
+    /// </summary>
+    public static string AppFechaVersion { get; } = "09-sep-2023";
+
     private bool inicializando = true;
     public static Form1 Current { get; set; }
 

@@ -138,7 +138,7 @@ namespace ApiReservasMailGYG
         }
 
         /// <summary>
-        /// Extraer del texto indicado lo que haya en la lineas línea posterior al campo indicado.
+        /// Extraer del texto indicado lo que haya en la línea index posterior al campo indicado.
         /// </summary>
         /// <param name="texto">El texto a evaluar.</param>
         /// <param name="campo">La cadena a buscar.</param>
@@ -279,11 +279,31 @@ namespace ApiReservasMailGYG
         /// <returns>Nulo si no es modificación o los datos de la reserva a cambiar.</returns>
         private static Reservas EsModificar(string email)
         {
-            if (email.Contains("following booking has changed") == false)
+            if (email.Contains("following booking has changed:") == false)
             {
                 return null;
             }
-            return new Reservas();
+
+            var refGyG = ExtraerDespues(email, "following booking has changed:", 1);
+            var nombre = Extraer(email, "Name:");
+            var fecGYG = Extraer(email, "Date:");
+            var actividad = Extraer(email, "Tour:");
+            var fec = DateTime.ParseExact(fecGYG, "MMMM dd, yyyy , h:mm", System.Globalization.CultureInfo.InvariantCulture);
+            var pax = Extraer(email, "Number of participants:");
+
+            Reservas re = new Reservas
+            {
+                GYGTipo = Reservas.GYGTipos.Modificada,
+                GYGFechaHora = fecGYG,
+                GYGOption = actividad,
+                GYGReference = refGyG, // El número de booking
+                Nombre = nombre,
+                FechaActividad = fec.Date,
+                HoraActividad = fec.TimeOfDay,
+                Adultos = pax.AsInteger(),
+            };
+
+            return re;
         }
 
         /*
