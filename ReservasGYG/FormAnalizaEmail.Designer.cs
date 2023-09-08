@@ -40,6 +40,8 @@ namespace ReservasGYG
             BtnPegarEmail = new Button();
             RtfEmail = new RichTextBox();
             GrbReserva = new GroupBox();
+            TxtTipo = new TextBox();
+            label16 = new Label();
             label15 = new Label();
             BtnCrearConEmail = new Button();
             TxtPais = new TextBox();
@@ -150,6 +152,8 @@ namespace ReservasGYG
             // GrbReserva
             // 
             GrbReserva.Anchor = AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            GrbReserva.Controls.Add(TxtTipo);
+            GrbReserva.Controls.Add(label16);
             GrbReserva.Controls.Add(label15);
             GrbReserva.Controls.Add(BtnCrearConEmail);
             GrbReserva.Controls.Add(TxtPais);
@@ -190,6 +194,22 @@ namespace ReservasGYG
             GrbReserva.TabStop = false;
             GrbReserva.Text = "Datos de la reserva";
             // 
+            // TxtTipo
+            // 
+            TxtTipo.Location = new Point(502, 333);
+            TxtTipo.Name = "TxtTipo";
+            TxtTipo.Size = new Size(200, 31);
+            TxtTipo.TabIndex = 27;
+            // 
+            // label16
+            // 
+            label16.Location = new Point(316, 333);
+            label16.Margin = new Padding(6, 3, 3, 3);
+            label16.Name = "label16";
+            label16.Size = new Size(180, 31);
+            label16.TabIndex = 26;
+            label16.Text = "Tipo reserva:";
+            // 
             // label15
             // 
             label15.Location = new Point(21, 376);
@@ -207,22 +227,22 @@ namespace ReservasGYG
             BtnCrearConEmail.Margin = new Padding(12, 3, 3, 12);
             BtnCrearConEmail.Name = "BtnCrearConEmail";
             BtnCrearConEmail.Size = new Size(205, 70);
-            BtnCrearConEmail.TabIndex = 31;
+            BtnCrearConEmail.TabIndex = 33;
             BtnCrearConEmail.Text = "Crear reserva y enviar email de confirmación";
             BtnCrearConEmail.UseVisualStyleBackColor = false;
             BtnCrearConEmail.Click += BtnCrearConEmail_Click;
             // 
             // TxtPais
             // 
-            TxtPais.Location = new Point(743, 259);
+            TxtPais.Location = new Point(502, 259);
             TxtPais.Name = "TxtPais";
             TxtPais.Size = new Size(335, 31);
             TxtPais.TabIndex = 23;
             // 
             // label14
             // 
-            label14.Location = new Point(557, 259);
-            label14.Margin = new Padding(3);
+            label14.Location = new Point(316, 259);
+            label14.Margin = new Padding(6, 3, 3, 3);
             label14.Name = "label14";
             label14.Size = new Size(180, 31);
             label14.TabIndex = 22;
@@ -230,19 +250,19 @@ namespace ReservasGYG
             // 
             // TxtID
             // 
-            TxtID.Location = new Point(743, 333);
+            TxtID.Location = new Point(978, 373);
             TxtID.Name = "TxtID";
             TxtID.Size = new Size(100, 31);
-            TxtID.TabIndex = 27;
+            TxtID.TabIndex = 31;
             TxtID.Text = "0";
             // 
             // label13
             // 
-            label13.Location = new Point(557, 336);
-            label13.Margin = new Padding(3);
+            label13.Location = new Point(792, 376);
+            label13.Margin = new Padding(6, 3, 3, 3);
             label13.Name = "label13";
             label13.Size = new Size(180, 31);
-            label13.TabIndex = 26;
+            label13.TabIndex = 30;
             label13.Text = "ID:";
             // 
             // TxtGYG
@@ -262,22 +282,22 @@ namespace ReservasGYG
             ChkCrearConEmail.Location = new Point(1137, 30);
             ChkCrearConEmail.Name = "ChkCrearConEmail";
             ChkCrearConEmail.Size = new Size(201, 29);
-            ChkCrearConEmail.TabIndex = 30;
+            ChkCrearConEmail.TabIndex = 32;
             ChkCrearConEmail.Text = "Habilitar crear+email";
             ChkCrearConEmail.UseVisualStyleBackColor = true;
             ChkCrearConEmail.CheckedChanged += ChkCrearReserva_CheckedChanged;
             // 
             // TxtPrice
             // 
-            TxtPrice.Location = new Point(743, 296);
+            TxtPrice.Location = new Point(502, 296);
             TxtPrice.Name = "TxtPrice";
             TxtPrice.Size = new Size(200, 31);
             TxtPrice.TabIndex = 25;
             // 
             // label12
             // 
-            label12.Location = new Point(557, 296);
-            label12.Margin = new Padding(3);
+            label12.Location = new Point(316, 296);
+            label12.Margin = new Padding(6, 3, 3, 3);
             label12.Name = "label12";
             label12.Size = new Size(180, 31);
             label12.TabIndex = 24;
@@ -472,7 +492,7 @@ namespace ReservasGYG
             BtnLimpiarReserva.Margin = new Padding(12, 3, 3, 3);
             BtnLimpiarReserva.Name = "BtnLimpiarReserva";
             BtnLimpiarReserva.Size = new Size(205, 70);
-            BtnLimpiarReserva.TabIndex = 32;
+            BtnLimpiarReserva.TabIndex = 34;
             BtnLimpiarReserva.Text = "Limpiar campos";
             BtnLimpiarReserva.UseVisualStyleBackColor = false;
             BtnLimpiarReserva.Click += BtnLimpiarReserva_Click;
@@ -592,5 +612,7 @@ namespace ReservasGYG
         private ToolStripStatusLabel LabelFechaHora;
         private Label label15;
         private Timer timer1;
+        private TextBox TxtTipo;
+        private Label label16;
     }
 }

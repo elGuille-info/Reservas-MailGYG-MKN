@@ -82,33 +82,6 @@ public partial class FormAnalizaEmail : Form
         if (string.IsNullOrEmpty(RtfEmail.Text)) return;
 
         Reservas re;
-        //DialogResult ret = DialogResult.No;
-
-        //// Comprobar si se usa desde la página de Bookings  (05/sep/23 09.02)
-        //// o desde el email.
-        //bool desdeBooking = RtfEmail.Text.Contains("Booked on:", StringComparison.OrdinalIgnoreCase);
-
-        //if (desdeBooking)
-        //{
-        //    ret = MessageBox.Show("El texto de la reserva se ha tomado desde la página Bookings." + CrLf +
-        //                          "Pulsa SÍ para analizarla con el formato de Bookings." + CrLf +
-        //                          "Pulsa NO para analizarla con el formato de email (no recomendable)." + CrLf +
-        //                          "Pulsa CANCELAR para no analizar nada.",
-        //                          "Analizar email de GYG", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
-        //    if (ret == DialogResult.Cancel)
-        //    {
-        //        return;
-        //    }
-        //}
-
-        //if (ret == DialogResult.No)
-        //{
-        //    re = MailGYG.AnalizarEmail(RtfEmail.Text);
-        //}
-        //else
-        //{
-        //    re = MailGYG.AnalizarBooking(RtfEmail.Text);
-        //}
 
         // En AnalizarEmail se comprueba si es desde        (08/sep/23 15.14)
         // la página de bookings.
@@ -120,10 +93,6 @@ public partial class FormAnalizaEmail : Form
             MessageBox.Show("Parece que los datos analizados no son correctos.", "Analizar email de GYG", MessageBoxButtons.OK, MessageBoxIcon.Error);
             return;
         }
-
-        // Si es una cancelación 
-        //re.GYGCambio contendrá 
-
 
         LaReserva = re;
         re.Notas2 = $"Price: {re.GYGPrice}";
@@ -144,13 +113,62 @@ public partial class FormAnalizaEmail : Form
         TxtReference.Text = re.GYGReference;
         TxtPais.Text = re.GYGPais;
 
+        TxtTipo.Text = re.GYGTipo.ToString();
+
         TxtGYG.Text = $"Option: {re.GYGOption}\r\nDate: {re.GYGFechaHora}\r\nPrice:{re.GYGPrice}";
         TxtID.Text = re.ID.ToString();
+
+        // Comprobar el tipo de reserva y asignar el texto  (09/sep/23 00.04)
+        // del botón crear
+        if (re.GYGTipo == Reservas.GYGTipos.Cancelada)
+        {
+            BtnCrearConEmail.Text = "Cancelar reserva y enviar email";
+        }
+        else if (re.GYGTipo == Reservas.GYGTipos.Modificada)
+        {
+            BtnCrearConEmail.Text = "Modificar reserva y enviar email";
+        }
+        else
+        {
+            BtnCrearConEmail.Text = "Crear reserva y enviar email de confirmación";
+        }
+
+        // Comprobar el alquiler con menos de 2 adultos.    (08/sep/23 23.51)
+        if (KNDatos.BaseKayak.ActividadesAlquiler().Contains(LaReserva.Actividad))
+        {
+            DialogResult ret;
+            if (LaReserva.Adultos < 2)
+            {
+                ret = MessageBox.Show("Es un alquiler para menos de 2 pax (adultos o menores mayor de 6 años)." + CrLf +
+                                      "NO se debe aceptar esta reserva." + CrLf + CrLf +
+                                      "Hay que contactar con el cliente por wasap y email y avisarle que el mínimo es 2 personas de 7 años o más." + CrLf + CrLf +
+                                      "Esta reserva hay que cancelarla." + CrLf + CrLf +
+                                      "¿Quieres continuar creando la reserva?",
+                                      "Nueva reserva de alquiler",
+                                      MessageBoxButtons.YesNo, MessageBoxIcon.Error, MessageBoxDefaultButton.Button2);
+                if (ret != DialogResult.Yes)
+                    return;
+            }
+            if (MessageBox.Show("Es un alquiler antes de continuar comprueba que esté correcta la reserva.",
+                                "Nueva reserva de alquiler",
+                                MessageBoxButtons.OKCancel, MessageBoxIcon.Exclamation) == DialogResult.Cancel)
+                return;
+        }
+        else
+        {
+            // Comprobar si solo hay menores, y avisar.     (08/sep/23 23.31)
+            if (re.Adultos < 1)
+            {
+                MessageBox.Show("¡ATENCIÓN! La reserva no incluye ningún adulto." + CrLf +
+                                "Habría que avisar al cliente de que se debe incluir al menos un adulto.",
+                                "Analizar email de GYG", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+            }
+        }
 
         ChkCrearConEmail.Enabled = true;
         ChkCrearConEmail.Checked = false;
 
-        // Si es desde booking a visar que revise las cosas antes de guardar.
+        // Si es desde booking avisar que revise las cosas antes de guardar.
         //if (desdeBooking)
         if (re.GYGTipo == Reservas.GYGTipos.Booking)
         {
@@ -196,32 +214,31 @@ public partial class FormAnalizaEmail : Form
         // Las dos cosas seguidas.                      (22/ago/23 10.28)
         // Si se hacen desde el temporizador no va bien.
 
-        // Comprobar si es alquiler y hay como mínimo 2 adultos. (05/sep/23 10.53)
-        if (KNDatos.BaseKayak.ActividadesAlquiler().Contains(LaReserva.Actividad))
-        {
-            DialogResult ret;
-            if (LaReserva.Adultos < 2)
-            {
-                ret = MessageBox.Show("Es un alquiler para menos de 2 pax (adultos)." + CrLf +
-                                      "NO se debe aceptar esta reserva." + CrLf + CrLf +
-                                      "Hay que contactar con el cliente por wasap y email y avisarle que el mínimo es 2 personas de 7 años o más." + CrLf + CrLf +
-                                      "Esta reserva hay que cancelarla." + CrLf + CrLf +
-                                      "¿Quieres continuar creando la reserva?",
-                                      "Nueva reserva de alquiler",
-                                      MessageBoxButtons.YesNo, MessageBoxIcon.Error, MessageBoxDefaultButton.Button2);
-                if (ret != DialogResult.Yes)
-                    return;
-            }
-            if (MessageBox.Show("Es un alquiler antes de continuar comprueba que esté correcta la reserva.",
-                                "Nueva reserva de alquiler", 
-                                MessageBoxButtons.OKCancel, MessageBoxIcon.Exclamation) == DialogResult.Cancel) 
-                return;
-        }
+        // Esto se hace en Analizar.                        (08/sep/23 23.54)
+        //// Comprobar si es alquiler y hay como mínimo 2 adultos. (05/sep/23 10.53)
+        //if (KNDatos.BaseKayak.ActividadesAlquiler().Contains(LaReserva.Actividad))
+        //{
+        //    DialogResult ret;
+        //    if (LaReserva.Adultos < 2)
+        //    {
+        //        ret = MessageBox.Show("Es un alquiler para menos de 2 pax (adultos o menores mayor de 6 años)." + CrLf +
+        //                              "NO se debe aceptar esta reserva." + CrLf + CrLf +
+        //                              "Hay que contactar con el cliente por wasap y email y avisarle que el mínimo es 2 personas de 7 años o más." + CrLf + CrLf +
+        //                              "Esta reserva hay que cancelarla." + CrLf + CrLf +
+        //                              "¿Quieres continuar creando la reserva?",
+        //                              "Nueva reserva de alquiler",
+        //                              MessageBoxButtons.YesNo, MessageBoxIcon.Error, MessageBoxDefaultButton.Button2);
+        //        if (ret != DialogResult.Yes)
+        //            return;
+        //    }
+        //    if (MessageBox.Show("Es un alquiler antes de continuar comprueba que esté correcta la reserva.",
+        //                        "Nueva reserva de alquiler",
+        //                        MessageBoxButtons.OKCancel, MessageBoxIcon.Exclamation) == DialogResult.Cancel)
+        //        return;
+        //}
 
         // Deshabilitar el botón hasta que finalice.        (27/ago/23 09.58)
         ChkCrearConEmail.Checked = false;
-
-        //QueBoton = sender;
 
         StatusAnt = LabelStatus.Text;
         LabelStatus.Text = "Creando la reserva...";
