@@ -215,45 +215,6 @@ namespace ApiReservasMailGYG
         }
 
         /*
-        El contenido del email/mensaje será como este:
-
-        Hi supply partner,
-
-        Great news! The following offer has been booked:
-
-        Nerja: Cliffs of Maro-Cerro Gordo Guided Kayak Tour (RutasKayak)
-        Option: 2-Hour Tour (Ruta Corta)
-
-        View booking
-        Most important data for this booking:
-
-        Date: 08 September 2023, 16:15 (04:15pm)
-
-        Price: € 97.70
-
-        Number of participants:
-        1 x Child (Age 4 - 6 ) (€ 0.00)
-        1 x Youth (Age 7 - 15 ) (€ 23.90)
-        2 x Adults (Age 16 - 99 ) (€ 36.90)
-        Reference number: GYG2RA2KZ692
-
-        Main customer:
-        Pedro Pacheco dominguez
-
-
-        Spain
-        customer-ewtbjjgqeoquqzyr@reply.getyourguide.com
-        Phone: +34 607 68 95 93
-        Please provide a phone number connected to Whatsapp. Please also provide the ages of all children in your group.:
-        Una niña de 12 años, y otra de 5 años número de teléfono 607689593
-
-        Tour language: Spanish (Live tour guide)
-
-        Best regards,
-        The GetYourGuide Team
-        */
-
-        /*
         We would like to inform you that the following booking has changed:
         GYGX7QWFLGXX
 
@@ -286,13 +247,15 @@ namespace ApiReservasMailGYG
 
             var refGyG = ExtraerDespues(email, "following booking has changed:", 1);
             var nombre = Extraer(email, "Name:");
-            // Date: September 9, 2023 , 10:30 AM
-            var fecGYG = Extraer(email, "Date:");
             var actividad = Extraer(email, "Tour:");
+
+            var fecGYG = Extraer(email, "Date:");
+            // Date: September 9, 2023 , 10:30 AM
+
             //var fec = DateTime.ParseExact(fecGYG, "MMMM dd, yyyy , h:mm", System.Globalization.CultureInfo.InvariantCulture);
             //var fec = DateTime.ParseExact(fecGYG, "MMMM d, yyyy , h:mm", System.Globalization.CultureInfo.GetCultureInfo("en-US"));
             //var fec = DateTime.ParseExact(fecGYG, "MMMM d, yyyy h:mm", System.Globalization.CultureInfo.GetCultureInfo("en-US"));
-            string fecD="01/01/23", fecH="00:00";
+            string fecD ="01/01/23", fecH="00:00";
             int i = fecGYG.LastIndexOf(",");
             if (i > -1)
             {
@@ -335,7 +298,6 @@ namespace ApiReservasMailGYG
         Date:	September 10, 2023 12:00 PM
         Activity:	Nerja: Cliffs of Maro-Cerro Gordo Guided Kayak Tour
         Please remove this customer from your list.
-        
         */
 
         /// <summary>
@@ -371,6 +333,44 @@ namespace ApiReservasMailGYG
             return re;
         }
 
+        /*
+        El contenido del email/mensaje será como este:
+
+        Hi supply partner,
+
+        Great news! The following offer has been booked:
+
+        Nerja: Cliffs of Maro-Cerro Gordo Guided Kayak Tour (RutasKayak)
+        Option: 2-Hour Tour (Ruta Corta)
+
+        View booking
+        Most important data for this booking:
+
+        Date: 08 September 2023, 16:15 (04:15pm)
+
+        Price: € 97.70
+
+        Number of participants:
+        1 x Child (Age 4 - 6 ) (€ 0.00)
+        1 x Youth (Age 7 - 15 ) (€ 23.90)
+        2 x Adults (Age 16 - 99 ) (€ 36.90)
+        Reference number: GYG2RA2KZ692
+
+        Main customer:
+        Pedro Pacheco dominguez
+
+
+        Spain
+        customer-ewtbjjgqeoquqzyr@reply.getyourguide.com
+        Phone: +34 607 68 95 93
+        Please provide a phone number connected to Whatsapp. Please also provide the ages of all children in your group.:
+        Una niña de 12 años, y otra de 5 años número de teléfono 607689593
+
+        Tour language: Spanish (Live tour guide)
+
+        Best regards,
+        The GetYourGuide Team
+        */
 
         /// <summary>
         /// Crea una reserva a partir del texto del email de GYG
@@ -474,6 +474,8 @@ namespace ApiReservasMailGYG
             {
                 return null;
             }
+
+            // Date: 08 September 2023, 16:15 (04:15pm)
 
             var fec = DateTime.ParseExact(fecGYG, "dd MMMM yyyy, HH:mm", System.Globalization.CultureInfo.InvariantCulture);
             //var fec = DateTime.ParseExact(fecGYG, "dd MMMM yyyy, HH:mm", System.Globalization.CultureInfo.GetCultureInfo("en-US"));
@@ -597,7 +599,7 @@ Sep 5, 2023
         */
 
         /// <summary>
-        /// TODO: Analizar la reserva si se coge el texto desde la página Bookings.
+        /// Analizar la reserva si se coge el texto desde la página Bookings.
         /// </summary>
         /// <param name="email">El texto a analizar</param>
         /// <returns>Un objeto Reservas si todo es correcto o nulo si no se pudo evaluar.</returns>
@@ -740,9 +742,15 @@ Sep 5, 2023
             // Sep 8, 2023 - 4:15pm
             var fecGYG = re.GYGFechaHora;
 
-            var fec = DateTime.ParseExact(fecGYG, "MMM d, yyyy - h:mm", System.Globalization.CultureInfo.GetCultureInfo("en-US"));
-            re.FechaActividad = fec.Date;
-            re.HoraActividad = fec.TimeOfDay;
+            string fecD = "01/01/23", fecH = "00:00";
+            i = fecGYG.LastIndexOf("-");
+            if (i > -1)
+            {
+                fecD = fecGYG.Substring(0, i).Trim();
+                fecH = fecGYG.Substring(i + 1).Trim();
+            }
+            re.FechaActividad = DateTime.Parse(fecD);
+            re.HoraActividad = DateTime.Parse(fecH).TimeOfDay;
 
             // Ahora puede haber alquileres.                (05/sep/23 08.36)
             //Option: Nerja: Cliffs of Maro-Cerro Gordo Kayak Rental (AlquilerKayak 1h)

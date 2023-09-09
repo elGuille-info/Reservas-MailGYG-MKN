@@ -7,15 +7,15 @@
         <Nullable>disable</Nullable>
         <Title>ApiReservasGYG</Title>
         <Description>Analizar los correos de GetYourGuide para crear las nuevas reservas para MKN Reservas (Maro - Kayak Nerja)  
-(revisión del 09-sep-2023).
+(revisión del 10-sep-2023).
 Usando .NET Standard 2.0 y KNDatos para Xamarin con System.Data.SqlClient v4.8.5
         </Description>
         <Copyright>(c) 2023 gSoft para Maro-Kayak Nerja</Copyright>
         <PackageReadmeFile>Readme.md</PackageReadmeFile>
         <Authors>gSoft (elguille.info)</Authors>
-        <Version>1.0.14</Version>
-        <FileVersion>1.0.14.0</FileVersion>
-        <AssemblyVersion>1.0.14.0</AssemblyVersion>
+        <Version>1.0.15</Version>
+        <FileVersion>1.0.15.0</FileVersion>
+        <AssemblyVersion>1.0.15.0</AssemblyVersion>
 
     </PropertyGroup>
 
