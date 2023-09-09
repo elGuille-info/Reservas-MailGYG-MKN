@@ -154,7 +154,8 @@ public partial class FormAnalizaEmail : Form
                                 MessageBoxButtons.OKCancel, MessageBoxIcon.Exclamation) == DialogResult.Cancel)
                 return;
         }
-        else
+        // Solo si no es cancelar.                          (09/sep/23 03.48)
+        else if (re.GYGTipo != Reservas.GYGTipos.Cancelada)
         {
             // Comprobar si solo hay menores, y avisar.     (08/sep/23 23.31)
             if (re.Adultos < 1)
@@ -239,6 +240,7 @@ public partial class FormAnalizaEmail : Form
         else if (LaReserva.GYGTipo == Reservas.GYGTipos.Modificada)
         {
             // Modificar la reserva
+            res = ModificarReserva();
         }
         else
         {
@@ -279,7 +281,7 @@ public partial class FormAnalizaEmail : Form
     private bool ModificarReserva()
     {
         // Buscar la reserva con el booking indicado.
-        var re = Reservas.Buscar($"Notas like '%{LaReserva.GYGReference}%'");
+        var re = Reservas.Buscar($"Notas like '%{LaReserva.GYGReference}%' and activa=1");
         if (re == null)
         {
             MessageBox.Show("No existe la reserva a modificar:" + CrLf +
@@ -287,13 +289,6 @@ public partial class FormAnalizaEmail : Form
             return true;
         }
         /*
-        var refGyG = ExtraerDespues(email, "following booking has changed:", 1);
-        var nombre = Extraer(email, "Name:");
-        var fecGYG = Extraer(email, "Date:");
-        var actividad = Extraer(email, "Tour:");
-        var fec = DateTime.ParseExact(fecGYG, "MMMM dd, yyyy , h:mm", System.Globalization.CultureInfo.InvariantCulture);
-        var pax = Extraer(email, "Number of participants:");
-
         Reservas re = new Reservas
         {
             GYGTipo = Reservas.GYGTipos.Modificada,
@@ -326,7 +321,7 @@ public partial class FormAnalizaEmail : Form
             pr.Actualizar2();
         }
         // Buscar el producto para la nueva fecha y hora
-        pr = Producto.Buscar(LaReserva.FechaActividad, LaReserva.HoraActividad, LaReserva.Actividad);
+        pr = Producto.Buscar(LaReserva.FechaActividad, LaReserva.HoraActividad, re.Actividad);
         if (pr == null)
         {
             // Asignarlo por libre
@@ -334,14 +329,37 @@ public partial class FormAnalizaEmail : Form
             pr.ID = -2;
             pr.Fecha = LaReserva.FechaActividad;
             pr.Hora = LaReserva.HoraActividad;
-            pr.Actividad = LaReserva.Actividad;
+            pr.Actividad = re.Actividad;
         }
         re.idProducto = pr.ID;
         // Si ha cambiado el número de pax:
         if (LaReserva.Adultos != re.TotalPax())
         {
-
+            var ret = MessageBox.Show("El número de participantes no coincide con el de la reserva original:" + CrLf +
+                            $"Antes: {re.TotalPax()}, ahora: '{LaReserva.Adultos}'" + CrLf + 
+                            "Pulsa SÍ para usar los pax nuevos (se pondrán todos como adultos)." + CrLf + 
+                            "Pulsa NO para dejar los pax que ya había.", 
+                            "Modificar la reserva", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            if (ret == DialogResult.Yes) 
+            {
+                re.Adultos = LaReserva.Adultos;
+                re.Niños = 0;
+                re.Niños2 = 0;
+            }
         }
+        // Actualizar el producto
+        if (pr.ID > 0)
+        {
+            pr.TotalPax += re.TotalPax();
+            pr.Actualizar2();
+        }
+        re.HoraActividad = pr.Hora;
+        re.FechaActividad = pr.Fecha;
+        re.Notas2 = string.Concat("Modificada //", re.Notas2);
+        re.Actualizar2();
+
+        re.GYGTipo = LaReserva.GYGTipo;
+        LaReserva = re;
 
         return false;
     }
@@ -349,7 +367,7 @@ public partial class FormAnalizaEmail : Form
     private bool CancelarReserva()
     {
         // Buscar la reserva con el booking indicado.
-        var re = Reservas.Buscar($"Notas like '%{LaReserva.GYGReference}%'");
+        var re = Reservas.Buscar($"Notas like '%{LaReserva.GYGReference}%' and activa=1");
         if (re == null)
         {
             MessageBox.Show("No existe la reserva a cancelar:" + CrLf +
@@ -365,7 +383,7 @@ public partial class FormAnalizaEmail : Form
 
         // Actualizar los pax.
         // Solo si el id no es -2
-        if (re.idProducto != -2)
+        if (re.idProducto > 0)
         {
             var pr = Producto.Buscar(re.idProducto);
             if (pr == null)
@@ -380,6 +398,9 @@ public partial class FormAnalizaEmail : Form
             pr.Actualizar2();
         }
         re.Actualizar2();
+
+        re.GYGTipo = LaReserva.GYGTipo;
+        LaReserva = re;
 
         return false;
     }
@@ -534,7 +555,6 @@ public partial class FormAnalizaEmail : Form
         re.Tanque = tanques;
     }
 
-
     private bool EnviarMensajeConfirmacion()
     {
         StringBuilder sb = new StringBuilder();
@@ -542,7 +562,7 @@ public partial class FormAnalizaEmail : Form
         var re = LaReserva;
         if (re == null)
         {
-            MessageBox.Show($"ERROR la reserva es nula. Debes generarla primero con 'Crear reserva'.",
+            MessageBox.Show($"ERROR la reserva es nula. No se puede mandar el mensaje.",
                             "Error al enviar el email de la reserva",
                             MessageBoxButtons.OK, MessageBoxIcon.Error);
             return true;
@@ -551,58 +571,85 @@ public partial class FormAnalizaEmail : Form
         var DatosVPWiz = new MKNUtilidades.VentasPlayaWiz(re);
         MKNUtilidades.VentasPlayaWiz.IncluirReportajeConfirmarReserva = false;
         MKNUtilidades.VentasPlayaWiz.IncluirTextosConfirmarReserva = false;
-        bool enIngles = re.GYGLanguage.Contains("English");
-
-        sb.Append(DatosVPWiz.ResumenReserva(esWeb: false, enIngles: enIngles));
-        sb.AppendLine();
-        sb.AppendLine();
-
-        // Mandar el texto según el idioma.             (22/ago/23 10.58)
-        if (re.HoraActividad.Hours == 9)
+        bool enIngles = false; // = re.GYGLanguage.Contains("English");
+        if (string.IsNullOrEmpty(re.GYGLanguage) == false)
         {
-            if (enIngles)
-            {
-                sb.Append(Properties.Resources.IMPORTANTE_EN_09_30_txt.Replace(CrLf, "<br/>"));
-            }
-            else
-            {
-                sb.Append(Properties.Resources.IMPORTANTE_ES_09_30.Replace(CrLf, "<br/>"));
-            }
+            enIngles = re.GYGLanguage.Contains("English");
         }
-        else if (re.HoraActividad.Hours == 10 || re.HoraActividad == new TimeSpan(11, 0, 0))
+
+        string asunto;
+        // Mandar el mensaje según sea modificar, cancelar o nueva. (09/sep/23 01.55)
+        if (LaReserva.GYGTipo == Reservas.GYGTipos.Cancelada)
         {
-            if (enIngles)
-            {
-                sb.Append(Properties.Resources.IMPORTANTE_EN_10_30_11_00_txt.Replace(CrLf, "<br/>"));
-            }
-            else
-            {
-                sb.Append(Properties.Resources.IMPORTANTE_ES_10_30_11_00_txt.Replace(CrLf, "<br/>"));
-            }
+            asunto = $"Cancelación reserva - {re.GYGReference}";
+            sb.Append("Reserva cancelada // Booking cancelled.");
+            sb.AppendLine($"{re.ActividadMostrar} {re.FechaActividad:dd/MM/yyyy} {re.HoraActividad:hh\\:mm}");
+            sb.AppendLine();
+            sb.AppendLine($"Número de reserva MKN: {LaReserva.ID:#,###}");
+            sb.AppendLine();
+            sb.AppendLine();
         }
         else
         {
-            if (enIngles)
+            if (LaReserva.GYGTipo == Reservas.GYGTipos.Modificada)
             {
-                sb.Append(Properties.Resources.IMPORTANTE_EN_txt.Replace(CrLf, "<br/>"));
+                asunto = $"Modificación reserva - {re.GYGReference}";
             }
             else
             {
-                sb.Append(Properties.Resources.IMPORTANTE_ES_txt.Replace(CrLf, "<br/>"));
+                asunto = $"Booking - S271506 - {re.GYGReference}";
             }
-        }
+            
+            sb.Append(DatosVPWiz.ResumenReserva(esWeb: false, enIngles: enIngles));
+            sb.AppendLine();
+            sb.AppendLine();
 
-        // Si es para el mismo día de la actividad.         (24/ago/23 06.24)
-        if (DateTime.Today == re.FechaActividad)
-        {
-            sb.Append("<br/>");
-            if (enIngles)
+            // Mandar el texto según el idioma.             (22/ago/23 10.58)
+            if (re.HoraActividad.Hours == 9)
             {
-                sb.Append("We would love to receive a review on the GetYourGuide website with your opinion on this activity, taking into account that <b>Kayak Makarena</b> is responsible for managing the reservations and <b>Maro - Kayak Nerja</b> carries out the routes.");
+                if (enIngles)
+                {
+                    sb.Append(Properties.Resources.IMPORTANTE_EN_09_30_txt.Replace(CrLf, "<br/>"));
+                }
+                else
+                {
+                    sb.Append(Properties.Resources.IMPORTANTE_ES_09_30.Replace(CrLf, "<br/>"));
+                }
+            }
+            else if (re.HoraActividad.Hours == 10 || re.HoraActividad == new TimeSpan(11, 0, 0))
+            {
+                if (enIngles)
+                {
+                    sb.Append(Properties.Resources.IMPORTANTE_EN_10_30_11_00_txt.Replace(CrLf, "<br/>"));
+                }
+                else
+                {
+                    sb.Append(Properties.Resources.IMPORTANTE_ES_10_30_11_00_txt.Replace(CrLf, "<br/>"));
+                }
             }
             else
             {
-                sb.Append("Nos encantaría recibir una reseña en el sitio de GetYourGuide con tu opinión sobre esta actividad, teniendo en cuenta que <b>Kayak Makarena</b> es la encargada de gestionar las reservas y <b>Maro - Kayak Nerja</b> realiza las rutas.");
+                if (enIngles)
+                {
+                    sb.Append(Properties.Resources.IMPORTANTE_EN_txt.Replace(CrLf, "<br/>"));
+                }
+                else
+                {
+                    sb.Append(Properties.Resources.IMPORTANTE_ES_txt.Replace(CrLf, "<br/>"));
+                }
+            }
+            // Si es para el mismo día de la actividad.         (24/ago/23 06.24)
+            if (DateTime.Today == re.FechaActividad)
+            {
+                sb.Append("<br/>");
+                if (enIngles)
+                {
+                    sb.Append("We would love to receive a review on the GetYourGuide website with your opinion on this activity, taking into account that <b>Kayak Makarena</b> is responsible for managing the reservations and <b>Maro - Kayak Nerja</b> carries out the routes.");
+                }
+                else
+                {
+                    sb.Append("Nos encantaría recibir una reseña en el sitio de GetYourGuide con tu opinión sobre esta actividad, teniendo en cuenta que <b>Kayak Makarena</b> es la encargada de gestionar las reservas y <b>Maro - Kayak Nerja</b> realiza las rutas.");
+                }
             }
         }
 
@@ -613,7 +660,7 @@ public partial class FormAnalizaEmail : Form
         sb.Append("WhatsApp: +34 645 76 16 89<br/>");
         sb.Append("https://kayakmakarena.com<br/>");
 
-        var asunto = $"Booking - S271506 - {re.GYGReference}";
+        //var asunto = $"Booking - S271506 - {re.GYGReference}";
         var para = re.Email;
         string body = sb.ToString().Replace(CrLf, "<br/>");
         var msg = ApiReservasMailGYG.MailGYG.EnviarMensaje(para, asunto, body, true);

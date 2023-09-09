@@ -286,9 +286,21 @@ namespace ApiReservasMailGYG
 
             var refGyG = ExtraerDespues(email, "following booking has changed:", 1);
             var nombre = Extraer(email, "Name:");
+            // Date: September 9, 2023 , 10:30 AM
             var fecGYG = Extraer(email, "Date:");
             var actividad = Extraer(email, "Tour:");
-            var fec = DateTime.ParseExact(fecGYG, "MMMM dd, yyyy , h:mm", System.Globalization.CultureInfo.InvariantCulture);
+            //var fec = DateTime.ParseExact(fecGYG, "MMMM dd, yyyy , h:mm", System.Globalization.CultureInfo.InvariantCulture);
+            //var fec = DateTime.ParseExact(fecGYG, "MMMM d, yyyy , h:mm", System.Globalization.CultureInfo.GetCultureInfo("en-US"));
+            //var fec = DateTime.ParseExact(fecGYG, "MMMM d, yyyy h:mm", System.Globalization.CultureInfo.GetCultureInfo("en-US"));
+            string fecD="01/01/23", fecH="00:00";
+            int i = fecGYG.LastIndexOf(",");
+            if (i > -1)
+            {
+                fecD = fecGYG.Substring(0, i).Trim();
+                int j = fecGYG.IndexOf(" ", i + 1);
+                int k = fecGYG.IndexOf(" ", j + 1);
+                fecH = fecGYG.Substring(i+1, k-j).Trim();
+            }
             var pax = Extraer(email, "Number of participants:");
 
             Reservas re = new Reservas
@@ -298,8 +310,8 @@ namespace ApiReservasMailGYG
                 GYGOption = actividad,
                 GYGReference = refGyG, // El número de booking
                 Nombre = nombre,
-                FechaActividad = fec.Date,
-                HoraActividad = fec.TimeOfDay,
+                FechaActividad = DateTime.Parse(fecD), // fec.Date,
+                HoraActividad = fecH.AsTimeSpan(), //.TimeOfDay,
                 Adultos = pax.AsInteger(),
             };
 
@@ -342,7 +354,8 @@ namespace ApiReservasMailGYG
             var nombre = Extraer(email, "Name:");
             var fecGYG = Extraer(email, "Date:");
             var actividad = Extraer(email, "Activity:");
-            var fec = DateTime.ParseExact(fecGYG, "MMMM dd, yyyy h:mm", System.Globalization.CultureInfo.InvariantCulture);
+            ////var fec = DateTime.ParseExact(fecGYG, "MMMM dd, yyyy h:mm", System.Globalization.CultureInfo.InvariantCulture);
+            //var fec = DateTime.ParseExact(fecGYG, "MMMM dd, yyyy h:mm", System.Globalization.CultureInfo.GetCultureInfo("en-US"));
 
             Reservas re = new Reservas
             {
@@ -351,8 +364,8 @@ namespace ApiReservasMailGYG
                 GYGOption = actividad,
                 GYGReference = refGyG, // El número de booking
                 Nombre = nombre,
-                FechaActividad = fec.Date,
-                HoraActividad = fec.TimeOfDay
+                //FechaActividad = fec.Date,
+                //HoraActividad = fec.TimeOfDay
             };
 
             return re;
@@ -463,6 +476,7 @@ namespace ApiReservasMailGYG
             }
 
             var fec = DateTime.ParseExact(fecGYG, "dd MMMM yyyy, HH:mm", System.Globalization.CultureInfo.InvariantCulture);
+            //var fec = DateTime.ParseExact(fecGYG, "dd MMMM yyyy, HH:mm", System.Globalization.CultureInfo.GetCultureInfo("en-US"));
             re.FechaActividad = fec.Date;
             re.HoraActividad = fec.TimeOfDay;
 
