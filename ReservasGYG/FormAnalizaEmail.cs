@@ -288,19 +288,6 @@ public partial class FormAnalizaEmail : Form
                             $"Booking: '{LaReserva.GYGReference}'", "No hay reserva", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
             return true;
         }
-        /*
-        Reservas re = new Reservas
-        {
-            GYGTipo = Reservas.GYGTipos.Modificada,
-            GYGFechaHora = fecGYG,
-            GYGOption = actividad,
-            GYGReference = refGyG, // El número de booking
-            Nombre = nombre,
-            FechaActividad = fec.Date,
-            HoraActividad = fec.TimeOfDay,
-            Adultos = pax.AsInteger(),
-        };
-        */
         // Puede cambiar la fecha y hora.
         // Puede cambiar el número de pax.
         Producto pr;
@@ -603,39 +590,47 @@ public partial class FormAnalizaEmail : Form
             sb.Append(DatosVPWiz.ResumenReserva(esWeb: false, enIngles: enIngles));
             sb.AppendLine();
             sb.AppendLine();
-
-            // Mandar el texto según el idioma.             (22/ago/23 10.58)
-            if (re.HoraActividad.Hours == 9)
+                        
+            // Para alquiler, mandar otro texto diferente.  (09/sep/23 22.08)
+            if (KNDatos.BaseKayak.ActividadesAlquiler().Contains(re.Actividad))
             {
-                if (enIngles)
-                {
-                    sb.Append(Properties.Resources.IMPORTANTE_EN_09_30_txt.Replace(CrLf, "<br/>"));
-                }
-                else
-                {
-                    sb.Append(Properties.Resources.IMPORTANTE_ES_09_30.Replace(CrLf, "<br/>"));
-                }
-            }
-            else if (re.HoraActividad.Hours == 10 || re.HoraActividad == new TimeSpan(11, 0, 0))
-            {
-                if (enIngles)
-                {
-                    sb.Append(Properties.Resources.IMPORTANTE_EN_10_30_11_00_txt.Replace(CrLf, "<br/>"));
-                }
-                else
-                {
-                    sb.Append(Properties.Resources.IMPORTANTE_ES_10_30_11_00_txt.Replace(CrLf, "<br/>"));
-                }
+                sb.Append(Properties.Resources.IMPORTANTE_ALQUILER.Replace(CrLf, "<br/>"));
             }
             else
             {
-                if (enIngles)
+                // Mandar el texto según el idioma.         (22/ago/23 10.58)
+                if (re.HoraActividad.Hours == 9)
                 {
-                    sb.Append(Properties.Resources.IMPORTANTE_EN_txt.Replace(CrLf, "<br/>"));
+                    if (enIngles)
+                    {
+                        sb.Append(Properties.Resources.IMPORTANTE_EN_09_30_txt.Replace(CrLf, "<br/>"));
+                    }
+                    else
+                    {
+                        sb.Append(Properties.Resources.IMPORTANTE_ES_09_30.Replace(CrLf, "<br/>"));
+                    }
+                }
+                else if (re.HoraActividad.Hours == 10 || re.HoraActividad == new TimeSpan(11, 0, 0))
+                {
+                    if (enIngles)
+                    {
+                        sb.Append(Properties.Resources.IMPORTANTE_EN_10_30_11_00_txt.Replace(CrLf, "<br/>"));
+                    }
+                    else
+                    {
+                        sb.Append(Properties.Resources.IMPORTANTE_ES_10_30_11_00_txt.Replace(CrLf, "<br/>"));
+                    }
                 }
                 else
                 {
-                    sb.Append(Properties.Resources.IMPORTANTE_ES_txt.Replace(CrLf, "<br/>"));
+                    if (enIngles)
+                    {
+                        sb.Append(Properties.Resources.IMPORTANTE_EN_txt.Replace(CrLf, "<br/>"));
+                    }
+                    else
+                    {
+                        sb.Append(Properties.Resources.IMPORTANTE_ES_txt.Replace(CrLf, "<br/>"));
+                    }
                 }
             }
             // Si es para el mismo día de la actividad.         (24/ago/23 06.24)

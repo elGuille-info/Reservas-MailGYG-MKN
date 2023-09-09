@@ -173,14 +173,40 @@ namespace ReservasGYG.Properties {
         ///&lt;b&gt;*IMPORTANTE*&lt;/b&gt;
         ///El punto de encuentro es en la playa de Maro (https://goo.gl/wbLLFd).
         ///Te recuerdo que &lt;b&gt;debes estar en el mostrador de la empresa de los kayaks 15 minutos antes de la hora de la actividad&lt;/b&gt;.
-        ///Si hay cola, NO la hagas, ve directamente al mostrador e indica que tienes una reserva de ruta.
+        ///Si hay cola, NO la hagas, ve directamente al mostrador e indica que tienes una reserva de ruta (o alquiler).
         ///Si llegas tarde tu reserva se cancelará.
         ///
-        ///Los vehículos no pueden ir hasta la playa de Maro (porque es zona protegida) y debes aparcar antes de ir a [rest of string was truncated]&quot;;.
+        ///Los vehículos no pueden ir hasta la playa de Maro (porque es zona protegida) y debes aparcar  [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string Hoy_es_el_dia_txt {
             get {
                 return ResourceManager.GetString("Hoy_es_el_dia_txt", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &lt;b&gt;*INFORMACIÓN DE INTERÉS (SPANISH)*&lt;/b&gt;
+        ///
+        ///
+        ///
+        ///&lt;b&gt;*LOCALIZACIÓN*&lt;/b&gt;
+        ///Ubicación en Google Maps de la &lt;b&gt;*Playa de Maro*&lt;/b&gt;
+        ///https://goo.gl/wbLLFd
+        ///(&lt;b&gt;*NO ES &quot;Caleta de Maro&quot;, no te confundas de playa*&lt;/b&gt;.)
+        ///
+        ///
+        ///&lt;b&gt;*LOCALIZACIÓN DEL PARKING JUNTO A PARADA DEL BUS A LA PLAYA*&lt;/b&gt;
+        ///Este sería (aproximadamente) el sitio donde dejar el coche y poder tomar el bus de bajada a la playa de Maro.
+        ///https://goo.gl/maps/ZfNzUsfkCN1q8iD47
+        ///
+        ///
+        ///
+        ///&lt;b&gt;*IMPORTANTE*:&lt;/b&gt;
+        ///Recuerda que debes estar en el mostrador de la em [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string IMPORTANTE_ALQUILER {
+            get {
+                return ResourceManager.GetString("IMPORTANTE_ALQUILER", resourceCulture);
             }
         }
         
@@ -239,13 +265,14 @@ namespace ReservasGYG.Properties {
         ///(*NOT Caleta de Maro, don’t confuse the beaches*.)
         ///
         ///
+        ///&lt;b&gt;*LOCATION OF THE PARKING LOT AND THE BUS STOP TO THE BEACH*&lt;/b&gt;
         ///This would be (approximately) the place to park your car and take the bus down to Maro beach.
         ///https://goo.gl/maps/ZfNzUsfkCN1q8iD47
         ///
         ///
         ///
         ///&lt;b&gt;*IMPORTANT*&lt;/b&gt;:
-        ///Remember that you must be at the company’s counter (Maro Kayak Nerja, which is right when you arrive at the beach) &lt;b&gt;*15 minutes before the activity’s departure time*&lt;/b&gt; if  [rest of string was truncated]&quot;;.
+        ///Remember that you must be at the company’s counter (Maro Kayak Nerja, which is right when you arrive at the [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string IMPORTANTE_EN_txt {
             get {
@@ -314,13 +341,14 @@ namespace ReservasGYG.Properties {
         ///(&lt;b&gt;*NO ES &quot;Caleta de Maro&quot;, no te confundas de playa*&lt;/b&gt;.)
         ///
         ///
+        ///&lt;b&gt;*LOCALIZACIÓN DEL PARKING JUNTO A PARADA DEL BUS A LA PLAYA*&lt;/b&gt;
         ///Este sería (aproximadamente) el sitio donde dejar el coche y poder tomar el bus de bajada a la playa de Maro.
         ///https://goo.gl/maps/ZfNzUsfkCN1q8iD47
         ///
         ///
         ///
         ///&lt;b&gt;*IMPORTANTE*:&lt;/b&gt;
-        ///Recuerda que debes estar en el mostrador de la empresa (Maro Kayak Nerja, que está justo cuando llegas a la playa) &lt;b&gt;*15 minuto [rest of string was truncated]&quot;;.
+        ///Recuerda que debes estar en el mostrador de la empresa (Mar [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string IMPORTANTE_ES_txt {
             get {
@@ -334,10 +362,10 @@ namespace ReservasGYG.Properties {
         ///&lt;b&gt;*IMPORTANTE*&lt;/b&gt;
         ///El punto de encuentro es en la playa de Maro (https://goo.gl/wbLLFd).
         ///Te recuerdo que &lt;b&gt;debes estar en el mostrador de la empresa de los kayaks 15 minutos antes de la hora de la actividad&lt;/b&gt;.
-        ///Si hay cola, NO la hagas, ve directamente al mostrador e indica que tienes una reserva de ruta.
+        ///Si hay cola, NO la hagas, ve directamente al mostrador e indica que tienes una reserva de ruta (o alquiler).
         ///Si llegas tarde tu reserva se cancelará.
         ///
-        ///Los vehículos no pueden ir hasta la playa de Maro (porque es zona protegida) y debes aparcar antes de ir [rest of string was truncated]&quot;;.
+        ///Los vehículos no pueden ir hasta la playa de Maro (porque es zona protegida) y debes aparca [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string Mañana_es_el_dia {
             get {
