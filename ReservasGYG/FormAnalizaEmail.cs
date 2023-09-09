@@ -276,6 +276,11 @@ public partial class FormAnalizaEmail : Form
         BtnCrearConEmail.Enabled = ChkCrearConEmail.Checked;
 
         MessageBox.Show(InfoCrearConEmail.ToString(), "Crear reserva y enviar email", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+        // Limpiar donde se pone el texto a analizar.       (09/sep/23 22.15)
+        inicializando = true;
+        RtfEmail.Text = "";
+        inicializando = false;
     }
 
     private bool ModificarReserva()
