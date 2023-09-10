@@ -26,23 +26,23 @@ public partial class Form1 : Form
 
     // Intentar no pasar de estas marcas: 60 caracteres. 2         3         4         5         6
     //                                ---------|---------|---------|---------|---------|---------|
-    //[COPIAR]AppDescripcionCopia = " email de alquiler y limpiar caja"
+    //[COPIAR]AppDescripcionCopia = " mostrar reservas canceladas"
     // BuscarClientes mostrar reservas en la pagina
 
     /// <summary>
     /// La versión de la aplicación.
     /// </summary>
-    public static string AppVersion { get; } = "1.0.14";
+    public static string AppVersion { get; } = "1.0.16";
 
     /// <summary>
     /// La versión del fichero (la revisión)
     /// </summary>
-    public static string AppFileVersion { get; } = "1.0.14.0";
+    public static string AppFileVersion { get; } = "1.0.16.0";
 
     /// <summary>
     /// La fecha de última actualización
     /// </summary>
-    public static string AppFechaVersion { get; } = "09-sep-2023";
+    public static string AppFechaVersion { get; } = "10-sep-2023";
 
     private bool inicializando = true;
     public static Form1 Current { get; set; }
@@ -153,6 +153,7 @@ public partial class Form1 : Form
         LvwSinEmail.Columns[4].Width = 160; // pax
         LvwSinEmail.Columns[5].Width = 300; // Email
         LvwSinEmail.Columns[6].Width = 300; // Notas
+        LvwSinEmail.Columns[7].Width = 100; // Cancelada
     }
 
     private void DateTimePickerGYG_ValueChanged(object sender, EventArgs e)
@@ -244,7 +245,8 @@ public partial class Form1 : Form
         }
 
         //var lisRes = Reservas.TablaCol($"SELECT * FROM Reservas Where idDistribuidor=10 and Activa=1 and CanceladaCliente=0 and Confirmada=1 and FechaActividad ='{fecha:yyyy-MM-dd}' ORDER By FechaActividad, HoraActividad");
-        var lisRes = ApiReservasMailGYG.MailGYG.DatosReservas(fecha, new TimeSpan(0, 0, 0), ChkConAlquileres.Checked);
+        // Mañana es el día no se manda a las canceladas.   (10/sep/23 02.07)
+        var lisRes = ApiReservasMailGYG.MailGYG.DatosReservas(fecha, new TimeSpan(0, 0, 0), ChkConAlquileres.Checked, conCanceladas:false);
         if (MessageBox.Show($"Se va a madar el mensaje a {lisRes.Count} {lisRes.Count.Plural("reserva")}",
                              "Mandar recordatorio de que MAÑANA es el día", MessageBoxButtons.OKCancel, MessageBoxIcon.Question) == DialogResult.Cancel)
         {
@@ -337,7 +339,8 @@ public partial class Form1 : Form
         }
 
         //var lisRes = Reservas.TablaCol($"SELECT * FROM Reservas Where idDistribuidor=10 and Activa=1 and CanceladaCliente=0 and Confirmada=1 and FechaActividad ='{fecha:yyyy-MM-dd}' ORDER By FechaActividad, HoraActividad");
-        var lisRes = ApiReservasMailGYG.MailGYG.DatosReservas(fecha, new TimeSpan(0, 0, 0), ChkConAlquileres.Checked);
+        // En hoy es el día no se usan las canceladas.      (10/sep/23 02.04)
+        var lisRes = ApiReservasMailGYG.MailGYG.DatosReservas(fecha, new TimeSpan(0, 0, 0), ChkConAlquileres.Checked, conCanceladas:false);
         if (MessageBox.Show($"Se va a mandar el mensaje a {lisRes.Count} {lisRes.Count.Plural("reserva")}",
                              "Mandar recordatorio de que hoy es el día", MessageBoxButtons.OKCancel, MessageBoxIcon.Question) == DialogResult.Cancel)
         {
@@ -436,7 +439,18 @@ public partial class Form1 : Form
         // Lista de las reservas de la fecha indicada.      (29/ago/23 11.32)
         var fecha = DateTimePickerGYG.Value.Date;
 
-        var col = ApiReservasMailGYG.MailGYG.DatosReservas(fecha, new TimeSpan(0, 0, 0), ChkConAlquileres.Checked);
+        List<ApiReservasMailGYG.ReservasGYG> col;
+        // Mostrar reservas usa el parámetro ConCanceladas. (10/sep/23 02.09)
+        // Aquí se debe comprobar si se quieren mostrar solo las canceladas.
+        if (ChkSoloCanceladas.Checked)
+        {
+            col = ApiReservasMailGYG.MailGYG.DatosReservasCanceladas(fecha, new TimeSpan(0, 0, 0), ChkConAlquileres.Checked);
+        }
+        else
+        {
+            col = ApiReservasMailGYG.MailGYG.DatosReservas(fecha, new TimeSpan(0, 0, 0), ChkConAlquileres.Checked, ChkConCanceladas.Checked);
+        }
+        
         AsignarListView(col, LvwSinEmail);
 
         //StringBuilder sb = new StringBuilder();
@@ -605,7 +619,8 @@ public partial class Form1 : Form
         }
 
         //var lisRes = Reservas.TablaCol($"SELECT * FROM Reservas Where idDistribuidor=10 and Activa=1 and CanceladaCliente=0 and Confirmada=1 and FechaActividad ='{fecha:yyyy-MM-dd}' ORDER By FechaActividad, HoraActividad");
-        var lisRes = ApiReservasMailGYG.MailGYG.DatosReservas(fecha, new TimeSpan(0, 0, 0), ChkConAlquileres.Checked);
+        // No enviar las alertas a las reservas canceladas. (10/sep/23 02.06)
+        var lisRes = ApiReservasMailGYG.MailGYG.DatosReservas(fecha, new TimeSpan(0, 0, 0), ChkConAlquileres.Checked, conCanceladas:false);
 
         if (MessageBox.Show($"Se va a madar el mensaje a {lisRes.Count} {lisRes.Count.Plural("reserva")}",
                             $"Mandar aviso de Alerta {alerta}", MessageBoxButtons.OKCancel, MessageBoxIcon.Question) == DialogResult.Cancel)

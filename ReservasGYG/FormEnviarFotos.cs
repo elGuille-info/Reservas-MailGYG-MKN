@@ -499,7 +499,8 @@ https://photos.app.goo.gl/qqxWBkVthdBGMjFEA
         //}
         //Form1.AsignarListView(col, LvwSinEmail);
 
-        var col = ApiReservasMailGYG.MailGYG.DatosReservas(fecha, new TimeSpan(0, 0, 0), conAlquileres:false);
+        // No se mandan las fotos a las canceladas.         (10/sep/23 02.06)
+        var col = ApiReservasMailGYG.MailGYG.DatosReservas(fecha, new TimeSpan(0, 0, 0), conAlquileres:false, conCanceladas:false);
         Form1.AsignarListView(col, LvwSinEmail);
 
 

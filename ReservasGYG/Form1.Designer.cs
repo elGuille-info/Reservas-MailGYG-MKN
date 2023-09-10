@@ -34,6 +34,7 @@ namespace ReservasGYG
             components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             toolTip1 = new ToolTip(components);
+            ChkConAlquileres = new CheckBox();
             GrbOpciones = new GroupBox();
             BtnAnalizarEmail = new Button();
             BtnFotos = new Button();
@@ -58,11 +59,25 @@ namespace ReservasGYG
             BtnComprobarSinMail = new Button();
             BtnHoyEs = new Button();
             TimerCargarAnalizarEmail = new Timer(components);
-            ChkConAlquileres = new CheckBox();
+            ChkConCanceladas = new CheckBox();
+            ChkSoloCanceladas = new CheckBox();
             GrbOpciones.SuspendLayout();
             GrbOpcionesFecha.SuspendLayout();
             ContextMenuListView.SuspendLayout();
             SuspendLayout();
+            // 
+            // ChkConAlquileres
+            // 
+            ChkConAlquileres.AutoSize = true;
+            ChkConAlquileres.Checked = true;
+            ChkConAlquileres.CheckState = CheckState.Checked;
+            ChkConAlquileres.Location = new Point(451, 30);
+            ChkConAlquileres.Name = "ChkConAlquileres";
+            ChkConAlquileres.Size = new Size(164, 29);
+            ChkConAlquileres.TabIndex = 2;
+            ChkConAlquileres.Text = "Incluir alquileres";
+            toolTip1.SetToolTip(ChkConAlquileres, "Incluir los alquileres al comprobar los emails y mostrar las reservas");
+            ChkConAlquileres.UseVisualStyleBackColor = true;
             // 
             // GrbOpciones
             // 
@@ -95,7 +110,7 @@ namespace ReservasGYG
             BtnFotos.Margin = new Padding(3, 12, 3, 3);
             BtnFotos.Name = "BtnFotos";
             BtnFotos.Size = new Size(1097, 40);
-            BtnFotos.TabIndex = 7;
+            BtnFotos.TabIndex = 9;
             BtnFotos.Text = "Enviar fotos";
             BtnFotos.UseVisualStyleBackColor = false;
             BtnFotos.Click += BtnFotos_Click;
@@ -103,6 +118,8 @@ namespace ReservasGYG
             // GrbOpcionesFecha
             // 
             GrbOpcionesFecha.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            GrbOpcionesFecha.Controls.Add(ChkSoloCanceladas);
+            GrbOpcionesFecha.Controls.Add(ChkConCanceladas);
             GrbOpcionesFecha.Controls.Add(ChkConAlquileres);
             GrbOpcionesFecha.Controls.Add(BtnAlerta3);
             GrbOpcionesFecha.Controls.Add(BtnAlerta1);
@@ -131,7 +148,7 @@ namespace ReservasGYG
             BtnAlerta3.Margin = new Padding(3, 6, 3, 3);
             BtnAlerta3.Name = "BtnAlerta3";
             BtnAlerta3.Size = new Size(356, 40);
-            BtnAlerta3.TabIndex = 12;
+            BtnAlerta3.TabIndex = 14;
             BtnAlerta3.Text = "Enviar Alerta 3";
             BtnAlerta3.UseVisualStyleBackColor = false;
             BtnAlerta3.Click += BtnAlerta3_Click;
@@ -144,7 +161,7 @@ namespace ReservasGYG
             BtnAlerta1.Margin = new Padding(3, 12, 3, 3);
             BtnAlerta1.Name = "BtnAlerta1";
             BtnAlerta1.Size = new Size(356, 40);
-            BtnAlerta1.TabIndex = 10;
+            BtnAlerta1.TabIndex = 12;
             BtnAlerta1.Text = "Enviar Alerta 1";
             BtnAlerta1.UseVisualStyleBackColor = false;
             BtnAlerta1.Click += BtnAlerta1_Click;
@@ -157,7 +174,7 @@ namespace ReservasGYG
             BtnAlerta2.Margin = new Padding(3, 6, 3, 3);
             BtnAlerta2.Name = "BtnAlerta2";
             BtnAlerta2.Size = new Size(356, 40);
-            BtnAlerta2.TabIndex = 11;
+            BtnAlerta2.TabIndex = 13;
             BtnAlerta2.Text = "Enviar Alerta 2";
             BtnAlerta2.UseVisualStyleBackColor = false;
             BtnAlerta2.Click += BtnAlerta2_Click;
@@ -170,7 +187,7 @@ namespace ReservasGYG
             BtnReservasSinSalida.Margin = new Padding(3, 12, 3, 3);
             BtnReservasSinSalida.Name = "BtnReservasSinSalida";
             BtnReservasSinSalida.Size = new Size(544, 40);
-            BtnReservasSinSalida.TabIndex = 4;
+            BtnReservasSinSalida.TabIndex = 6;
             BtnReservasSinSalida.Text = "Comprobar reservas sin salida (not show)";
             BtnReservasSinSalida.UseVisualStyleBackColor = false;
             BtnReservasSinSalida.Click += BtnReservasSinSalida_Click;
@@ -188,7 +205,7 @@ namespace ReservasGYG
             LvwSinEmail.MultiSelect = false;
             LvwSinEmail.Name = "LvwSinEmail";
             LvwSinEmail.Size = new Size(1100, 353);
-            LvwSinEmail.TabIndex = 6;
+            LvwSinEmail.TabIndex = 8;
             LvwSinEmail.UseCompatibleStateImageBehavior = false;
             LvwSinEmail.View = View.Details;
             // 
@@ -253,7 +270,7 @@ namespace ReservasGYG
             BtnMañanaEs.Margin = new Padding(3, 12, 3, 3);
             BtnMañanaEs.Name = "BtnMañanaEs";
             BtnMañanaEs.Size = new Size(544, 40);
-            BtnMañanaEs.TabIndex = 8;
+            BtnMañanaEs.TabIndex = 10;
             BtnMañanaEs.Text = "Enviar MAÑANA es el día";
             BtnMañanaEs.UseVisualStyleBackColor = false;
             BtnMañanaEs.Click += BtnMañanaEs_Click;
@@ -266,7 +283,7 @@ namespace ReservasGYG
             BtnMostrarReservas.Margin = new Padding(3, 12, 3, 3);
             BtnMostrarReservas.Name = "BtnMostrarReservas";
             BtnMostrarReservas.Size = new Size(544, 40);
-            BtnMostrarReservas.TabIndex = 5;
+            BtnMostrarReservas.TabIndex = 7;
             BtnMostrarReservas.Text = "Mostrar Reservas";
             BtnMostrarReservas.UseVisualStyleBackColor = false;
             BtnMostrarReservas.Click += BtnMostrarReservas_Click;
@@ -298,7 +315,7 @@ namespace ReservasGYG
             BtnComprobarSinMail.Location = new Point(6, 80);
             BtnComprobarSinMail.Name = "BtnComprobarSinMail";
             BtnComprobarSinMail.Size = new Size(1103, 40);
-            BtnComprobarSinMail.TabIndex = 3;
+            BtnComprobarSinMail.TabIndex = 5;
             BtnComprobarSinMail.Text = "Comprobar reservas sin email en la fecha";
             BtnComprobarSinMail.UseVisualStyleBackColor = false;
             BtnComprobarSinMail.Click += BtnComprobarSinMail_Click;
@@ -311,7 +328,7 @@ namespace ReservasGYG
             BtnHoyEs.Margin = new Padding(3, 6, 3, 3);
             BtnHoyEs.Name = "BtnHoyEs";
             BtnHoyEs.Size = new Size(529, 40);
-            BtnHoyEs.TabIndex = 9;
+            BtnHoyEs.TabIndex = 11;
             BtnHoyEs.Text = "Enviar HOY es el día";
             BtnHoyEs.UseVisualStyleBackColor = false;
             BtnHoyEs.Click += BtnHoyEs_Click;
@@ -321,18 +338,29 @@ namespace ReservasGYG
             TimerCargarAnalizarEmail.Interval = 300;
             TimerCargarAnalizarEmail.Tick += TimerCargarAnalizarEmail_Tick;
             // 
-            // ChkConAlquileres
+            // ChkConCanceladas
             // 
-            ChkConAlquileres.AutoSize = true;
-            ChkConAlquileres.Checked = true;
-            ChkConAlquileres.CheckState = CheckState.Checked;
-            ChkConAlquileres.Location = new Point(451, 30);
-            ChkConAlquileres.Name = "ChkConAlquileres";
-            ChkConAlquileres.Size = new Size(164, 29);
-            ChkConAlquileres.TabIndex = 2;
-            ChkConAlquileres.Text = "Incluir alquileres";
-            toolTip1.SetToolTip(ChkConAlquileres, "Incluir los alquileres al comprobar los emails y mostrar las reservas");
-            ChkConAlquileres.UseVisualStyleBackColor = true;
+            ChkConCanceladas.AutoSize = true;
+            ChkConCanceladas.Location = new Point(621, 30);
+            ChkConCanceladas.Name = "ChkConCanceladas";
+            ChkConCanceladas.Size = new Size(175, 29);
+            ChkConCanceladas.TabIndex = 3;
+            ChkConCanceladas.Text = "Incluir canceladas";
+            toolTip1.SetToolTip(ChkConCanceladas, "Incluir las reservas canceladas al mostrar las reservas");
+            ChkConCanceladas.UseVisualStyleBackColor = true;
+            // 
+            // ChkSoloCanceladas
+            // 
+            ChkSoloCanceladas.AutoSize = true;
+            ChkSoloCanceladas.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point);
+            ChkSoloCanceladas.ForeColor = Color.Firebrick;
+            ChkSoloCanceladas.Location = new Point(802, 30);
+            ChkSoloCanceladas.Name = "ChkSoloCanceladas";
+            ChkSoloCanceladas.Size = new Size(201, 29);
+            ChkSoloCanceladas.TabIndex = 4;
+            ChkSoloCanceladas.Text = "Solo las canceladas";
+            toolTip1.SetToolTip(ChkSoloCanceladas, "Mostrar solo las reservas canceladas");
+            ChkSoloCanceladas.UseVisualStyleBackColor = true;
             // 
             // Form1
             // 
@@ -382,5 +410,7 @@ namespace ReservasGYG
         private Button BtnAlerta2;
         private ToolStripMenuItem MnuCopiarEmail;
         private CheckBox ChkConAlquileres;
+        private CheckBox ChkConCanceladas;
+        private CheckBox ChkSoloCanceladas;
     }
 }

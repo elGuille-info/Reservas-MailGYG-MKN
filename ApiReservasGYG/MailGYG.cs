@@ -1159,18 +1159,66 @@ Sep 5, 2023
         /// </summary>
         /// <param name="fecha">La fecha de las reservas a comprobar.</param>
         /// <param name="hora">La hora de las reservas a comprobar, si la hora es cero, no se comprueba la hora.</param>
+        /// <param name="conAlquileres">Incluir los alquileres al comprobar las reservas.</param>
+        /// <param name="conCanceladas">Incluir las reservas canceladas.</param>
         /// <returns>Una colección con las reservas de la fecha y hora indicada. Si no se indica la hora, todas las de la fecha.</returns>
-        public static List<ReservasGYG> DatosReservas(DateTime fecha, TimeSpan hora, bool conAlquileres)
+        public static List<ReservasGYG> DatosReservas(DateTime fecha, TimeSpan hora, bool conAlquileres, bool conCanceladas)
         {
             StringBuilder sb = new StringBuilder();
             sb.Append("Select * from Reservas ");
-            sb.Append("where Activa = 1 and CanceladaCliente = 0 and idDistribuidor = 10 ");
+            sb.Append("where Activa = 1 and idDistribuidor = 10 ");
             // Que estén confirmadas                        (02/sep/23 20.55)
             sb.Append("and Confirmada = 1 ");
-            //sb.Append("and Email = '' and Nombre != 'Makarena (GYG)' ");
+            // Incluir también las canceladas               (10/sep/23 02.01)
+            if (conCanceladas == false)
+            {
+                sb.Append("and CanceladaCliente = 0 ");
+            }
             sb.Append("and Nombre != 'Makarena (GYG)' ");
-            // Solo las rutas                               (02/sep/23 13.54)
-            //sb.Append($"and Actividad like 'ruta%' ");
+            // también los alquileres...                    (05/sep/23 23.47)
+            // Ahora como parámetro.                        (05/sep/23 23.58)
+            if (conAlquileres == false)
+            {
+                sb.Append($"and Actividad like 'ruta%' ");
+            }
+
+            sb.Append($"and FechaActividad = '{fecha:yyyy-MM-dd}' ");
+            if (hora.Hours > 0)
+            {
+                sb.Append($"and HoraActividad = '{hora:hh\\:mm}' ");
+            }
+            sb.Append("order by FechaActividad, HoraActividad, ID");
+
+            var colRes = Reservas.TablaCol(sb.ToString());
+
+            List<ReservasGYG> col = new();
+
+            if (colRes.Count > 0)
+            {
+                for (int i = 0; i < colRes.Count; i++)
+                {
+                    col.Add(new ReservasGYG(colRes[i]));
+                }
+            }
+            return col;
+        }
+
+        /// <summary>
+        /// Buscar solo las reservas canceladas.
+        /// </summary>
+        /// <param name="fecha"></param>
+        /// <param name="hora"></param>
+        /// <returns></returns>
+        public static List<ReservasGYG> DatosReservasCanceladas(DateTime fecha, TimeSpan hora, bool conAlquileres)
+        {
+            StringBuilder sb = new StringBuilder();
+            sb.Append("Select * from Reservas ");
+            sb.Append("where Activa = 1 and idDistribuidor = 10 ");
+            // Que estén confirmadas                        (02/sep/23 20.55)
+            sb.Append("and Confirmada = 1 ");
+            // Y que estén canceladas.                      (10/sep/23 02.02)
+            sb.Append("and CanceladaCliente = 1 ");
+            sb.Append("and Nombre != 'Makarena (GYG)' ");
             // también los alquileres...                    (05/sep/23 23.47)
             // Ahora como parámetro.                        (05/sep/23 23.58)
             if (conAlquileres == false)

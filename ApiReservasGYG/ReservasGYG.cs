@@ -21,10 +21,11 @@ namespace ApiReservasMailGYG
             Fecha = re.FechaActividad;
             Hora = re.HoraActividad;
             BookingGYG = AsignarBookingGYG(Notas);
+            Cancelada = re.CanceladaCliente;
         }
 
         // Las columnas a usar en esta clase.                   (29/ago/23 12.09)
-        public static string[] Columnas { get; } = { "Booking", "Nombre", "Teléfono", "Reserva", "PAX", "Email", "Notas" };
+        public static string[] Columnas { get; } = { "Booking", "Nombre", "Teléfono", "Reserva", "PAX", "Email", "Notas", "Cancelada" };
 
         /// <summary>
         /// Devuelve el contenido de la columna indicada.
@@ -40,6 +41,7 @@ namespace ApiReservasMailGYG
             if (columna == "pax") return Pax;
             if (columna == "email") return Email;
             if (columna == "notas") return Notas;
+            if (columna == "cancelada") return Cancelada.ToString();
             return "";
         }
 
@@ -95,5 +97,7 @@ namespace ApiReservasMailGYG
         public string Reserva { get => $"{Fecha:dd/MM/yy} {Hora:hh\\:mm} {Actividad}"; }
 
         public string Pax { get => LaReserva.Paxs; }
+
+        public bool Cancelada { get; set; }
     }
 }
