@@ -32,12 +32,12 @@ public partial class Form1 : Form
     /// <summary>
     /// La versión de la aplicación.
     /// </summary>
-    public static string AppVersion { get; } = "1.0.16";
+    public static string AppVersion { get; } = "1.0.17";
 
     /// <summary>
     /// La versión del fichero (la revisión)
     /// </summary>
-    public static string AppFileVersion { get; } = "1.0.16.0";
+    public static string AppFileVersion { get; } = "1.0.17.0";
 
     /// <summary>
     /// La fecha de última actualización
@@ -420,7 +420,8 @@ public partial class Form1 : Form
         // de la fecha indicada 
         var fecha = DateTimePickerGYG.Value.Date;
 
-        var col = ApiReservasMailGYG.MailGYG.ReservasSinSalida(fecha);
+        // Incluir o no las canceladas.                     (10/sep/23 13.36)
+        var col = ApiReservasMailGYG.MailGYG.ReservasSinSalida(fecha, ChkConCanceladas.Checked);
 
         AsignarListView(col, LvwSinEmail);
 

@@ -1251,17 +1251,29 @@ Sep 5, 2023
         /// Reservas sin salida en la fecha indicada.
         /// </summary>
         /// <param name="fecha">La fecha de las reservas a comprobar.</param>
+        /// <param name="conCanceladas">Si se tienen en cuenta las canceladas.</param>
         /// <returns>Una colección con las reservas sin salida de la fecha indicada.</returns>
         /// <remarks>Aquí no se mira si es con o sin alquileres.</remarks>
-        public static List<ReservasGYG> ReservasSinSalida(DateTime fecha)
+        public static List<ReservasGYG> ReservasSinSalida(DateTime fecha, bool conCanceladas)
         {
             StringBuilder sb = new StringBuilder();
+            //
             sb.Append("Select * from Reservas ");
-            sb.Append("where Activa = 1 and CanceladaCliente = 0 and idDistribuidor = 10 ");
+            sb.Append("where Activa = 1 and idDistribuidor = 10 ");
+            // Que estén confirmadas                        (02/sep/23 20.55)
+            sb.Append("and Confirmada = 1 ");
+            // Incluir también las canceladas               (10/sep/23 02.01)
+            if (conCanceladas == false)
+            {
+                sb.Append("and CanceladaCliente = 0 ");
+            }
+            //
+            //sb.Append("Select * from Reservas ");
+            //sb.Append("where Activa = 1 and CanceladaCliente = 0 and idDistribuidor = 10 ");
             sb.Append("and Nombre != 'Makarena (GYG)' ");
             sb.Append("and Control = 0 ");
             sb.Append($"and FechaActividad = '{fecha:yyyy-MM-dd}' ");
-            sb.Append("order by FechaActividad, HoraActividad, ID");
+            sb.Append("order by FechaActividad, HoraActividad, CanceladaCliente, ID");
 
             var colRes = Reservas.TablaCol(sb.ToString());
 
