@@ -81,6 +81,7 @@ namespace ReservasGYG
             LabelVersion = new ToolStripStatusLabel();
             LabelFechaHora = new ToolStripStatusLabel();
             TimerHoraStatus = new Timer(components);
+            toolTip1 = new ToolTip(components);
             GrbEmail.SuspendLayout();
             GrbReserva.SuspendLayout();
             statusStrip1.SuspendLayout();
@@ -359,6 +360,7 @@ namespace ReservasGYG
             TxtLanguage.Name = "TxtLanguage";
             TxtLanguage.Size = new Size(335, 31);
             TxtLanguage.TabIndex = 3;
+            TxtLanguage.TextChanged += TxtLanguage_TextChanged;
             // 
             // label8
             // 
@@ -368,6 +370,7 @@ namespace ReservasGYG
             label8.Size = new Size(180, 31);
             label8.TabIndex = 2;
             label8.Text = "Tour language:";
+            toolTip1.SetToolTip(label8, "Indica English para mandar el mensaje en inglés");
             // 
             // TxtNotas
             // 
@@ -526,7 +529,7 @@ namespace ReservasGYG
             // 
             LabelStatus.BorderSides = ToolStripStatusLabelBorderSides.Right;
             LabelStatus.Name = "LabelStatus";
-            LabelStatus.Size = new Size(909, 29);
+            LabelStatus.Size = new Size(955, 29);
             LabelStatus.Spring = true;
             LabelStatus.Text = "Crear reservas de GetYourGuide en la app de MKN Reservas y enviar email de confirmación";
             LabelStatus.TextAlign = ContentAlignment.MiddleLeft;
@@ -624,5 +627,6 @@ namespace ReservasGYG
         private TextBox TxtTipo;
         private Label label16;
         private ToolStripStatusLabel LabelVersion;
+        private ToolTip toolTip1;
     }
 }

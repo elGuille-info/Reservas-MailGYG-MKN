@@ -749,4 +749,13 @@ public partial class FormAnalizaEmail : Form
     {
         LabelFechaHora.Text = $"{DateTime.Now:dd/MM/yyyy HH:mm:ss}";
     }
+
+    private void TxtLanguage_TextChanged(object sender, EventArgs e)
+    {
+        if (inicializando) return;
+
+        if (LaReserva == null) return;
+
+        LaReserva.GYGLanguage = TxtLanguage.Text;
+    }
 }
