@@ -52,6 +52,7 @@
             MnuCopiarTelefono = new System.Windows.Forms.ToolStripMenuItem();
             MnuCopiarEmail = new System.Windows.Forms.ToolStripMenuItem();
             MnuCopiarNotas = new System.Windows.Forms.ToolStripMenuItem();
+            LabelInfoListView = new System.Windows.Forms.Label();
             ContextMenuListView.SuspendLayout();
             SuspendLayout();
             // 
@@ -132,7 +133,7 @@
             // 
             LabelInfo.Anchor = System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
             LabelInfo.BackColor = System.Drawing.SystemColors.Info;
-            LabelInfo.Location = new System.Drawing.Point(12, 900);
+            LabelInfo.Location = new System.Drawing.Point(12, 938);
             LabelInfo.Margin = new System.Windows.Forms.Padding(3);
             LabelInfo.Name = "LabelInfo";
             LabelInfo.Size = new System.Drawing.Size(1284, 32);
@@ -218,7 +219,7 @@
             LvwSinEmail.GridLines = true;
             LvwSinEmail.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
             LvwSinEmail.Location = new System.Drawing.Point(21, 674);
-            LvwSinEmail.Margin = new System.Windows.Forms.Padding(3, 12, 3, 12);
+            LvwSinEmail.Margin = new System.Windows.Forms.Padding(3, 12, 3, 3);
             LvwSinEmail.MultiSelect = false;
             LvwSinEmail.Name = "LvwSinEmail";
             LvwSinEmail.Size = new System.Drawing.Size(1266, 211);
@@ -279,11 +280,23 @@
             MnuCopiarNotas.Text = "Copiar Notas";
             MnuCopiarNotas.Click += MnuCopiarDeLvw_Click;
             // 
+            // LabelInfoListView
+            // 
+            LabelInfoListView.Anchor = System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+            LabelInfoListView.Location = new System.Drawing.Point(21, 891);
+            LabelInfoListView.Margin = new System.Windows.Forms.Padding(3);
+            LabelInfoListView.Name = "LabelInfoListView";
+            LabelInfoListView.Size = new System.Drawing.Size(1266, 31);
+            LabelInfoListView.TabIndex = 16;
+            LabelInfoListView.Text = "Hay n elementos";
+            LabelInfoListView.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
             // FormEnviarFotos
             // 
             AutoScaleDimensions = new System.Drawing.SizeF(10F, 25F);
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            ClientSize = new System.Drawing.Size(1308, 944);
+            ClientSize = new System.Drawing.Size(1308, 982);
+            Controls.Add(LabelInfoListView);
             Controls.Add(LvwSinEmail);
             Controls.Add(BtnComprobarReservasHoras);
             Controls.Add(BtnEnviarFotosDia);
@@ -330,5 +343,6 @@
         private System.Windows.Forms.ToolStripMenuItem MnuCopiarTelefono;
         private System.Windows.Forms.ToolStripMenuItem MnuCopiarEmail;
         private System.Windows.Forms.ToolStripMenuItem MnuCopiarNotas;
+        private System.Windows.Forms.Label LabelInfoListView;
     }
 }

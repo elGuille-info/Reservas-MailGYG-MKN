@@ -47,6 +47,8 @@ public partial class FormEnviarFotos : Form
         CboHoras.Items.Clear();
         CboHoras.Items.AddRange(MailGYG.LasHoras.ToArray());
 
+        LabelInfoListView.Text = "";
+
         inicializando = false;
     }
 
@@ -258,11 +260,16 @@ public partial class FormEnviarFotos : Form
         var fecha = DateTimePickerGYG.Value.Date;
 
         // No se mandan fotos a los alquileres.             (06/sep/23 00.04)
-        var res = Form1.ComprobarEmailsReservas(fecha, LvwSinEmail, conAlquileres:false);
+        var res = Form1.ComprobarEmailsReservas(fecha, LvwSinEmail, conAlquileres: false);
         if (res > 0)
         {
+            LabelInfoListView.Text = $"Hay {res} {res.Plural("reserva")} (de rutas) del {fecha:dddd dd/MM/yyyy} sin emails.";
             MessageBox.Show($"Hay {res} {res.Plural("reserva")} (de rutas) del {fecha:dddd dd/MM/yyyy} sin emails.{CrLf}No se debe continuar hasta que lo soluciones.", "Comprobar reservas sin email", MessageBoxButtons.OK, MessageBoxIcon.Error);
             return true;
+        }
+        else
+        {
+            LabelInfoListView.Text = $"Todas las reservas del '{fecha:dddd dd/MM/yyyy}' tiene asignado el email.";
         }
 
         return false;
@@ -277,14 +284,16 @@ public partial class FormEnviarFotos : Form
         var fecha = DateTimePickerGYG.Value.Date;
 
         // Para las fotos son sin alquiler.                 (06/sep/23 00.03)
-        var res = Form1.ComprobarEmailsReservas(fecha, LvwSinEmail, conAlquileres:false);
+        var res = Form1.ComprobarEmailsReservas(fecha, LvwSinEmail, conAlquileres: false);
         if (res > 0)
         {
+            LabelInfoListView.Text = $"Hay {res} {res.Plural("reserva")} (de rutas) del {fecha:dddd dd/MM/yyyy} sin emails.;
             MessageBox.Show($"Hay {res} {res.Plural("reserva")} (de rutas) del {fecha:dddd dd/MM/yyyy} sin emails.{CrLf}No se debe continuar hasta que lo soluciones.", "Comprobar reservas sin email", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
         else
         {
-            MessageBox.Show($"Todas las reservas de rutas del '{fecha:dddd dd/MM/yyyy}' tiene asignado el email.", "Comprobar reservas sin email", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            LabelInfoListView.Text = $"Todas las reservas del '{fecha:dddd dd/MM/yyyy}' tiene asignado el email.";
+            //MessageBox.Show($"Todas las reservas de rutas del '{fecha:dddd dd/MM/yyyy}' tiene asignado el email.", "Comprobar reservas sin email", MessageBoxButtons.OK, MessageBoxIcon.Information);
             BtnEnviarFotos.Enabled = true;
             BtnEnviarFotosDia.Enabled = true;
         }
@@ -500,9 +509,8 @@ https://photos.app.goo.gl/qqxWBkVthdBGMjFEA
         //Form1.AsignarListView(col, LvwSinEmail);
 
         // No se mandan las fotos a las canceladas.         (10/sep/23 02.06)
-        var col = ApiReservasMailGYG.MailGYG.DatosReservas(fecha, new TimeSpan(0, 0, 0), conAlquileres:false, conCanceladas:false);
+        var col = ApiReservasMailGYG.MailGYG.DatosReservas(fecha, new TimeSpan(0, 0, 0), conAlquileres: false, conCanceladas: false);
         Form1.AsignarListView(col, LvwSinEmail);
-
 
         // Extraer las reservas de cada hora
         var hora = new TimeSpan(0, 0, 0);
