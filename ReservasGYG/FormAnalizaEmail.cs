@@ -353,7 +353,11 @@ public partial class FormAnalizaEmail : Form
         re.Notas2 = string.Concat("Modificada //", re.Notas2);
         re.Actualizar2();
 
+        // Asignar los valores no en base datos.            (11/sep/23 12.17)
+        re.GYGReference = LaReserva.GYGReference;
         re.GYGTipo = LaReserva.GYGTipo;
+        re.GYGFechaHora = LaReserva.GYGFechaHora;
+        re.GYGOption = LaReserva.GYGOption;
         LaReserva = re;
 
         return false;
@@ -394,7 +398,11 @@ public partial class FormAnalizaEmail : Form
         }
         re.Actualizar2();
 
+        // Asignar los valores no en base datos.            (11/sep/23 12.15)
+        re.GYGReference = LaReserva.GYGReference;
         re.GYGTipo = LaReserva.GYGTipo;
+        re.GYGFechaHora = LaReserva.GYGFechaHora;
+        re.GYGOption = LaReserva.GYGOption;
         LaReserva = re;
 
         return false;
@@ -550,6 +558,10 @@ public partial class FormAnalizaEmail : Form
         re.Tanque = tanques;
     }
 
+    /// <summary>
+    /// Enviar el email de confirmación según sea nueva, modificar o cancelar.
+    /// </summary>
+    /// <returns>True si no se mandó, false si todo fue bien.</returns>
     private bool EnviarMensajeConfirmacion()
     {
         StringBuilder sb = new StringBuilder();
