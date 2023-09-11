@@ -588,25 +588,47 @@ public partial class FormAnalizaEmail : Form
         // Mandar el mensaje según sea modificar, cancelar o nueva. (09/sep/23 01.55)
         if (LaReserva.GYGTipo == Reservas.GYGTipos.Cancelada)
         {
-            asunto = $"Cancelación reserva - {re.GYGReference}";
+            if (enIngles)
+            {
+                asunto = $"Booking cancelled - {re.GYGReference}";
+            }
+            else
+            {
+                asunto = $"Reserva cancelada - {re.GYGReference}";
+            }
+            
             sb.AppendLine("Reserva cancelada // Booking cancelled.");
             sb.AppendLine();
             sb.AppendLine($"GetYourGuide Booking # {re.GYGReference}");
             sb.AppendLine($"{re.ActividadMostrar} {re.FechaActividad:dd/MM/yyyy} {re.HoraActividad:hh\\:mm}");
             sb.AppendLine();
             sb.AppendLine($"Número de reserva MKN: {re.ID:#,###}");
-            sb.AppendLine();
+            //sb.AppendLine();
             sb.AppendLine();
         }
         else
         {
             if (LaReserva.GYGTipo == Reservas.GYGTipos.Modificada)
             {
-                asunto = $"Modificación reserva - {re.GYGReference}";
+                if (enIngles)
+                {
+                    asunto = $"Booking changed - {re.GYGReference}";
+                }
+                else
+                {
+                    asunto = $"Modificación reserva - {re.GYGReference}";
+                }
             }
             else
             {
-                asunto = $"Booking - S271506 - {re.GYGReference}";
+                if (enIngles)
+                {
+                    asunto = $"Booking confirmation - {re.GYGReference}";
+                }
+                else
+                {
+                    asunto = $"Confirmación reserva - {re.GYGReference}";
+                }
             }
 
             sb.Append(DatosVPWiz.ResumenReserva(esWeb: false, enIngles: enIngles));
@@ -658,7 +680,7 @@ public partial class FormAnalizaEmail : Form
             // Indicar siempre que hagan la reseña.         (11/sep/23 10.25)
             //// Si es para el mismo día de la actividad.     (24/ago/23 06.24)
             //if (DateTime.Today == re.FechaActividad)
-            sb.Append("<br/>");
+            sb.AppendLine("<br/>");
             sb.Append("<br/>");
             if (enIngles)
             {
@@ -670,11 +692,18 @@ public partial class FormAnalizaEmail : Form
             }
         }
 
-        sb.Append("<br/>");
+        sb.AppendLine("<br/>");
         sb.Append("<br/>");
         // No tenía los cambios de línea, añado el teléfono (08/sep/23 13.55)
         sb.Append("Kayak Makarena<br/>");
-        sb.Append("iMessage / WhatsApp: +34 645 76 16 89<br/>");
+        if (enIngles)
+        {
+            sb.Append("iMessage / WhatsApp: +34 645 76 16 89 <small>(Please, only WhatsApp messages or calls as I usually don't have coverage)</small><br/>");
+        }
+        else
+        {
+            sb.Append("iMessage / WhatsApp: +34 645 76 16 89 <small>(Por favor, solo mensajes o llamadas por wasap ya que no suelo tener cobertura)</small><br/>");
+        }
         sb.Append("https://kayakmakarena.com<br/>");
 
         //var asunto = $"Booking - S271506 - {re.GYGReference}";
