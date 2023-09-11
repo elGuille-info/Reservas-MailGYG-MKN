@@ -348,6 +348,10 @@ public partial class FormAnalizaEmail : Form
             pr.TotalPax += re.TotalPax();
             pr.Actualizar2();
         }
+        if (string.IsNullOrWhiteSpace(LaReserva.GYGNotas) == false)
+        {
+            re.Notas = string.Concat(re.Notas, CrLf, LaReserva.GYGNotas);
+        }
         re.HoraActividad = pr.Hora;
         re.FechaActividad = pr.Fecha;
         re.Notas2 = string.Concat("Modificada //", re.Notas2);
@@ -596,7 +600,7 @@ public partial class FormAnalizaEmail : Form
             {
                 asunto = $"Reserva cancelada - {re.GYGReference}";
             }
-            
+
             sb.AppendLine("Reserva cancelada // Booking cancelled.");
             sb.AppendLine();
             sb.AppendLine($"GetYourGuide Booking # {re.GYGReference}");
@@ -782,9 +786,44 @@ public partial class FormAnalizaEmail : Form
     private void TxtLanguage_TextChanged(object sender, EventArgs e)
     {
         if (inicializando) return;
-
         if (LaReserva == null) return;
 
         LaReserva.GYGLanguage = TxtLanguage.Text;
+    }
+
+    private void TxtNotas_TextChanged(object sender, EventArgs e)
+    {
+        // Si se modifican las notas.                       (11/sep/23 23.42)
+        if (inicializando) return;
+        if (LaReserva == null) return;
+
+        LaReserva.GYGNotas = TxtNotas.Text;
+    }
+
+    private void TxtTelefono_TextChanged(object sender, EventArgs e)
+    {
+        // Si se modifica el teléfono.                      (11/sep/23 23.43)
+        if (inicializando) return;
+        if (LaReserva == null) return;
+
+        LaReserva.Telefono = TxtTelefono.Text;
+    }
+
+    private void TxtPais_TextChanged(object sender, EventArgs e)
+    {
+        // Si se modifica el país.                          (11/sep/23 23.45)
+        if (inicializando) return;
+        if (LaReserva == null) return;
+
+        LaReserva.GYGPais = TxtPais.Text;
+    }
+
+    private void TxtEmail_TextChanged(object sender, EventArgs e)
+    {
+        // Si se modifica el email.                         (11/sep/23 23.49)
+        if (inicializando) return;
+        if (LaReserva == null) return;
+
+        LaReserva.Email = TxtEmail.Text;
     }
 }

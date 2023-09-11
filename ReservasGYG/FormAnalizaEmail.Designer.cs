@@ -198,6 +198,7 @@ namespace ReservasGYG
             // 
             // TxtTipo
             // 
+            TxtTipo.BackColor = Color.MintCream;
             TxtTipo.Location = new Point(502, 333);
             TxtTipo.Name = "TxtTipo";
             TxtTipo.Size = new Size(200, 31);
@@ -240,6 +241,7 @@ namespace ReservasGYG
             TxtPais.Name = "TxtPais";
             TxtPais.Size = new Size(335, 31);
             TxtPais.TabIndex = 23;
+            TxtPais.TextChanged += TxtPais_TextChanged;
             // 
             // label14
             // 
@@ -249,9 +251,11 @@ namespace ReservasGYG
             label14.Size = new Size(180, 31);
             label14.TabIndex = 22;
             label14.Text = "País:";
+            toolTip1.SetToolTip(label14, "Puedes modificar el país");
             // 
             // TxtID
             // 
+            TxtID.BackColor = Color.MintCream;
             TxtID.Location = new Point(978, 373);
             TxtID.Name = "TxtID";
             TxtID.Size = new Size(100, 31);
@@ -269,6 +273,7 @@ namespace ReservasGYG
             // 
             // TxtGYG
             // 
+            TxtGYG.BackColor = Color.MintCream;
             TxtGYG.Location = new Point(207, 373);
             TxtGYG.Multiline = true;
             TxtGYG.Name = "TxtGYG";
@@ -291,6 +296,7 @@ namespace ReservasGYG
             // 
             // TxtPrice
             // 
+            TxtPrice.BackColor = Color.MintCream;
             TxtPrice.Location = new Point(502, 296);
             TxtPrice.Name = "TxtPrice";
             TxtPrice.Size = new Size(200, 31);
@@ -307,6 +313,7 @@ namespace ReservasGYG
             // 
             // TxtMenoresG
             // 
+            TxtMenoresG.BackColor = Color.MintCream;
             TxtMenoresG.Location = new Point(207, 333);
             TxtMenoresG.Name = "TxtMenoresG";
             TxtMenoresG.Size = new Size(100, 31);
@@ -323,6 +330,7 @@ namespace ReservasGYG
             // 
             // TxtMenores
             // 
+            TxtMenores.BackColor = Color.MintCream;
             TxtMenores.Location = new Point(207, 296);
             TxtMenores.Name = "TxtMenores";
             TxtMenores.Size = new Size(100, 31);
@@ -339,6 +347,7 @@ namespace ReservasGYG
             // 
             // TxtAdultos
             // 
+            TxtAdultos.BackColor = Color.MintCream;
             TxtAdultos.Location = new Point(207, 259);
             TxtAdultos.Name = "TxtAdultos";
             TxtAdultos.Size = new Size(100, 31);
@@ -382,18 +391,21 @@ namespace ReservasGYG
             TxtNotas.Size = new Size(871, 64);
             TxtNotas.TabIndex = 15;
             TxtNotas.Text = "Las notas del wasap y edades\r\nSegunda línea";
+            TxtNotas.TextChanged += TxtNotas_TextChanged;
             // 
             // label7
             // 
             label7.Location = new Point(21, 192);
             label7.Margin = new Padding(3);
             label7.Name = "label7";
-            label7.Size = new Size(180, 86);
+            label7.Size = new Size(180, 61);
             label7.TabIndex = 14;
             label7.Text = "Notas:\r\n(Wasap y edades)";
+            toolTip1.SetToolTip(label7, "Puedes modificar las notas");
             // 
             // TxtFechaHora
             // 
+            TxtFechaHora.BackColor = Color.MintCream;
             TxtFechaHora.Location = new Point(743, 78);
             TxtFechaHora.Name = "TxtFechaHora";
             TxtFechaHora.Size = new Size(335, 31);
@@ -410,6 +422,7 @@ namespace ReservasGYG
             // 
             // TxtActividad
             // 
+            TxtActividad.BackColor = Color.MintCream;
             TxtActividad.Location = new Point(207, 78);
             TxtActividad.Name = "TxtActividad";
             TxtActividad.Size = new Size(335, 31);
@@ -430,6 +443,7 @@ namespace ReservasGYG
             TxtEmail.Name = "TxtEmail";
             TxtEmail.Size = new Size(871, 31);
             TxtEmail.TabIndex = 13;
+            TxtEmail.TextChanged += TxtEmail_TextChanged;
             // 
             // label4
             // 
@@ -439,6 +453,7 @@ namespace ReservasGYG
             label4.Size = new Size(180, 31);
             label4.TabIndex = 12;
             label4.Text = "Email:";
+            toolTip1.SetToolTip(label4, "Puedes modificar el email");
             // 
             // TxtTelefono
             // 
@@ -446,6 +461,7 @@ namespace ReservasGYG
             TxtTelefono.Name = "TxtTelefono";
             TxtTelefono.Size = new Size(335, 31);
             TxtTelefono.TabIndex = 11;
+            TxtTelefono.TextChanged += TxtTelefono_TextChanged;
             // 
             // label3
             // 
@@ -455,9 +471,11 @@ namespace ReservasGYG
             label3.Size = new Size(180, 31);
             label3.TabIndex = 10;
             label3.Text = "Teléfono:";
+            toolTip1.SetToolTip(label3, "Puedes modificar el teléfono");
             // 
             // TxtNombre
             // 
+            TxtNombre.BackColor = Color.MintCream;
             TxtNombre.Location = new Point(207, 115);
             TxtNombre.Name = "TxtNombre";
             TxtNombre.Size = new Size(335, 31);
@@ -474,6 +492,7 @@ namespace ReservasGYG
             // 
             // TxtReference
             // 
+            TxtReference.BackColor = Color.MintCream;
             TxtReference.Location = new Point(207, 41);
             TxtReference.Name = "TxtReference";
             TxtReference.Size = new Size(335, 31);

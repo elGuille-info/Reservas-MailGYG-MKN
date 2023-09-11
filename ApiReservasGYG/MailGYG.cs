@@ -248,7 +248,8 @@ namespace ApiReservasMailGYG
             var refGyG = ExtraerDespues(email, "following booking has changed:", 1);
             var nombre = Extraer(email, "Name:");
             var actividad = Extraer(email, "Tour:");
-
+            var notas = Extraer(email, "Comment:");
+            if (notas.StartsWith(" -")) { notas = ""; }
             var fecGYG = Extraer(email, "Date:");
             // Date: September 9, 2023 , 10:30 AM
 
@@ -276,6 +277,7 @@ namespace ApiReservasMailGYG
                 FechaActividad = DateTime.Parse(fecD), // fec.Date,
                 HoraActividad = fecH.AsTimeSpan(), //.TimeOfDay,
                 Adultos = pax.AsInteger(),
+                GYGNotas = notas,
             };
 
             return re;
