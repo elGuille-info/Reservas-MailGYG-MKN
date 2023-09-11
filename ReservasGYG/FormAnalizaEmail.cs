@@ -638,18 +638,17 @@ public partial class FormAnalizaEmail : Form
                     }
                 }
             }
-            // Si es para el mismo día de la actividad.         (24/ago/23 06.24)
-            if (DateTime.Today == re.FechaActividad)
+            // Indicar siempre que hagan la reseña.         (11/sep/23 10.25)
+            //// Si es para el mismo día de la actividad.     (24/ago/23 06.24)
+            //if (DateTime.Today == re.FechaActividad)
+            sb.Append("<br/>");
+            if (enIngles)
             {
-                sb.Append("<br/>");
-                if (enIngles)
-                {
-                    sb.Append("We would love to receive a review on the GetYourGuide website with your opinion on this activity, taking into account that <b>Kayak Makarena</b> is responsible for managing the reservations and <b>Maro - Kayak Nerja</b> carries out the routes.");
-                }
-                else
-                {
-                    sb.Append("Nos encantaría recibir una reseña en el sitio de GetYourGuide con tu opinión sobre esta actividad, teniendo en cuenta que <b>Kayak Makarena</b> es la encargada de gestionar las reservas y <b>Maro - Kayak Nerja</b> realiza las rutas.");
-                }
+                sb.Append("We would love to receive a review on the GetYourGuide website with your opinion on this activity, taking into account that <b>Kayak Makarena</b> is responsible for managing the reservations and <b>Maro - Kayak Nerja</b> carries out the routes.");
+            }
+            else
+            {
+                sb.Append("Nos encantaría recibir una reseña en el sitio de GetYourGuide con tu opinión sobre esta actividad, teniendo en cuenta que <b>Kayak Makarena</b> es la encargada de gestionar las reservas y <b>Maro - Kayak Nerja</b> realiza las rutas.");
             }
         }
 
@@ -657,7 +656,7 @@ public partial class FormAnalizaEmail : Form
         sb.Append("<br/>");
         // No tenía los cambios de línea, añado el teléfono (08/sep/23 13.55)
         sb.Append("Kayak Makarena<br/>");
-        sb.Append("WhatsApp: +34 645 76 16 89<br/>");
+        sb.Append("iMessage / WhatsApp: +34 645 76 16 89<br/>");
         sb.Append("https://kayakmakarena.com<br/>");
 
         //var asunto = $"Booking - S271506 - {re.GYGReference}";
