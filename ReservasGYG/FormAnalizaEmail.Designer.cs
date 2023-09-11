@@ -78,8 +78,9 @@ namespace ReservasGYG
             BtnOpciones = new Button();
             statusStrip1 = new StatusStrip();
             LabelStatus = new ToolStripStatusLabel();
+            LabelVersion = new ToolStripStatusLabel();
             LabelFechaHora = new ToolStripStatusLabel();
-            timer1 = new Timer(components);
+            TimerHoraStatus = new Timer(components);
             GrbEmail.SuspendLayout();
             GrbReserva.SuspendLayout();
             statusStrip1.SuspendLayout();
@@ -514,7 +515,7 @@ namespace ReservasGYG
             // statusStrip1
             // 
             statusStrip1.ImageScalingSize = new Size(24, 24);
-            statusStrip1.Items.AddRange(new ToolStripItem[] { LabelStatus, LabelFechaHora });
+            statusStrip1.Items.AddRange(new ToolStripItem[] { LabelStatus, LabelVersion, LabelFechaHora });
             statusStrip1.Location = new Point(0, 908);
             statusStrip1.Name = "statusStrip1";
             statusStrip1.Size = new Size(1370, 36);
@@ -525,10 +526,18 @@ namespace ReservasGYG
             // 
             LabelStatus.BorderSides = ToolStripStatusLabelBorderSides.Right;
             LabelStatus.Name = "LabelStatus";
-            LabelStatus.Size = new Size(1155, 29);
+            LabelStatus.Size = new Size(909, 29);
             LabelStatus.Spring = true;
             LabelStatus.Text = "Crear reservas de GetYourGuide en la app de MKN Reservas y enviar email de confirmación";
             LabelStatus.TextAlign = ContentAlignment.MiddleLeft;
+            // 
+            // LabelVersion
+            // 
+            LabelVersion.AutoSize = false;
+            LabelVersion.BorderSides = ToolStripStatusLabelBorderSides.Right;
+            LabelVersion.Name = "LabelVersion";
+            LabelVersion.Size = new Size(200, 29);
+            LabelVersion.Text = "v1.0.18.1 (11-sep-2023)";
             // 
             // LabelFechaHora
             // 
@@ -537,10 +546,10 @@ namespace ReservasGYG
             LabelFechaHora.Size = new Size(200, 29);
             LabelFechaHora.Text = "dd/MM/yyyy HH:mm:ss";
             // 
-            // timer1
+            // TimerHoraStatus
             // 
-            timer1.Interval = 900;
-            timer1.Tick += TimerHoraStatus_Tick;
+            TimerHoraStatus.Interval = 900;
+            TimerHoraStatus.Tick += TimerHoraStatus_Tick;
             // 
             // FormAnalizaEmail
             // 
@@ -611,8 +620,9 @@ namespace ReservasGYG
         private ToolStripStatusLabel LabelStatus;
         private ToolStripStatusLabel LabelFechaHora;
         private Label label15;
-        private Timer timer1;
+        private Timer TimerHoraStatus;
         private TextBox TxtTipo;
         private Label label16;
+        private ToolStripStatusLabel LabelVersion;
     }
 }

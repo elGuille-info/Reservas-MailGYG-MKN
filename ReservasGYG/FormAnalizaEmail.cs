@@ -23,8 +23,10 @@ namespace ReservasGYG;
 public partial class FormAnalizaEmail : Form
 {
     private bool inicializando = true;
-    private string StatusAnt;
-    //private object QueBoton;
+    private string StatusAnt { get; set; }
+    private Reservas LaReserva { get; set; }
+    private StringBuilder InfoCrearConEmail { get; set; } = new StringBuilder();
+
 
     public static FormAnalizaEmail Current { get; set; }
     public FormAnalizaEmail()
@@ -32,20 +34,17 @@ public partial class FormAnalizaEmail : Form
         InitializeComponent();
         Current = this;
     }
-
-    private Reservas LaReserva { get; set; }
-
-    private StringBuilder InfoCrearConEmail { get; set; } = new StringBuilder();
-
     private void FormAnalizaEmailGYG_Load(object sender, EventArgs e)
     {
+        LabelFechaHora.Text = $"{DateTime.Now:dd/MM/yyyy HH:mm:ss}";
+
         inicializando = false;
 
         BtnPegarEmail.Image = Properties.Resources.Paste; // Bitmap.FromFile("..\\Resources\\Paste.png");
         BtnLimpiarTexto.Image = Properties.Resources.CleanData; //Bitmap.FromFile("..\\Resources\\CleanData.png");
 
-        timer1.Interval = 990;
-        timer1.Enabled = true;
+        TimerHoraStatus.Interval = 990;
+        TimerHoraStatus.Enabled = true;
 
         RtfEmail.Text = "";
 
@@ -208,6 +207,8 @@ public partial class FormAnalizaEmail : Form
 
         ChkCrearConEmail.Checked = false;
         BtnCrearConEmail.Enabled = ChkCrearConEmail.Checked;
+
+        LabelVersion.Text = $"v{Form1.AppVersion} ({Form1.AppFechaVersion})";
     }
 
     private void BtnCrearConEmail_Click(object sender, EventArgs e)
@@ -219,20 +220,22 @@ public partial class FormAnalizaEmail : Form
         ChkCrearConEmail.Enabled = false;
         BtnCrearConEmail.Enabled = ChkCrearConEmail.Checked;
 
+        // Limpiar el contenido para que no se acumule.     (11/sep/23 10.57)
+        InfoCrearConEmail.Clear();
+
         if (LaReserva == null)
         {
             MessageBox.Show("La reserva no está asignada.", "No hay reserva", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
             return;
         }
 
-        bool res = false;
-
         StatusAnt = LabelStatus.Text;
         LabelStatus.Text = "Creando la reserva...";
         Application.DoEvents();
 
+        bool res;
         // Comporbar si es crear, cancelar y modificar      (09/sep/23 00.20)
-        if (LaReserva.GYGTipo == Reservas.GYGTipos.Cancelada) 
+        if (LaReserva.GYGTipo == Reservas.GYGTipos.Cancelada)
         {
             // Cancelar la reserva
             res = CancelarReserva();
@@ -328,11 +331,11 @@ public partial class FormAnalizaEmail : Form
         if (LaReserva.Adultos != re.TotalPax())
         {
             var ret = MessageBox.Show("El número de participantes no coincide con el de la reserva original:" + CrLf +
-                            $"Antes: {re.TotalPax()}, ahora: '{LaReserva.Adultos}'" + CrLf + 
-                            "Pulsa SÍ para usar los pax nuevos (se pondrán todos como adultos)." + CrLf + 
-                            "Pulsa NO para dejar los pax que ya había.", 
+                            $"Antes: {re.TotalPax()}, ahora: '{LaReserva.Adultos}'" + CrLf +
+                            "Pulsa SÍ para usar los pax nuevos (se pondrán todos como adultos)." + CrLf +
+                            "Pulsa NO para dejar los pax que ya había.",
                             "Modificar la reserva", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-            if (ret == DialogResult.Yes) 
+            if (ret == DialogResult.Yes)
             {
                 re.Adultos = LaReserva.Adultos;
                 re.Niños = 0;
@@ -382,7 +385,7 @@ public partial class FormAnalizaEmail : Form
             {
                 MessageBox.Show("El producto de la reserva no existe:" + CrLf +
                                 $"ID producto: '{re.idProducto}'" + CrLf +
-                                $"Actividad: {re.ActividadMostrar} {re.FechaActividad:dd/MM/yyyy} {re.HoraActividad:hh\\:mm}", 
+                                $"Actividad: {re.ActividadMostrar} {re.FechaActividad:dd/MM/yyyy} {re.HoraActividad:hh\\:mm}",
                                 "No hay producto", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 return true;
             }
@@ -574,10 +577,12 @@ public partial class FormAnalizaEmail : Form
         if (LaReserva.GYGTipo == Reservas.GYGTipos.Cancelada)
         {
             asunto = $"Cancelación reserva - {re.GYGReference}";
-            sb.Append("Reserva cancelada // Booking cancelled.");
+            sb.AppendLine("Reserva cancelada // Booking cancelled.");
+            sb.AppendLine();
+            sb.AppendLine($"GetYourGuide Booking # {re.GYGReference}");
             sb.AppendLine($"{re.ActividadMostrar} {re.FechaActividad:dd/MM/yyyy} {re.HoraActividad:hh\\:mm}");
             sb.AppendLine();
-            sb.AppendLine($"Número de reserva MKN: {LaReserva.ID:#,###}");
+            sb.AppendLine($"Número de reserva MKN: {re.ID:#,###}");
             sb.AppendLine();
             sb.AppendLine();
         }
@@ -591,11 +596,11 @@ public partial class FormAnalizaEmail : Form
             {
                 asunto = $"Booking - S271506 - {re.GYGReference}";
             }
-            
+
             sb.Append(DatosVPWiz.ResumenReserva(esWeb: false, enIngles: enIngles));
             sb.AppendLine();
             sb.AppendLine();
-                        
+
             // Para alquiler, mandar otro texto diferente.  (09/sep/23 22.08)
             if (KNDatos.BaseKayak.ActividadesAlquiler().Contains(re.Actividad))
             {
@@ -641,6 +646,7 @@ public partial class FormAnalizaEmail : Form
             // Indicar siempre que hagan la reseña.         (11/sep/23 10.25)
             //// Si es para el mismo día de la actividad.     (24/ago/23 06.24)
             //if (DateTime.Today == re.FechaActividad)
+            sb.Append("<br/>");
             sb.Append("<br/>");
             if (enIngles)
             {
