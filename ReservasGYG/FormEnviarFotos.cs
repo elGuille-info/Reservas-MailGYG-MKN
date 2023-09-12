@@ -287,7 +287,7 @@ public partial class FormEnviarFotos : Form
         var res = Form1.ComprobarEmailsReservas(fecha, LvwSinEmail, conAlquileres: false);
         if (res > 0)
         {
-            LabelInfoListView.Text = $"Hay {res} {res.Plural("reserva")} (de rutas) del {fecha:dddd dd/MM/yyyy} sin emails.;
+            LabelInfoListView.Text = $"Hay {res} {res.Plural("reserva")} (de rutas) del {fecha:dddd dd/MM/yyyy} sin emails.";
             MessageBox.Show($"Hay {res} {res.Plural("reserva")} (de rutas) del {fecha:dddd dd/MM/yyyy} sin emails.{CrLf}No se debe continuar hasta que lo soluciones.", "Comprobar reservas sin email", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
         else
