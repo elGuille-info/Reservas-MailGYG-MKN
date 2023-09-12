@@ -1,15 +1,8 @@
-﻿//using System;
-//using System.Collections.Generic;
-//using System.Linq;
-//using System.Text;
-//using System.Threading.Tasks;
-
-//namespace ReservasGYG
-//{
-//    //internal class ProgramMutextSingleInstance
-//    //{
-//    //}
-//}
+﻿// Para hacer la app de una sola instancia.                 (12/sep/23 17.52)
+// Si está en funcionamiento, aunque esté minimizada, se muestra normal.
+//
+// Parte del código de Bing AI con ayudita ;-)
+//
 
 using System;
 using System.Diagnostics;

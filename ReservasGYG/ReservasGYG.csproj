@@ -16,10 +16,16 @@
         <PackageReadmeFile>Readme.md</PackageReadmeFile>
         <RepositoryType>git</RepositoryType>
         <RepositoryUrl>https://github.com/elGuille-info/Reservas-MailGYG-MKN</RepositoryUrl>
-        <Version>1.0.26</Version>
-        <AssemblyVersion>1.0.26.0</AssemblyVersion>
-        <FileVersion>1.0.26.0</FileVersion>
+        <Version>1.0.27</Version>
+        <AssemblyVersion>1.0.27.0</AssemblyVersion>
+        <FileVersion>1.0.27.0</FileVersion>
     </PropertyGroup>
+
+    <ItemGroup>
+      <Compile Remove="Program.cs" />
+      <Compile Remove="ProgramMutex.cs" />
+      <Compile Remove="ProgramSingleInstance.cs" />
+    </ItemGroup>
 
     <ItemGroup>
         <Content Include="GYG_logo_blanco.ico" />
