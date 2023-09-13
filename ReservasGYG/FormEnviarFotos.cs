@@ -580,6 +580,9 @@ https://photos.app.goo.gl/qqxWBkVthdBGMjFEA
         bool hab = LvwSinEmail.SelectedIndices.Count > 0;
         foreach (var mnu in ContextMenuListView.Items)
         {
+            // Por si es el separador.                      (13/sep/23 09.56)
+            var mnu1 = mnu as ToolStripMenuItem;
+            if (mnu1 == null) continue;
             (mnu as ToolStripMenuItem).Enabled = hab;
         }
     }

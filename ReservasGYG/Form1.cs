@@ -26,18 +26,18 @@ public partial class Form1 : Form
 
     // Intentar no pasar de estas marcas: 60 caracteres. 2         3         4         5         6
     //                                ---------|---------|---------|---------|---------|---------|
-    //[COPIAR]AppDescripcionCopia = " menu contextual copiar todo"
+    //[COPIAR]AppDescripcionCopia = " ContextMenuListView_Opening"
     // BuscarClientes mostrar reservas en la pagina
 
     /// <summary>
     /// La versión de la aplicación.
     /// </summary>
-    public static string AppVersion { get; } = "1.0.29";
+    public static string AppVersion { get; } = "1.0.30";
 
     /// <summary>
     /// La versión del fichero (la revisión)
     /// </summary>
-    public static string AppFileVersion { get; } = "1.0.29.0";
+    public static string AppFileVersion { get; } = "1.0.30.0";
 
     /// <summary>
     /// La fecha de última actualización
@@ -598,6 +598,9 @@ public partial class Form1 : Form
         bool hab = LvwSinEmail.SelectedIndices.Count > 0;
         foreach (var mnu in ContextMenuListView.Items)
         {
+            // Por si es el separador.                      (13/sep/23 09.56)
+            var mnu1 = mnu as ToolStripMenuItem;
+            if (mnu1 == null) continue;
             (mnu as ToolStripMenuItem).Enabled = hab;
         }
     }
