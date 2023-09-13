@@ -41,6 +41,7 @@ namespace ReservasGYG
             BtnAnalizarEmail = new Button();
             BtnFotos = new Button();
             GrbOpcionesFecha = new GroupBox();
+            LabelInfoListView = new Label();
             BtnAlerta3 = new Button();
             BtnAlerta1 = new Button();
             BtnAlerta2 = new Button();
@@ -61,7 +62,8 @@ namespace ReservasGYG
             BtnComprobarSinMail = new Button();
             BtnHoyEs = new Button();
             TimerCargarAnalizarEmail = new Timer(components);
-            LabelInfoListView = new Label();
+            MnuCopiarReserva = new ToolStripMenuItem();
+            MnuCopiarPax = new ToolStripMenuItem();
             GrbOpciones.SuspendLayout();
             GrbOpcionesFecha.SuspendLayout();
             ContextMenuListView.SuspendLayout();
@@ -166,6 +168,17 @@ namespace ReservasGYG
             GrbOpcionesFecha.TabStop = false;
             GrbOpcionesFecha.Text = "Opciones con fecha";
             // 
+            // LabelInfoListView
+            // 
+            LabelInfoListView.Anchor = AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            LabelInfoListView.Location = new Point(9, 543);
+            LabelInfoListView.Margin = new Padding(3);
+            LabelInfoListView.Name = "LabelInfoListView";
+            LabelInfoListView.Size = new Size(1100, 31);
+            LabelInfoListView.TabIndex = 15;
+            LabelInfoListView.Text = "Hay n elementos";
+            LabelInfoListView.TextAlign = ContentAlignment.MiddleLeft;
+            // 
             // BtnAlerta3
             // 
             BtnAlerta3.Anchor = AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
@@ -248,9 +261,9 @@ namespace ReservasGYG
             // ContextMenuListView
             // 
             ContextMenuListView.ImageScalingSize = new Size(24, 24);
-            ContextMenuListView.Items.AddRange(new ToolStripItem[] { MnuCopiarBooking, MnuCopiarNombre, MnuCopiarTelefono, MnuCopiarEmail, MnuCopiarNotas });
+            ContextMenuListView.Items.AddRange(new ToolStripItem[] { MnuCopiarBooking, MnuCopiarNombre, MnuCopiarTelefono, MnuCopiarReserva, MnuCopiarPax, MnuCopiarEmail, MnuCopiarNotas });
             ContextMenuListView.Name = "ContextMenuListView";
-            ContextMenuListView.Size = new Size(209, 164);
+            ContextMenuListView.Size = new Size(209, 228);
             ContextMenuListView.Opening += ContextMenuListView_Opening;
             // 
             // MnuCopiarBooking
@@ -364,16 +377,19 @@ namespace ReservasGYG
             TimerCargarAnalizarEmail.Interval = 300;
             TimerCargarAnalizarEmail.Tick += TimerCargarAnalizarEmail_Tick;
             // 
-            // LabelInfoListView
+            // MnuCopiarReserva
             // 
-            LabelInfoListView.Anchor = AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            LabelInfoListView.Location = new Point(9, 543);
-            LabelInfoListView.Margin = new Padding(3);
-            LabelInfoListView.Name = "LabelInfoListView";
-            LabelInfoListView.Size = new Size(1100, 31);
-            LabelInfoListView.TabIndex = 15;
-            LabelInfoListView.Text = "Hay n elementos";
-            LabelInfoListView.TextAlign = ContentAlignment.MiddleLeft;
+            MnuCopiarReserva.Name = "MnuCopiarReserva";
+            MnuCopiarReserva.Size = new Size(208, 32);
+            MnuCopiarReserva.Text = "Copiar Reserva";
+            MnuCopiarReserva.Click += MnuCopiarDeLvw_Click;
+            // 
+            // MnuCopiarPax
+            // 
+            MnuCopiarPax.Name = "MnuCopiarPax";
+            MnuCopiarPax.Size = new Size(208, 32);
+            MnuCopiarPax.Text = "Copiar Pax";
+            MnuCopiarPax.Click += MnuCopiarDeLvw_Click;
             // 
             // Form1
             // 
@@ -426,5 +442,7 @@ namespace ReservasGYG
         private CheckBox ChkConCanceladas;
         private CheckBox ChkSoloCanceladas;
         private Label LabelInfoListView;
+        private ToolStripMenuItem MnuCopiarReserva;
+        private ToolStripMenuItem MnuCopiarPax;
     }
 }

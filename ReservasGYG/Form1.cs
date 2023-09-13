@@ -26,26 +26,141 @@ public partial class Form1 : Form
 
     // Intentar no pasar de estas marcas: 60 caracteres. 2         3         4         5         6
     //                                ---------|---------|---------|---------|---------|---------|
-    //[COPIAR]AppDescripcionCopia = " quito las pruebas de una sola instancia"
+    //[COPIAR]AppDescripcionCopia = " todos los menús contextuales"
     // BuscarClientes mostrar reservas en la pagina
 
     /// <summary>
     /// La versión de la aplicación.
     /// </summary>
-    public static string AppVersion { get; } = "1.0.27";
+    public static string AppVersion { get; } = "1.0.28";
 
     /// <summary>
     /// La versión del fichero (la revisión)
     /// </summary>
-    public static string AppFileVersion { get; } = "1.0.27.0";
+    public static string AppFileVersion { get; } = "1.0.28.0";
 
     /// <summary>
     /// La fecha de última actualización
     /// </summary>
-    public static string AppFechaVersion { get; } = "12-sep-2023";
+    public static string AppFechaVersion { get; } = "13-sep-2023";
+
+
+    public static Form1 Current { get; set; }
+
+    //
+    // Métodos estáticos/compartidos
+    //
+
+    /// <summary>
+    /// Asignar las columnas y el ancho al listview indicado.
+    /// </summary>
+    /// <param name="LvwSinEmail"></param>
+    /// <param name="asignarColumnas">True para asignar columnas y limpiar contenido, false para cambiar el ancho.</param>
+    public static void AsignarColumnasLvw(ListView LvwSinEmail, bool asignarColumnas)
+    {
+        if (asignarColumnas)
+        {
+            LvwSinEmail.Items.Clear();
+            LvwSinEmail.Columns.Clear();
+
+            for (int j = 0; j < ApiReservasMailGYG.ReservasGYG.Columnas.Length; j++)
+            {
+                LvwSinEmail.Columns.Add(ApiReservasMailGYG.ReservasGYG.Columnas[j]);
+            }
+        }
+
+        LvwSinEmail.Columns[0].Width = 160; // booking
+        LvwSinEmail.Columns[1].Width = 400; // Nombre
+        LvwSinEmail.Columns[2].Width = 150; // Teléfono
+        LvwSinEmail.Columns[3].Width = 260; // Reserva
+        LvwSinEmail.Columns[4].Width = 160; // pax
+        LvwSinEmail.Columns[5].Width = 300; // Email
+        LvwSinEmail.Columns[6].Width = 300; // Notas
+        LvwSinEmail.Columns[7].Width = 100; // Cancelada
+    }
+
+    /// <summary>
+    /// Asignar los datos de las reservas sin email al listView indicado.
+    /// </summary>
+    /// <param name="col"></param>
+    /// <param name="LvwSinEmail"></param>
+    public static void AsignarListView(List<ApiReservasMailGYG.ReservasGYG> col, ListView LvwSinEmail)
+    {
+        AsignarColumnasLvw(LvwSinEmail, asignarColumnas: true);
+
+        for (int i = 0; i < col.Count; i++)
+        {
+            var item = LvwSinEmail.Items.Add(col[i].ValorColumna("booking"));
+            for (int j = 1; j < ApiReservasMailGYG.ReservasGYG.Columnas.Length; j++)
+            {
+                item.SubItems.Add(col[i].ValorColumna(ApiReservasMailGYG.ReservasGYG.Columnas[j]));
+            }
+        }
+    }
+
+    /// <summary>
+    /// Copiar en el portapales el campo correspondiente al menú indicado.
+    /// </summary>
+    /// <param name="sender">El menú usado para saber qué copiar.</param>
+    /// <param name="LvwSinEmail">El listview con el contenido a copiar.</param>
+    public static void CopiarDeLvw(object sender, ListView LvwSinEmail)
+    {
+        if (LvwSinEmail.SelectedIndices.Count == 0) return;
+
+        if (sender is not ToolStripMenuItem mnu) return;
+
+        // Los nombres de los menús contextuales:
+        // MnuCopiarBooking, MnuCopiarNombre, MnuCopiarTelefono, MnuCopiarReserva, MnuCopiarPax, MnuCopiarEmail, MnuCopiarNotas
+        // Las columnas:
+        // "Booking", "Nombre", "Teléfono", "Reserva", "PAX", "Email", "Notas", "Cancelada"
+
+        int index = -1;
+        if (mnu.Name == "MnuCopiarBooking") index = 0;
+        if (mnu.Name == "MnuCopiarNombre") index = 1;
+        if (mnu.Name == "MnuCopiarTelefono") index = 2;
+        if (mnu.Name == "MnuCopiarReserva") index = 3;
+        if (mnu.Name == "MnuCopiarPax") index = 4;
+        if (mnu.Name == "MnuCopiarEmail") index = 5;
+        if (mnu.Name == "MnuCopiarNotas") index = 6;
+        if (index == -1) return;
+
+        string texto = LvwSinEmail.Items[LvwSinEmail.SelectedIndices[0]].SubItems[index].Text;
+        CopiarPortapapeles(texto);
+    }
+
+    /// <summary>
+    /// Comprueba las reservas de la fecha indicada sin email y las añade al listview.
+    /// </summary>
+    /// <param name="fecha"></param>
+    /// <param name="LvwSinEmail"></param>
+    /// <returns></returns>
+    public static int ComprobarEmailsReservas(DateTime fecha, ListView LvwSinEmail, bool conAlquileres)
+    {
+        var col = MailGYG.ComprobarEmails(fecha, conAlquileres);
+
+        AsignarListView(col, LvwSinEmail);
+
+        return col.Count;
+    }
+
+    /// <summary>
+    /// Copiar el texto indicado en el portapapeles.
+    /// </summary>
+    /// <param name="texto">el texto a copiar en el portapapeles.</param>
+    public static void CopiarPortapapeles(string texto)
+    {
+        try
+        {
+            Clipboard.SetText(texto);
+        }
+        catch { }
+    }
+
+    //
+    // Métodos y variables de instancia
+    //
 
     private bool inicializando = true;
-    public static Form1 Current { get; set; }
 
     public Form1()
     {
@@ -127,34 +242,6 @@ public partial class Form1 : Form
         BtnAlerta3.Width = w;
         BtnAlerta2.Left = BtnAlerta1.Left + w + 12;
         BtnAlerta3.Left = BtnAlerta2.Left + w + 12;
-    }
-
-    /// <summary>
-    /// Asignar las columnas y el ancho al listview indicado.
-    /// </summary>
-    /// <param name="LvwSinEmail"></param>
-    /// <param name="asignarColumnas">True para asignar columnas y limpiar contenido, false para cambiar el ancho.</param>
-    public static void AsignarColumnasLvw(ListView LvwSinEmail, bool asignarColumnas)
-    {
-        if (asignarColumnas)
-        {
-            LvwSinEmail.Items.Clear();
-            LvwSinEmail.Columns.Clear();
-
-            for (int j = 0; j < ApiReservasMailGYG.ReservasGYG.Columnas.Length; j++)
-            {
-                LvwSinEmail.Columns.Add(ApiReservasMailGYG.ReservasGYG.Columnas[j]);
-            }
-        }
-
-        LvwSinEmail.Columns[0].Width = 160; // booking
-        LvwSinEmail.Columns[1].Width = 400; // Nombre
-        LvwSinEmail.Columns[2].Width = 150; // Teléfono
-        LvwSinEmail.Columns[3].Width = 260; // Reserva
-        LvwSinEmail.Columns[4].Width = 160; // pax
-        LvwSinEmail.Columns[5].Width = 300; // Email
-        LvwSinEmail.Columns[6].Width = 300; // Notas
-        LvwSinEmail.Columns[7].Width = 100; // Cancelada
     }
 
     private void DateTimePickerGYG_ValueChanged(object sender, EventArgs e)
@@ -482,41 +569,6 @@ public partial class Form1 : Form
         }
     }
 
-
-    /// <summary>
-    /// Asignar los datos de las reservas sin email al listView indicado.
-    /// </summary>
-    /// <param name="col"></param>
-    /// <param name="LvwSinEmail"></param>
-    public static void AsignarListView(List<ApiReservasMailGYG.ReservasGYG> col, ListView LvwSinEmail)
-    {
-        AsignarColumnasLvw(LvwSinEmail, asignarColumnas: true);
-
-        for (int i = 0; i < col.Count; i++)
-        {
-            var item = LvwSinEmail.Items.Add(col[i].ValorColumna("booking"));
-            for (int j = 1; j < ApiReservasMailGYG.ReservasGYG.Columnas.Length; j++)
-            {
-                item.SubItems.Add(col[i].ValorColumna(ApiReservasMailGYG.ReservasGYG.Columnas[j]));
-            }
-        }
-    }
-
-    /// <summary>
-    /// Comprueba las reservas de la fecha indicada sin email y las añade al listview.
-    /// </summary>
-    /// <param name="fecha"></param>
-    /// <param name="LvwSinEmail"></param>
-    /// <returns></returns>
-    public static int ComprobarEmailsReservas(DateTime fecha, ListView LvwSinEmail, bool conAlquileres)
-    {
-        var col = MailGYG.ComprobarEmails(fecha, conAlquileres);
-
-        AsignarListView(col, LvwSinEmail);
-
-        return col.Count;
-    }
-
     private void ContextMenuListView_Opening(object sender, System.ComponentModel.CancelEventArgs e)
     {
         bool hab = LvwSinEmail.SelectedIndices.Count > 0;
@@ -526,60 +578,9 @@ public partial class Form1 : Form
         }
     }
 
-    //public static string[] Columnas { get; } = { "Booking", "Nombre", "Teléfono", "Reserva", "PAX", "Email", "Notas" };
     private void MnuCopiarDeLvw_Click(object sender, EventArgs e)
     {
-        //if (LvwSinEmail.SelectedIndices.Count == 0) return;
-        ////var mnu = sender as ToolStripMenuItem;
-        ////if (mnu == null) return;
-        //int index = -1;
-        //if (sender == MnuCopiarBooking) index = 0;
-        //if (sender == MnuCopiarNombre) index = 1;
-        //if (sender == MnuCopiarTelefono) index = 2;
-        //if (sender == MnuCopiarEmail) index = 5;
-        //if (sender == MnuCopiarNotas) index = 6;
-        //if (index == -1) return;
-
-        //string texto = LvwSinEmail.Items[LvwSinEmail.SelectedIndices[0]].SubItems[index].Text;
-        //CopiarPortapapeles(texto);
-
         CopiarDeLvw(sender, LvwSinEmail);
-    }
-
-    /// <summary>
-    /// Copiar en el portapales el campo correspondiente al menú indicado.
-    /// </summary>
-    /// <param name="sender">El menú usado para saber qué copiar.</param>
-    /// <param name="LvwSinEmail">El listview con el contenido a copiar.</param>
-    public static void CopiarDeLvw(object sender, ListView LvwSinEmail)
-    {
-        if (LvwSinEmail.SelectedIndices.Count == 0) return;
-
-        if (sender is not ToolStripMenuItem mnu) return;
-
-        int index = -1;
-        if (mnu.Name == "MnuCopiarBooking") index = 0;
-        if (mnu.Name == "MnuCopiarNombre") index = 1;
-        if (mnu.Name == "MnuCopiarTelefono") index = 2;
-        if (mnu.Name == "MnuCopiarEmail") index = 5;
-        if (mnu.Name == "MnuCopiarNotas") index = 6;
-        if (index == -1) return;
-
-        string texto = LvwSinEmail.Items[LvwSinEmail.SelectedIndices[0]].SubItems[index].Text;
-        CopiarPortapapeles(texto);
-    }
-
-    /// <summary>
-    /// Copiar el texto indicado en el portapapeles.
-    /// </summary>
-    /// <param name="texto">el texto a copiar en el portapapeles.</param>
-    public static void CopiarPortapapeles(string texto)
-    {
-        try
-        {
-            Clipboard.SetText(texto);
-        }
-        catch { }
     }
 
     /// <summary>

@@ -1,4 +1,7 @@
-﻿namespace ReservasGYG
+﻿using System.Drawing;
+using System.Windows.Forms;
+
+namespace ReservasGYG
 {
     partial class FormEnviarFotos
     {
@@ -52,6 +55,8 @@
             MnuCopiarTelefono = new System.Windows.Forms.ToolStripMenuItem();
             MnuCopiarEmail = new System.Windows.Forms.ToolStripMenuItem();
             MnuCopiarNotas = new System.Windows.Forms.ToolStripMenuItem();
+            MnuCopiarReserva = new System.Windows.Forms.ToolStripMenuItem();
+            MnuCopiarPax = new System.Windows.Forms.ToolStripMenuItem();
             LabelInfoListView = new System.Windows.Forms.Label();
             ContextMenuListView.SuspendLayout();
             SuspendLayout();
@@ -240,7 +245,8 @@
             // ContextMenuListView
             // 
             ContextMenuListView.ImageScalingSize = new System.Drawing.Size(24, 24);
-            ContextMenuListView.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { MnuCopiarBooking, MnuCopiarNombre, MnuCopiarTelefono, MnuCopiarEmail, MnuCopiarNotas });
+            //ContextMenuListView.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { MnuCopiarBooking, MnuCopiarNombre, MnuCopiarTelefono, MnuCopiarEmail, MnuCopiarNotas });
+            ContextMenuListView.Items.AddRange(new ToolStripItem[] { MnuCopiarBooking, MnuCopiarNombre, MnuCopiarTelefono, MnuCopiarReserva, MnuCopiarPax, MnuCopiarEmail, MnuCopiarNotas });
             ContextMenuListView.Name = "ContextMenuListView";
             ContextMenuListView.Size = new System.Drawing.Size(209, 164);
             ContextMenuListView.Opening += ContextMenuListView_Opening;
@@ -279,6 +285,20 @@
             MnuCopiarNotas.Size = new System.Drawing.Size(208, 32);
             MnuCopiarNotas.Text = "Copiar Notas";
             MnuCopiarNotas.Click += MnuCopiarDeLvw_Click;
+            // 
+            // MnuCopiarReserva
+            // 
+            MnuCopiarReserva.Name = "MnuCopiarReserva";
+            MnuCopiarReserva.Size = new Size(208, 32);
+            MnuCopiarReserva.Text = "Copiar Reserva";
+            MnuCopiarReserva.Click += MnuCopiarDeLvw_Click;
+            // 
+            // MnuCopiarPax
+            // 
+            MnuCopiarPax.Name = "MnuCopiarPax";
+            MnuCopiarPax.Size = new Size(208, 32);
+            MnuCopiarPax.Text = "Copiar Pax";
+            MnuCopiarPax.Click += MnuCopiarDeLvw_Click;
             // 
             // LabelInfoListView
             // 
@@ -343,6 +363,8 @@
         private System.Windows.Forms.ToolStripMenuItem MnuCopiarTelefono;
         private System.Windows.Forms.ToolStripMenuItem MnuCopiarEmail;
         private System.Windows.Forms.ToolStripMenuItem MnuCopiarNotas;
+        private System.Windows.Forms.ToolStripMenuItem MnuCopiarReserva;
+        private System.Windows.Forms.ToolStripMenuItem MnuCopiarPax;
         private System.Windows.Forms.Label LabelInfoListView;
     }
 }
