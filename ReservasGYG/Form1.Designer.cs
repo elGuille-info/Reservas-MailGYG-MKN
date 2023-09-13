@@ -53,6 +53,8 @@ namespace ReservasGYG
             MnuCopiarBooking = new ToolStripMenuItem();
             MnuCopiarNombre = new ToolStripMenuItem();
             MnuCopiarTelefono = new ToolStripMenuItem();
+            MnuCopiarReserva = new ToolStripMenuItem();
+            MnuCopiarPax = new ToolStripMenuItem();
             MnuCopiarEmail = new ToolStripMenuItem();
             MnuCopiarNotas = new ToolStripMenuItem();
             BtnMañanaEs = new Button();
@@ -62,8 +64,8 @@ namespace ReservasGYG
             BtnComprobarSinMail = new Button();
             BtnHoyEs = new Button();
             TimerCargarAnalizarEmail = new Timer(components);
-            MnuCopiarReserva = new ToolStripMenuItem();
-            MnuCopiarPax = new ToolStripMenuItem();
+            MnuSep1 = new ToolStripSeparator();
+            MnuCopiarTodo = new ToolStripMenuItem();
             GrbOpciones.SuspendLayout();
             GrbOpcionesFecha.SuspendLayout();
             ContextMenuListView.SuspendLayout();
@@ -261,43 +263,57 @@ namespace ReservasGYG
             // ContextMenuListView
             // 
             ContextMenuListView.ImageScalingSize = new Size(24, 24);
-            ContextMenuListView.Items.AddRange(new ToolStripItem[] { MnuCopiarBooking, MnuCopiarNombre, MnuCopiarTelefono, MnuCopiarReserva, MnuCopiarPax, MnuCopiarEmail, MnuCopiarNotas });
+            ContextMenuListView.Items.AddRange(new ToolStripItem[] { MnuCopiarBooking, MnuCopiarNombre, MnuCopiarTelefono, MnuCopiarReserva, MnuCopiarPax, MnuCopiarEmail, MnuCopiarNotas, MnuSep1, MnuCopiarTodo });
             ContextMenuListView.Name = "ContextMenuListView";
-            ContextMenuListView.Size = new Size(209, 228);
+            ContextMenuListView.Size = new Size(241, 299);
             ContextMenuListView.Opening += ContextMenuListView_Opening;
             // 
             // MnuCopiarBooking
             // 
             MnuCopiarBooking.Name = "MnuCopiarBooking";
-            MnuCopiarBooking.Size = new Size(208, 32);
+            MnuCopiarBooking.Size = new Size(240, 32);
             MnuCopiarBooking.Text = "Copiar Booking";
             MnuCopiarBooking.Click += MnuCopiarDeLvw_Click;
             // 
             // MnuCopiarNombre
             // 
             MnuCopiarNombre.Name = "MnuCopiarNombre";
-            MnuCopiarNombre.Size = new Size(208, 32);
+            MnuCopiarNombre.Size = new Size(240, 32);
             MnuCopiarNombre.Text = "Copiar Nombre";
             MnuCopiarNombre.Click += MnuCopiarDeLvw_Click;
             // 
             // MnuCopiarTelefono
             // 
             MnuCopiarTelefono.Name = "MnuCopiarTelefono";
-            MnuCopiarTelefono.Size = new Size(208, 32);
+            MnuCopiarTelefono.Size = new Size(240, 32);
             MnuCopiarTelefono.Text = "Copiar Teléfono";
             MnuCopiarTelefono.Click += MnuCopiarDeLvw_Click;
+            // 
+            // MnuCopiarReserva
+            // 
+            MnuCopiarReserva.Name = "MnuCopiarReserva";
+            MnuCopiarReserva.Size = new Size(240, 32);
+            MnuCopiarReserva.Text = "Copiar Reserva";
+            MnuCopiarReserva.Click += MnuCopiarDeLvw_Click;
+            // 
+            // MnuCopiarPax
+            // 
+            MnuCopiarPax.Name = "MnuCopiarPax";
+            MnuCopiarPax.Size = new Size(240, 32);
+            MnuCopiarPax.Text = "Copiar Pax";
+            MnuCopiarPax.Click += MnuCopiarDeLvw_Click;
             // 
             // MnuCopiarEmail
             // 
             MnuCopiarEmail.Name = "MnuCopiarEmail";
-            MnuCopiarEmail.Size = new Size(208, 32);
+            MnuCopiarEmail.Size = new Size(240, 32);
             MnuCopiarEmail.Text = "Copiar Email";
             MnuCopiarEmail.Click += MnuCopiarDeLvw_Click;
             // 
             // MnuCopiarNotas
             // 
             MnuCopiarNotas.Name = "MnuCopiarNotas";
-            MnuCopiarNotas.Size = new Size(208, 32);
+            MnuCopiarNotas.Size = new Size(240, 32);
             MnuCopiarNotas.Text = "Copiar Notas";
             MnuCopiarNotas.Click += MnuCopiarDeLvw_Click;
             // 
@@ -377,19 +393,17 @@ namespace ReservasGYG
             TimerCargarAnalizarEmail.Interval = 300;
             TimerCargarAnalizarEmail.Tick += TimerCargarAnalizarEmail_Tick;
             // 
-            // MnuCopiarReserva
+            // MnuSep1
             // 
-            MnuCopiarReserva.Name = "MnuCopiarReserva";
-            MnuCopiarReserva.Size = new Size(208, 32);
-            MnuCopiarReserva.Text = "Copiar Reserva";
-            MnuCopiarReserva.Click += MnuCopiarDeLvw_Click;
+            MnuSep1.Name = "MnuSep1";
+            MnuSep1.Size = new Size(237, 6);
             // 
-            // MnuCopiarPax
+            // MnuCopiarTodo
             // 
-            MnuCopiarPax.Name = "MnuCopiarPax";
-            MnuCopiarPax.Size = new Size(208, 32);
-            MnuCopiarPax.Text = "Copiar Pax";
-            MnuCopiarPax.Click += MnuCopiarDeLvw_Click;
+            MnuCopiarTodo.Name = "MnuCopiarTodo";
+            MnuCopiarTodo.Size = new Size(240, 32);
+            MnuCopiarTodo.Text = "Copiar Todo";
+            MnuCopiarTodo.Click += MnuCopiarDeLvw_Click;
             // 
             // Form1
             // 
@@ -444,5 +458,7 @@ namespace ReservasGYG
         private Label LabelInfoListView;
         private ToolStripMenuItem MnuCopiarReserva;
         private ToolStripMenuItem MnuCopiarPax;
+        private ToolStripSeparator MnuSep1;
+        private ToolStripMenuItem MnuCopiarTodo;
     }
 }

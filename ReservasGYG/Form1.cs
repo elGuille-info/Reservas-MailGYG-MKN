@@ -26,18 +26,18 @@ public partial class Form1 : Form
 
     // Intentar no pasar de estas marcas: 60 caracteres. 2         3         4         5         6
     //                                ---------|---------|---------|---------|---------|---------|
-    //[COPIAR]AppDescripcionCopia = " todos los menús contextuales"
+    //[COPIAR]AppDescripcionCopia = " menu contextual copiar todo"
     // BuscarClientes mostrar reservas en la pagina
 
     /// <summary>
     /// La versión de la aplicación.
     /// </summary>
-    public static string AppVersion { get; } = "1.0.28";
+    public static string AppVersion { get; } = "1.0.29";
 
     /// <summary>
     /// La versión del fichero (la revisión)
     /// </summary>
-    public static string AppFileVersion { get; } = "1.0.28.0";
+    public static string AppFileVersion { get; } = "1.0.29.0";
 
     /// <summary>
     /// La fecha de última actualización
@@ -110,10 +110,11 @@ public partial class Form1 : Form
         if (sender is not ToolStripMenuItem mnu) return;
 
         // Los nombres de los menús contextuales:
-        // MnuCopiarBooking, MnuCopiarNombre, MnuCopiarTelefono, MnuCopiarReserva, MnuCopiarPax, MnuCopiarEmail, MnuCopiarNotas
+        // MnuCopiarBooking, MnuCopiarNombre, MnuCopiarTelefono, MnuCopiarReserva, MnuCopiarPax, MnuCopiarEmail, MnuCopiarNotas, MnuCopiarTodo
         // Las columnas:
         // "Booking", "Nombre", "Teléfono", "Reserva", "PAX", "Email", "Notas", "Cancelada"
 
+        int copiarTodo = 99;
         int index = -1;
         if (mnu.Name == "MnuCopiarBooking") index = 0;
         if (mnu.Name == "MnuCopiarNombre") index = 1;
@@ -122,10 +123,33 @@ public partial class Form1 : Form
         if (mnu.Name == "MnuCopiarPax") index = 4;
         if (mnu.Name == "MnuCopiarEmail") index = 5;
         if (mnu.Name == "MnuCopiarNotas") index = 6;
+        if (mnu.Name == "MnuCopiarTodo") index = copiarTodo;
         if (index == -1) return;
+        //string texto = LvwSinEmail.Items[LvwSinEmail.SelectedIndices[0]].SubItems[index].Text;
+        //CopiarPortapapeles(texto);
 
-        string texto = LvwSinEmail.Items[LvwSinEmail.SelectedIndices[0]].SubItems[index].Text;
-        CopiarPortapapeles(texto);
+        StringBuilder sb = new StringBuilder();
+        if (index == copiarTodo)
+        {
+            //sb.Append(LvwSinEmail.Items[LvwSinEmail.SelectedIndices[0]].SubItems[index].Text);
+            var it = LvwSinEmail.Items[LvwSinEmail.SelectedIndices[0]];
+            for (int i = 0; i < it.SubItems.Count; i++)
+            {
+                sb.Append(ApiReservasMailGYG.ReservasGYG.Columnas[i]);
+                sb.Append(": ");
+                sb.Append(it.SubItems[i].Text);
+                if (i < it.SubItems.Count - 1)
+                {
+                    sb.Append(", ");
+                }
+            }
+        }
+        else
+        {
+            sb.Append(LvwSinEmail.Items[LvwSinEmail.SelectedIndices[0]].SubItems[index].Text);
+        }
+
+        CopiarPortapapeles(sb.ToString());
     }
 
     /// <summary>
