@@ -26,18 +26,18 @@ public partial class Form1 : Form
 
     // Intentar no pasar de estas marcas: 60 caracteres. 2         3         4         5         6
     //                                ---------|---------|---------|---------|---------|---------|
-    //[COPIAR]AppDescripcionCopia = " ContextMenuListView_Opening"
+    //[COPIAR]AppDescripcionCopia = " separar con ; datos del listview"
     // BuscarClientes mostrar reservas en la pagina
 
     /// <summary>
     /// La versión de la aplicación.
     /// </summary>
-    public static string AppVersion { get; } = "1.0.30";
+    public static string AppVersion { get; } = "1.0.31";
 
     /// <summary>
     /// La versión del fichero (la revisión)
     /// </summary>
-    public static string AppFileVersion { get; } = "1.0.30.0";
+    public static string AppFileVersion { get; } = "1.0.31.0";
 
     /// <summary>
     /// La fecha de última actualización
@@ -131,7 +131,6 @@ public partial class Form1 : Form
         StringBuilder sb = new StringBuilder();
         if (index == copiarTodo)
         {
-            //sb.Append(LvwSinEmail.Items[LvwSinEmail.SelectedIndices[0]].SubItems[index].Text);
             var it = LvwSinEmail.Items[LvwSinEmail.SelectedIndices[0]];
             for (int i = 0; i < it.SubItems.Count; i++)
             {
@@ -140,7 +139,7 @@ public partial class Form1 : Form
                 sb.Append(it.SubItems[i].Text);
                 if (i < it.SubItems.Count - 1)
                 {
-                    sb.Append(", ");
+                    sb.Append("; ");
                 }
             }
         }
