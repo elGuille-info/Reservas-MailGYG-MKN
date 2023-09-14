@@ -32,17 +32,17 @@ public partial class Form1 : Form
     /// <summary>
     /// La versión de la aplicación.
     /// </summary>
-    public static string AppVersion { get; } = "1.0.31";
+    public static string AppVersion { get; } = "1.0.32";
 
     /// <summary>
     /// La versión del fichero (la revisión)
     /// </summary>
-    public static string AppFileVersion { get; } = "1.0.31.0";
+    public static string AppFileVersion { get; } = "1.0.32.0";
 
     /// <summary>
     /// La fecha de última actualización
     /// </summary>
-    public static string AppFechaVersion { get; } = "13-sep-2023";
+    public static string AppFechaVersion { get; } = "14-sep-2023";
 
 
     public static Form1 Current { get; set; }

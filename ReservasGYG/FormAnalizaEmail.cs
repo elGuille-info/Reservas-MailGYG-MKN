@@ -362,6 +362,7 @@ public partial class FormAnalizaEmail : Form
         re.GYGTipo = LaReserva.GYGTipo;
         re.GYGFechaHora = LaReserva.GYGFechaHora;
         re.GYGOption = LaReserva.GYGOption;
+        re.GYGLanguage = LaReserva.GYGLanguage;
         LaReserva = re;
 
         return false;
@@ -407,6 +408,7 @@ public partial class FormAnalizaEmail : Form
         re.GYGTipo = LaReserva.GYGTipo;
         re.GYGFechaHora = LaReserva.GYGFechaHora;
         re.GYGOption = LaReserva.GYGOption;
+        re.GYGLanguage = LaReserva.GYGLanguage;
         LaReserva = re;
 
         return false;
