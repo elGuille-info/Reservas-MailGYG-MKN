@@ -10,6 +10,58 @@ namespace ApiReservasMailGYG
 {
     public class ReservasGYG
     {
+        //
+        // Las propiedades
+        //
+
+        public string Nombre { get; set; }
+        public string Telefono { get; set; }
+        public string Email { get; set; }
+
+        public string Notas { get; set; }
+        public string BookingGYG { get; set; }
+
+        public string Actividad { get; set; }
+        public DateTime Fecha { get; set; }
+
+        public TimeSpan Hora { get; set; }
+
+        /// <summary>
+        /// Los datos de la reserva usada en esta instancia.
+        /// </summary>
+        public KNDatos.Reservas LaReserva { get; set; }
+
+        /// <summary>
+        /// Devuelve los datos de la actividad
+        /// </summary>
+        public string Reserva { get => $"{Fecha:dd/MM/yy} {Hora:hh\\:mm} {Actividad}"; }
+
+        public string Pax { get => LaReserva.Paxs; }
+
+        public bool Cancelada { get; set; }
+
+        // Añado datos para saber si ha salido, etc.        (15/sep/23 17.00)
+
+        /// <summary>
+        /// El número de control.
+        /// </summary>
+        public int Control { get; set; }
+
+        /// <summary>
+        /// Para saber si ha vuelto.
+        /// </summary>
+        /// <remarks>Será 0 si no ha salido, 1 si es vuelta parcial, 2 si ya ha vuelto.</remarks>
+        public int Vuelta { get; set; }
+
+        /// <summary>
+        /// La hora de salida.
+        /// </summary>
+        public TimeSpan HoraSalida { get; set; }
+        /// <summary>
+        /// La hora de vuelta.
+        /// </summary>
+        public TimeSpan HoraVuelta { get; set; }
+
         public ReservasGYG(KNDatos.Reservas re)
         {
             LaReserva = re.Clone();
@@ -22,10 +74,15 @@ namespace ApiReservasMailGYG
             Hora = re.HoraActividad;
             BookingGYG = AsignarBookingGYG(Notas);
             Cancelada = re.CanceladaCliente;
+            HoraSalida = re.HoraSalida;
+            HoraVuelta = re.HoraVuelta;
+            Control = re.Control;
+            Vuelta = re.Vuelta;
         }
 
         // Las columnas a usar en esta clase.                   (29/ago/23 12.09)
-        public static string[] Columnas { get; } = { "Booking", "Nombre", "Teléfono", "Reserva", "PAX", "Email", "Notas", "Cancelada" };
+        public static string[] Columnas { get; } =
+            { "Booking", "Nombre", "Teléfono", "Reserva", "PAX", "Email", "Notas", "Cancelada", "Control", "Vuelta", "H.Salida", "H.Vuelta" };
 
         /// <summary>
         /// Devuelve el contenido de la columna indicada.
@@ -42,6 +99,10 @@ namespace ApiReservasMailGYG
             if (columna == "email") return Email;
             if (columna == "notas") return Notas;
             if (columna == "cancelada") return Cancelada.ToString();
+            if (columna == "control") return Control.ToString();
+            if (columna == "vuelta") return Vuelta.ToString();
+            if (columna == "h.salida") return HoraSalida.ToString("hh\\:mm");
+            if (columna == "h.vuelta") return HoraVuelta.ToString("hh\\:mm");
             return "";
         }
 
@@ -55,7 +116,9 @@ namespace ApiReservasMailGYG
             string nota = "";
             // Poner solo los xx primeros caracteres de las notas. (25/ago/23 14.18)
             //GetYourGuide - GYGLMWA85MXQ - (Spain) - Spanish (Live tour guide) -
-            if (notas.StartsWith("GetYourGuide"))
+            //if (notas.StartsWith("GetYourGuide"))
+            // Por si se añade texto al principio.          (15/sep/23 17.05)
+            if (notas.Contains("GetYourGuide"))
             {
                 int j = notas.IndexOf("- GYG");
                 if (j > -1)
@@ -76,28 +139,5 @@ namespace ApiReservasMailGYG
             }
             return nota;
         }
-
-        public string Nombre { get; set; }
-        public string Telefono { get; set; }
-        public string Email { get; set; }
-
-        public string Notas { get; set; }
-        public string BookingGYG { get; set; }
-
-        public string Actividad { get; set; }
-        public DateTime Fecha { get; set; }
-
-        public TimeSpan Hora { get; set; }
-
-        public KNDatos.Reservas LaReserva { get; set; }
-
-        /// <summary>
-        /// Devuelve los datos de la actividad
-        /// </summary>
-        public string Reserva { get => $"{Fecha:dd/MM/yy} {Hora:hh\\:mm} {Actividad}"; }
-
-        public string Pax { get => LaReserva.Paxs; }
-
-        public bool Cancelada { get; set; }
     }
 }
