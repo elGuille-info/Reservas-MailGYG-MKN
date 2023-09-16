@@ -26,17 +26,17 @@ namespace ReservasGYG_Movil
 
         // Intentar no pasar de estas marcas: 60 caracteres. 2         3         4         5         6
         //                                ---------|---------|---------|---------|---------|---------|
-        //[COPIAR]AppDescripcionCopia = " nueva funcionalidad app móvil-2"
+        //[COPIAR]AppDescripcionCopia = " nueva funcionalidad app móvil-3"
 
         /// <summary>
         /// La versión de la aplicación.
         /// </summary>
-        public static string AppVersion { get; } = "1.0.40";
+        public static string AppVersion { get; } = "1.0.41";
 
         /// <summary>
         /// La versión del fichero (la revisión)
         /// </summary>
-        public static string AppFileVersion { get; } = "1.0.40.0";
+        public static string AppFileVersion { get; } = "1.0.41.0";
 
         /// <summary>
         /// La fecha de última actualización

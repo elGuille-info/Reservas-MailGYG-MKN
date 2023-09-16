@@ -146,13 +146,13 @@
                     <StackLayout Style="{StaticResource StackCampos}">
                         <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand">
                             <Label Text="Email:" Style="{StaticResource LabelCampos}"/>
-                            <Entry x:Name="TxtEmail" WidthRequest="540"/>
+                            <Entry x:Name="TxtEmail" WidthRequest="546"/>
                         </StackLayout>
                     </StackLayout>
                     <StackLayout Style="{StaticResource StackCampos}">
                         <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand">
                             <Label Text="Notas:" Style="{StaticResource LabelCampos}"/>
-                            <Editor x:Name="TxtNotas" WidthRequest="540" HeightRequest="100" />
+                            <Editor x:Name="TxtNotas" WidthRequest="546" HeightRequest="100" />
                         </StackLayout>
                     </StackLayout>
                     <StackLayout Style="{StaticResource StackCampos}">
@@ -188,13 +188,17 @@
                     <StackLayout Style="{StaticResource StackCampos}">
                         <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand">
                             <Label Text="Otra info:" Style="{StaticResource LabelCampos}"/>
-                            <Editor x:Name="TxtGYG" WidthRequest="540" HeightRequest="100" />
+                            <Editor x:Name="TxtGYG" WidthRequest="546" HeightRequest="100" />
                         </StackLayout>
                     </StackLayout>
                     <StackLayout Style="{StaticResource StackCampos}">
-                        <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand">
+                        <StackLayout Orientation="Horizontal">
                             <Label Text="Tipo reserva:" Style="{StaticResource LabelCampos}"/>
-                            <Editor x:Name="TxtTipo" />
+                            <Entry x:Name="TxtTipo" />
+                        </StackLayout>
+                        <StackLayout Orientation="Horizontal">
+                            <Label Text="" Style="{StaticResource LabelCampos}"/>
+                            <Entry IsVisible="False"/>
                         </StackLayout>
                     </StackLayout>
                 </StackLayout>
