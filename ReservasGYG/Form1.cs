@@ -26,23 +26,23 @@ public partial class Form1 : Form
 
     // Intentar no pasar de estas marcas: 60 caracteres. 2         3         4         5         6
     //                                ---------|---------|---------|---------|---------|---------|
-    //[COPIAR]AppDescripcionCopia = " Faltaba las 15h de las fotos"
+    //[COPIAR]AppDescripcionCopia = " menu copiar todo con cr"
     // BuscarClientes mostrar reservas en la pagina
 
     /// <summary>
     /// La versión de la aplicación.
     /// </summary>
-    public static string AppVersion { get; } = "1.0.35";
+    public static string AppVersion { get; } = "1.0.36";
 
     /// <summary>
     /// La versión del fichero (la revisión)
     /// </summary>
-    public static string AppFileVersion { get; } = "1.0.35.0";
+    public static string AppFileVersion { get; } = "1.0.36.0";
 
     /// <summary>
     /// La fecha de última actualización
     /// </summary>
-    public static string AppFechaVersion { get; } = "15-sep-2023";
+    public static string AppFechaVersion { get; } = "16-sep-2023";
 
 
     public static Form1 Current { get; set; }
@@ -110,7 +110,7 @@ public partial class Form1 : Form
         if (sender is not ToolStripMenuItem mnu) return;
 
         // Los nombres de los menús contextuales:
-        // MnuCopiarBooking, MnuCopiarNombre, MnuCopiarTelefono, MnuCopiarReserva, MnuCopiarPax, MnuCopiarEmail, MnuCopiarNotas, MnuCopiarTodo
+        // MnuCopiarBooking, MnuCopiarNombre, MnuCopiarTelefono, MnuCopiarReserva, MnuCopiarPax, MnuCopiarEmail, MnuCopiarNotas, MnuCopiarTodo, MnuCopiarTodoConCr
         // Las columnas:
         // "Booking", "Nombre", "Teléfono", "Reserva", "PAX", "Email", "Notas", "Cancelada"
 
@@ -124,12 +124,13 @@ public partial class Form1 : Form
         if (mnu.Name == "MnuCopiarEmail") index = 5;
         if (mnu.Name == "MnuCopiarNotas") index = 6;
         if (mnu.Name == "MnuCopiarTodo") index = copiarTodo;
+        if (mnu.Name == "MnuCopiarTodoConCr") index = copiarTodo + 1;
         if (index == -1) return;
         //string texto = LvwSinEmail.Items[LvwSinEmail.SelectedIndices[0]].SubItems[index].Text;
         //CopiarPortapapeles(texto);
 
         StringBuilder sb = new StringBuilder();
-        if (index == copiarTodo)
+        if (index >= copiarTodo)
         {
             var it = LvwSinEmail.Items[LvwSinEmail.SelectedIndices[0]];
             for (int i = 0; i < it.SubItems.Count; i++)
@@ -141,6 +142,10 @@ public partial class Form1 : Form
                 {
                     sb.Append("; ");
                 }
+            }
+            if (index == copiarTodo + 1)
+            {
+                sb.AppendLine();
             }
         }
         else
