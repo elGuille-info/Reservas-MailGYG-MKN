@@ -1,4 +1,4 @@
-//
+ï»¿//
 // Mostrar las reservas de GetYourGuide recibidas por email (12/ago/23 18.04)
 //
 
@@ -20,27 +20,27 @@ namespace ReservasGYG;
 public partial class Form1 : Form
 {
 
-    // La descripción para las copias de seguridad. (21/Oct/21)
-    // Se usará como descripción lo que esté entre comillas dobles (incluidos los espacios).
+    // La descripciÃ³n para las copias de seguridad. (21/Oct/21)
+    // Se usarÃ¡ como descripciÃ³n lo que estÃ© entre comillas dobles (incluidos los espacios).
     // Ya que se comprueba que empiece con: [COPIAR]AppDescripcionCopia = y unas comillas dobles.
 
     // Intentar no pasar de estas marcas: 60 caracteres. 2         3         4         5         6
     //                                ---------|---------|---------|---------|---------|---------|
-    //[COPIAR]AppDescripcionCopia = " nueva funcionalidad app móvil"
+    //[COPIAR]AppDescripcionCopia = " nueva funcionalidad app mÃ³vil-2"
     // BuscarClientes mostrar reservas en la pagina
 
     /// <summary>
-    /// La versión de la aplicación.
+    /// La versiÃ³n de la aplicaciÃ³n.
     /// </summary>
-    public static string AppVersion { get; } = "1.0.39";
+    public static string AppVersion { get; } = "1.0.40";
 
     /// <summary>
-    /// La versión del fichero (la revisión)
+    /// La versiÃ³n del fichero (la revisiÃ³n)
     /// </summary>
-    public static string AppFileVersion { get; } = "1.0.39.0";
+    public static string AppFileVersion { get; } = "1.0.40.0";
 
     /// <summary>
-    /// La fecha de última actualización
+    /// La fecha de Ãºltima actualizaciÃ³n
     /// </summary>
     public static string AppFechaVersion { get; } = "16-sep-2023";
 
@@ -48,7 +48,7 @@ public partial class Form1 : Form
     public static Form1 Current { get; set; }
 
     //
-    // Métodos estáticos/compartidos
+    // MÃ©todos estÃ¡ticos/compartidos
     //
 
     /// <summary>
@@ -70,10 +70,10 @@ public partial class Form1 : Form
         }
 
         //   0          1         2           3          4      5            6           7           8          9         10       11
-        //{ "Booking", "Nombre", "Teléfono", "Reserva", "PAX", "Cancelada", "H.Salida", "H.Vuelta", "Control", "Vuelta", "Email", "Notas" };
+        //{ "Booking", "Nombre", "TelÃ©fono", "Reserva", "PAX", "Cancelada", "H.Salida", "H.Vuelta", "Control", "Vuelta", "Email", "Notas" };
         LvwSinEmail.Columns[0].Width = 160; // booking
         LvwSinEmail.Columns[1].Width = 400; // Nombre
-        LvwSinEmail.Columns[2].Width = 150; // Teléfono
+        LvwSinEmail.Columns[2].Width = 150; // TelÃ©fono
         LvwSinEmail.Columns[3].Width = 260; // Reserva
         LvwSinEmail.Columns[4].Width = 160; // pax
         LvwSinEmail.Columns[10].Width = 300; // Email
@@ -105,9 +105,9 @@ public partial class Form1 : Form
     }
 
     /// <summary>
-    /// Copiar en el portapales el campo correspondiente al menú indicado.
+    /// Copiar en el portapales el campo correspondiente al menÃº indicado.
     /// </summary>
-    /// <param name="sender">El menú usado para saber qué copiar.</param>
+    /// <param name="sender">El menÃº usado para saber quÃ© copiar.</param>
     /// <param name="LvwSinEmail">El listview con el contenido a copiar.</param>
     public static void CopiarDeLvw(object sender, ListView LvwSinEmail)
     {
@@ -118,10 +118,10 @@ public partial class Form1 : Form
 
         if (sender is not ToolStripMenuItem mnu) return;
 
-        // Los nombres de los menús contextuales:
+        // Los nombres de los menÃºs contextuales:
         // MnuCopiarBooking, MnuCopiarNombre, MnuCopiarTelefono, MnuCopiarReserva, MnuCopiarPax, MnuCopiarEmail, MnuCopiarNotas, MnuCopiarTodo, MnuCopiarTodoConCr
         // Las columnas:
-        //{ "Booking", "Nombre", "Teléfono", "Reserva", "PAX", "Cancelada", "H.Salida", "H.Vuelta", "Control", "Vuelta", "Email", "Notas" };
+        //{ "Booking", "Nombre", "TelÃ©fono", "Reserva", "PAX", "Cancelada", "H.Salida", "H.Vuelta", "Control", "Vuelta", "Email", "Notas" };
 
         int copiarTodo = 99;
         //int index = -1;
@@ -148,8 +148,8 @@ public partial class Form1 : Form
                 sb.Append(": ");
                 sb.Append(it.SubItems[i].Text);
                 // Si es copiar todo con CR,                (16/sep/23 03.20)
-                // añadir un cambio de línea.
-                // Si no, añair el punto y coma.            (16/sep/23 03.23)
+                // aÃ±adir un cambio de lÃ­nea.
+                // Si no, aÃ±air el punto y coma.            (16/sep/23 03.23)
                 if (index == copiarTodo + 1)
                 {
                     sb.AppendLine();
@@ -172,7 +172,7 @@ public partial class Form1 : Form
     }
 
     /// <summary>
-    /// Comprueba las reservas de la fecha indicada sin email y las añade al listview.
+    /// Comprueba las reservas de la fecha indicada sin email y las aÃ±ade al listview.
     /// </summary>
     /// <param name="fecha"></param>
     /// <param name="LvwSinEmail"></param>
@@ -200,7 +200,7 @@ public partial class Form1 : Form
     }
 
     //
-    // Métodos y variables de instancia
+    // MÃ©todos y variables de instancia
     //
 
     private bool inicializando = true;
@@ -246,7 +246,7 @@ public partial class Form1 : Form
         //{
         //    if (FormAnalizaEmail.Current != null && FormAnalizaEmail.Current.IsDisposed == false)
         //    {
-        //        var ret = MessageBox.Show($"La ventana de analizar mails está abierta.{CrLf}¿Quieres cerrar todas las ventanas abiertas?", 
+        //        var ret = MessageBox.Show($"La ventana de analizar mails estÃ¡ abierta.{CrLf}Â¿Quieres cerrar todas las ventanas abiertas?", 
         //                                  "Cerrar la ventana principal", 
         //                                  MessageBoxButtons.YesNo, MessageBoxIcon.Question);
         //        if (ret != DialogResult.Yes)
@@ -269,11 +269,11 @@ public partial class Form1 : Form
         //LvwSinEmail.Columns[1].Width = w;
         AsignarColumnasLvw(LvwSinEmail, asignarColumnas: false);
 
-        // Ajustar el tamaño de MañanaEs y HoyEs.           (02/sep/23 19.20)
+        // Ajustar el tamaÃ±o de MaÃ±anaEs y HoyEs.           (02/sep/23 19.20)
         int w = (GrbOpcionesFecha.ClientSize.Width - 30) / 2;
-        BtnMañanaEs.Width = w;
+        BtnMaÃ±anaEs.Width = w;
         BtnHoyEs.Width = w;
-        BtnHoyEs.Left = BtnMañanaEs.Left + w + 12;
+        BtnHoyEs.Left = BtnMaÃ±anaEs.Left + w + 12;
 
         BtnReservasSinSalida.Width = w;
         BtnMostrarReservas.Width = w;
@@ -306,7 +306,7 @@ public partial class Form1 : Form
 
     private void HabilitarBotones(bool habilitar)
     {
-        BtnMañanaEs.Enabled = habilitar;
+        BtnMaÃ±anaEs.Enabled = habilitar;
         BtnHoyEs.Enabled = habilitar;
         BtnAlerta1.Enabled = habilitar;
         BtnAlerta2.Enabled = habilitar;
@@ -335,7 +335,7 @@ public partial class Form1 : Form
         FormAnalizaEmail.Current.Focus();
     }
 
-    private void BtnMañanaEs_Click(object sender, EventArgs e)
+    private void BtnMaÃ±anaEs_Click(object sender, EventArgs e)
     {
         DateTime fecha = DateTimePickerGYG.Value.Date;
         DialogResult ret;
@@ -343,19 +343,19 @@ public partial class Form1 : Form
         // Comprobar que la fecha no sea hoy.               (27/ago/23 14.11)
         if (fecha.Date == DateTime.Today)
         {
-            MessageBox.Show("No se pueden mandar el mensaje MANAÑA ES EL DÍA a las reservas de HOY." + CrLf + CrLf +
-                            $"Has indicado mandar el mensaje MAÑANA es el día a las reservas de hoy {fecha.Date:dddd dd/MM/yyyy}" + CrLf +
-                            "Debes elegir la opción HOY en el día para mandar en el mismo día de la actividad." + CrLf +
+            MessageBox.Show("No se pueden mandar el mensaje MANAÃ‘A ES EL DÃA a las reservas de HOY." + CrLf + CrLf +
+                            $"Has indicado mandar el mensaje MAÃ‘ANA es el dÃ­a a las reservas de hoy {fecha.Date:dddd dd/MM/yyyy}" + CrLf +
+                            "Debes elegir la opciÃ³n HOY en el dÃ­a para mandar en el mismo dÃ­a de la actividad." + CrLf +
                             "O bien cambiar la fecha seleccionada.",
-                            "Mandar recordatorio de que MAÑANA es el día", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                            "Mandar recordatorio de que MAÃ‘ANA es el dÃ­a", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
             DateTimePickerGYG.Focus();
             return;
         }
 
-        ret = MessageBox.Show($"¿Quieres mandar el mensaje de 'Mañana es el día' a las reservas del {fecha.Date:dddd dd/MM/yyyy}?" + CrLf +
-                              "Pulsa SÍ para mandar el mensaje de MAÑANA ES EL DÍA a las reservas de esa fecha." + CrLf +
+        ret = MessageBox.Show($"Â¿Quieres mandar el mensaje de 'MaÃ±ana es el dÃ­a' a las reservas del {fecha.Date:dddd dd/MM/yyyy}?" + CrLf +
+                              "Pulsa SÃ para mandar el mensaje de MAÃ‘ANA ES EL DÃA a las reservas de esa fecha." + CrLf +
                               $"Pulsa NO no mandar nada y seleccionar otra fecha.",
-                              "Mandar recordatorio de que MAÑANA es el día", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                              "Mandar recordatorio de que MAÃ‘ANA es el dÃ­a", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
         if (ret == DialogResult.No)
         {
             DateTimePickerGYG.Focus();
@@ -365,14 +365,14 @@ public partial class Form1 : Form
 
         // Comprobar que todos tengan email.                (24/ago/23 04.41)
         //string res = ComprobarEmails(fecha);
-        // Usando la nueva función.                         (27/ago/23 17.26)
+        // Usando la nueva funciÃ³n.                         (27/ago/23 17.26)
         var res = ComprobarEmailsReservas(fecha, LvwSinEmail, ChkConAlquileres.Checked);
 
         if (res > 0)
         {
             LabelInfoListView.Text = $"Hay {res} {res.Plural("reserva")} del {fecha:dddd dd/MM/yyyy} sin emails.";
             MessageBox.Show($"Hay {res} {res.Plural("reserva")} del {fecha:dddd dd/MM/yyyy} sin emails.{CrLf}No se puede continuar hasta que lo soluciones.",
-                            "Mandar recordatorio de que MAÑANA es el día", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            "Mandar recordatorio de que MAÃ‘ANA es el dÃ­a", MessageBoxButtons.OK, MessageBoxIcon.Error);
             return;
         }
         else
@@ -381,10 +381,10 @@ public partial class Form1 : Form
         }
 
         //var lisRes = Reservas.TablaCol($"SELECT * FROM Reservas Where idDistribuidor=10 and Activa=1 and CanceladaCliente=0 and Confirmada=1 and FechaActividad ='{fecha:yyyy-MM-dd}' ORDER By FechaActividad, HoraActividad");
-        // Mañana es el día no se manda a las canceladas.   (10/sep/23 02.07)
+        // MaÃ±ana es el dÃ­a no se manda a las canceladas.   (10/sep/23 02.07)
         var lisRes = ApiReservasMailGYG.MailGYG.DatosReservas(fecha, new TimeSpan(0, 0, 0), ChkConAlquileres.Checked, conCanceladas: false);
         if (MessageBox.Show($"Se va a madar el mensaje a {lisRes.Count} {lisRes.Count.Plural("reserva")}",
-                             "Mandar recordatorio de que MAÑANA es el día", MessageBoxButtons.OKCancel, MessageBoxIcon.Question) == DialogResult.Cancel)
+                             "Mandar recordatorio de que MAÃ‘ANA es el dÃ­a", MessageBoxButtons.OKCancel, MessageBoxIcon.Question) == DialogResult.Cancel)
         {
             return;
         }
@@ -406,16 +406,16 @@ public partial class Form1 : Form
 
         StringBuilder sb = new StringBuilder();
         sb.Append("");
-        sb.Append(Properties.Resources.Mañana_es_el_dia.Replace(CrLf, "<br/>"));
+        sb.Append(Properties.Resources.MaÃ±ana_es_el_dia.Replace(CrLf, "<br/>"));
         sb.Append("<br/>");
         sb.Append("<br/>");
-        // No tenía los cambios de línea, añado el teléfono (08/sep/23 13.55)
+        // No tenÃ­a los cambios de lÃ­nea, aÃ±ado el telÃ©fono (08/sep/23 13.55)
         sb.Append("Kayak Makarena<br/>");
         sb.Append("WhatsApp: +34 645 76 16 89<br/>");
         sb.Append("https://kayakmakarena.com<br/>");
 
         string body = sb.ToString().Replace(CrLf, "<br/>");
-        var msg = ApiReservasMailGYG.MailGYG.EnviarMensaje(colPara, "Mañana es el día / Tomorrow is the day", body, true);
+        var msg = ApiReservasMailGYG.MailGYG.EnviarMensaje(colPara, "MaÃ±ana es el dÃ­a / Tomorrow is the day", body, true);
         if (msg.StartsWith("ERROR"))
         {
             MessageBox.Show($"ERROR al enviar el email:{CrLf}{msg}.", "Error al enviar el email de la reserva", MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -432,17 +432,17 @@ public partial class Form1 : Form
         DateTime fecha = DateTimePickerGYG.Value.Date;
         DialogResult ret;
 
-        // Cambiar el orden de la comprobación.             (27/ago/23 13.22)
-        // Doble comprobación                               (25/ago/23 14.12)
-        // Si es el mismo día de la actividad... avisar que no se debe mandar salvo si es de madrugada
+        // Cambiar el orden de la comprobaciÃ³n.             (27/ago/23 13.22)
+        // Doble comprobaciÃ³n                               (25/ago/23 14.12)
+        // Si es el mismo dÃ­a de la actividad... avisar que no se debe mandar salvo si es de madrugada
         if (DateTime.Today == fecha.Date && DateTime.Now.TimeOfDay.Hours > 8)
         {
-            ret = MessageBox.Show($"Los mensajes de 'Hoy es el día' para las reservas del {fecha.Date:dddd dd/MM/yyyy}" + CrLf +
-                                  "Solo se deben mandar en el mismo día si es antes de las 08:00." + CrLf + CrLf +
-                                  $"AHORA SON LAS {DateTime.Now:HH:mm} Y NO DEBERÍAS MANDARLAS." + CrLf + CrLf +
+            ret = MessageBox.Show($"Los mensajes de 'Hoy es el dÃ­a' para las reservas del {fecha.Date:dddd dd/MM/yyyy}" + CrLf +
+                                  "Solo se deben mandar en el mismo dÃ­a si es antes de las 08:00." + CrLf + CrLf +
+                                  $"AHORA SON LAS {DateTime.Now:HH:mm} Y NO DEBERÃAS MANDARLAS." + CrLf + CrLf +
                                   "Pulsa ACEPTAR para mandar los mensajes." + CrLf +
                                   $"Pulsa CANCELAR para no mandar nada y/o seleccionar otra fecha.",
-                                  "Mandar recordatorio de que hoy es el día",
+                                  "Mandar recordatorio de que hoy es el dÃ­a",
                                   MessageBoxButtons.OKCancel, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2);
             if (ret == DialogResult.Cancel)
             {
@@ -451,11 +451,11 @@ public partial class Form1 : Form
             }
         }
 
-        // Segundo aviso, sin más comprobaciones.
-        ret = MessageBox.Show($"¿Quieres mandar el mensaje de 'Hoy es el día' a las reservas del {fecha.Date:dddd dd/MM/yyyy}?" + CrLf +
-                              "Pulsa SÍ para mandar el mensaje a las reservas de esa fecha." + CrLf +
+        // Segundo aviso, sin mÃ¡s comprobaciones.
+        ret = MessageBox.Show($"Â¿Quieres mandar el mensaje de 'Hoy es el dÃ­a' a las reservas del {fecha.Date:dddd dd/MM/yyyy}?" + CrLf +
+                              "Pulsa SÃ para mandar el mensaje a las reservas de esa fecha." + CrLf +
                               $"Pulsa NO no mandar nada y seleccionar otra fecha.",
-                              "Mandar recordatorio de que hoy es el día", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                              "Mandar recordatorio de que hoy es el dÃ­a", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
         if (ret == DialogResult.No)
         {
             DateTimePickerGYG.Focus();
@@ -464,14 +464,14 @@ public partial class Form1 : Form
 
 
         // Comprobar que todos tengan email.                (24/ago/23 04.41)
-        // Usando la nueva función.                         (27/ago/23 17.26)
+        // Usando la nueva funciÃ³n.                         (27/ago/23 17.26)
         var res = ComprobarEmailsReservas(fecha, LvwSinEmail, ChkConAlquileres.Checked);
 
         if (res > 0)
         {
             LabelInfoListView.Text = $"Hay {res} {res.Plural("reserva")} del {fecha:dddd dd/MM/yyyy} sin emails.";
             MessageBox.Show($"Hay {res} {res.Plural("reserva")} del {fecha:dddd dd/MM/yyyy} sin emails:{CrLf}No se puede continuar hasta que lo soluciones.",
-                            "Mandar recordatorio de que hoy es el día", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            "Mandar recordatorio de que hoy es el dÃ­a", MessageBoxButtons.OK, MessageBoxIcon.Error);
             return;
         }
         else
@@ -480,10 +480,10 @@ public partial class Form1 : Form
         }
 
         //var lisRes = Reservas.TablaCol($"SELECT * FROM Reservas Where idDistribuidor=10 and Activa=1 and CanceladaCliente=0 and Confirmada=1 and FechaActividad ='{fecha:yyyy-MM-dd}' ORDER By FechaActividad, HoraActividad");
-        // En hoy es el día no se usan las canceladas.      (10/sep/23 02.04)
+        // En hoy es el dÃ­a no se usan las canceladas.      (10/sep/23 02.04)
         var lisRes = ApiReservasMailGYG.MailGYG.DatosReservas(fecha, new TimeSpan(0, 0, 0), ChkConAlquileres.Checked, conCanceladas: false);
         if (MessageBox.Show($"Se va a mandar el mensaje a {lisRes.Count} {lisRes.Count.Plural("reserva")}",
-                             "Mandar recordatorio de que hoy es el día", MessageBoxButtons.OKCancel, MessageBoxIcon.Question) == DialogResult.Cancel)
+                             "Mandar recordatorio de que hoy es el dÃ­a", MessageBoxButtons.OKCancel, MessageBoxIcon.Question) == DialogResult.Cancel)
         {
             return;
         }
@@ -508,13 +508,13 @@ public partial class Form1 : Form
         sb.Append(Properties.Resources.Hoy_es_el_dia_txt.Replace(CrLf, "<br/>"));
         sb.Append("<br/>");
         sb.Append("<br/>");
-        // No tenía los cambios de línea, añado el teléfono (08/sep/23 13.55)
+        // No tenÃ­a los cambios de lÃ­nea, aÃ±ado el telÃ©fono (08/sep/23 13.55)
         sb.Append("Kayak Makarena<br/>");
         sb.Append("WhatsApp: +34 645 76 16 89<br/>");
         sb.Append("https://kayakmakarena.com<br/>");
 
         string body = sb.ToString().Replace(CrLf, "<br/>");
-        var msg = MailGYG.EnviarMensaje(colPara, "Hoy es el día / Today is the day", body, true);
+        var msg = MailGYG.EnviarMensaje(colPara, "Hoy es el dÃ­a / Today is the day", body, true);
         if (msg.StartsWith("ERROR"))
         {
             MessageBox.Show($"ERROR al enviar el email:{CrLf}{msg}.", "Error al enviar el email de la reserva", MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -587,8 +587,8 @@ public partial class Form1 : Form
         var fecha = DateTimePickerGYG.Value.Date;
 
         List<ApiReservasMailGYG.ReservasGYG> col;
-        // Mostrar reservas usa el parámetro ConCanceladas. (10/sep/23 02.09)
-        // Aquí se debe comprobar si se quieren mostrar solo las canceladas.
+        // Mostrar reservas usa el parÃ¡metro ConCanceladas. (10/sep/23 02.09)
+        // AquÃ­ se debe comprobar si se quieren mostrar solo las canceladas.
         if (ChkSoloCanceladas.Checked)
         {
             col = ApiReservasMailGYG.MailGYG.DatosReservasCanceladas(fecha, new TimeSpan(0, 0, 0), ChkConAlquileres.Checked);
@@ -630,9 +630,9 @@ public partial class Form1 : Form
     }
 
     /// <summary>
-    /// Enviar el mensaje de alerta indicado en el parámetro, valores válidos: 1, 2 o 3.
+    /// Enviar el mensaje de alerta indicado en el parÃ¡metro, valores vÃ¡lidos: 1, 2 o 3.
     /// </summary>
-    /// <param name="alerta">Número de la alerta (1, 2 3)</param>
+    /// <param name="alerta">NÃºmero de la alerta (1, 2 3)</param>
     private void EnviarAlerta(int alerta)
     {
         if (alerta < 1 || alerta > 3) alerta = 1;
@@ -640,8 +640,8 @@ public partial class Form1 : Form
         DateTime fecha = DateTimePickerGYG.Value.Date;
         DialogResult ret;
 
-        ret = MessageBox.Show($"¿Quieres mandar el mensaje de 'Alerta {alerta}' a las reservas del {fecha.Date:dddd dd/MM/yyyy}?" + CrLf +
-                              $"Pulsa SÍ para mandar el mensaje de ALERTA {alerta} a las reservas de esa fecha." + CrLf +
+        ret = MessageBox.Show($"Â¿Quieres mandar el mensaje de 'Alerta {alerta}' a las reservas del {fecha.Date:dddd dd/MM/yyyy}?" + CrLf +
+                              $"Pulsa SÃ para mandar el mensaje de ALERTA {alerta} a las reservas de esa fecha." + CrLf +
                               $"Pulsa NO no mandar nada y seleccionar otra fecha.",
                               $"Mandar aviso de Alerta {alerta}", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
         if (ret == DialogResult.No)
@@ -652,7 +652,7 @@ public partial class Form1 : Form
 
 
         // Comprobar que todos tengan email.                (24/ago/23 04.41)
-        // Usando la nueva función.                         (27/ago/23 17.26)
+        // Usando la nueva funciÃ³n.                         (27/ago/23 17.26)
         var res = ComprobarEmailsReservas(fecha, LvwSinEmail, ChkConAlquileres.Checked);
         if (res > 0)
         {
@@ -703,12 +703,12 @@ public partial class Form1 : Form
         sb.Append("<br/>");
         //sb.Append("Kayak Makarena");
         //sb.Append("https://kayakmakarena.com");
-        // No tenía los cambios de línea, añado el teléfono (08/sep/23 13.55)
+        // No tenÃ­a los cambios de lÃ­nea, aÃ±ado el telÃ©fono (08/sep/23 13.55)
         sb.Append("Kayak Makarena<br/>");
         sb.Append("WhatsApp: +34 645 76 16 89<br/>");
         sb.Append("https://kayakmakarena.com<br/>");
 
-        // La fecha en español e inglés.                    (02/sep/23 21.05)
+        // La fecha en espaÃ±ol e inglÃ©s.                    (02/sep/23 21.05)
         var fechaES = $"{fecha.Date.ToString("dddd dd/MM/yyyy", System.Globalization.CultureInfo.CreateSpecificCulture("es-ES"))}";
         var fechaEN = $"{fecha.Date.ToString("dddd dd/MM/yyyy", System.Globalization.CultureInfo.CreateSpecificCulture("en-US"))}";
 

@@ -5,9 +5,9 @@
         <ProduceReferenceAssembly>true</ProduceReferenceAssembly>
         <ProduceReferenceAssemblyInOutDir>true</ProduceReferenceAssemblyInOutDir>
         <Title>ReservasGYG Movil</Title>
-        <Version>1.0.39</Version>
-        <AssemblyVersion>1.0.39.0</AssemblyVersion>
-        <FileVersion>1.0.39.0</FileVersion>
+        <Version>1.0.40</Version>
+        <AssemblyVersion>1.0.40.0</AssemblyVersion>
+        <FileVersion>1.0.40.0</FileVersion>
         <Authors>gSoft (elguille.nfo)</Authors>
         <Product>ReservasGYG Movil</Product>
         <Description>Aplicación móvil para gestionar las reservas de GetYourGuide para MKN Reservas  (revisión del 16-sep-2023)</Description>
@@ -51,6 +51,7 @@
         <None Remove="Resources\GYG_logo_blanco90x90.png" />
         <None Remove="Resources\GYG_logo_naranja_265x265.png" />
         <None Remove="Resources\Hoy_es_el_dia.txt" />
+        <None Remove="Resources\IMPORTANTE_ALQUILER.txt" />
         <None Remove="Resources\IMPORTANTE_EN.txt" />
         <None Remove="Resources\IMPORTANTE_EN_09_30.txt" />
         <None Remove="Resources\IMPORTANTE_EN_10_30_11_00.txt" />
@@ -71,6 +72,7 @@
         <EmbeddedResource Include="Resources\GYG_logo_blanco90x90.png" />
         <EmbeddedResource Include="Resources\GYG_logo_naranja_265x265.png" />
         <EmbeddedResource Include="Resources\Hoy_es_el_dia.txt" />
+        <EmbeddedResource Include="Resources\IMPORTANTE_ALQUILER.txt" />
         <EmbeddedResource Include="Resources\IMPORTANTE_EN_09_30.txt" />
         <EmbeddedResource Include="Resources\IMPORTANTE_EN_10_30_11_00.txt" />
         <EmbeddedResource Include="Resources\IMPORTANTE_EN.txt" />

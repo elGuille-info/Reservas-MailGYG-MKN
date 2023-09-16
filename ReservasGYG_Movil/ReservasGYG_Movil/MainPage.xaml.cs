@@ -166,7 +166,7 @@ namespace ReservasGYG_Movil
                 bool ret;
                 if (LaReserva.Adultos < 2)
                 {
-                    ret = await DisplayAlert("Nueva reserva de alquiler", 
+                    ret = await DisplayAlert("Nueva reserva de alquiler",
                                              "Es un alquiler para menos de 2 pax (adultos o menores mayor de 6 años)." + CrLf +
                                              "NO se debe aceptar esta reserva." + CrLf + CrLf +
                                              "Hay que contactar con el cliente por wasap y email y avisarle que el mínimo es 2 personas de 7 años o más." + CrLf + CrLf +
@@ -194,7 +194,7 @@ namespace ReservasGYG_Movil
                 {
                     await DisplayAlert("Analizar email de GYG",
                                        "¡ATENCIÓN! La reserva no incluye ningún adulto." + CrLf +
-                                       "Habría que avisar al cliente de que se debe incluir al menos un adulto.", 
+                                       "Habría que avisar al cliente de que se debe incluir al menos un adulto.",
                                        "Aceptar");
                 }
             }
@@ -204,7 +204,7 @@ namespace ReservasGYG_Movil
             {
                 await DisplayAlert("Analizar email de GYG",
                                    "El texto de la reserva se ha tomado desde la página Bookings." + CrLf +
-                                   "Comprueba que los datos son correctos antes de guardar y enviar el mensaje.", 
+                                   "Comprueba que los datos son correctos antes de guardar y enviar el mensaje.",
                                    "Aceptar");
             }
 
@@ -291,7 +291,7 @@ namespace ReservasGYG_Movil
             {
                 await DisplayAlert("No hay reserva",
                                    "No existe la reserva a modificar:" + CrLf +
-                                   $"Booking: '{LaReserva.GYGReference}'", 
+                                   $"Booking: '{LaReserva.GYGReference}'",
                                    "Aceptar");
                 return true;
             }
@@ -308,7 +308,7 @@ namespace ReservasGYG_Movil
                     await DisplayAlert("No hay producto",
                                        "El producto de la reserva no existe:" + CrLf +
                                        $"ID producto: '{re.idProducto}'" + CrLf +
-                                       $"Actividad: {re.ActividadMostrar} {re.FechaActividad:dd/MM/yyyy} {re.HoraActividad:hh\\:mm}", 
+                                       $"Actividad: {re.ActividadMostrar} {re.FechaActividad:dd/MM/yyyy} {re.HoraActividad:hh\\:mm}",
                                        "Aceptar");
                     return true;
                 }
@@ -334,7 +334,7 @@ namespace ReservasGYG_Movil
                                              "El número de participantes no coincide con el de la reserva original:" + CrLf +
                                              $"Antes: {re.TotalPax()}, ahora: '{LaReserva.Adultos}'" + CrLf +
                                              "Pulsa SÍ para usar los pax nuevos (se pondrán todos como adultos)." + CrLf +
-                                             "Pulsa NO para dejar los pax que ya había.", 
+                                             "Pulsa NO para dejar los pax que ya había.",
                                              "Sí", "No");
                 if (ret)
                 {
@@ -377,7 +377,7 @@ namespace ReservasGYG_Movil
             {
                 await DisplayAlert("No hay reserva",
                                    "No existe la reserva a cancelar:" + CrLf +
-                                   $"Booking: '{LaReserva.GYGReference}'", 
+                                   $"Booking: '{LaReserva.GYGReference}'",
                                    "Aceptar");
                 return true;
             }
@@ -398,7 +398,7 @@ namespace ReservasGYG_Movil
                     await DisplayAlert("No hay producto",
                                        "El producto de la reserva no existe:" + CrLf +
                                        $"ID producto: '{re.idProducto}'" + CrLf +
-                                       $"Actividad: {re.ActividadMostrar} {re.FechaActividad:dd/MM/yyyy} {re.HoraActividad:hh\\:mm}", 
+                                       $"Actividad: {re.ActividadMostrar} {re.FechaActividad:dd/MM/yyyy} {re.HoraActividad:hh\\:mm}",
                                        "Aceptar");
                     return true;
                 }
@@ -587,52 +587,107 @@ namespace ReservasGYG_Movil
             var DatosVPWiz = new MKNUtilidades.VentasPlayaWiz(re);
             MKNUtilidades.VentasPlayaWiz.IncluirReportajeConfirmarReserva = false;
             MKNUtilidades.VentasPlayaWiz.IncluirTextosConfirmarReserva = false;
-            bool enIngles = re.GYGLanguage.Contains("English");
-
-            sb.Append(DatosVPWiz.ResumenReserva(esWeb: false, enIngles: enIngles));
-            sb.AppendLine();
-            sb.AppendLine();
-
-            // Mandar el texto según el idioma.             (22/ago/23 10.58)
-            if (re.HoraActividad.Hours == 9)
+            bool enIngles = false; // = re.GYGLanguage.Contains("English");
+            if (string.IsNullOrEmpty(re.GYGLanguage) == false)
             {
-                if (enIngles)
-                {
-                    sb.Append(await MainPage.LeerAsset("IMPORTANTE_EN_09_30.txt"));
-                }
-                else
-                {
-                    sb.Append(await MainPage.LeerAsset("IMPORTANTE_ES_09_30.txt"));
-                }
+                enIngles = re.GYGLanguage.Contains("English");
             }
-            else if (re.HoraActividad.Hours == 10 || re.HoraActividad == new TimeSpan(11, 0, 0))
+
+            string asunto;
+            // Mandar el mensaje según sea modificar, cancelar o nueva. (09/sep/23 01.55)
+            if (LaReserva.GYGTipo == Reservas.GYGTipos.Cancelada)
             {
                 if (enIngles)
                 {
-                    sb.Append(await MainPage.LeerAsset("IMPORTANTE_EN_10_30_11_00.txt"));
+                    asunto = $"Booking cancelled - {re.GYGReference}";
                 }
                 else
                 {
-                    sb.Append(await MainPage.LeerAsset("IMPORTANTE_ES_10_30_11_00.txt"));
+                    asunto = $"Reserva cancelada - {re.GYGReference}";
                 }
+
+                sb.AppendLine("Reserva cancelada // Booking cancelled.");
+                sb.AppendLine();
+                sb.AppendLine($"GetYourGuide Booking # {re.GYGReference}");
+                sb.AppendLine($"{re.ActividadMostrar} {re.FechaActividad:dd/MM/yyyy} {re.HoraActividad:hh\\:mm}");
+                sb.AppendLine();
+                sb.AppendLine($"Número de reserva MKN: {re.ID:#,###}");
+                //sb.AppendLine();
+                sb.AppendLine();
             }
             else
             {
-                if (enIngles)
+                if (LaReserva.GYGTipo == Reservas.GYGTipos.Modificada)
                 {
-                    sb.Append(await MainPage.LeerAsset("IMPORTANTE_EN.txt"));
+                    if (enIngles)
+                    {
+                        asunto = $"Booking changed - {re.GYGReference}";
+                    }
+                    else
+                    {
+                        asunto = $"Modificación reserva - {re.GYGReference}";
+                    }
                 }
                 else
                 {
-                    sb.Append(await MainPage.LeerAsset("IMPORTANTE_ES.txt"));
-                    //sb.Append(await MainPage.LeerAsset("IMPORTANTE_ES.rtf"));
+                    if (enIngles)
+                    {
+                        asunto = $"Booking confirmation - {re.GYGReference}";
+                    }
+                    else
+                    {
+                        asunto = $"Confirmación reserva - {re.GYGReference}";
+                    }
                 }
-            }
 
-            // Si es para el mismo día de la actividad.         (24/ago/23 06.24)
-            if (DateTime.Today == re.FechaActividad)
-            {
-                //sb.Append("<br/>");
+                sb.Append(DatosVPWiz.ResumenReserva(esWeb: false, enIngles: enIngles));
+                sb.AppendLine();
+                sb.AppendLine();
+
+                // Para alquiler, mandar otro texto diferente.  (09/sep/23 22.08)
+                if (KNDatos.BaseKayak.ActividadesAlquiler().Contains(re.Actividad))
+                {
+                    sb.Append(await MainPage.LeerAsset("IMPORTANTE_ALQUILER.txt"));
+                }
+                else
+                {
+                    // Mandar el texto según el idioma.             (22/ago/23 10.58)
+                    if (re.HoraActividad.Hours == 9)
+                    {
+                        if (enIngles)
+                        {
+                            sb.Append(await MainPage.LeerAsset("IMPORTANTE_EN_09_30.txt"));
+                        }
+                        else
+                        {
+                            sb.Append(await MainPage.LeerAsset("IMPORTANTE_ES_09_30.txt"));
+                        }
+                    }
+                    else if (re.HoraActividad.Hours == 10 || re.HoraActividad == new TimeSpan(11, 0, 0))
+                    {
+                        if (enIngles)
+                        {
+                            sb.Append(await MainPage.LeerAsset("IMPORTANTE_EN_10_30_11_00.txt"));
+                        }
+                        else
+                        {
+                            sb.Append(await MainPage.LeerAsset("IMPORTANTE_ES_10_30_11_00.txt"));
+                        }
+                    }
+                    else
+                    {
+                        if (enIngles)
+                        {
+                            sb.Append(await MainPage.LeerAsset("IMPORTANTE_EN.txt"));
+                        }
+                        else
+                        {
+                            sb.Append(await MainPage.LeerAsset("IMPORTANTE_ES.txt"));
+                        }
+                    }
+                }
+                // Indicar siempre que hagan la reseña.     (16/sep/23 22.44)
+                sb.AppendLine();
                 sb.AppendLine();
                 if (enIngles)
                 {
@@ -642,22 +697,22 @@ namespace ReservasGYG_Movil
                 {
                     sb.Append("Nos encantaría recibir una reseña en el sitio de GetYourGuide con tu opinión sobre esta actividad, teniendo en cuenta que <b>Kayak Makarena</b> es la encargada de gestionar las reservas y <b>Maro - Kayak Nerja</b> realiza las rutas.");
                 }
-                sb.AppendLine();
             }
 
             sb.AppendLine();
             sb.AppendLine();
-            //sb.Append("<br/>");
-            //sb.Append("<br/>");
-            sb.Append("Kayak Makarena");
+            sb.AppendLine("Kayak Makarena");
+            if (enIngles)
+            {
+                sb.AppendLine("iMessage / WhatsApp: +34 645 76 16 89 (Please, only WhatsApp messages or calls as I usually don't have coverage)");
+            }
+            else
+            {
+                sb.AppendLine("iMessage / WhatsApp: +34 645 76 16 89 (Por favor, solo mensajes o llamadas por wasap ya que no suelo tener cobertura)");
+            }
+            sb.AppendLine("https://kayakmakarena.com");
 
-            //var asunto = $"Booking - S271506 - {re.GYGReference}";
-            //var para = re.Email;
-            ////string body = sb.ToString().Replace(CrLf, "<br/>");
-            ////var msg = ApiReservasMailGYG.MailGYG.EnviarMensaje(para, asunto, body, true);
-            //string body = sb.ToString();
-
-            LabelAsuntoEmail.Text = $"Booking - S271506 - {re.GYGReference}";
+            LabelAsuntoEmail.Text = asunto; // $"Booking - S271506 - {re.GYGReference}";
             LabelParaEmail.Text = re.Email;
             TxtTextoEmail.Text = sb.ToString();
 
