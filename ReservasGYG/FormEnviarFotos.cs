@@ -484,30 +484,6 @@ https://photos.app.goo.gl/qqxWBkVthdBGMjFEA
     /// <param name="conAlertas"></param>
     private bool ComprobarHorasFotosReservas(DateTime fecha, bool conAlertas)
     {
-        //StringBuilder sb = new StringBuilder();
-        //sb.Append("Select * from Reservas ");
-        //sb.Append("where Activa = 1 and CanceladaCliente = 0 and idDistribuidor = 10 ");
-        //// Solo las reservas confirmadas, por si las moscas (01/sep/23 19.49)
-        //sb.Append($"and Confirmada = 1 ");
-        //// Solo las rutas                                   (01/sep/23 21.15)
-        //sb.Append($"and Actividad like 'ruta%' ");
-        //sb.Append($"and FechaActividad = '{fecha:yyyy-MM-dd}' ");
-        //sb.Append("order by FechaActividad, HoraActividad, ID");
-
-        //var colRes = Reservas.TablaCol(sb.ToString());
-
-        //// Crear una lista de reservas para el listview
-        //List<ApiReservasMailGYG.ReservasGYG> col = new();
-
-        //if (colRes.Count > 0)
-        //{
-        //    for (int i = 0; i < colRes.Count; i++)
-        //    {
-        //        col.Add(new ApiReservasMailGYG.ReservasGYG(colRes[i]));
-        //    }
-        //}
-        //Form1.AsignarListView(col, LvwSinEmail);
-
         // No se mandan las fotos a las canceladas.         (10/sep/23 02.06)
         var col = ApiReservasMailGYG.MailGYG.DatosReservas(fecha, new TimeSpan(0, 0, 0), conAlquileres: false, conCanceladas: false);
         Form1.AsignarListView(col, LvwSinEmail);
@@ -515,14 +491,6 @@ https://photos.app.goo.gl/qqxWBkVthdBGMjFEA
         // Extraer las reservas de cada hora
         var hora = new TimeSpan(0, 0, 0);
         List<string> listHoras = new List<string>();
-        //for (int i = 0; i < colRes.Count; i++)
-        //{
-        //    if (colRes[i].HoraActividad != hora)
-        //    {
-        //        hora = colRes[i].HoraActividad;
-        //        listHoras.Add($"{colRes[i].HoraActividad:hh\\:mm}");
-        //    }
-        //}
         for (int i = 0; i < col.Count; i++)
         {
             if (col[i].Hora != hora)
