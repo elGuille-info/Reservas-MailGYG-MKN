@@ -26,18 +26,18 @@ public partial class Form1 : Form
 
     // Intentar no pasar de estas marcas: 60 caracteres. 2         3         4         5         6
     //                                ---------|---------|---------|---------|---------|---------|
-    //[COPIAR]AppDescripcionCopia = " copiar cr y nombre en titulo"
+    //[COPIAR]AppDescripcionCopia = " cambiar orden columnas listView"
     // BuscarClientes mostrar reservas en la pagina
 
     /// <summary>
     /// La versión de la aplicación.
     /// </summary>
-    public static string AppVersion { get; } = "1.0.37";
+    public static string AppVersion { get; } = "1.0.38";
 
     /// <summary>
     /// La versión del fichero (la revisión)
     /// </summary>
-    public static string AppFileVersion { get; } = "1.0.37.0";
+    public static string AppFileVersion { get; } = "1.0.38.0";
 
     /// <summary>
     /// La fecha de última actualización
@@ -69,14 +69,20 @@ public partial class Form1 : Form
             }
         }
 
+        //   0          1         2           3          4      5            6           7           8          9         10       11
+        //{ "Booking", "Nombre", "Teléfono", "Reserva", "PAX", "Cancelada", "H.Salida", "H.Vuelta", "Control", "Vuelta", "Email", "Notas" };
         LvwSinEmail.Columns[0].Width = 160; // booking
         LvwSinEmail.Columns[1].Width = 400; // Nombre
         LvwSinEmail.Columns[2].Width = 150; // Teléfono
         LvwSinEmail.Columns[3].Width = 260; // Reserva
         LvwSinEmail.Columns[4].Width = 160; // pax
-        LvwSinEmail.Columns[5].Width = 300; // Email
-        LvwSinEmail.Columns[6].Width = 300; // Notas
-        LvwSinEmail.Columns[7].Width = 100; // Cancelada
+        LvwSinEmail.Columns[10].Width = 300; // Email
+        LvwSinEmail.Columns[11].Width = 500; // Notas
+        LvwSinEmail.Columns[5].Width = 96; // Cancelada
+        LvwSinEmail.Columns[6].Width = 80; // H.Salida
+        LvwSinEmail.Columns[7].Width = 80; // H.Vuelta
+        LvwSinEmail.Columns[8].Width = 76; // Control
+        LvwSinEmail.Columns[9].Width = 64; // Vuelta
     }
 
     /// <summary>
@@ -107,27 +113,30 @@ public partial class Form1 : Form
     {
         if (LvwSinEmail.SelectedIndices.Count == 0) return;
 
+        // Comprobar que no sea nulo.                       (16/sep/23 17.29)
+        if (sender == null) return;
+
         if (sender is not ToolStripMenuItem mnu) return;
 
         // Los nombres de los menús contextuales:
         // MnuCopiarBooking, MnuCopiarNombre, MnuCopiarTelefono, MnuCopiarReserva, MnuCopiarPax, MnuCopiarEmail, MnuCopiarNotas, MnuCopiarTodo, MnuCopiarTodoConCr
         // Las columnas:
-        // "Booking", "Nombre", "Teléfono", "Reserva", "PAX", "Email", "Notas", "Cancelada"
+        //{ "Booking", "Nombre", "Teléfono", "Reserva", "PAX", "Cancelada", "H.Salida", "H.Vuelta", "Control", "Vuelta", "Email", "Notas" };
 
         int copiarTodo = 99;
-        int index = -1;
-        if (mnu.Name == "MnuCopiarBooking") index = 0;
-        if (mnu.Name == "MnuCopiarNombre") index = 1;
-        if (mnu.Name == "MnuCopiarTelefono") index = 2;
-        if (mnu.Name == "MnuCopiarReserva") index = 3;
-        if (mnu.Name == "MnuCopiarPax") index = 4;
-        if (mnu.Name == "MnuCopiarEmail") index = 5;
-        if (mnu.Name == "MnuCopiarNotas") index = 6;
-        if (mnu.Name == "MnuCopiarTodo") index = copiarTodo;
-        if (mnu.Name == "MnuCopiarTodoConCr") index = copiarTodo + 1;
+        //int index = -1;
+        //if (mnu.Name == "MnuCopiarBooking") index = 0;
+        //if (mnu.Name == "MnuCopiarNombre") index = 1;
+        //if (mnu.Name == "MnuCopiarTelefono") index = 2;
+        //if (mnu.Name == "MnuCopiarReserva") index = 3;
+        //if (mnu.Name == "MnuCopiarPax") index = 4;
+        //if (mnu.Name == "MnuCopiarEmail") index = 5;
+        //if (mnu.Name == "MnuCopiarNotas") index = 6;
+        //if (mnu.Name == "MnuCopiarTodo") index = copiarTodo;
+        //if (mnu.Name == "MnuCopiarTodoConCr") index = copiarTodo + 1;
+
+        int index = ApiReservasMailGYG.ReservasGYG.IndexColumna(mnu.Name);
         if (index == -1) return;
-        //string texto = LvwSinEmail.Items[LvwSinEmail.SelectedIndices[0]].SubItems[index].Text;
-        //CopiarPortapapeles(texto);
 
         StringBuilder sb = new StringBuilder();
         if (index >= copiarTodo)
@@ -138,10 +147,6 @@ public partial class Form1 : Form
                 sb.Append(ApiReservasMailGYG.ReservasGYG.Columnas[i]);
                 sb.Append(": ");
                 sb.Append(it.SubItems[i].Text);
-                //if (i < it.SubItems.Count - 1)
-                //{
-                //    sb.Append("; ");
-                //}
                 // Si es copiar todo con CR,                (16/sep/23 03.20)
                 // añadir un cambio de línea.
                 // Si no, añair el punto y coma.            (16/sep/23 03.23)

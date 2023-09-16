@@ -85,7 +85,8 @@ namespace ApiReservasMailGYG
 
         // Las columnas a usar en esta clase.                   (29/ago/23 12.09)
         public static string[] Columnas { get; } =
-            { "Booking", "Nombre", "Teléfono", "Reserva", "PAX", "Email", "Notas", "Cancelada", "Control", "Vuelta", "H.Salida", "H.Vuelta" };
+            { "Booking", "Nombre", "Teléfono", "Reserva", "PAX", "Cancelada", "H.Salida", "H.Vuelta", "Control", "Vuelta", "Email", "Notas" };
+        //{ "Booking", "Nombre", "Teléfono", "Reserva", "PAX", "Email", "Notas", "Cancelada", "Control", "Vuelta", "H.Salida", "H.Vuelta" };
 
         /// <summary>
         /// Devuelve el contenido de la columna indicada.
@@ -107,6 +108,34 @@ namespace ApiReservasMailGYG
             if (columna == "h.salida") return HoraSalida.ToString("hh\\:mm");
             if (columna == "h.vuelta") return HoraVuelta.ToString("hh\\:mm");
             return "";
+        }
+
+        /// <summary>
+        /// El índice de la columna (por el nombre).
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <returns>El índice de la columna o -1 si no existe.</returns>
+        public static int IndexColumna(string mnu)
+        {
+            // Se supone que no será nulo, pero...          (16/sep/23 17.30)
+            //if (sender == null) return -1;
+
+            //var mnu = sender.GetType().Name;
+            int copiarTodo = 99;
+            int index = -1;
+            //   0          1         2           3          4      5            6           7           8          9         10       11
+            //{ "Booking", "Nombre", "Teléfono", "Reserva", "PAX", "Cancelada", "H.Salida", "H.Vuelta", "Control", "Vuelta", "Email", "Notas" };
+            if (mnu == "MnuCopiarBooking") index = 0;
+            else if (mnu == "MnuCopiarNombre") index = 1;
+            else if (mnu == "MnuCopiarTelefono") index = 2;
+            else if (mnu == "MnuCopiarReserva") index = 3;
+            else if (mnu == "MnuCopiarPax") index = 4;
+            else if (mnu == "MnuCopiarEmail") index = 10;
+            else if (mnu == "MnuCopiarNotas") index = 11;
+            else if (mnu == "MnuCopiarTodo") index = copiarTodo;
+            else if (mnu == "MnuCopiarTodoConCr") index = copiarTodo + 1;
+            //if (index == -1) return;
+            return index;
         }
 
         /// <summary>
