@@ -191,11 +191,12 @@
                             <Editor x:Name="TxtGYG" WidthRequest="540" HeightRequest="100" />
                         </StackLayout>
                     </StackLayout>
-                    <!--<StackLayout BackgroundColor="LightSteelBlue" Padding="4,2">
-                        <Label x:Name="LabelStatus" FontSize="12" TextColor="Black"
-                               HorizontalOptions="StartAndExpand" HorizontalTextAlignment="Start"
-                               Text="Información de la reserva."/>
-                    </StackLayout>-->
+                    <StackLayout Style="{StaticResource StackCampos}">
+                        <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand">
+                            <Label Text="Tipo reserva:" Style="{StaticResource LabelCampos}"/>
+                            <Editor x:Name="TxtTipo" />
+                        </StackLayout>
+                    </StackLayout>
                 </StackLayout>
             </ScrollView>
             <!-- Simular Expander -->

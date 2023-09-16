@@ -133,18 +133,85 @@ namespace ReservasGYG_Movil
             TxtReference.Text = re.GYGReference;
             TxtPais.Text = re.GYGPais;
 
+            TxtTipo.Text = re.GYGTipo.ToString();
+
             TxtGYG.Text = $"Option: {re.GYGOption}\r\nDate: {re.GYGFechaHora}\r\nPrice:{re.GYGPrice}";
             TxtID.Text = re.ID.ToString();
+
+            // Comprobar el tipo de reserva y asignar el texto  (16/sep/23 21.18)
+            // del botón crear
+            if (re.GYGTipo == Reservas.GYGTipos.Cancelada)
+            {
+                BtnCrearConEmail.Text = "Cancelar reserva y texto para email";
+            }
+            else if (re.GYGTipo == Reservas.GYGTipos.Modificada)
+            {
+                BtnCrearConEmail.Text = "Modificar reserva y texto para email";
+            }
+            else
+            {
+                BtnCrearConEmail.Text = "Crear reserva y texto para email";
+            }
 
             LabelAsuntoEmail.Text = $"Booking - S271506 - {re.GYGReference}";
             LabelParaEmail.Text = re.Email;
 
             _ = await EnviarMensajeConfirmacion();
-            
+
+            bool todoOK = true;
+
+            // Comprobar el alquiler con menos de 2 adultos.    (08/sep/23 23.51)
+            if (KNDatos.BaseKayak.ActividadesAlquiler().Contains(LaReserva.Actividad))
+            {
+                bool ret;
+                if (LaReserva.Adultos < 2)
+                {
+                    ret = await DisplayAlert("Nueva reserva de alquiler", 
+                                             "Es un alquiler para menos de 2 pax (adultos o menores mayor de 6 años)." + CrLf +
+                                             "NO se debe aceptar esta reserva." + CrLf + CrLf +
+                                             "Hay que contactar con el cliente por wasap y email y avisarle que el mínimo es 2 personas de 7 años o más." + CrLf + CrLf +
+                                             "Esta reserva hay que cancelarla." + CrLf + CrLf +
+                                             "¿Quieres continuar creando la reserva?",
+                                             "Sí", "No");
+                    todoOK = ret;
+                }
+                //else
+                //{
+                //    ret = await DisplayAlert("Nueva reserva de alquiler",
+                //                             "Es un alquiler antes de continuar comprueba que esté correcta la reserva.",
+                //                             "Aceptar", "Cancelar");
+                //    todoOK = ret;
+                //}
+                await DisplayAlert("Nueva reserva de alquiler",
+                                   "Es un alquiler, antes de continuar comprueba que esté correcta la reserva.",
+                                   "Aceptar");
+            }
+            // Solo si no es cancelar.                          (09/sep/23 03.48)
+            else if (re.GYGTipo != Reservas.GYGTipos.Cancelada)
+            {
+                // Comprobar si solo hay menores, y avisar.     (08/sep/23 23.31)
+                if (re.Adultos < 1)
+                {
+                    await DisplayAlert("Analizar email de GYG",
+                                       "¡ATENCIÓN! La reserva no incluye ningún adulto." + CrLf +
+                                       "Habría que avisar al cliente de que se debe incluir al menos un adulto.", 
+                                       "Aceptar");
+                }
+            }
+
+            // Si es desde booking avisar que revise las cosas antes de guardar.
+            if (re.GYGTipo == Reservas.GYGTipos.Booking)
+            {
+                await DisplayAlert("Analizar email de GYG",
+                                   "El texto de la reserva se ha tomado desde la página Bookings." + CrLf +
+                                   "Comprueba que los datos son correctos antes de guardar y enviar el mensaje.", 
+                                   "Aceptar");
+            }
+
             GrbTextoEmail.IsVisible = true;
             ActualizarImagenExpander();
 
-            BtnCrearConEmail.IsEnabled = true;
+            BtnCrearConEmail.IsEnabled = todoOK;
         }
 
         private async void BtnCrearConEmail_Clicked(object sender, EventArgs e)
@@ -153,7 +220,25 @@ namespace ReservasGYG_Movil
             LabelStatus.Text = "Creando la reserva...";
 
             // Si devuelve true, no continuar con el envío del email.   (26/ago/23 00.06)
-            bool res = await CrearReserva();
+            //bool res = await CrearReserva();
+
+            bool res;
+            // Comporbar si es crear, cancelar y modificar  (16/sep/23 21.41)
+            if (LaReserva.GYGTipo == Reservas.GYGTipos.Cancelada)
+            {
+                // Cancelar la reserva
+                res = await CancelarReserva();
+            }
+            else if (LaReserva.GYGTipo == Reservas.GYGTipos.Modificada)
+            {
+                // Modificar la reserva
+                res = await ModificarReserva();
+            }
+            else
+            {
+                // Crear la reserva
+                res = await CrearReserva();
+            }
 
             LabelStatus.Text = StatusAnt;
 
@@ -196,6 +281,141 @@ namespace ReservasGYG_Movil
                     btn.FontAttributes = FontAttributes.Italic;
                 }
             }
+        }
+
+        private async Task<bool> ModificarReserva()
+        {
+            // Buscar la reserva con el booking indicado.
+            var re = Reservas.Buscar($"Notas like '%{LaReserva.GYGReference}%' and activa=1");
+            if (re == null)
+            {
+                await DisplayAlert("No hay reserva",
+                                   "No existe la reserva a modificar:" + CrLf +
+                                   $"Booking: '{LaReserva.GYGReference}'", 
+                                   "Aceptar");
+                return true;
+            }
+            // Puede cambiar la fecha y hora.
+            // Puede cambiar el número de pax.
+            Producto pr;
+
+            // Actualizar el producto de la reserva original
+            if (re.idProducto != -2)
+            {
+                pr = Producto.Buscar(re.idProducto);
+                if (pr == null)
+                {
+                    await DisplayAlert("No hay producto",
+                                       "El producto de la reserva no existe:" + CrLf +
+                                       $"ID producto: '{re.idProducto}'" + CrLf +
+                                       $"Actividad: {re.ActividadMostrar} {re.FechaActividad:dd/MM/yyyy} {re.HoraActividad:hh\\:mm}", 
+                                       "Aceptar");
+                    return true;
+                }
+                pr.TotalPax -= re.TotalPax();
+                pr.Actualizar2();
+            }
+            // Buscar el producto para la nueva fecha y hora
+            pr = Producto.Buscar(LaReserva.FechaActividad, LaReserva.HoraActividad, re.Actividad);
+            if (pr == null)
+            {
+                // Asignarlo por libre
+                pr = new Producto();
+                pr.ID = -2;
+                pr.Fecha = LaReserva.FechaActividad;
+                pr.Hora = LaReserva.HoraActividad;
+                pr.Actividad = re.Actividad;
+            }
+            re.idProducto = pr.ID;
+            // Si ha cambiado el número de pax:
+            if (LaReserva.Adultos != re.TotalPax())
+            {
+                var ret = await DisplayAlert("Modificar la reserva",
+                                             "El número de participantes no coincide con el de la reserva original:" + CrLf +
+                                             $"Antes: {re.TotalPax()}, ahora: '{LaReserva.Adultos}'" + CrLf +
+                                             "Pulsa SÍ para usar los pax nuevos (se pondrán todos como adultos)." + CrLf +
+                                             "Pulsa NO para dejar los pax que ya había.", 
+                                             "Sí", "No");
+                if (ret)
+                {
+                    re.Adultos = LaReserva.Adultos;
+                    re.Niños = 0;
+                    re.Niños2 = 0;
+                }
+            }
+            // Actualizar el producto
+            if (pr.ID > 0)
+            {
+                pr.TotalPax += re.TotalPax();
+                pr.Actualizar2();
+            }
+            if (string.IsNullOrWhiteSpace(LaReserva.GYGNotas) == false)
+            {
+                re.Notas = string.Concat(re.Notas, CrLf, LaReserva.GYGNotas);
+            }
+            re.HoraActividad = pr.Hora;
+            re.FechaActividad = pr.Fecha;
+            re.Notas2 = string.Concat("Modificada //", re.Notas2);
+            re.Actualizar2();
+
+            // Asignar los valores no en base datos.            (11/sep/23 12.17)
+            re.GYGReference = LaReserva.GYGReference;
+            re.GYGTipo = LaReserva.GYGTipo;
+            re.GYGFechaHora = LaReserva.GYGFechaHora;
+            re.GYGOption = LaReserva.GYGOption;
+            re.GYGLanguage = LaReserva.GYGLanguage;
+            LaReserva = re;
+
+            return false;
+        }
+
+        private async Task<bool> CancelarReserva()
+        {
+            // Buscar la reserva con el booking indicado.
+            var re = Reservas.Buscar($"Notas like '%{LaReserva.GYGReference}%' and activa=1");
+            if (re == null)
+            {
+                await DisplayAlert("No hay reserva",
+                                   "No existe la reserva a cancelar:" + CrLf +
+                                   $"Booking: '{LaReserva.GYGReference}'", 
+                                   "Aceptar");
+                return true;
+            }
+            // Cancelar la reserva
+            re.PagoACta = 0;
+            re.ModoPagoACta = "";
+            re.Documento = "";
+            re.Notas2 = string.Concat("Cancelada y devolución por GYG //", re.Notas2);
+            re.CanceladaCliente = true;
+
+            // Actualizar los pax.
+            // Solo si el id no es -2
+            if (re.idProducto > 0)
+            {
+                var pr = Producto.Buscar(re.idProducto);
+                if (pr == null)
+                {
+                    await DisplayAlert("No hay producto",
+                                       "El producto de la reserva no existe:" + CrLf +
+                                       $"ID producto: '{re.idProducto}'" + CrLf +
+                                       $"Actividad: {re.ActividadMostrar} {re.FechaActividad:dd/MM/yyyy} {re.HoraActividad:hh\\:mm}", 
+                                       "Aceptar");
+                    return true;
+                }
+                pr.TotalPax -= re.TotalPax();
+                pr.Actualizar2();
+            }
+            re.Actualizar2();
+
+            // Asignar los valores no en base datos.            (11/sep/23 12.15)
+            re.GYGReference = LaReserva.GYGReference;
+            re.GYGTipo = LaReserva.GYGTipo;
+            re.GYGFechaHora = LaReserva.GYGFechaHora;
+            re.GYGOption = LaReserva.GYGOption;
+            re.GYGLanguage = LaReserva.GYGLanguage;
+            LaReserva = re;
+
+            return false;
         }
 
         private async Task<bool> CrearReserva()

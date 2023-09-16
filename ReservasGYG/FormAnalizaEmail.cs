@@ -148,7 +148,7 @@ public partial class FormAnalizaEmail : Form
                 if (ret != DialogResult.Yes)
                     return;
             }
-            if (MessageBox.Show("Es un alquiler antes de continuar comprueba que esté correcta la reserva.",
+            if (MessageBox.Show("Es un alquiler, antes de continuar comprueba que esté correcta la reserva.",
                                 "Nueva reserva de alquiler",
                                 MessageBoxButtons.OKCancel, MessageBoxIcon.Exclamation) == DialogResult.Cancel)
                 return;
