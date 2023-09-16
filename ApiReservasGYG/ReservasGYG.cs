@@ -6,6 +6,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+using KNDatos;
+
 namespace ApiReservasMailGYG
 {
     public class ReservasGYG
@@ -65,7 +67,8 @@ namespace ApiReservasMailGYG
         public ReservasGYG(KNDatos.Reservas re)
         {
             LaReserva = re.Clone();
-            Nombre = re.Nombre;
+            // Poner el nombre con título.                  (16/sep/23 03.25)
+            Nombre = re.Nombre.ToTitle();
             Telefono = re.Telefono;
             Email = re.Email;
             Notas = re.Notas;

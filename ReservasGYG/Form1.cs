@@ -26,18 +26,18 @@ public partial class Form1 : Form
 
     // Intentar no pasar de estas marcas: 60 caracteres. 2         3         4         5         6
     //                                ---------|---------|---------|---------|---------|---------|
-    //[COPIAR]AppDescripcionCopia = " menu copiar todo con cr"
+    //[COPIAR]AppDescripcionCopia = " copiar cr y nombre en titulo"
     // BuscarClientes mostrar reservas en la pagina
 
     /// <summary>
     /// La versión de la aplicación.
     /// </summary>
-    public static string AppVersion { get; } = "1.0.36";
+    public static string AppVersion { get; } = "1.0.37";
 
     /// <summary>
     /// La versión del fichero (la revisión)
     /// </summary>
-    public static string AppFileVersion { get; } = "1.0.36.0";
+    public static string AppFileVersion { get; } = "1.0.37.0";
 
     /// <summary>
     /// La fecha de última actualización
@@ -138,14 +138,24 @@ public partial class Form1 : Form
                 sb.Append(ApiReservasMailGYG.ReservasGYG.Columnas[i]);
                 sb.Append(": ");
                 sb.Append(it.SubItems[i].Text);
-                if (i < it.SubItems.Count - 1)
+                //if (i < it.SubItems.Count - 1)
+                //{
+                //    sb.Append("; ");
+                //}
+                // Si es copiar todo con CR,                (16/sep/23 03.20)
+                // añadir un cambio de línea.
+                // Si no, añair el punto y coma.            (16/sep/23 03.23)
+                if (index == copiarTodo + 1)
                 {
-                    sb.Append("; ");
+                    sb.AppendLine();
                 }
-            }
-            if (index == copiarTodo + 1)
-            {
-                sb.AppendLine();
+                else
+                {
+                    if (i < it.SubItems.Count - 1)
+                    {
+                        sb.Append("; ");
+                    }
+                }
             }
         }
         else

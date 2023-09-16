@@ -16,9 +16,9 @@
         <PackageReadmeFile>Readme.md</PackageReadmeFile>
         <RepositoryType>git</RepositoryType>
         <RepositoryUrl>https://github.com/elGuille-info/Reservas-MailGYG-MKN</RepositoryUrl>
-        <Version>1.0.36</Version>
-        <AssemblyVersion>1.0.36.0</AssemblyVersion>
-        <FileVersion>1.0.36.0</FileVersion>
+        <Version>1.0.37</Version>
+        <AssemblyVersion>1.0.37.0</AssemblyVersion>
+        <FileVersion>1.0.37.0</FileVersion>
     </PropertyGroup>
 
     <ItemGroup>
