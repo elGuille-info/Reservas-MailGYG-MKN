@@ -120,6 +120,13 @@
   <metadata name="toolTip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>17, 17</value>
   </metadata>
+  <data name="TxtAvisoExtra.Text" xml:space="preserve">
+    <value>El martes 20 y el sábado y domingo las previsiones son buenas.
+El miércoles, jueves y viernes se prevé mucho viento.
+
+On Tuesday 20th and Saturday and Sunday the forecast it's good.
+For Wednesday, Thursday and Friday are not good.</value>
+  </data>
   <metadata name="ContextMenuListView.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>417, 17</value>
   </metadata>

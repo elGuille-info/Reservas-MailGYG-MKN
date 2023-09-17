@@ -164,9 +164,9 @@ namespace ReservasGYG
             ChkIncluirTextoAviso.AutoSize = true;
             ChkIncluirTextoAviso.Location = new Point(6, 30);
             ChkIncluirTextoAviso.Name = "ChkIncluirTextoAviso";
-            ChkIncluirTextoAviso.Size = new Size(453, 29);
+            ChkIncluirTextoAviso.Size = new Size(455, 29);
             ChkIncluirTextoAviso.TabIndex = 0;
-            ChkIncluirTextoAviso.Text = "Incluir este texto en Enviar es el día y en Enviar Alerta";
+            ChkIncluirTextoAviso.Text = "Incluir este texto en Enviar es el día o en Enviar Alerta";
             ChkIncluirTextoAviso.UseVisualStyleBackColor = true;
             ChkIncluirTextoAviso.CheckedChanged += ChkIncluirTextoAviso_CheckedChanged;
             // 
@@ -176,8 +176,10 @@ namespace ReservasGYG
             TxtAvisoExtra.Location = new Point(6, 65);
             TxtAvisoExtra.Multiline = true;
             TxtAvisoExtra.Name = "TxtAvisoExtra";
+            TxtAvisoExtra.ScrollBars = ScrollBars.Both;
             TxtAvisoExtra.Size = new Size(1298, 103);
             TxtAvisoExtra.TabIndex = 1;
+            TxtAvisoExtra.Text = resources.GetString("TxtAvisoExtra.Text");
             // 
             // PanelBotones
             // 
