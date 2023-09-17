@@ -26,18 +26,18 @@ public partial class Form1 : Form
 
     // Intentar no pasar de estas marcas: 60 caracteres. 2         3         4         5         6
     //                                ---------|---------|---------|---------|---------|---------|
-    //[COPIAR]AppDescripcionCopia = " sin analizar email en form1"
+    //[COPIAR]AppDescripcionCopia = " diseño form1"
     // BuscarClientes mostrar reservas en la pagina
 
     /// <summary>
     /// La versión de la aplicación.
     /// </summary>
-    public static string AppVersion { get; } = "1.0.43";
+    public static string AppVersion { get; } = "1.0.44";
 
     /// <summary>
     /// La versión del fichero (la revisión)
     /// </summary>
-    public static string AppFileVersion { get; } = "1.0.43.0";
+    public static string AppFileVersion { get; } = "1.0.44.0";
 
     /// <summary>
     /// La fecha de última actualización
@@ -275,9 +275,13 @@ public partial class Form1 : Form
         BtnHoyEs.Width = w;
         BtnHoyEs.Left = BtnMañanaEs.Left + w + 12;
 
-        BtnReservasSinSalida.Width = w;
-        BtnMostrarReservas.Width = w;
-        BtnMostrarReservas.Left = BtnReservasSinSalida.Left + w + 12;
+        BtnComprobarSinMail.Width = BtnMañanaEs.Width;
+        BtnFotos.Width = BtnHoyEs.Width;
+        BtnFotos.Left = BtnHoyEs.Left;
+
+        BtnReservasSinSalida.Width = BtnMañanaEs.Width;  //w;
+        BtnMostrarReservas.Width = BtnHoyEs.Width;  //w;
+        BtnMostrarReservas.Left = BtnHoyEs.Left;  //BtnReservasSinSalida.Left + w + 12;
 
         w = (GrbOpcionesFecha.ClientSize.Width - 45) / 3;
         BtnAlerta1.Width = w;
