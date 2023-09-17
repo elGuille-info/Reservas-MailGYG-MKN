@@ -26,18 +26,18 @@ public partial class Form1 : Form
 
     // Intentar no pasar de estas marcas: 60 caracteres. 2         3         4         5         6
     //                                ---------|---------|---------|---------|---------|---------|
-    //[COPIAR]AppDescripcionCopia = " Enviar texto extra"
+    //[COPIAR]AppDescripcionCopia = " Enviar texto extra-2"
     // BuscarClientes mostrar reservas en la pagina
 
     /// <summary>
     /// La versión de la aplicación.
     /// </summary>
-    public static string AppVersion { get; } = "1.0.46";
+    public static string AppVersion { get; } = "1.0.47";
 
     /// <summary>
     /// La versión del fichero (la revisión)
     /// </summary>
-    public static string AppFileVersion { get; } = "1.0.46.0";
+    public static string AppFileVersion { get; } = "1.0.47.0";
 
     /// <summary>
     /// La fecha de última actualización
@@ -703,7 +703,7 @@ public partial class Form1 : Form
             sb.Append(TxtAvisoExtra.Text.Replace(CrLf, "<br/>"));
             sb.Append("<br/>");
         }
-        
+
         sb.Append("<br/>");
         sb.Append("<br/>");
         //sb.Append("Kayak Makarena");
