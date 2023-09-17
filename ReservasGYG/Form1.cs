@@ -26,18 +26,18 @@ public partial class Form1 : Form
 
     // Intentar no pasar de estas marcas: 60 caracteres. 2         3         4         5         6
     //                                ---------|---------|---------|---------|---------|---------|
-    //[COPIAR]AppDescripcionCopia = " tamaño form1"
+    //[COPIAR]AppDescripcionCopia = " sin analizar email en form1"
     // BuscarClientes mostrar reservas en la pagina
 
     /// <summary>
     /// La versión de la aplicación.
     /// </summary>
-    public static string AppVersion { get; } = "1.0.42";
+    public static string AppVersion { get; } = "1.0.43";
 
     /// <summary>
     /// La versión del fichero (la revisión)
     /// </summary>
-    public static string AppFileVersion { get; } = "1.0.42.0";
+    public static string AppFileVersion { get; } = "1.0.43.0";
 
     /// <summary>
     /// La fecha de última actualización
@@ -311,28 +311,6 @@ public partial class Form1 : Form
         BtnAlerta1.Enabled = habilitar;
         BtnAlerta2.Enabled = habilitar;
         BtnAlerta3.Enabled = habilitar;
-    }
-
-    private void TimerCargarAnalizarEmail_Tick(object sender, EventArgs e)
-    {
-        TimerCargarAnalizarEmail.Enabled = false;
-        CargarAnalizarEmail();
-    }
-
-    private void BtnAnalizarEmail_Click(object sender, EventArgs e)
-    {
-        CargarAnalizarEmail();
-    }
-
-    private static void CargarAnalizarEmail()
-    {
-        if (FormAnalizaEmail.Current == null || FormAnalizaEmail.Current.IsDisposed)
-        {
-            FormAnalizaEmail.Current = new FormAnalizaEmail();
-        }
-        FormAnalizaEmail.Current.BringToFront();
-        FormAnalizaEmail.Current.Show();
-        FormAnalizaEmail.Current.Focus();
     }
 
     private void BtnMañanaEs_Click(object sender, EventArgs e)

@@ -37,8 +37,6 @@ namespace ReservasGYG
             ChkConAlquileres = new CheckBox();
             ChkConCanceladas = new CheckBox();
             ChkSoloCanceladas = new CheckBox();
-            GrbOpciones = new GroupBox();
-            BtnAnalizarEmail = new Button();
             BtnFotos = new Button();
             GrbOpcionesFecha = new GroupBox();
             LabelInfoListView = new Label();
@@ -66,8 +64,6 @@ namespace ReservasGYG
             label8 = new Label();
             BtnComprobarSinMail = new Button();
             BtnHoyEs = new Button();
-            TimerCargarAnalizarEmail = new Timer(components);
-            GrbOpciones.SuspendLayout();
             GrbOpcionesFecha.SuspendLayout();
             ContextMenuListView.SuspendLayout();
             SuspendLayout();
@@ -109,34 +105,11 @@ namespace ReservasGYG
             toolTip1.SetToolTip(ChkSoloCanceladas, "Mostrar solo las reservas canceladas");
             ChkSoloCanceladas.UseVisualStyleBackColor = true;
             // 
-            // GrbOpciones
-            // 
-            GrbOpciones.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            GrbOpciones.Controls.Add(BtnAnalizarEmail);
-            GrbOpciones.Location = new Point(12, 12);
-            GrbOpciones.Name = "GrbOpciones";
-            GrbOpciones.Size = new Size(1322, 104);
-            GrbOpciones.TabIndex = 0;
-            GrbOpciones.TabStop = false;
-            GrbOpciones.Text = "Opciones crear reservas";
-            // 
-            // BtnAnalizarEmail
-            // 
-            BtnAnalizarEmail.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            BtnAnalizarEmail.BackColor = Color.Honeydew;
-            BtnAnalizarEmail.Location = new Point(6, 30);
-            BtnAnalizarEmail.Name = "BtnAnalizarEmail";
-            BtnAnalizarEmail.Size = new Size(1310, 40);
-            BtnAnalizarEmail.TabIndex = 0;
-            BtnAnalizarEmail.Text = "Analizar email y crear reserva";
-            BtnAnalizarEmail.UseVisualStyleBackColor = false;
-            BtnAnalizarEmail.Click += BtnAnalizarEmail_Click;
-            // 
             // BtnFotos
             // 
             BtnFotos.Anchor = AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             BtnFotos.BackColor = Color.MistyRose;
-            BtnFotos.Location = new Point(6, 644);
+            BtnFotos.Location = new Point(6, 754);
             BtnFotos.Margin = new Padding(3, 12, 3, 3);
             BtnFotos.Name = "BtnFotos";
             BtnFotos.Size = new Size(1298, 40);
@@ -164,9 +137,9 @@ namespace ReservasGYG
             GrbOpcionesFecha.Controls.Add(label8);
             GrbOpcionesFecha.Controls.Add(BtnComprobarSinMail);
             GrbOpcionesFecha.Controls.Add(BtnHoyEs);
-            GrbOpcionesFecha.Location = new Point(12, 122);
+            GrbOpcionesFecha.Location = new Point(12, 12);
             GrbOpcionesFecha.Name = "GrbOpcionesFecha";
-            GrbOpcionesFecha.Size = new Size(1316, 794);
+            GrbOpcionesFecha.Size = new Size(1316, 904);
             GrbOpcionesFecha.TabIndex = 1;
             GrbOpcionesFecha.TabStop = false;
             GrbOpcionesFecha.Text = "Opciones con fecha";
@@ -174,7 +147,7 @@ namespace ReservasGYG
             // LabelInfoListView
             // 
             LabelInfoListView.Anchor = AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            LabelInfoListView.Location = new Point(9, 600);
+            LabelInfoListView.Location = new Point(9, 710);
             LabelInfoListView.Margin = new Padding(3);
             LabelInfoListView.Name = "LabelInfoListView";
             LabelInfoListView.Size = new Size(1301, 31);
@@ -186,7 +159,7 @@ namespace ReservasGYG
             // 
             BtnAlerta3.Anchor = AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             BtnAlerta3.BackColor = Color.Salmon;
-            BtnAlerta3.Location = new Point(741, 748);
+            BtnAlerta3.Location = new Point(741, 858);
             BtnAlerta3.Margin = new Padding(3, 6, 3, 3);
             BtnAlerta3.Name = "BtnAlerta3";
             BtnAlerta3.Size = new Size(557, 40);
@@ -199,7 +172,7 @@ namespace ReservasGYG
             // 
             BtnAlerta1.Anchor = AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             BtnAlerta1.BackColor = Color.PaleGreen;
-            BtnAlerta1.Location = new Point(6, 748);
+            BtnAlerta1.Location = new Point(6, 858);
             BtnAlerta1.Margin = new Padding(3, 12, 3, 3);
             BtnAlerta1.Name = "BtnAlerta1";
             BtnAlerta1.Size = new Size(557, 40);
@@ -212,7 +185,7 @@ namespace ReservasGYG
             // 
             BtnAlerta2.Anchor = AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             BtnAlerta2.BackColor = Color.Orange;
-            BtnAlerta2.Location = new Point(373, 748);
+            BtnAlerta2.Location = new Point(373, 858);
             BtnAlerta2.Margin = new Padding(3, 6, 3, 3);
             BtnAlerta2.Name = "BtnAlerta2";
             BtnAlerta2.Size = new Size(557, 40);
@@ -245,7 +218,7 @@ namespace ReservasGYG
             LvwSinEmail.Location = new Point(9, 184);
             LvwSinEmail.Margin = new Padding(3, 6, 3, 3);
             LvwSinEmail.Name = "LvwSinEmail";
-            LvwSinEmail.Size = new Size(1301, 410);
+            LvwSinEmail.Size = new Size(1301, 520);
             LvwSinEmail.TabIndex = 8;
             LvwSinEmail.UseCompatibleStateImageBehavior = false;
             LvwSinEmail.View = View.Details;
@@ -340,7 +313,7 @@ namespace ReservasGYG
             // 
             BtnMañanaEs.Anchor = AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             BtnMañanaEs.BackColor = Color.LightYellow;
-            BtnMañanaEs.Location = new Point(6, 699);
+            BtnMañanaEs.Location = new Point(6, 809);
             BtnMañanaEs.Margin = new Padding(3, 12, 3, 3);
             BtnMañanaEs.Name = "BtnMañanaEs";
             BtnMañanaEs.Size = new Size(745, 40);
@@ -398,7 +371,7 @@ namespace ReservasGYG
             // 
             BtnHoyEs.Anchor = AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             BtnHoyEs.BackColor = Color.Gold;
-            BtnHoyEs.Location = new Point(571, 699);
+            BtnHoyEs.Location = new Point(571, 809);
             BtnHoyEs.Margin = new Padding(3, 6, 3, 3);
             BtnHoyEs.Name = "BtnHoyEs";
             BtnHoyEs.Size = new Size(730, 40);
@@ -407,18 +380,12 @@ namespace ReservasGYG
             BtnHoyEs.UseVisualStyleBackColor = false;
             BtnHoyEs.Click += BtnHoyEs_Click;
             // 
-            // TimerCargarAnalizarEmail
-            // 
-            TimerCargarAnalizarEmail.Interval = 300;
-            TimerCargarAnalizarEmail.Tick += TimerCargarAnalizarEmail_Tick;
-            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(10F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1346, 928);
             Controls.Add(GrbOpcionesFecha);
-            Controls.Add(GrbOpciones);
             Icon = (Icon)resources.GetObject("$this.Icon");
             Name = "Form1";
             StartPosition = FormStartPosition.CenterScreen;
@@ -426,7 +393,6 @@ namespace ReservasGYG
             FormClosing += Form1_FormClosing;
             Load += Form1_Load;
             Resize += Form1_Resize;
-            GrbOpciones.ResumeLayout(false);
             GrbOpcionesFecha.ResumeLayout(false);
             GrbOpcionesFecha.PerformLayout();
             ContextMenuListView.ResumeLayout(false);
@@ -435,8 +401,6 @@ namespace ReservasGYG
 
         #endregion
         private ToolTip toolTip1;
-        private GroupBox GrbOpciones;
-        private Button BtnAnalizarEmail;
         private Button BtnFotos;
         private GroupBox GrbOpcionesFecha;
         private DateTimePicker DateTimePickerGYG;
@@ -444,7 +408,6 @@ namespace ReservasGYG
         private Button BtnComprobarSinMail;
         private Button BtnHoyEs;
         private Button BtnMostrarReservas;
-        private Timer TimerCargarAnalizarEmail;
         private Button BtnMañanaEs;
         private ListView LvwSinEmail;
         private ColumnHeader columnHeader1;
