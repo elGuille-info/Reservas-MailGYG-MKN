@@ -26,18 +26,18 @@ public partial class Form1 : Form
 
     // Intentar no pasar de estas marcas: 60 caracteres. 2         3         4         5         6
     //                                ---------|---------|---------|---------|---------|---------|
-    //[COPIAR]AppDescripcionCopia = " diseño form1"
+    //[COPIAR]AppDescripcionCopia = " diseño form1-2"
     // BuscarClientes mostrar reservas en la pagina
 
     /// <summary>
     /// La versión de la aplicación.
     /// </summary>
-    public static string AppVersion { get; } = "1.0.44";
+    public static string AppVersion { get; } = "1.0.45";
 
     /// <summary>
     /// La versión del fichero (la revisión)
     /// </summary>
-    public static string AppFileVersion { get; } = "1.0.44.0";
+    public static string AppFileVersion { get; } = "1.0.45.0";
 
     /// <summary>
     /// La fecha de última actualización
@@ -236,6 +236,15 @@ public partial class Form1 : Form
 
         DateTimePickerGYG.Value = DateTime.Today;
 
+        TimerInicioForm1.Enabled = true;
+        //Form1_Resize(null, null);
+    }
+
+    private void TimerInicioForm1_Tick(object sender, EventArgs e)
+    {
+        TimerInicioForm1.Enabled = false;
+        ChkIncluirTextoAviso.Checked = false;
+        ActualizarColorEnabled();
         Form1_Resize(null, null);
     }
 
@@ -269,21 +278,27 @@ public partial class Form1 : Form
         //LvwSinEmail.Columns[1].Width = w;
         AsignarColumnasLvw(LvwSinEmail, asignarColumnas: false);
 
+        GrbAvisos.Width = GrbOpcionesFecha.ClientSize.Width - 12;
+
         // Ajustar el tamaño de MañanaEs y HoyEs.           (02/sep/23 19.20)
-        int w = (GrbOpcionesFecha.ClientSize.Width - 30) / 2;
+        int w;
+
+        w = (GrbOpcionesFecha.ClientSize.Width - 30) / 2;
+        BtnComprobarSinMail.Width = w; // BtnMañanaEs.Width;
+        BtnFotos.Width = w; // BtnHoyEs.Width;
+        BtnFotos.Left = BtnComprobarSinMail.Left + w + 12;
+
+        BtnReservasSinSalida.Width = w;
+        BtnMostrarReservas.Width = w;
+        BtnMostrarReservas.Left = BtnFotos.Left;
+
+        w = (GrbAvisos.ClientSize.Width - 30) / 2;
         BtnMañanaEs.Width = w;
         BtnHoyEs.Width = w;
         BtnHoyEs.Left = BtnMañanaEs.Left + w + 12;
 
-        BtnComprobarSinMail.Width = BtnMañanaEs.Width;
-        BtnFotos.Width = BtnHoyEs.Width;
-        BtnFotos.Left = BtnHoyEs.Left;
-
-        BtnReservasSinSalida.Width = BtnMañanaEs.Width;  //w;
-        BtnMostrarReservas.Width = BtnHoyEs.Width;  //w;
-        BtnMostrarReservas.Left = BtnHoyEs.Left;  //BtnReservasSinSalida.Left + w + 12;
-
-        w = (GrbOpcionesFecha.ClientSize.Width - 45) / 3;
+        //w = (GrbOpcionesFecha.ClientSize.Width - 45) / 3;
+        w = (GrbAvisos.ClientSize.Width - 45) / 3;
         BtnAlerta1.Width = w;
         BtnAlerta2.Width = w;
         BtnAlerta3.Width = w;
@@ -719,5 +734,23 @@ public partial class Form1 : Form
     private void BtnAlerta3_Click(object sender, EventArgs e)
     {
         EnviarAlerta(3);
+    }
+
+    private void ChkIncluirTextoAviso_CheckedChanged(object sender, EventArgs e)
+    {
+        ActualizarColorEnabled();
+    }
+
+    private void ActualizarColorEnabled()
+    {
+        TxtAvisoExtra.Enabled = ChkIncluirTextoAviso.Checked;
+        if (TxtAvisoExtra.Enabled)
+        {
+            TxtAvisoExtra.BackColor = Color.White;
+        }
+        else
+        {
+            TxtAvisoExtra.BackColor = Color.MintCream;
+        }
     }
 }
