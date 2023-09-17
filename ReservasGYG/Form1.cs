@@ -26,23 +26,23 @@ public partial class Form1 : Form
 
     // Intentar no pasar de estas marcas: 60 caracteres. 2         3         4         5         6
     //                                ---------|---------|---------|---------|---------|---------|
-    //[COPIAR]AppDescripcionCopia = " nueva funcionalidad app móvil-3"
+    //[COPIAR]AppDescripcionCopia = " tamaño form1"
     // BuscarClientes mostrar reservas en la pagina
 
     /// <summary>
     /// La versión de la aplicación.
     /// </summary>
-    public static string AppVersion { get; } = "1.0.41";
+    public static string AppVersion { get; } = "1.0.42";
 
     /// <summary>
     /// La versión del fichero (la revisión)
     /// </summary>
-    public static string AppFileVersion { get; } = "1.0.41.0";
+    public static string AppFileVersion { get; } = "1.0.42.0";
 
     /// <summary>
     /// La fecha de última actualización
     /// </summary>
-    public static string AppFechaVersion { get; } = "16-sep-2023";
+    public static string AppFechaVersion { get; } = "17-sep-2023";
 
 
     public static Form1 Current { get; set; }

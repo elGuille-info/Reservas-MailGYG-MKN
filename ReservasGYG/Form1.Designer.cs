@@ -59,6 +59,7 @@ namespace ReservasGYG
             MnuCopiarNotas = new ToolStripMenuItem();
             MnuSep1 = new ToolStripSeparator();
             MnuCopiarTodo = new ToolStripMenuItem();
+            MnuCopiarTodoConCr = new ToolStripMenuItem();
             BtnMañanaEs = new Button();
             BtnMostrarReservas = new Button();
             DateTimePickerGYG = new DateTimePicker();
@@ -66,7 +67,6 @@ namespace ReservasGYG
             BtnComprobarSinMail = new Button();
             BtnHoyEs = new Button();
             TimerCargarAnalizarEmail = new Timer(components);
-            MnuCopiarTodoConCr = new ToolStripMenuItem();
             GrbOpciones.SuspendLayout();
             GrbOpcionesFecha.SuspendLayout();
             ContextMenuListView.SuspendLayout();
@@ -115,7 +115,7 @@ namespace ReservasGYG
             GrbOpciones.Controls.Add(BtnAnalizarEmail);
             GrbOpciones.Location = new Point(12, 12);
             GrbOpciones.Name = "GrbOpciones";
-            GrbOpciones.Size = new Size(1121, 104);
+            GrbOpciones.Size = new Size(1322, 104);
             GrbOpciones.TabIndex = 0;
             GrbOpciones.TabStop = false;
             GrbOpciones.Text = "Opciones crear reservas";
@@ -126,7 +126,7 @@ namespace ReservasGYG
             BtnAnalizarEmail.BackColor = Color.Honeydew;
             BtnAnalizarEmail.Location = new Point(6, 30);
             BtnAnalizarEmail.Name = "BtnAnalizarEmail";
-            BtnAnalizarEmail.Size = new Size(1109, 40);
+            BtnAnalizarEmail.Size = new Size(1310, 40);
             BtnAnalizarEmail.TabIndex = 0;
             BtnAnalizarEmail.Text = "Analizar email y crear reserva";
             BtnAnalizarEmail.UseVisualStyleBackColor = false;
@@ -136,10 +136,10 @@ namespace ReservasGYG
             // 
             BtnFotos.Anchor = AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             BtnFotos.BackColor = Color.MistyRose;
-            BtnFotos.Location = new Point(6, 587);
+            BtnFotos.Location = new Point(6, 644);
             BtnFotos.Margin = new Padding(3, 12, 3, 3);
             BtnFotos.Name = "BtnFotos";
-            BtnFotos.Size = new Size(1097, 40);
+            BtnFotos.Size = new Size(1298, 40);
             BtnFotos.TabIndex = 9;
             BtnFotos.Text = "Enviar fotos";
             BtnFotos.UseVisualStyleBackColor = false;
@@ -166,7 +166,7 @@ namespace ReservasGYG
             GrbOpcionesFecha.Controls.Add(BtnHoyEs);
             GrbOpcionesFecha.Location = new Point(12, 122);
             GrbOpcionesFecha.Name = "GrbOpcionesFecha";
-            GrbOpcionesFecha.Size = new Size(1115, 737);
+            GrbOpcionesFecha.Size = new Size(1316, 794);
             GrbOpcionesFecha.TabIndex = 1;
             GrbOpcionesFecha.TabStop = false;
             GrbOpcionesFecha.Text = "Opciones con fecha";
@@ -174,10 +174,10 @@ namespace ReservasGYG
             // LabelInfoListView
             // 
             LabelInfoListView.Anchor = AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            LabelInfoListView.Location = new Point(9, 543);
+            LabelInfoListView.Location = new Point(9, 600);
             LabelInfoListView.Margin = new Padding(3);
             LabelInfoListView.Name = "LabelInfoListView";
-            LabelInfoListView.Size = new Size(1100, 31);
+            LabelInfoListView.Size = new Size(1301, 31);
             LabelInfoListView.TabIndex = 15;
             LabelInfoListView.Text = "Hay n elementos";
             LabelInfoListView.TextAlign = ContentAlignment.MiddleLeft;
@@ -186,10 +186,10 @@ namespace ReservasGYG
             // 
             BtnAlerta3.Anchor = AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             BtnAlerta3.BackColor = Color.Salmon;
-            BtnAlerta3.Location = new Point(741, 691);
+            BtnAlerta3.Location = new Point(741, 748);
             BtnAlerta3.Margin = new Padding(3, 6, 3, 3);
             BtnAlerta3.Name = "BtnAlerta3";
-            BtnAlerta3.Size = new Size(356, 40);
+            BtnAlerta3.Size = new Size(557, 40);
             BtnAlerta3.TabIndex = 14;
             BtnAlerta3.Text = "Enviar Alerta 3";
             BtnAlerta3.UseVisualStyleBackColor = false;
@@ -199,10 +199,10 @@ namespace ReservasGYG
             // 
             BtnAlerta1.Anchor = AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             BtnAlerta1.BackColor = Color.PaleGreen;
-            BtnAlerta1.Location = new Point(6, 691);
+            BtnAlerta1.Location = new Point(6, 748);
             BtnAlerta1.Margin = new Padding(3, 12, 3, 3);
             BtnAlerta1.Name = "BtnAlerta1";
-            BtnAlerta1.Size = new Size(356, 40);
+            BtnAlerta1.Size = new Size(557, 40);
             BtnAlerta1.TabIndex = 12;
             BtnAlerta1.Text = "Enviar Alerta 1";
             BtnAlerta1.UseVisualStyleBackColor = false;
@@ -212,10 +212,10 @@ namespace ReservasGYG
             // 
             BtnAlerta2.Anchor = AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             BtnAlerta2.BackColor = Color.Orange;
-            BtnAlerta2.Location = new Point(373, 691);
+            BtnAlerta2.Location = new Point(373, 748);
             BtnAlerta2.Margin = new Padding(3, 6, 3, 3);
             BtnAlerta2.Name = "BtnAlerta2";
-            BtnAlerta2.Size = new Size(356, 40);
+            BtnAlerta2.Size = new Size(557, 40);
             BtnAlerta2.TabIndex = 13;
             BtnAlerta2.Text = "Enviar Alerta 2";
             BtnAlerta2.UseVisualStyleBackColor = false;
@@ -228,7 +228,7 @@ namespace ReservasGYG
             BtnReservasSinSalida.Location = new Point(6, 135);
             BtnReservasSinSalida.Margin = new Padding(3, 12, 3, 3);
             BtnReservasSinSalida.Name = "BtnReservasSinSalida";
-            BtnReservasSinSalida.Size = new Size(544, 40);
+            BtnReservasSinSalida.Size = new Size(745, 40);
             BtnReservasSinSalida.TabIndex = 6;
             BtnReservasSinSalida.Text = "Comprobar reservas sin salida (not show)";
             BtnReservasSinSalida.UseVisualStyleBackColor = false;
@@ -245,7 +245,7 @@ namespace ReservasGYG
             LvwSinEmail.Location = new Point(9, 184);
             LvwSinEmail.Margin = new Padding(3, 6, 3, 3);
             LvwSinEmail.Name = "LvwSinEmail";
-            LvwSinEmail.Size = new Size(1100, 353);
+            LvwSinEmail.Size = new Size(1301, 410);
             LvwSinEmail.TabIndex = 8;
             LvwSinEmail.UseCompatibleStateImageBehavior = false;
             LvwSinEmail.View = View.Details;
@@ -265,7 +265,7 @@ namespace ReservasGYG
             ContextMenuListView.ImageScalingSize = new Size(24, 24);
             ContextMenuListView.Items.AddRange(new ToolStripItem[] { MnuCopiarBooking, MnuCopiarNombre, MnuCopiarTelefono, MnuCopiarReserva, MnuCopiarPax, MnuCopiarEmail, MnuCopiarNotas, MnuSep1, MnuCopiarTodo, MnuCopiarTodoConCr });
             ContextMenuListView.Name = "ContextMenuListView";
-            ContextMenuListView.Size = new Size(253, 331);
+            ContextMenuListView.Size = new Size(253, 298);
             ContextMenuListView.Opening += ContextMenuListView_Opening;
             // 
             // MnuCopiarBooking
@@ -329,14 +329,21 @@ namespace ReservasGYG
             MnuCopiarTodo.Text = "Copiar Todo";
             MnuCopiarTodo.Click += MnuCopiarDeLvw_Click;
             // 
+            // MnuCopiarTodoConCr
+            // 
+            MnuCopiarTodoConCr.Name = "MnuCopiarTodoConCr";
+            MnuCopiarTodoConCr.Size = new Size(252, 32);
+            MnuCopiarTodoConCr.Text = "Copiar Todo (con CR)";
+            MnuCopiarTodoConCr.Click += MnuCopiarDeLvw_Click;
+            // 
             // BtnMañanaEs
             // 
             BtnMañanaEs.Anchor = AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             BtnMañanaEs.BackColor = Color.LightYellow;
-            BtnMañanaEs.Location = new Point(6, 642);
+            BtnMañanaEs.Location = new Point(6, 699);
             BtnMañanaEs.Margin = new Padding(3, 12, 3, 3);
             BtnMañanaEs.Name = "BtnMañanaEs";
-            BtnMañanaEs.Size = new Size(544, 40);
+            BtnMañanaEs.Size = new Size(745, 40);
             BtnMañanaEs.TabIndex = 10;
             BtnMañanaEs.Text = "Enviar MAÑANA es el día";
             BtnMañanaEs.UseVisualStyleBackColor = false;
@@ -349,7 +356,7 @@ namespace ReservasGYG
             BtnMostrarReservas.Location = new Point(562, 135);
             BtnMostrarReservas.Margin = new Padding(3, 12, 3, 3);
             BtnMostrarReservas.Name = "BtnMostrarReservas";
-            BtnMostrarReservas.Size = new Size(544, 40);
+            BtnMostrarReservas.Size = new Size(745, 40);
             BtnMostrarReservas.TabIndex = 7;
             BtnMostrarReservas.Text = "Mostrar Reservas";
             BtnMostrarReservas.UseVisualStyleBackColor = false;
@@ -381,7 +388,7 @@ namespace ReservasGYG
             BtnComprobarSinMail.BackColor = Color.FloralWhite;
             BtnComprobarSinMail.Location = new Point(6, 80);
             BtnComprobarSinMail.Name = "BtnComprobarSinMail";
-            BtnComprobarSinMail.Size = new Size(1103, 40);
+            BtnComprobarSinMail.Size = new Size(1304, 40);
             BtnComprobarSinMail.TabIndex = 5;
             BtnComprobarSinMail.Text = "Comprobar reservas sin email en la fecha";
             BtnComprobarSinMail.UseVisualStyleBackColor = false;
@@ -391,10 +398,10 @@ namespace ReservasGYG
             // 
             BtnHoyEs.Anchor = AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             BtnHoyEs.BackColor = Color.Gold;
-            BtnHoyEs.Location = new Point(571, 642);
+            BtnHoyEs.Location = new Point(571, 699);
             BtnHoyEs.Margin = new Padding(3, 6, 3, 3);
             BtnHoyEs.Name = "BtnHoyEs";
-            BtnHoyEs.Size = new Size(529, 40);
+            BtnHoyEs.Size = new Size(730, 40);
             BtnHoyEs.TabIndex = 11;
             BtnHoyEs.Text = "Enviar HOY es el día";
             BtnHoyEs.UseVisualStyleBackColor = false;
@@ -405,18 +412,11 @@ namespace ReservasGYG
             TimerCargarAnalizarEmail.Interval = 300;
             TimerCargarAnalizarEmail.Tick += TimerCargarAnalizarEmail_Tick;
             // 
-            // MnuCopiarTodoConCr
-            // 
-            MnuCopiarTodoConCr.Name = "MnuCopiarTodoConCr";
-            MnuCopiarTodoConCr.Size = new Size(252, 32);
-            MnuCopiarTodoConCr.Text = "Copiar Todo (con CR)";
-            MnuCopiarTodoConCr.Click += MnuCopiarDeLvw_Click;
-            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(10F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1145, 871);
+            ClientSize = new Size(1346, 928);
             Controls.Add(GrbOpcionesFecha);
             Controls.Add(GrbOpciones);
             Icon = (Icon)resources.GetObject("$this.Icon");
