@@ -653,7 +653,7 @@ public partial class FormAnalizaEmail : Form
                 {
                     if (enIngles)
                     {
-                        sb.Append(Properties.Resources.IMPORTANTE_EN_09_30_txt.Replace(CrLf, "<br/>"));
+                        sb.Append(Properties.Resources.IMPORTANTE_EN_09_30.Replace(CrLf, "<br/>"));
                     }
                     else
                     {
@@ -664,25 +664,32 @@ public partial class FormAnalizaEmail : Form
                 {
                     if (enIngles)
                     {
-                        sb.Append(Properties.Resources.IMPORTANTE_EN_10_30_11_00_txt.Replace(CrLf, "<br/>"));
+                        sb.Append(Properties.Resources.IMPORTANTE_EN_10_30_11_00.Replace(CrLf, "<br/>"));
                     }
                     else
                     {
-                        sb.Append(Properties.Resources.IMPORTANTE_ES_10_30_11_00_txt.Replace(CrLf, "<br/>"));
+                        sb.Append(Properties.Resources.IMPORTANTE_ES_10_30_11_00.Replace(CrLf, "<br/>"));
                     }
                 }
                 else
                 {
                     if (enIngles)
                     {
-                        sb.Append(Properties.Resources.IMPORTANTE_EN_txt.Replace(CrLf, "<br/>"));
+                        sb.Append(Properties.Resources.IMPORTANTE_EN.Replace(CrLf, "<br/>"));
                     }
                     else
                     {
-                        sb.Append(Properties.Resources.IMPORTANTE_ES_txt.Replace(CrLf, "<br/>"));
+                        sb.Append(Properties.Resources.IMPORTANTE_ES.Replace(CrLf, "<br/>"));
                     }
                 }
             }
+
+            // En temporada alta, hasta mediados septiembre (18/sep/23 05.18)
+            if (DateTime.Today <= new DateTime(2023, 9, 15))
+            {
+                sb.Append(Properties.Resources.IMPORTANTE_Lee_esto_Maro.Replace(CrLf, "<br/>"));
+            }
+
             // Indicar siempre que hagan la reseña.         (11/sep/23 10.25)
             //// Si es para el mismo día de la actividad.     (24/ago/23 06.24)
             //if (DateTime.Today == re.FechaActividad)
@@ -698,19 +705,22 @@ public partial class FormAnalizaEmail : Form
             }
         }
 
-        sb.AppendLine("<br/>");
-        sb.Append("<br/>");
-        // No tenía los cambios de línea, añado el teléfono (08/sep/23 13.55)
-        sb.Append("Kayak Makarena<br/>");
-        if (enIngles)
-        {
-            sb.Append("iMessage / WhatsApp: +34 645 76 16 89 <small>(Please, only WhatsApp messages or calls as I usually don't have coverage)</small><br/>");
-        }
-        else
-        {
-            sb.Append("iMessage / WhatsApp: +34 645 76 16 89 <small>(Por favor, solo mensajes o llamadas por wasap ya que no suelo tener cobertura)</small><br/>");
-        }
-        sb.Append("https://kayakmakarena.com<br/>");
+        // Añadir la firma de Kayak Makarena                (18/sep/23 05.33)
+        MailGYG.FirmaMakarena(sb, enIngles);
+
+        //sb.AppendLine("<br/>");
+        //sb.Append("<br/>");
+        //// No tenía los cambios de línea, añado el teléfono (08/sep/23 13.55)
+        //sb.Append("Kayak Makarena<br/>");
+        //if (enIngles)
+        //{
+        //    sb.Append("iMessage / WhatsApp: +34 645 76 16 89 <small>(Please, only WhatsApp messages or calls as I usually don't have coverage)</small><br/>");
+        //}
+        //else
+        //{
+        //    sb.Append("iMessage / WhatsApp: +34 645 76 16 89 <small>(Por favor, solo mensajes o llamadas por wasap ya que no suelo tener cobertura)</small><br/>");
+        //}
+        //sb.Append("https://kayakmakarena.com<br/>");
 
         //var asunto = $"Booking - S271506 - {re.GYGReference}";
         var para = re.Email;

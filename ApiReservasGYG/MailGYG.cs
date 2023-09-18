@@ -25,7 +25,7 @@ namespace ApiReservasMailGYG
         /// <summary>
         /// El cambio de línea en las cajas de texto.
         /// </summary>
-        /// <remarks>En aplicaciones de Windows Forms es \n en WinUI es \r en Android e iOS es </remarks>
+        /// <remarks>En aplicaciones de Windows Forms es \n en WinUI es \r en Android e iOS es \n</remarks>
         public static string CambioLinea { get; set; } = "\n";
 
         /// <summary>
@@ -1039,71 +1039,71 @@ Sep 5, 2023
     ¡Muchas gracias!
         */
 
-        /// <summary>
-        /// Comprueba si las reservas de la fecha indicada tienen todas el email.
-        /// </summary>
-        /// <param name="fecha">Fecha con las reservas a comprobar.</param>
-        /// <param name="conCabecera">True para añadir la cabecera con las reservas sin email.</param>
-        /// <returns>Una cadena vacía si todo está bien, si no, con los datos de las reservas que no tienen email.</returns>
-        [Obsolete("No usar este método, usar el que devuelve la colección")]
-        public static string ComprobarEmails(DateTime fecha, bool conAlquileres, bool conCabecera)
-        {
-            StringBuilder sb = new StringBuilder();
-            sb.Append("Select * from Reservas ");
-            sb.Append("where Activa = 1 and CanceladaCliente = 0 and idDistribuidor = 10 ");
-            sb.Append("and Email = '' and Nombre != 'Makarena (GYG)' ");
-            // Solo las rutas                               (02/sep/23 13.52)
-            //sb.Append($"and Actividad like 'ruta%' ");
-            // también los alquileres...                    (05/sep/23 23.47)
-            // Ahora como parámetro.                        (05/sep/23 23.58)
-            if (conAlquileres == false)
-            {
-                sb.Append($"and Actividad like 'ruta%' ");
-            }
+        ///// <summary>
+        ///// Comprueba si las reservas de la fecha indicada tienen todas el email.
+        ///// </summary>
+        ///// <param name="fecha">Fecha con las reservas a comprobar.</param>
+        ///// <param name="conCabecera">True para añadir la cabecera con las reservas sin email.</param>
+        ///// <returns>Una cadena vacía si todo está bien, si no, con los datos de las reservas que no tienen email.</returns>
+        //[Obsolete("No usar este método, usar el que devuelve la colección")]
+        //public static string ComprobarEmails(DateTime fecha, bool conAlquileres, bool conCabecera)
+        //{
+        //    StringBuilder sb = new StringBuilder();
+        //    sb.Append("Select * from Reservas ");
+        //    sb.Append("where Activa = 1 and CanceladaCliente = 0 and idDistribuidor = 10 ");
+        //    sb.Append("and Email = '' and Nombre != 'Makarena (GYG)' ");
+        //    // Solo las rutas                               (02/sep/23 13.52)
+        //    //sb.Append($"and Actividad like 'ruta%' ");
+        //    // también los alquileres...                    (05/sep/23 23.47)
+        //    // Ahora como parámetro.                        (05/sep/23 23.58)
+        //    if (conAlquileres == false)
+        //    {
+        //        sb.Append($"and Actividad like 'ruta%' ");
+        //    }
 
-            sb.Append($"and FechaActividad = '{fecha:yyyy-MM-dd}' ");
-            sb.Append("order by FechaActividad, HoraActividad, ID");
+        //    sb.Append($"and FechaActividad = '{fecha:yyyy-MM-dd}' ");
+        //    sb.Append("order by FechaActividad, HoraActividad, ID");
 
-            var colRes = Reservas.TablaCol(sb.ToString());
+        //    var colRes = Reservas.TablaCol(sb.ToString());
 
-            sb.Clear();
+        //    sb.Clear();
 
-            if (colRes.Count > 0)
-            {
-                if (conCabecera)
-                {
-                    sb.AppendLine($"Hay {colRes.Count} {colRes.Count.Plural("reserva")} del {fecha:dddd dd/MM/yyyy} sin email.");
-                }
-                for (int i = 0; i < colRes.Count; i++)
-                {
-                    string nota = "";
-                    // Poner solo los xx primeros caracteres de las notas. (25/ago/23 14.18)
-                    //GetYourGuide - GYGLMWA85MXQ - (Spain) - Spanish (Live tour guide) -
-                    //sb.AppendLine($"{colRes[i].Nombre}, {colRes[i].Notas}");
-                    if (colRes[i].Notas.StartsWith("GetYourGuide"))
-                    {
-                        int j = colRes[i].Notas.IndexOf("- GYG");
-                        if (j > -1)
-                        {
-                            nota = colRes[i].Notas.Substring(j + 2, 12);
-                        }
-                    }
-                    else
-                    {
-                        nota = colRes[i].Notas;
-                    }
-                    if (string.IsNullOrEmpty(nota))
-                    {
-                        if (string.IsNullOrEmpty(colRes[i].Notas) == false)
-                        {
-                            nota = colRes[i].Notas.Substring(0, 28);
-                        }
-                    }
-                    sb.AppendLine($"{colRes[i].Nombre}, {nota}");
-                }
-            }
-            return sb.ToString();
-        }
+        //    if (colRes.Count > 0)
+        //    {
+        //        if (conCabecera)
+        //        {
+        //            sb.AppendLine($"Hay {colRes.Count} {colRes.Count.Plural("reserva")} del {fecha:dddd dd/MM/yyyy} sin email.");
+        //        }
+        //        for (int i = 0; i < colRes.Count; i++)
+        //        {
+        //            string nota = "";
+        //            // Poner solo los xx primeros caracteres de las notas. (25/ago/23 14.18)
+        //            //GetYourGuide - GYGLMWA85MXQ - (Spain) - Spanish (Live tour guide) -
+        //            //sb.AppendLine($"{colRes[i].Nombre}, {colRes[i].Notas}");
+        //            if (colRes[i].Notas.StartsWith("GetYourGuide"))
+        //            {
+        //                int j = colRes[i].Notas.IndexOf("- GYG");
+        //                if (j > -1)
+        //                {
+        //                    nota = colRes[i].Notas.Substring(j + 2, 12);
+        //                }
+        //            }
+        //            else
+        //            {
+        //                nota = colRes[i].Notas;
+        //            }
+        //            if (string.IsNullOrEmpty(nota))
+        //            {
+        //                if (string.IsNullOrEmpty(colRes[i].Notas) == false)
+        //                {
+        //                    nota = colRes[i].Notas.Substring(0, 28);
+        //                }
+        //            }
+        //            sb.AppendLine($"{colRes[i].Nombre}, {nota}");
+        //        }
+        //    }
+        //    return sb.ToString();
+        //}
 
         /// <summary>
         /// Comprueba las reservas sin email de la fecha indicada.
@@ -1292,143 +1292,168 @@ Sep 5, 2023
             return col;
         }
 
-        // El nombre del país según el código internacional del teléfono. (06/sep/23 23.35)
+        // Se usa el de Extensiones en KNDatos.
+
+        //// El nombre del país según el código internacional del teléfono. (06/sep/23 23.35)
+
+        ///// <summary>
+        ///// Averiguar el país según el código internacional del teléfono.
+        ///// </summary>
+        ///// <param name="telefono">El número de teléfono con el código internacional.</param>
+        ///// <returns>El nombre del país correspondiente al código internacional.</returns>
+        //public static string PaisTelefono(string telefono)
+        //{
+        //    if (string.IsNullOrWhiteSpace(telefono)) { return ""; }
+
+        //    string elPais;
+
+        //    if (telefono.StartsWith("+1"))
+        //        elPais = "United States/Canada";
+        //    else if (telefono.StartsWith("+7"))
+        //        elPais = "Russia";
+        //    else if (telefono.StartsWith("+30"))
+        //        elPais = "Greece";
+        //    else if (telefono.StartsWith("+31"))
+        //        elPais = "Netherlands";
+        //    else if (telefono.StartsWith("+32"))
+        //        elPais = "Belgium";
+        //    else if (telefono.StartsWith("+33"))
+        //        elPais = "France";
+        //    else if (telefono.StartsWith("+34"))
+        //        elPais = "Spain";
+        //    else if (telefono.StartsWith("+36"))
+        //        elPais = "Hungary";
+        //    else if (telefono.StartsWith("+39"))
+        //        elPais = "Italy";
+        //    else if (telefono.StartsWith("+40"))
+        //        elPais = "Romania";
+        //    else if (telefono.StartsWith("+41"))
+        //        elPais = "Switzerland";
+        //    else if (telefono.StartsWith("+43"))
+        //        elPais = "Austria";
+        //    else if (telefono.StartsWith("+44"))
+        //        elPais = "United Kingdom";
+        //    else if (telefono.StartsWith("+45"))
+        //        elPais = "Denmark";
+        //    else if (telefono.StartsWith("+46"))
+        //        elPais = "Sweden";
+        //    else if (telefono.StartsWith("+47"))
+        //        elPais = "Norway";
+        //    else if (telefono.StartsWith("+48"))
+        //        elPais = "Poland";
+        //    else if (telefono.StartsWith("+49"))
+        //        elPais = "Germany";
+        //    else if (telefono.StartsWith("+52"))
+        //        elPais = "Mexico";
+        //    else if (telefono.StartsWith("+54"))
+        //        elPais = "Argentina";
+        //    else if (telefono.StartsWith("+61"))
+        //        elPais = "Australia";
+        //    else if (telefono.StartsWith("+81"))
+        //        elPais = "Japan";
+        //    else if (telefono.StartsWith("+212"))
+        //        elPais = "Morocco";
+        //    else if (telefono.StartsWith("+350"))
+        //        elPais = "Gibraltar";
+        //    else if (telefono.StartsWith("+351"))
+        //        elPais = "Portugal";
+        //    else if (telefono.StartsWith("+352"))
+        //        elPais = "Luxembourg";
+        //    else if (telefono.StartsWith("+353"))
+        //        elPais = "Ireland";
+        //    else if (telefono.StartsWith("+354"))
+        //        elPais = "Iceland";
+        //    else if (telefono.StartsWith("+355"))
+        //        elPais = "Albania";
+        //    else if (telefono.StartsWith("+356"))
+        //        elPais = "Malta";
+        //    else if (telefono.StartsWith("+357"))
+        //        elPais = "Cyprus";
+        //    else if (telefono.StartsWith("+358"))
+        //        elPais = "Findland";
+        //    else if (telefono.StartsWith("+359"))
+        //        elPais = "Bulgaria";
+        //    else if (telefono.StartsWith("+370"))
+        //        elPais = "Lithuania";
+        //    else if (telefono.StartsWith("+371"))
+        //        elPais = "Latvia";
+        //    else if (telefono.StartsWith("+372"))
+        //        elPais = "Estonia";
+        //    else if (telefono.StartsWith("+373"))
+        //        elPais = "Moldova";
+        //    else if (telefono.StartsWith("+374"))
+        //        elPais = "Armenia";
+        //    else if (telefono.StartsWith("+375"))
+        //        elPais = "Belarus";
+        //    else if (telefono.StartsWith("+376"))
+        //        elPais = "Andorra";
+        //    else if (telefono.StartsWith("+377"))
+        //        elPais = "Monaco";
+        //    else if (telefono.StartsWith("+378"))
+        //        elPais = "San Marino";
+        //    else if (telefono.StartsWith("+379"))
+        //        elPais = "Vatican City";
+        //    else if (telefono.StartsWith("+380"))
+        //        elPais = "Ukraine";
+        //    else if (telefono.StartsWith("+381"))
+        //        elPais = "Serbia";
+        //    else if (telefono.StartsWith("+382"))
+        //        elPais = "Montenegro";
+        //    else if (telefono.StartsWith("+383"))
+        //        elPais = "Kosovo";
+        //    else if (telefono.StartsWith("+385"))
+        //        elPais = "Croatia";
+        //    else if (telefono.StartsWith("+386"))
+        //        elPais = "Slovenia";
+        //    else if (telefono.StartsWith("+387"))
+        //        elPais = "Bosnia and Herzegovina";
+        //    else if (telefono.StartsWith("+389"))
+        //        elPais = "North Macedonia";
+        //    else if (telefono.StartsWith("+420"))
+        //        elPais = "Czechia";
+        //    else if (telefono.StartsWith("+421"))
+        //        elPais = "Slovakia";
+        //    else if (telefono.StartsWith("+423"))
+        //        elPais = "Liechtenstein";
+        //    else if (telefono.StartsWith("+82"))
+        //        elPais = "South Korea";
+        //    else if (telefono.StartsWith("+852"))
+        //        elPais = "Hong Kong";
+        //    else if (telefono.StartsWith("+965"))
+        //        elPais = "Kuwait";
+        //    else if (telefono.StartsWith("+966"))
+        //        elPais = "Saudi Arabia";
+        //    else if (telefono.StartsWith("+972"))
+        //        elPais = "Israel";
+        //    else if (telefono.StartsWith("+974"))
+        //        elPais = "Qatar";
+        //    else
+        //        elPais = "";
+
+        //    return elPais;
+        //}
 
         /// <summary>
-        /// Averiguar el país según el código internacional del teléfono.
+        /// Añadir al StringBuilder indicado la firma de Kayak Makarena.
         /// </summary>
-        /// <param name="telefono">El número de teléfono con el código internacional.</param>
-        /// <returns>El nombre del país correspondiente al código internacional.</returns>
-        public static string PaisTelefono(string telefono)
+        /// <param name="sb"></param>
+        /// <param name="enIngles"></param>
+        public static void FirmaMakarena(StringBuilder sb, bool enIngles)
         {
-            if (string.IsNullOrWhiteSpace(telefono)) { return ""; }
-
-            string elPais;
-
-            if (telefono.StartsWith("+1"))
-                elPais = "United States/Canada";
-            else if (telefono.StartsWith("+7"))
-                elPais = "Russia";
-            else if (telefono.StartsWith("+30"))
-                elPais = "Greece";
-            else if (telefono.StartsWith("+31"))
-                elPais = "Netherlands";
-            else if (telefono.StartsWith("+32"))
-                elPais = "Belgium";
-            else if (telefono.StartsWith("+33"))
-                elPais = "France";
-            else if (telefono.StartsWith("+34"))
-                elPais = "Spain";
-            else if (telefono.StartsWith("+36"))
-                elPais = "Hungary";
-            else if (telefono.StartsWith("+39"))
-                elPais = "Italy";
-            else if (telefono.StartsWith("+40"))
-                elPais = "Romania";
-            else if (telefono.StartsWith("+41"))
-                elPais = "Switzerland";
-            else if (telefono.StartsWith("+43"))
-                elPais = "Austria";
-            else if (telefono.StartsWith("+44"))
-                elPais = "United Kingdom";
-            else if (telefono.StartsWith("+45"))
-                elPais = "Denmark";
-            else if (telefono.StartsWith("+46"))
-                elPais = "Sweden";
-            else if (telefono.StartsWith("+47"))
-                elPais = "Norway";
-            else if (telefono.StartsWith("+48"))
-                elPais = "Poland";
-            else if (telefono.StartsWith("+49"))
-                elPais = "Germany";
-            else if (telefono.StartsWith("+52"))
-                elPais = "Mexico";
-            else if (telefono.StartsWith("+54"))
-                elPais = "Argentina";
-            else if (telefono.StartsWith("+61"))
-                elPais = "Australia";
-            else if (telefono.StartsWith("+81"))
-                elPais = "Japan";
-            else if (telefono.StartsWith("+212"))
-                elPais = "Morocco";
-            else if (telefono.StartsWith("+350"))
-                elPais = "Gibraltar";
-            else if (telefono.StartsWith("+351"))
-                elPais = "Portugal";
-            else if (telefono.StartsWith("+352"))
-                elPais = "Luxembourg";
-            else if (telefono.StartsWith("+353"))
-                elPais = "Ireland";
-            else if (telefono.StartsWith("+354"))
-                elPais = "Iceland";
-            else if (telefono.StartsWith("+355"))
-                elPais = "Albania";
-            else if (telefono.StartsWith("+356"))
-                elPais = "Malta";
-            else if (telefono.StartsWith("+357"))
-                elPais = "Cyprus";
-            else if (telefono.StartsWith("+358"))
-                elPais = "Findland";
-            else if (telefono.StartsWith("+359"))
-                elPais = "Bulgaria";
-            else if (telefono.StartsWith("+370"))
-                elPais = "Lithuania";
-            else if (telefono.StartsWith("+371"))
-                elPais = "Latvia";
-            else if (telefono.StartsWith("+372"))
-                elPais = "Estonia";
-            else if (telefono.StartsWith("+373"))
-                elPais = "Moldova";
-            else if (telefono.StartsWith("+374"))
-                elPais = "Armenia";
-            else if (telefono.StartsWith("+375"))
-                elPais = "Belarus";
-            else if (telefono.StartsWith("+376"))
-                elPais = "Andorra";
-            else if (telefono.StartsWith("+377"))
-                elPais = "Monaco";
-            else if (telefono.StartsWith("+378"))
-                elPais = "San Marino";
-            else if (telefono.StartsWith("+379"))
-                elPais = "Vatican City";
-            else if (telefono.StartsWith("+380"))
-                elPais = "Ukraine";
-            else if (telefono.StartsWith("+381"))
-                elPais = "Serbia";
-            else if (telefono.StartsWith("+382"))
-                elPais = "Montenegro";
-            else if (telefono.StartsWith("+383"))
-                elPais = "Kosovo";
-            else if (telefono.StartsWith("+385"))
-                elPais = "Croatia";
-            else if (telefono.StartsWith("+386"))
-                elPais = "Slovenia";
-            else if (telefono.StartsWith("+387"))
-                elPais = "Bosnia and Herzegovina";
-            else if (telefono.StartsWith("+389"))
-                elPais = "North Macedonia";
-            else if (telefono.StartsWith("+420"))
-                elPais = "Czechia";
-            else if (telefono.StartsWith("+421"))
-                elPais = "Slovakia";
-            else if (telefono.StartsWith("+423"))
-                elPais = "Liechtenstein";
-            else if (telefono.StartsWith("+82"))
-                elPais = "South Korea";
-            else if (telefono.StartsWith("+852"))
-                elPais = "Hong Kong";
-            else if (telefono.StartsWith("+965"))
-                elPais = "Kuwait";
-            else if (telefono.StartsWith("+966"))
-                elPais = "Saudi Arabia";
-            else if (telefono.StartsWith("+972"))
-                elPais = "Israel";
-            else if (telefono.StartsWith("+974"))
-                elPais = "Qatar";
+            sb.AppendLine("<br/>");
+            sb.Append("<br/>");
+            // No tenía los cambios de línea, añado el teléfono (08/sep/23 13.55)
+            sb.Append("Kayak Makarena<br/>");
+            sb.Append("iMessage / WhatsApp: +34 645 76 16 89 ");
+            if (enIngles)
+            {
+                sb.Append("<small>(Please, only WhatsApp messages or calls as I usually don't have phone coverage)</small><br/>");
+            }
             else
-                elPais = "";
-
-            return elPais;
+            {
+                sb.Append("<small>(Por favor, solo mensajes o llamadas por wasap ya que no suelo tener cobertura)</small><br/>");
+            }
+            sb.Append("https://kayakmakarena.com<br/>");
         }
     }
 }

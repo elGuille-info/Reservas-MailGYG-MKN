@@ -178,7 +178,7 @@ namespace ReservasGYG.Properties {
         ///
         ///Los vehículos no pueden ir hasta la playa de Maro (porque es zona protegida) y debes aparcar  [rest of string was truncated]&quot;;.
         /// </summary>
-        internal static string Hoy_es_el_dia_txt {
+        internal static string Hoy_es_el_dia {
             get {
                 return ResourceManager.GetString("Hoy_es_el_dia", resourceCulture);
             }
@@ -228,7 +228,7 @@ namespace ReservasGYG.Properties {
         ///&lt;b&gt;*IMPORTANT*&lt;/b&gt;:
         ///Remember that you must be at the companyâ€™s counter (Maro Kayak Nerja, which is right when you arrive at the beach) &lt;b&gt;*15 minutes before the activityâ€™s departure time*&lt;/ [rest of string was truncated]&quot;;.
         /// </summary>
-        internal static string IMPORTANTE_EN_09_30_txt {
+        internal static string IMPORTANTE_EN_09_30 {
             get {
                 return ResourceManager.GetString("IMPORTANTE_EN_09.30", resourceCulture);
             }
@@ -251,7 +251,7 @@ namespace ReservasGYG.Properties {
         ///&lt;b&gt;*IMPORTANT*&lt;/b&gt;:
         ///Remember that you must be at the company’s counter (Maro Kayak Nerja, which is right when you arrive at the beach) &lt;b&gt;*15 minutes before the activity’s departure time*&lt;/b&gt; if  [rest of string was truncated]&quot;;.
         /// </summary>
-        internal static string IMPORTANTE_EN_10_30_11_00_txt {
+        internal static string IMPORTANTE_EN_10_30_11_00 {
             get {
                 return ResourceManager.GetString("IMPORTANTE_EN_10.30_11.00", resourceCulture);
             }
@@ -275,7 +275,7 @@ namespace ReservasGYG.Properties {
         ///&lt;b&gt;*IMPORTANT*&lt;/b&gt;:
         ///Remember that you must be at the company’s counter (Maro Kayak Nerja, which is right when you arrive at the [rest of string was truncated]&quot;;.
         /// </summary>
-        internal static string IMPORTANTE_EN_txt {
+        internal static string IMPORTANTE_EN {
             get {
                 return ResourceManager.GetString("IMPORTANTE_EN", resourceCulture);
             }
@@ -325,7 +325,7 @@ namespace ReservasGYG.Properties {
         ///&lt;b&gt;*IMPORTANTE*:&lt;/b&gt;
         ///Recuerda que debes estar en el mostrador de la empresa (Maro Kayak Nerja, que está justo cuando llegas a la playa) &lt;b&gt;*15 minuto [rest of string was truncated]&quot;;.
         /// </summary>
-        internal static string IMPORTANTE_ES_10_30_11_00_txt {
+        internal static string IMPORTANTE_ES_10_30_11_00 {
             get {
                 return ResourceManager.GetString("IMPORTANTE_ES_10.30_11.00", resourceCulture);
             }
@@ -351,7 +351,7 @@ namespace ReservasGYG.Properties {
         ///&lt;b&gt;*IMPORTANTE*:&lt;/b&gt;
         ///Recuerda que debes estar en el mostrador de la empresa (Mar [rest of string was truncated]&quot;;.
         /// </summary>
-        internal static string IMPORTANTE_ES_txt {
+        internal static string IMPORTANTE_ES {
             get {
                 return ResourceManager.GetString("IMPORTANTE_ES", resourceCulture);
             }

@@ -686,6 +686,12 @@ namespace ReservasGYG_Movil
                         }
                     }
                 }
+                // En temporada alta, hasta mediados septiembre (18/sep/23 05.18)
+                if (DateTime.Today <= new DateTime(2023, 9, 15))
+                {
+                    sb.Append(await MainPage.LeerAsset("IMPORTANTE_Lee_esto_Maro.txt"));
+                }
+
                 // Indicar siempre que hagan la reseña.     (16/sep/23 22.44)
                 sb.AppendLine();
                 sb.AppendLine();
@@ -699,19 +705,21 @@ namespace ReservasGYG_Movil
                 }
             }
 
-            // Esto solo añadirlo si se manda por email.
-            sb.AppendLine();
-            sb.AppendLine();
-            sb.AppendLine("Kayak Makarena");
-            if (enIngles)
-            {
-                sb.AppendLine("iMessage / WhatsApp: +34 645 76 16 89 <small>(Please, only WhatsApp messages or calls as I usually don't have coverage)</small>");
-            }
-            else
-            {
-                sb.AppendLine("iMessage / WhatsApp: +34 645 76 16 89 <small>(Por favor, solo mensajes o llamadas por wasap ya que no suelo tener cobertura)</small>");
-            }
-            sb.AppendLine("https://kayakmakarena.com");
+            // Añadir la firma de Kayak Makarena                (18/sep/23 05.37)
+            MailGYG.FirmaMakarena(sb, enIngles);
+
+            //sb.AppendLine();
+            //sb.AppendLine();
+            //sb.AppendLine("Kayak Makarena");
+            //if (enIngles)
+            //{
+            //    sb.AppendLine("iMessage / WhatsApp: +34 645 76 16 89 <small>(Please, only WhatsApp messages or calls as I usually don't have coverage)</small>");
+            //}
+            //else
+            //{
+            //    sb.AppendLine("iMessage / WhatsApp: +34 645 76 16 89 <small>(Por favor, solo mensajes o llamadas por wasap ya que no suelo tener cobertura)</small>");
+            //}
+            //sb.AppendLine("https://kayakmakarena.com");
 
             LabelAsuntoEmail.Text = asunto; // $"Booking - S271506 - {re.GYGReference}";
             LabelParaEmail.Text = re.Email;

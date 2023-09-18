@@ -26,18 +26,18 @@ public partial class Form1 : Form
 
     // Intentar no pasar de estas marcas: 60 caracteres. 2         3         4         5         6
     //                                ---------|---------|---------|---------|---------|---------|
-    //[COPIAR]AppDescripcionCopia = " nombres ficheros recursos app escritorio"
+    //[COPIAR]AppDescripcionCopia = " metodo FirmaMakarena"
     // BuscarClientes mostrar reservas en la pagina
 
     /// <summary>
     /// La versión de la aplicación.
     /// </summary>
-    public static string AppVersion { get; } = "1.0.49";
+    public static string AppVersion { get; } = "1.0.50";
 
     /// <summary>
     /// La versión del fichero (la revisión)
     /// </summary>
-    public static string AppFileVersion { get; } = "1.0.49.0";
+    public static string AppFileVersion { get; } = "1.0.50.0";
 
     /// <summary>
     /// La fecha de última actualización
@@ -502,13 +502,17 @@ public partial class Form1 : Form
 
         StringBuilder sb = new StringBuilder();
         sb.Append("");
-        sb.Append(Properties.Resources.Hoy_es_el_dia_txt.Replace(CrLf, "<br/>"));
-        sb.Append("<br/>");
-        sb.Append("<br/>");
-        // No tenía los cambios de línea, añado el teléfono (08/sep/23 13.55)
-        sb.Append("Kayak Makarena<br/>");
-        sb.Append("WhatsApp: +34 645 76 16 89<br/>");
-        sb.Append("https://kayakmakarena.com<br/>");
+        sb.Append(Properties.Resources.Hoy_es_el_dia.Replace(CrLf, "<br/>"));
+
+        // Añadir la firma de Kayak Makarena                (18/sep/23 05.33)
+        MailGYG.FirmaMakarena(sb, enIngles:false);
+
+        //sb.Append("<br/>");
+        //sb.Append("<br/>");
+        //// No tenía los cambios de línea, añado el teléfono (08/sep/23 13.55)
+        //sb.Append("Kayak Makarena<br/>");
+        //sb.Append("WhatsApp: +34 645 76 16 89<br/>");
+        //sb.Append("https://kayakmakarena.com<br/>");
 
         string body = sb.ToString().Replace(CrLf, "<br/>");
         var msg = MailGYG.EnviarMensaje(colPara, "Hoy es el día / Today is the day", body, true);
