@@ -7,15 +7,15 @@
   IgnorableNamespaces="uap mp">
 
   <Identity
-    Name="6CD7D48C-241F-4119-9E6B-CBAEDEDD5736"
-    Publisher="CN=9C97D517-09B9-4E8A-883D-39373B9CAAFB"
-    Version="1.0.0.0" />
+    Name="30481elGuille.info.427501C30E220"
+    Publisher="CN=F38F01A4-356D-413A-9B95-191B2D6030BD"
+    Version="1.0.56.0" />
 
-  <mp:PhoneIdentity PhoneProductId="ec0cc741-fd3e-485c-81be-68815c480690" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
+  <mp:PhoneIdentity PhoneProductId="8ba38007-c7a1-4c48-b2ba-1c3ecbb40879" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
 
   <Properties>
-    <DisplayName>ReservsGYG_Movil.UWP</DisplayName>
-    <PublisherDisplayName>9C97D517-09B9-4E8A-883D-39373B9CAAFB</PublisherDisplayName>
+    <DisplayName>ReservasGYG</DisplayName>
+    <PublisherDisplayName>elguille.info</PublisherDisplayName>
     <Logo>Assets\StoreLogo.png</Logo>
   </Properties>
 
