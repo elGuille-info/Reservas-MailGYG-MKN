@@ -31,12 +31,15 @@ namespace ApiReservasMailGYG
 
     public class MailGYG
     {
+        // Esto no va...                                    (18/sep/23 18.17)
+        // lo mismo hay que probar de otra forma...   
+
         /// <summary>
         /// Función para usar al enviar los mensajes al crear, modificar o cancelar una reserva.
         /// </summary>
         /// <param name="re">Referencia a la reserva nueva, modificada o cancelada.</param>
         /// <param name="delegado">Función a la que se llamará para obtener el texto del recurso que se deba usar en el mensaje.</param>
-        /// <returns>Una cadena con el texto de la confirmación a enviar por email.</returns>
+        /// <returns>Una tupla con el texto de la confirmación y el asunto a enviar por email.</returns>
         public static (string Body, string Asunto) TextoMensajeConfirmacion(Reservas re, AccederRecursoDelegate delegado)
         {
             var LaReserva = re;
@@ -45,6 +48,7 @@ namespace ApiReservasMailGYG
             var DatosVPWiz = new MKNUtilidades.VentasPlayaWiz(re);
             MKNUtilidades.VentasPlayaWiz.IncluirReportajeConfirmarReserva = false;
             MKNUtilidades.VentasPlayaWiz.IncluirTextosConfirmarReserva = false;
+
             bool enIngles = false; // = re.GYGLanguage.Contains("English");
             if (string.IsNullOrEmpty(re.GYGLanguage) == false)
             {
