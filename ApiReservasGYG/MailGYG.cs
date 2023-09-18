@@ -1450,7 +1450,7 @@ Sep 5, 2023
             sb.Append("iMessage / WhatsApp: +34 645 76 16 89 ");
             if (enIngles)
             {
-                sb.Append("<small>(Please, only WhatsApp messages or calls as I usually don't have phone coverage)</small><br/>");
+                sb.Append("<small>(Please, only WhatsApp messages or calls as I usually don't have phone coverage)</small>");
             }
             else
             {
