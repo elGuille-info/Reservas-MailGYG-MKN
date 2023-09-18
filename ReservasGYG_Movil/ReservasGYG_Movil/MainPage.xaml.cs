@@ -724,6 +724,8 @@ namespace ReservasGYG_Movil
             // Añadir la firma de Kayak Makarena                (18/sep/23 05.37)
             MailGYG.FirmaMakarena(sb, enIngles);
 
+            //TODO: Usar MailGYG.TextoMensajeConfirmacion       (18/sep/23 10.31)
+
             LabelAsuntoEmail.Text = asunto;
             LabelParaEmail.Text = re.Email;
             // Cambiar los retornos de carro por <br/>      (18/sep/23 04.49)

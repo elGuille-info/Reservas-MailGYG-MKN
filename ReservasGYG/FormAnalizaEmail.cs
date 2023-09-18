@@ -708,19 +708,7 @@ public partial class FormAnalizaEmail : Form
         // Añadir la firma de Kayak Makarena                (18/sep/23 05.33)
         MailGYG.FirmaMakarena(sb, enIngles);
 
-        //sb.AppendLine("<br/>");
-        //sb.Append("<br/>");
-        //// No tenía los cambios de línea, añado el teléfono (08/sep/23 13.55)
-        //sb.Append("Kayak Makarena<br/>");
-        //if (enIngles)
-        //{
-        //    sb.Append("iMessage / WhatsApp: +34 645 76 16 89 <small>(Please, only WhatsApp messages or calls as I usually don't have coverage)</small><br/>");
-        //}
-        //else
-        //{
-        //    sb.Append("iMessage / WhatsApp: +34 645 76 16 89 <small>(Por favor, solo mensajes o llamadas por wasap ya que no suelo tener cobertura)</small><br/>");
-        //}
-        //sb.Append("https://kayakmakarena.com<br/>");
+        //TODO: Usar MailGYG.TextoMensajeConfirmacion       (18/sep/23 10.31)
 
         //var asunto = $"Booking - S271506 - {re.GYGReference}";
         var para = re.Email;

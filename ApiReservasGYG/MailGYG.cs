@@ -20,8 +20,158 @@ using System.Net;
 
 namespace ApiReservasMailGYG
 {
+    // Delegado para usar con los recursos.                 (18/sep/23 09.11)
+    
+    /// <summary>
+    /// Delegado para acceder a los recursos.
+    /// </summary>
+    /// <returns>Una cadena con el contenido del recurso.</returns>
+    public delegate string AccederRecursoDelegate(string recurso);
+
     public class MailGYG
     {
+        public static string TextoMensajeConfirmacion(Reservas re, AccederRecursoDelegate delegado)
+        {
+            var LaReserva = re;
+            StringBuilder sb = new StringBuilder();
+
+            var DatosVPWiz = new MKNUtilidades.VentasPlayaWiz(re);
+            MKNUtilidades.VentasPlayaWiz.IncluirReportajeConfirmarReserva = false;
+            MKNUtilidades.VentasPlayaWiz.IncluirTextosConfirmarReserva = false;
+            bool enIngles = false; // = re.GYGLanguage.Contains("English");
+            if (string.IsNullOrEmpty(re.GYGLanguage) == false)
+            {
+                enIngles = re.GYGLanguage.Contains("English");
+            }
+
+            string asunto;
+            // Mandar el mensaje según sea modificar, cancelar o nueva. (09/sep/23 01.55)
+            if (LaReserva.GYGTipo == Reservas.GYGTipos.Cancelada)
+            {
+                if (enIngles)
+                {
+                    asunto = $"Booking cancelled - {re.GYGReference}";
+                }
+                else
+                {
+                    asunto = $"Reserva cancelada - {re.GYGReference}";
+                }
+
+                sb.AppendLine("Reserva cancelada // Booking cancelled.");
+                sb.AppendLine();
+                sb.AppendLine($"GetYourGuide Booking # {re.GYGReference}");
+                sb.AppendLine($"{re.ActividadMostrar} {re.FechaActividad:dd/MM/yyyy} {re.HoraActividad:hh\\:mm}");
+                sb.AppendLine();
+                sb.AppendLine($"Número de reserva MKN: {re.ID:#,###}");
+                //sb.AppendLine();
+                sb.AppendLine();
+            }
+            else
+            {
+                if (LaReserva.GYGTipo == Reservas.GYGTipos.Modificada)
+                {
+                    if (enIngles)
+                    {
+                        asunto = $"Booking changed - {re.GYGReference}";
+                    }
+                    else
+                    {
+                        asunto = $"Modificación reserva - {re.GYGReference}";
+                    }
+                }
+                else
+                {
+                    if (enIngles)
+                    {
+                        asunto = $"Booking confirmation - {re.GYGReference}";
+                    }
+                    else
+                    {
+                        asunto = $"Confirmación reserva - {re.GYGReference}";
+                    }
+                }
+
+                sb.Append(DatosVPWiz.ResumenReserva(esWeb: false, enIngles: enIngles));
+                sb.AppendLine();
+                sb.AppendLine();
+
+                // Para alquiler, mandar otro texto diferente.  (09/sep/23 22.08)
+                if (KNDatos.BaseKayak.ActividadesAlquiler().Contains(re.Actividad))
+                {
+                    //sb.Append(Properties.Resources.IMPORTANTE_ALQUILER.Replace(CrLf, "<br/>"));
+                    sb.Append(delegado("IMPORTANTE_ALQUILER").Replace(CrLf, "<br/>"));
+                }
+                else
+                {
+                    // Mandar el texto según el idioma.         (22/ago/23 10.58)
+                    if (re.HoraActividad.Hours == 9)
+                    {
+                        if (enIngles)
+                        {
+                            //sb.Append(Properties.Resources.IMPORTANTE_EN_09_30.Replace(CrLf, "<br/>"));
+                            sb.Append(delegado("IMPORTANTE_EN_09_30").Replace(CrLf, "<br/>"));
+                        }
+                        else
+                        {
+                            //sb.Append(Properties.Resources.IMPORTANTE_ES_09_30.Replace(CrLf, "<br/>"));
+                            sb.Append(delegado("IMPORTANTE_ES_09_30").Replace(CrLf, "<br/>"));
+                        }
+                    }
+                    else if (re.HoraActividad.Hours == 10 || re.HoraActividad == new TimeSpan(11, 0, 0))
+                    {
+                        if (enIngles)
+                        {
+                            //sb.Append(Properties.Resources.IMPORTANTE_EN_10_30_11_00.Replace(CrLf, "<br/>"));
+                            sb.Append(delegado("IMPORTANTE_EN_10_30_11_00").Replace(CrLf, "<br/>"));
+                        }
+                        else
+                        {
+                            //sb.Append(Properties.Resources.IMPORTANTE_ES_10_30_11_00.Replace(CrLf, "<br/>"));
+                            sb.Append(delegado("IMPORTANTE_ES_10_30_11_00").Replace(CrLf, "<br/>"));
+                        }
+                    }
+                    else
+                    {
+                        if (enIngles)
+                        {
+                            //sb.Append(Properties.Resources.IMPORTANTE_EN.Replace(CrLf, "<br/>"));
+                            sb.Append(delegado("IMPORTANTE_EN").Replace(CrLf, "<br/>"));
+                        }
+                        else
+                        {
+                            //sb.Append(Properties.Resources.IMPORTANTE_ES.Replace(CrLf, "<br/>"));
+                            sb.Append(delegado("IMPORTANTE_ES").Replace(CrLf, "<br/>"));
+                        }
+                    }
+                }
+
+                // En temporada alta, hasta mediados septiembre (18/sep/23 05.18)
+                if (DateTime.Today <= new DateTime(2023, 9, 15))
+                {
+                    sb.Append(delegado("IMPORTANTE_Lee_esto_Maro").Replace(CrLf, "<br/>"));
+                }
+
+                // Indicar siempre que hagan la reseña.         (11/sep/23 10.25)
+                //// Si es para el mismo día de la actividad.     (24/ago/23 06.24)
+                //if (DateTime.Today == re.FechaActividad)
+                sb.AppendLine("<br/>");
+                sb.Append("<br/>");
+                if (enIngles)
+                {
+                    sb.Append("We would love to receive a review on the GetYourGuide website with your opinion on this activity, taking into account that <b>Kayak Makarena</b> is responsible for managing the reservations and <b>Maro - Kayak Nerja</b> carries out the routes.<br/>");
+                }
+                else
+                {
+                    sb.Append("Nos encantaría recibir una reseña en el sitio de GetYourGuide con tu opinión sobre esta actividad, teniendo en cuenta que <b>Kayak Makarena</b> es la encargada de gestionar las reservas y <b>Maro - Kayak Nerja</b> realiza las rutas.<br/>");
+                }
+            }
+
+            // Añadir la firma de Kayak Makarena                (18/sep/23 05.33)
+            MailGYG.FirmaMakarena(sb, enIngles);
+
+            return sb.ToString();
+        }
+
         /// <summary>
         /// El cambio de línea en las cajas de texto.
         /// </summary>
