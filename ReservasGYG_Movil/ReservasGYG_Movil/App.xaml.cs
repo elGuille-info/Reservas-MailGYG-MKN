@@ -31,17 +31,17 @@ namespace ReservasGYG_Movil
         /// <summary>
         /// La versión de la aplicación.
         /// </summary>
-        public static string AppVersion { get; } = "1.0.41";
+        public static string AppVersion { get; } = "1.0.48";
 
         /// <summary>
         /// La versión del fichero (la revisión)
         /// </summary>
-        public static string AppFileVersion { get; } = "1.0.41.0";
+        public static string AppFileVersion { get; } = "1.0.48.0";
 
         /// <summary>
         /// La fecha de última actualización
         /// </summary>
-        public static string AppFechaVersion { get; } = "16-sep-2023";
+        public static string AppFechaVersion { get; } = "18-sep-2023";
 
         /// <summary>
         /// Hacer una pequeña pausa para refrescar.

@@ -163,6 +163,9 @@
   <data name="IMPORTANTE_ES_txt" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\IMPORTANTE_ES_txt.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
+  <data name="IMPORTANTE_Lee_esto_Maro" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\IMPORTANTE_Lee_esto_Maro.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
   <data name="Mañana_es_el_dia" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Mañana_es_el_dia.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>

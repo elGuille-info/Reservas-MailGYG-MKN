@@ -185,14 +185,15 @@ namespace ReservasGYG.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to &lt;b&gt;*INFORMACIÓN DE INTERÉS (SPANISH)*&lt;/b&gt;
-        ///
+        ///   Looks up a localized string similar to 
+        ///&lt;b&gt;*INFORMACIÓN DE INTERÉS (SPANISH)*&lt;/b&gt;
         ///
         ///
         ///&lt;b&gt;*LOCALIZACIÓN*&lt;/b&gt;
         ///Ubicación en Google Maps de la &lt;b&gt;*Playa de Maro*&lt;/b&gt;
         ///https://goo.gl/wbLLFd
         ///(&lt;b&gt;*NO ES &quot;Caleta de Maro&quot;, no te confundas de playa*&lt;/b&gt;.)
+        ///
         ///
         ///
         ///&lt;b&gt;*LOCALIZACIÓN DEL PARKING JUNTO A PARADA DEL BUS A LA PLAYA*&lt;/b&gt;
@@ -202,7 +203,7 @@ namespace ReservasGYG.Properties {
         ///
         ///
         ///&lt;b&gt;*IMPORTANTE*:&lt;/b&gt;
-        ///Recuerda que debes estar en el mostrador de la em [rest of string was truncated]&quot;;.
+        ///Recuerda que debes estar en el mostrador de la  [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string IMPORTANTE_ALQUILER {
             get {
@@ -353,6 +354,20 @@ namespace ReservasGYG.Properties {
         internal static string IMPORTANTE_ES_txt {
             get {
                 return ResourceManager.GetString("IMPORTANTE_ES_txt", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &lt;b&gt;*Por favor lee esto*&lt;/b&gt;, el pueblo de Maro es muy pequeño y hay pocos sitios donde aparcar. Si no vas en taxi a la playa de Maro, por favor calcula al menos una hora y media para aparcar y si no encuentras en el pueblo, puedes ir al parking de las Cuevas de Nerja, aunque es de pago.
+        ///Te aviso porque si no estás en la playa de Maro 15 minutos antes de la hora de la actividad perderás tu reserva.
+        ///Gracias por tu comprensión.
+        ///
+        ///
+        ///&lt;b&gt;*Please read this*&lt;/b&gt;, the town of Maro is very small and there are few  [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string IMPORTANTE_Lee_esto_Maro {
+            get {
+                return ResourceManager.GetString("IMPORTANTE_Lee_esto_Maro", resourceCulture);
             }
         }
         

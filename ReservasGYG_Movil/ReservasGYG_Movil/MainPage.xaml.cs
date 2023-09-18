@@ -691,30 +691,32 @@ namespace ReservasGYG_Movil
                 sb.AppendLine();
                 if (enIngles)
                 {
-                    sb.Append("We would love to receive a review on the GetYourGuide website with your opinion on this activity, taking into account that <b>Kayak Makarena</b> is responsible for managing the reservations and <b>Maro - Kayak Nerja</b> carries out the routes.");
+                    sb.AppendLine("We would love to receive a review on the GetYourGuide website with your opinion on this activity, taking into account that <b>Kayak Makarena</b> is responsible for managing the reservations and <b>Maro - Kayak Nerja</b> carries out the routes.");
                 }
                 else
                 {
-                    sb.Append("Nos encantaría recibir una reseña en el sitio de GetYourGuide con tu opinión sobre esta actividad, teniendo en cuenta que <b>Kayak Makarena</b> es la encargada de gestionar las reservas y <b>Maro - Kayak Nerja</b> realiza las rutas.");
+                    sb.AppendLine("Nos encantaría recibir una reseña en el sitio de GetYourGuide con tu opinión sobre esta actividad, teniendo en cuenta que <b>Kayak Makarena</b> es la encargada de gestionar las reservas y <b>Maro - Kayak Nerja</b> realiza las rutas.");
                 }
             }
 
+            // Esto solo añadirlo si se manda por email.
             sb.AppendLine();
             sb.AppendLine();
             sb.AppendLine("Kayak Makarena");
             if (enIngles)
             {
-                sb.AppendLine("iMessage / WhatsApp: +34 645 76 16 89 (Please, only WhatsApp messages or calls as I usually don't have coverage)");
+                sb.AppendLine("iMessage / WhatsApp: +34 645 76 16 89 <small>(Please, only WhatsApp messages or calls as I usually don't have coverage)</small>");
             }
             else
             {
-                sb.AppendLine("iMessage / WhatsApp: +34 645 76 16 89 (Por favor, solo mensajes o llamadas por wasap ya que no suelo tener cobertura)");
+                sb.AppendLine("iMessage / WhatsApp: +34 645 76 16 89 <small>(Por favor, solo mensajes o llamadas por wasap ya que no suelo tener cobertura)</small>");
             }
             sb.AppendLine("https://kayakmakarena.com");
 
             LabelAsuntoEmail.Text = asunto; // $"Booking - S271506 - {re.GYGReference}";
             LabelParaEmail.Text = re.Email;
-            TxtTextoEmail.Text = sb.ToString();
+            // Cambiar los retornos de carro por <br/>      (18/sep/23 04.49)
+            TxtTextoEmail.Text = sb.ToString().Replace(CrLf, "<br/>");
 
             // No enviar el email,                          (30/ago/23 02.49)
             // pegar el texto en otra parte para poder copiarlo y enviarlo manualmente.
