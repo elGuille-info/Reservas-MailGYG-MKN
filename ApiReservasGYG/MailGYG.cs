@@ -1444,9 +1444,9 @@ Sep 5, 2023
         public static void FirmaMakarena(StringBuilder sb, bool enIngles)
         {
             sb.AppendLine("<br/>");
-            sb.Append("<br/>");
+            sb.AppendLine("<br/>");
             // No tenía los cambios de línea, añado el teléfono (08/sep/23 13.55)
-            sb.Append("Kayak Makarena<br/>");
+            sb.AppendLine("Kayak Makarena<br/>");
             sb.Append("iMessage / WhatsApp: +34 645 76 16 89 ");
             if (enIngles)
             {
@@ -1454,9 +1454,10 @@ Sep 5, 2023
             }
             else
             {
-                sb.Append("<small>(Por favor, solo mensajes o llamadas por wasap ya que no suelo tener cobertura)</small><br/>");
+                sb.Append("<small>(Por favor, solo mensajes o llamadas por wasap ya que no suelo tener cobertura)</small>");
             }
-            sb.Append("https://kayakmakarena.com<br/>");
+            sb.AppendLine("<br/>");
+            sb.AppendLine("https://kayakmakarena.com<br/>");
         }
     }
 }
