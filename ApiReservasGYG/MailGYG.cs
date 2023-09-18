@@ -433,7 +433,6 @@ namespace ApiReservasMailGYG
                 Nombre = ExtraerDespues(email, "Main customer:", 1).ToTitle(),
                 GYGPais = ExtraerDespues(email, "Main customer:", 2),
                 Email = ExtraerDespues(email, "Main customer:", 3),
-                //GYGNotas = ExtraerDespues(email, "children in your group.:", 1),
                 // Por si las notas están en varias líneas.     (25/ago/23 23.36)
                 GYGNotas = Extraer(email, "children in your group.:", "Tour language:"),
                 GYGLanguage = Extraer(email, "Tour language:"),
@@ -519,7 +518,11 @@ namespace ApiReservasMailGYG
             // en vez de XXX (Live tour guide)
             if (string.IsNullOrWhiteSpace(re.GYGLanguage))
             {
-                re.GYGLanguage = $"({re.ActividadMostrar.ToTitle()})";
+                // Añadir el país según prefijo telefónico  (18/sep/23 06.46)
+                var pais = KNDatos.Extensiones.PaisTelefono(re.Telefono);
+                // Añadir el idioma según el país.          (18/sep/23 06.52)
+                var idioma = $"{KNDatos.Extensiones.IdiomaPais(pais)} ";
+                re.GYGLanguage = $"{idioma}({pais} - {re.ActividadMostrar.ToTitle()})";
             }
 
             return re;

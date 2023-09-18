@@ -38,14 +38,14 @@
                         <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="TapGestureRecognizer_Tapped_1" />
                     </StackLayout.GestureRecognizers>
                     <Label Text="Email de la reserva a Analizar"
-                       FontFamily="Consolas" TextColor="White" FontAttributes="Bold"
-                       HorizontalOptions="FillAndExpand">
+                           FontFamily="Consolas" TextColor="White" FontAttributes="Bold"
+                           HorizontalOptions="FillAndExpand">
                         <Label.GestureRecognizers>
                             <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="TapGestureRecognizer_Tapped_1" />
                         </Label.GestureRecognizers>
                     </Label>
                     <Image x:Name="ImgEmailReserva" Style="{StaticResource ImgExpander}"
-                       Source="Resources\expand.png">
+                           Source="Resources\expand.png">
                         <Image.GestureRecognizers>
                             <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="TapGestureRecognizer_Tapped_1" />
                         </Image.GestureRecognizers>
@@ -61,19 +61,19 @@
                             <Button x:Name="BtnPegarMail" Text="Pegar texto" 
                                     HorizontalOptions="Start"
                                     BackgroundColor="Gold" TextColor="Black" 
-                                    HeightRequest="40" WidthRequest="160"
+                                    HeightRequest="40"
                                     Clicked="BtnPegarMail_Clicked"/>
+                            <!-- HorizontalOptions="{OnIdiom Phone=Start, Default=CenterAndExpand}" -->
                             <Button x:Name="BtnAnalizarEmail" Text="Analizar email"
-                                    HorizontalOptions="{OnIdiom Phone=Start, Default=CenterAndExpand}"
                                     BackgroundColor="Azure" TextColor="Black"
-                                    HeightRequest="40" WidthRequest="160"
+                                    HeightRequest="40"
                                     PropertyChanged="BtnCrearConEmail_PropertyChanged"
                                     Clicked="BtnAnalizarEmail_Clicked"/>
-                            <Button x:Name="BtnCrearConEmail" Text="Crear reserva y texto para email"
-                                    Margin="{OnIdiom Phone=0, Desktop='24,0,0,0', Tablet='8,0,0,0'}" 
-                                    HorizontalOptions="{OnIdiom Phone=Start, Default=EndAndExpand}"
+                            <!-- HorizontalOptions="{OnIdiom Phone=Start, Default=EndAndExpand}" -->
+                            <Button x:Name="BtnCrearConEmail" Text="Crear reserva"
+                                    Margin="{OnIdiom Phone='4,0,0,0', Desktop='12,0,0,0', Tablet='8,0,0,0'}" 
                                     BackgroundColor="MistyRose" TextColor="Black"
-                                    HeightRequest="40" WidthRequest="350"
+                                    HeightRequest="40"
                                     PropertyChanged="BtnCrearConEmail_PropertyChanged"
                                     Clicked="BtnCrearConEmail_Clicked"/>
                         </StackLayout>

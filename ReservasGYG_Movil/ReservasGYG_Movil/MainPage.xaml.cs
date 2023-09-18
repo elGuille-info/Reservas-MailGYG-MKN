@@ -16,6 +16,7 @@ using static ApiReservasMailGYG.MailGYG;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using Xamarin.Essentials;
+using System.Diagnostics;
 
 namespace ReservasGYG_Movil
 {
@@ -47,6 +48,8 @@ namespace ReservasGYG_Movil
             if (DeviceInfo.Platform == DevicePlatform.UWP)
             {
                 MailGYG.CambioLinea = "\r";
+                //MailGYG.CambioLinea = "\r\n";
+                //MailGYG.CambioLinea = CrLf;
             }
             else
             {
@@ -79,21 +82,30 @@ namespace ReservasGYG_Movil
         {
             if (MainThread.IsMainThread)
             {
+                // Deshabilitar los botones al pegar.       (18/sep/23 06.37)
+                BtnAnalizarEmail.IsEnabled = false;
+                BtnCrearConEmail.IsEnabled = false;
+
                 try
                 {
                     // Code to run if this is the main thread
                     string sClip = await Clipboard.GetTextAsync();
                     RtfEmail.Text = sClip;
                 }
-                catch { }
+                catch (Exception ex)
+                {
+                    Debug.WriteLine(ex.Message);
+                }
+                
+                // Habilitar el botón de analizar si tiene texto.
                 if (string.IsNullOrWhiteSpace(RtfEmail.Text) == false)
                 {
                     BtnAnalizarEmail.IsEnabled = true;
                 }
-                else
-                {
-                    BtnAnalizarEmail.IsEnabled = false;
-                }
+                //else
+                //{
+                //    BtnAnalizarEmail.IsEnabled = false;
+                //}
             }
         }
 
