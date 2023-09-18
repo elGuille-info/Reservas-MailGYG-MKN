@@ -42,6 +42,10 @@ namespace ReservasGYG_Movil
             GrbTextoEmail.IsVisible = false;
             GrbDatosReserva.IsVisible = false;
 
+            // Los colores de los botones.                  (18/sep/23 07.26)
+            BtnAnalizarEmail.BackgroundColor = Color.Azure;
+            BtnCrearConEmail.BackgroundColor = Color.MistyRose;
+
             BtnCrearConEmail.IsEnabled = false;
             BtnAnalizarEmail.IsEnabled = false;
 
@@ -101,6 +105,8 @@ namespace ReservasGYG_Movil
                 if (string.IsNullOrWhiteSpace(RtfEmail.Text) == false)
                 {
                     BtnAnalizarEmail.IsEnabled = true;
+                    // Los colores de los botones.                  (18/sep/23 07.26)
+                    BtnAnalizarEmail.BackgroundColor = Color.Azure;
                 }
                 //else
                 //{
@@ -154,15 +160,15 @@ namespace ReservasGYG_Movil
             // del botón crear
             if (re.GYGTipo == Reservas.GYGTipos.Cancelada)
             {
-                BtnCrearConEmail.Text = "Cancelar reserva y texto para email";
+                BtnCrearConEmail.Text = "Cancelar reserva";
             }
             else if (re.GYGTipo == Reservas.GYGTipos.Modificada)
             {
-                BtnCrearConEmail.Text = "Modificar reserva y texto para email";
+                BtnCrearConEmail.Text = "Modificar reserva";
             }
             else
             {
-                BtnCrearConEmail.Text = "Crear reserva y texto para email";
+                BtnCrearConEmail.Text = "Crear reserva";
             }
 
             LabelAsuntoEmail.Text = $"Booking - S271506 - {re.GYGReference}";
@@ -217,6 +223,8 @@ namespace ReservasGYG_Movil
             ActualizarImagenExpander();
 
             BtnCrearConEmail.IsEnabled = todoOK;
+            // Los colores de los botones.                  (18/sep/23 07.26)
+            BtnCrearConEmail.BackgroundColor = Color.MistyRose;
         }
 
         private async void BtnCrearConEmail_Clicked(object sender, EventArgs e)
@@ -280,6 +288,9 @@ namespace ReservasGYG_Movil
                 if (btn.IsEnabled)
                 {
                     btn.FontAttributes = FontAttributes.None;
+                    //// Los colores de los botones.          (18/sep/23 07.26)
+                    //BtnAnalizarEmail.BackgroundColor = Color.Azure;
+                    //BtnCrearConEmail.BackgroundColor = Color.MistyRose;
                 }
                 else
                 {
