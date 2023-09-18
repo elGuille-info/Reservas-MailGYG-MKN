@@ -16,6 +16,7 @@ using System.Globalization;
 using KNDatos;
 using System.Net.Mail;
 using System.Net;
+using System.Threading.Tasks;
 //using MimeKit.Text;
 
 namespace ApiReservasMailGYG
@@ -26,11 +27,17 @@ namespace ApiReservasMailGYG
     /// Delegado para acceder a los recursos.
     /// </summary>
     /// <returns>Una cadena con el contenido del recurso.</returns>
-    public delegate string AccederRecursoDelegate(string recurso);
+    public delegate Task<string> AccederRecursoDelegate(string recurso);
 
     public class MailGYG
     {
-        public static string TextoMensajeConfirmacion(Reservas re, AccederRecursoDelegate delegado)
+        /// <summary>
+        /// Función para usar al enviar los mensajes al crear, modificar o cancelar una reserva.
+        /// </summary>
+        /// <param name="re">Referencia a la reserva nueva, modificada o cancelada.</param>
+        /// <param name="delegado">Función a la que se llamará para obtener el texto del recurso que se deba usar en el mensaje.</param>
+        /// <returns>Una cadena con el texto de la confirmación a enviar por email.</returns>
+        public static (string Body, string Asunto) TextoMensajeConfirmacion(Reservas re, AccederRecursoDelegate delegado)
         {
             var LaReserva = re;
             StringBuilder sb = new StringBuilder();
@@ -99,7 +106,7 @@ namespace ApiReservasMailGYG
                 if (KNDatos.BaseKayak.ActividadesAlquiler().Contains(re.Actividad))
                 {
                     //sb.Append(Properties.Resources.IMPORTANTE_ALQUILER.Replace(CrLf, "<br/>"));
-                    sb.Append(delegado("IMPORTANTE_ALQUILER").Replace(CrLf, "<br/>"));
+                    sb.Append(delegado("IMPORTANTE_ALQUILER").Result.Replace(CrLf, "<br/>"));
                 }
                 else
                 {
@@ -109,12 +116,12 @@ namespace ApiReservasMailGYG
                         if (enIngles)
                         {
                             //sb.Append(Properties.Resources.IMPORTANTE_EN_09_30.Replace(CrLf, "<br/>"));
-                            sb.Append(delegado("IMPORTANTE_EN_09_30").Replace(CrLf, "<br/>"));
+                            sb.Append(delegado("IMPORTANTE_EN_09_30").Result.Replace(CrLf, "<br/>"));
                         }
                         else
                         {
                             //sb.Append(Properties.Resources.IMPORTANTE_ES_09_30.Replace(CrLf, "<br/>"));
-                            sb.Append(delegado("IMPORTANTE_ES_09_30").Replace(CrLf, "<br/>"));
+                            sb.Append(delegado("IMPORTANTE_ES_09_30").Result.Replace(CrLf, "<br/>"));
                         }
                     }
                     else if (re.HoraActividad.Hours == 10 || re.HoraActividad == new TimeSpan(11, 0, 0))
@@ -122,12 +129,12 @@ namespace ApiReservasMailGYG
                         if (enIngles)
                         {
                             //sb.Append(Properties.Resources.IMPORTANTE_EN_10_30_11_00.Replace(CrLf, "<br/>"));
-                            sb.Append(delegado("IMPORTANTE_EN_10_30_11_00").Replace(CrLf, "<br/>"));
+                            sb.Append(delegado("IMPORTANTE_EN_10_30_11_00").Result.Replace(CrLf, "<br/>"));
                         }
                         else
                         {
                             //sb.Append(Properties.Resources.IMPORTANTE_ES_10_30_11_00.Replace(CrLf, "<br/>"));
-                            sb.Append(delegado("IMPORTANTE_ES_10_30_11_00").Replace(CrLf, "<br/>"));
+                            sb.Append(delegado("IMPORTANTE_ES_10_30_11_00").Result.Replace(CrLf, "<br/>"));
                         }
                     }
                     else
@@ -135,12 +142,12 @@ namespace ApiReservasMailGYG
                         if (enIngles)
                         {
                             //sb.Append(Properties.Resources.IMPORTANTE_EN.Replace(CrLf, "<br/>"));
-                            sb.Append(delegado("IMPORTANTE_EN").Replace(CrLf, "<br/>"));
+                            sb.Append(delegado("IMPORTANTE_EN").Result.Replace(CrLf, "<br/>"));
                         }
                         else
                         {
                             //sb.Append(Properties.Resources.IMPORTANTE_ES.Replace(CrLf, "<br/>"));
-                            sb.Append(delegado("IMPORTANTE_ES").Replace(CrLf, "<br/>"));
+                            sb.Append(delegado("IMPORTANTE_ES").Result.Replace(CrLf, "<br/>"));
                         }
                     }
                 }
@@ -148,7 +155,7 @@ namespace ApiReservasMailGYG
                 // En temporada alta, hasta mediados septiembre (18/sep/23 05.18)
                 if (DateTime.Today <= new DateTime(2023, 9, 15))
                 {
-                    sb.Append(delegado("IMPORTANTE_Lee_esto_Maro").Replace(CrLf, "<br/>"));
+                    sb.Append(delegado("IMPORTANTE_Lee_esto_Maro").Result.Replace(CrLf, "<br/>"));
                 }
 
                 // Indicar siempre que hagan la reseña.         (11/sep/23 10.25)
@@ -169,7 +176,7 @@ namespace ApiReservasMailGYG
             // Añadir la firma de Kayak Makarena                (18/sep/23 05.33)
             MailGYG.FirmaMakarena(sb, enIngles);
 
-            return sb.ToString();
+            return (sb.ToString(), asunto);
         }
 
         /// <summary>
