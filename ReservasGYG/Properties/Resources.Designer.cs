@@ -180,7 +180,7 @@ namespace ReservasGYG.Properties {
         /// </summary>
         internal static string Hoy_es_el_dia_txt {
             get {
-                return ResourceManager.GetString("Hoy_es_el_dia_txt", resourceCulture);
+                return ResourceManager.GetString("Hoy_es_el_dia", resourceCulture);
             }
         }
         
@@ -230,7 +230,7 @@ namespace ReservasGYG.Properties {
         /// </summary>
         internal static string IMPORTANTE_EN_09_30_txt {
             get {
-                return ResourceManager.GetString("IMPORTANTE_EN_09.30_txt", resourceCulture);
+                return ResourceManager.GetString("IMPORTANTE_EN_09.30", resourceCulture);
             }
         }
         
@@ -253,7 +253,7 @@ namespace ReservasGYG.Properties {
         /// </summary>
         internal static string IMPORTANTE_EN_10_30_11_00_txt {
             get {
-                return ResourceManager.GetString("IMPORTANTE_EN_10.30_11.00_txt", resourceCulture);
+                return ResourceManager.GetString("IMPORTANTE_EN_10.30_11.00", resourceCulture);
             }
         }
         
@@ -277,7 +277,7 @@ namespace ReservasGYG.Properties {
         /// </summary>
         internal static string IMPORTANTE_EN_txt {
             get {
-                return ResourceManager.GetString("IMPORTANTE_EN_txt", resourceCulture);
+                return ResourceManager.GetString("IMPORTANTE_EN", resourceCulture);
             }
         }
         
@@ -327,7 +327,7 @@ namespace ReservasGYG.Properties {
         /// </summary>
         internal static string IMPORTANTE_ES_10_30_11_00_txt {
             get {
-                return ResourceManager.GetString("IMPORTANTE_ES_10.30_11.00_txt", resourceCulture);
+                return ResourceManager.GetString("IMPORTANTE_ES_10.30_11.00", resourceCulture);
             }
         }
         
@@ -353,7 +353,7 @@ namespace ReservasGYG.Properties {
         /// </summary>
         internal static string IMPORTANTE_ES_txt {
             get {
-                return ResourceManager.GetString("IMPORTANTE_ES_txt", resourceCulture);
+                return ResourceManager.GetString("IMPORTANTE_ES", resourceCulture);
             }
         }
         
