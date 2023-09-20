@@ -135,7 +135,9 @@ public partial class FormAnalizaEmail : Form
         TxtAdultos.Text = re.Adultos.ToString();
         TxtMenores.Text = re.Niños.ToString();
         TxtMenoresG.Text = re.Niños2.ToString();
+        inicializando = true;
         TxtFechaHora.Text = $"{re.FechaActividad:dd/MM/yyyy} {re.HoraActividad:hh\\:mm}"; //re.GYGFechaHora; // $"{re.FechaActividad:dd/MM/yyyy} {re.HoraActividad:hh\\mm}";
+        inicializando = false;
         TxtPrice.Text = re.GYGPrice;
         TxtLanguage.Text = re.GYGLanguage;
         TxtReference.Text = re.GYGReference;
@@ -859,7 +861,7 @@ public partial class FormAnalizaEmail : Form
 
     private void TxtFechaHora_TextChanged(object sender, EventArgs e)
     {
-        LabelAvisoCambiarFecha.Visible = false;
+        //LabelAvisoCambiarFecha.Visible = false;
         if (inicializando) return;
         if (LaReserva == null) return;
 
