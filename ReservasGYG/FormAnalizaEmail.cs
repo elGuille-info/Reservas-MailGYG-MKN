@@ -77,6 +77,7 @@ public partial class FormAnalizaEmail : Form
     {
         ChkCrearConEmail.Enabled = false;
         ChkCrearConEmail.Checked = false;
+        LabelAvisoCambiarFecha.Visible = false;
 
         if (string.IsNullOrEmpty(RtfEmail.Text)) return;
 
@@ -97,6 +98,34 @@ public partial class FormAnalizaEmail : Form
         re.Notas2 = $"Price: {re.GYGPrice}";
 
         LimpiarControlesReserva();
+
+        // Comprobar si es reserva para cambiar de fecha    (20/sep/23 19.28)
+        if (re.GYGOption.Contains("to change", StringComparison.OrdinalIgnoreCase))
+        {
+            var fechaChange1 = new DateTime(2023, 9, 21);
+            var fechaChange2 = new DateTime(2023, 9, 22);
+            string mensajeChange;
+            if (re.GYGLanguage.Contains("English"))
+            {
+                mensajeChange = " *The option you booked is for change to another date that we expect better weather conditions.*";
+                if (re.FechaActividad.FechasBetween(fechaChange1, fechaChange2))
+                {
+                    mensajeChange += " *I change your reservation to Saturday 23rd.*";
+                }
+            }
+            else
+            {
+                mensajeChange = "La opción que has reservado es para cambiar a otra fecha que las previsiones estén mejor.";
+                if (re.FechaActividad.FechasBetween(fechaChange1, fechaChange2))
+                {
+                    mensajeChange += " *He cambiado tu reserva para el sábado 23.*";
+                }
+            }
+            re.GYGNotas += mensajeChange;
+
+            LabelAvisoCambiarFecha.Text = $"Es una reserva para cambiar de fecha de {re.GYGFechaHora} a una con mejor tiempo.";
+            LabelAvisoCambiarFecha.Visible = true;
+        }
 
         TxtNombre.Text = re.Nombre;
         TxtTelefono.Text = re.Telefono;
@@ -584,6 +613,7 @@ public partial class FormAnalizaEmail : Form
         var DatosVPWiz = new MKNUtilidades.VentasPlayaWiz(re);
         MKNUtilidades.VentasPlayaWiz.IncluirReportajeConfirmarReserva = false;
         MKNUtilidades.VentasPlayaWiz.IncluirTextosConfirmarReserva = false;
+
         bool enIngles = false; // = re.GYGLanguage.Contains("English");
         if (string.IsNullOrEmpty(re.GYGLanguage) == false)
         {
@@ -825,5 +855,72 @@ public partial class FormAnalizaEmail : Form
         if (LaReserva == null) return;
 
         LaReserva.Email = TxtEmail.Text;
+    }
+
+    private void TxtFechaHora_TextChanged(object sender, EventArgs e)
+    {
+        LabelAvisoCambiarFecha.Visible = false;
+        if (inicializando) return;
+        if (LaReserva == null) return;
+
+        if (LaReserva.GYGFechaHora == TxtFechaHora.Text) return;
+
+        LabelAvisoCambiarFecha.Text = $"Has cambiado la fecha, si la estás escribiendo después pulsa ENTER para confirmarla y comprobar que es correcta:{CrLf}{TxtFechaHora.Text}{CrLf}Fecha: {LaReserva.FechaActividad:dddd dd/MM/yyyy}{CrLf}Hora: {LaReserva.HoraActividad:hh\\:mm}";
+        LabelAvisoCambiarFecha.Visible = true;
+    }
+
+    private void TxtFechaHora_KeyUp(object sender, KeyEventArgs e)
+    {
+        if (e.KeyCode == Keys.Enter)
+        {
+            CambiarFechaGYG();
+        }
+    }
+
+    private void TxtFechaHora_Leave(object sender, EventArgs e)
+    {
+        CambiarFechaGYG();
+    }
+
+    private void CambiarFechaGYG()
+    {
+        LabelAvisoCambiarFecha.Visible = false;
+
+        if (inicializando) return;
+        if (LaReserva == null) return;
+
+        if (LaReserva.GYGFechaHora == TxtFechaHora.Text) return;
+
+        LaReserva.GYGFechaHora = TxtFechaHora.Text;
+        var re = LaReserva;
+        var fecGYG = re.GYGFechaHora;
+        int k = re.GYGFechaHora.IndexOf("(");
+        if (k > -1)
+        {
+            fecGYG = re.GYGFechaHora.Substring(0, k).Trim();
+        }
+
+        // Si la fecha no tiene contenido válido, devolver nulo. (22/ago/23 20.22)
+        if (string.IsNullOrWhiteSpace(fecGYG))
+        {
+            return;
+        }
+
+        // Date: 08 September 2023, 16:15 (04:15pm)
+
+        //var fec = DateTime.ParseExact(fecGYG, "dd MMMM yyyy, HH:mm", System.Globalization.CultureInfo.InvariantCulture);
+        DateTime fec;
+
+        try
+        {
+            fec = DateTime.ParseExact(fecGYG, "dd/MM/yyyy HH:mm", System.Globalization.CultureInfo.InvariantCulture);
+            re.FechaActividad = fec.Date;
+            re.HoraActividad = fec.TimeOfDay;
+        }
+        catch (Exception ex)
+        {
+            LabelAvisoCambiarFecha.Text = $"Error en la fecha indicada:{CrLf}{TxtFechaHora.Text}{CrLf}{ex.Message}.";
+            LabelAvisoCambiarFecha.Visible = true;
+        }
     }
 }

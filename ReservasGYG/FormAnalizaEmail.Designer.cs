@@ -82,6 +82,7 @@ namespace ReservasGYG
             LabelFechaHora = new ToolStripStatusLabel();
             TimerHoraStatus = new Timer(components);
             toolTip1 = new ToolTip(components);
+            LabelAvisoCambiarFecha = new Label();
             GrbEmail.SuspendLayout();
             GrbReserva.SuspendLayout();
             statusStrip1.SuspendLayout();
@@ -154,6 +155,7 @@ namespace ReservasGYG
             // GrbReserva
             // 
             GrbReserva.Anchor = AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            GrbReserva.Controls.Add(LabelAvisoCambiarFecha);
             GrbReserva.Controls.Add(TxtTipo);
             GrbReserva.Controls.Add(label16);
             GrbReserva.Controls.Add(label15);
@@ -405,11 +407,13 @@ namespace ReservasGYG
             // 
             // TxtFechaHora
             // 
-            TxtFechaHora.BackColor = Color.MintCream;
             TxtFechaHora.Location = new Point(743, 78);
             TxtFechaHora.Name = "TxtFechaHora";
             TxtFechaHora.Size = new Size(335, 31);
             TxtFechaHora.TabIndex = 7;
+            TxtFechaHora.TextChanged += TxtFechaHora_TextChanged;
+            TxtFechaHora.KeyUp += TxtFechaHora_KeyUp;
+            TxtFechaHora.Leave += TxtFechaHora_Leave;
             // 
             // label6
             // 
@@ -573,6 +577,18 @@ namespace ReservasGYG
             TimerHoraStatus.Interval = 900;
             TimerHoraStatus.Tick += TimerHoraStatus_Tick;
             // 
+            // LabelAvisoCambiarFecha
+            // 
+            LabelAvisoCambiarFecha.BackColor = Color.Firebrick;
+            LabelAvisoCambiarFecha.ForeColor = Color.Yellow;
+            LabelAvisoCambiarFecha.Location = new Point(1137, 150);
+            LabelAvisoCambiarFecha.Margin = new Padding(6, 3, 3, 3);
+            LabelAvisoCambiarFecha.Name = "LabelAvisoCambiarFecha";
+            LabelAvisoCambiarFecha.Size = new Size(201, 214);
+            LabelAvisoCambiarFecha.TabIndex = 35;
+            LabelAvisoCambiarFecha.Text = "Has cambiado la fecha, comprueba que es correcta:";
+            LabelAvisoCambiarFecha.Visible = false;
+            // 
             // FormAnalizaEmail
             // 
             AutoScaleDimensions = new SizeF(10F, 25F);
@@ -647,5 +663,6 @@ namespace ReservasGYG
         private Label label16;
         private ToolStripStatusLabel LabelVersion;
         private ToolTip toolTip1;
+        private Label LabelAvisoCambiarFecha;
     }
 }

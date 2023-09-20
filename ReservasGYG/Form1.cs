@@ -26,7 +26,7 @@ public partial class Form1 : Form
 
     // Intentar no pasar de estas marcas: 60 caracteres. 2         3         4         5         6
     //                                ---------|---------|---------|---------|---------|---------|
-    //[COPIAR]AppDescripcionCopia = " usar TextoMensajeConfirmacion-3"
+    //[COPIAR]AppDescripcionCopia = " opción de cambio de fecha"
     // BuscarClientes mostrar reservas en la pagina
 
     /// <summary>
@@ -37,12 +37,12 @@ public partial class Form1 : Form
     /// <summary>
     /// La versión del fichero (la revisión)
     /// </summary>
-    public static string AppFileVersion { get; } = "1.0.59.0";
+    public static string AppFileVersion { get; } = "1.0.59.1";
 
     /// <summary>
     /// La fecha de última actualización
     /// </summary>
-    public static string AppFechaVersion { get; } = "18-sep-2023";
+    public static string AppFechaVersion { get; } = "20-sep-2023";
 
 
     public static Form1 Current { get; set; }
