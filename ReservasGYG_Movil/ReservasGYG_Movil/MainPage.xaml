@@ -79,7 +79,7 @@
                         </StackLayout>
                     </ScrollView>
                     <Editor x:Name="RtfEmail" HorizontalOptions="FillAndExpand"
-                            HeightRequest="200"
+                            HeightRequest="200" Completed="RtfEmail_Completed"
                             Text=""/>
                     <StackLayout BackgroundColor="LightSteelBlue" Padding="4,2">
                         <Label x:Name="LabelStatus" FontSize="12" TextColor="Black"

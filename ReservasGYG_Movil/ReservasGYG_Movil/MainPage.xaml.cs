@@ -90,6 +90,9 @@ namespace ReservasGYG_Movil
                 // Deshabilitar los botones al pegar.       (18/sep/23 06.37)
                 BtnAnalizarEmail.IsEnabled = false;
                 BtnCrearConEmail.IsEnabled = false;
+                
+                // Antes de pegar, limpiar todo.            (21/sep/23 15.18)
+                LimpiarControlesReserva();
 
                 try
                 {
@@ -109,10 +112,6 @@ namespace ReservasGYG_Movil
                     // Los colores de los botones.                  (18/sep/23 07.26)
                     BtnAnalizarEmail.BackgroundColor = Color.Azure;
                 }
-                //else
-                //{
-                //    BtnAnalizarEmail.IsEnabled = false;
-                //}
             }
         }
 
@@ -949,6 +948,17 @@ namespace ReservasGYG_Movil
             catch (Exception ex)
             {
                 LabelStatus.Text = $"ERROR en la fecha:{TxtFechaHora.Text} {ex.Message}.";
+            }
+        }
+
+        private void RtfEmail_Completed(object sender, EventArgs e)
+        {
+            // Habilitar el botón de analizar si tiene texto.
+            if (string.IsNullOrWhiteSpace(RtfEmail.Text) == false)
+            {
+                BtnAnalizarEmail.IsEnabled = true;
+                // Los colores de los botones.                  (18/sep/23 07.26)
+                BtnAnalizarEmail.BackgroundColor = Color.Azure;
             }
         }
     }
