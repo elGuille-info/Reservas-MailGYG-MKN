@@ -112,7 +112,7 @@ public partial class FormAnalizaEmail : Form
                 {
                     mensajeChange += " *I change your reservation to Saturday 23rd.*";
                 }
-                mensajeChange += " *Please tell me by WhatsApp message, what day is good for you?*";
+                mensajeChange += " *Please tell me by WhatsApp message which day is good for you.*";
             }
             else
             {
@@ -121,7 +121,7 @@ public partial class FormAnalizaEmail : Form
                 {
                     mensajeChange += " *He cambiado tu reserva para el sábado 23.*";
                 }
-                mensajeChange += " *Por favor dime por mensaje de WhatsAppHe qué día te viene bien.*";
+                mensajeChange += " *Por favor dime por mensaje de WhatsApp qué día te viene bien.*";
             }
             re.GYGNotas += mensajeChange;
 

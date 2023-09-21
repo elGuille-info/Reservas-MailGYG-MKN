@@ -27,7 +27,7 @@
 	<key>CFBundleIdentifier</key>
 	<string>com.elguille.ReservasGYG_Movil</string>
 	<key>CFBundleVersion</key>
-    <string>1.0.63.0</string>
+    <string>1.0.64.0</string>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>CFBundleName</key>
@@ -35,6 +35,6 @@
 	<key>XSAppIconAssets</key>
 	<string>Assets.xcassets/AppIcon.appiconset</string>
 	<key>CFBundleShortVersionString</key>
-    <string>1.0.63</string>
+    <string>1.0.64</string>
 </dict>
 </plist>
