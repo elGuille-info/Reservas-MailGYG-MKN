@@ -29,7 +29,7 @@
     </ContentPage.Resources>
 
     <!-- <ScrollView Padding="4"> -->
-    <ScrollView Padding="4">
+    <ScrollView Padding="4" Margin="{OnPlatform iOS={OnIdiom Phone='0,20,0,0', Default=0}, Default=0}">
         <StackLayout Orientation="Vertical" Padding="6" Spacing="12">
             <!-- Expander -->
             <StackLayout>
