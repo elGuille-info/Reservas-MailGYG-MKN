@@ -137,6 +137,31 @@ namespace ReservasGYG_Movil
 
             LimpiarControlesReserva();
 
+            //
+            // Por si elige la opción de cambiar fecha.     (21/sep/23 09.45)
+            //
+
+            if (re.GYGOption.ToLower().Contains("to change"))
+            {
+                // No comprobar fechas,                         (21/sep/23 09.41)
+                // la reserva se dejará para el día que eligió.
+                StringBuilder mensajeChange = new StringBuilder();
+                if (re.GYGLanguage.Contains("English"))
+                {
+                    mensajeChange.Append(" *The option you booked is for 'change to another date' that we expect better weather conditions in the sea.*");
+                    mensajeChange.Append(" *Please tell me by WhatsApp message which day is good for you.*");
+                }
+                else
+                {
+                    mensajeChange.Append(" *La opción que has reservado es para 'cambiar a otra fecha' que las previsiones del mar estén mejor.*");
+                    mensajeChange.Append(" *Por favor dime por mensaje de WhatsApp qué día te viene bien.*");
+                }
+                re.GYGNotas += mensajeChange.ToString();
+
+                //LabelAvisoCambiarFecha.Text = $"Es una reserva para cambiar de fecha de {re.GYGFechaHora} a una con mejor tiempo.";
+                //LabelAvisoCambiarFecha.Visible = true;
+            }
+
             TxtNombre.Text = re.Nombre;
             TxtTelefono.Text = re.Telefono;
             TxtNotas.Text = re.GYGNotas;

@@ -245,6 +245,9 @@ public partial class FormAnalizaEmail : Form
         ChkCrearConEmail.Checked = false;
         BtnCrearConEmail.Enabled = ChkCrearConEmail.Checked;
 
+        // Ocultar el aviso al limpiar campos.              (21/sep/23 09.51)
+        LabelAvisoCambiarFecha.Visible = false;
+
         LabelVersion.Text = $"v{Form1.AppVersion} ({Form1.AppFechaVersion})";
     }
 
