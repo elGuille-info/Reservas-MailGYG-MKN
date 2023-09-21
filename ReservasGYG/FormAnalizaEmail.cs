@@ -102,28 +102,32 @@ public partial class FormAnalizaEmail : Form
         // Comprobar si es reserva para cambiar de fecha    (20/sep/23 19.28)
         if (re.GYGOption.Contains("to change", StringComparison.OrdinalIgnoreCase))
         {
-            var fechaChange1 = new DateTime(2023, 9, 21);
-            var fechaChange2 = new DateTime(2023, 9, 22);
-            string mensajeChange;
+            // No comprobar fechas,                         (21/sep/23 09.41)
+            // la reserva se dejará para el día que eligió.
+
+            //var fechaChange1 = new DateTime(2023, 9, 21);
+            //var fechaChange2 = new DateTime(2023, 9, 22);
+            //string mensajeChange;
+            StringBuilder mensajeChange = new StringBuilder();
             if (re.GYGLanguage.Contains("English"))
             {
-                mensajeChange = " *The option you booked is for 'change to another date' that we expect better weather conditions.*";
-                if (re.FechaActividad.FechasBetween(fechaChange1, fechaChange2))
-                {
-                    mensajeChange += " *I change your reservation to Saturday 23rd.*";
-                }
-                mensajeChange += " *Please tell me by WhatsApp message which day is good for you.*";
+                mensajeChange.Append(" *The option you booked is for 'change to another date' that we expect better weather conditions in the sea.*");
+                //if (re.FechaActividad.FechasBetween(fechaChange1, fechaChange2))
+                //{
+                //    mensajeChange += " *I change your reservation to Saturday 23rd.*";
+                //}
+                mensajeChange.Append(" *Please tell me by WhatsApp message which day is good for you.*");
             }
             else
             {
-                mensajeChange = " *La opción que has reservado es para 'cambiar a otra fecha' que las previsiones estén mejor.*";
-                if (re.FechaActividad.FechasBetween(fechaChange1, fechaChange2))
-                {
-                    mensajeChange += " *He cambiado tu reserva para el sábado 23.*";
-                }
-                mensajeChange += " *Por favor dime por mensaje de WhatsApp qué día te viene bien.*";
+                mensajeChange.Append(" *La opción que has reservado es para 'cambiar a otra fecha' que las previsiones del mar estén mejor.*");
+                //if (re.FechaActividad.FechasBetween(fechaChange1, fechaChange2))
+                //{
+                //    mensajeChange += " *He cambiado tu reserva para el sábado 23.*";
+                //}
+                mensajeChange.Append(" *Por favor dime por mensaje de WhatsApp qué día te viene bien.*");
             }
-            re.GYGNotas += mensajeChange;
+            re.GYGNotas += mensajeChange.ToString();
 
             LabelAvisoCambiarFecha.Text = $"Es una reserva para cambiar de fecha de {re.GYGFechaHora} a una con mejor tiempo.";
             LabelAvisoCambiarFecha.Visible = true;
