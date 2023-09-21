@@ -115,7 +115,7 @@ public partial class FormAnalizaEmail : Form
             }
             else
             {
-                mensajeChange = "La opción que has reservado es para cambiar a otra fecha que las previsiones estén mejor.";
+                mensajeChange = " *La opción que has reservado es para cambiar a otra fecha que las previsiones estén mejor.*";
                 if (re.FechaActividad.FechasBetween(fechaChange1, fechaChange2))
                 {
                     mensajeChange += " *He cambiado tu reserva para el sábado 23.*";
@@ -866,6 +866,8 @@ public partial class FormAnalizaEmail : Form
         if (LaReserva == null) return;
 
         if (LaReserva.GYGFechaHora == TxtFechaHora.Text) return;
+
+        if (string.IsNullOrEmpty(TxtFechaHora.Text)) return;
 
         LabelAvisoCambiarFecha.Text = $"Has cambiado la fecha, si la estás escribiendo después pulsa ENTER para confirmarla y comprobar que es correcta:{CrLf}{TxtFechaHora.Text}{CrLf}Fecha: {LaReserva.FechaActividad:dddd dd/MM/yyyy}{CrLf}Hora: {LaReserva.HoraActividad:hh\\:mm}";
         LabelAvisoCambiarFecha.Visible = true;
