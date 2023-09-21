@@ -26,18 +26,18 @@ public partial class Form1 : Form
 
     // Intentar no pasar de estas marcas: 60 caracteres. 2         3         4         5         6
     //                                ---------|---------|---------|---------|---------|---------|
-    //[COPIAR]AppDescripcionCopia = " margen iOS phone"
+    //[COPIAR]AppDescripcionCopia = " anchos columnas listView"
     // BuscarClientes mostrar reservas en la pagina
 
     /// <summary>
     /// La versión de la aplicación.
     /// </summary>
-    public static string AppVersion { get; } = "1.0.70";
+    public static string AppVersion { get; } = "1.0.71";
 
     /// <summary>
     /// La versión del fichero (la revisión)
     /// </summary>
-    public static string AppFileVersion { get; } = "1.0.70.0";
+    public static string AppFileVersion { get; } = "1.0.71.0";
 
     /// <summary>
     /// La fecha de última actualización
@@ -73,11 +73,11 @@ public partial class Form1 : Form
         //{ "Booking", "Nombre", "Teléfono", "Reserva", "PAX", "Cancelada", "H.Salida", "H.Vuelta", "Control", "Vuelta", "Email", "Notas" };
         LvwSinEmail.Columns[0].Width = 160; // booking
         LvwSinEmail.Columns[1].Width = 400; // Nombre
-        LvwSinEmail.Columns[2].Width = 150; // Teléfono
+        LvwSinEmail.Columns[2].Width = 160; // 150 Teléfono
         LvwSinEmail.Columns[3].Width = 260; // Reserva
         LvwSinEmail.Columns[4].Width = 160; // pax
         LvwSinEmail.Columns[10].Width = 300; // Email
-        LvwSinEmail.Columns[11].Width = 500; // Notas
+        LvwSinEmail.Columns[11].Width = 700; // 500 Notas
         LvwSinEmail.Columns[5].Width = 96; // Cancelada
         LvwSinEmail.Columns[6].Width = 80; // H.Salida
         LvwSinEmail.Columns[7].Width = 80; // H.Vuelta
