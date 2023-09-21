@@ -107,19 +107,21 @@ public partial class FormAnalizaEmail : Form
             string mensajeChange;
             if (re.GYGLanguage.Contains("English"))
             {
-                mensajeChange = " *The option you booked is for change to another date that we expect better weather conditions.*";
+                mensajeChange = " *The option you booked is for 'change to another date' that we expect better weather conditions.*";
                 if (re.FechaActividad.FechasBetween(fechaChange1, fechaChange2))
                 {
                     mensajeChange += " *I change your reservation to Saturday 23rd.*";
                 }
+                mensajeChange += " *Please tell me by WhatsApp message, what day is good for you?*";
             }
             else
             {
-                mensajeChange = " *La opción que has reservado es para cambiar a otra fecha que las previsiones estén mejor.*";
+                mensajeChange = " *La opción que has reservado es para 'cambiar a otra fecha' que las previsiones estén mejor.*";
                 if (re.FechaActividad.FechasBetween(fechaChange1, fechaChange2))
                 {
                     mensajeChange += " *He cambiado tu reserva para el sábado 23.*";
                 }
+                mensajeChange += " *Por favor dime por mensaje de WhatsAppHe qué día te viene bien.*";
             }
             re.GYGNotas += mensajeChange;
 
