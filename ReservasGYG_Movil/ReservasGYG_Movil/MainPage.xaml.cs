@@ -80,6 +80,7 @@ namespace ReservasGYG_Movil
                     txt.Text = "";
                 }
             }
+            LabelStatus.Text = $"{App.AppName} v{App.AppVersion} ({App.AppFechaVersion})";
         }
 
         private async void BtnPegarMail_Clicked(object sender, EventArgs e)
