@@ -158,7 +158,7 @@ namespace ReservasGYG_Movil
                 }
                 re.GYGNotas += mensajeChange.ToString();
 
-                //LabelAvisoCambiarFecha.Text = $"Es una reserva para cambiar de fecha de {re.GYGFechaHora} a una con mejor tiempo.";
+                LabelStatus.Text = $"Es una reserva para cambiar de fecha de {re.GYGFechaHora} a una con mejor tiempo.";
                 //LabelAvisoCambiarFecha.Visible = true;
             }
 
@@ -860,11 +860,94 @@ namespace ReservasGYG_Movil
             {
                 try
                 {
-
                     // Code to run if this is the main thread
                     await Clipboard.SetTextAsync(texto);
                 }
                 catch { }
+            }
+        }
+
+        private void Txt_Completed(object sender, EventArgs e)
+        {
+            if (inicializando) return;
+            if (LaReserva == null) return;
+
+            if (sender == TxtLanguage)
+            {
+                LaReserva.GYGLanguage = TxtLanguage.Text;
+            }
+            else if (sender == TxtFechaHora)
+            {
+                if (LaReserva.GYGFechaHora == TxtFechaHora.Text) return;
+
+                if (string.IsNullOrEmpty(TxtFechaHora.Text)) return;
+
+                LabelStatus.Text = $"Indica la fecha en formato 'dd/MM/yyyy HH:mm' y pulsa ENTER para confirmarla.";
+            }
+            else if (sender == TxtTelefono)
+            {
+                LaReserva.Telefono = TxtTelefono.Text;
+            }
+            else if (sender == TxtEmail)
+            {
+                LaReserva.Email = TxtEmail.Text;
+            }
+            else if (sender == TxtNotas)
+            {
+                LaReserva.GYGNotas = TxtNotas.Text;
+            }
+            else if (sender == TxtPais)
+            {
+                LaReserva.GYGPais = TxtPais.Text;
+            }
+        }
+
+        private void Txt_Unfocused(object sender, FocusEventArgs e)
+        {
+            if (sender == TxtFechaHora)
+            {
+                CambiarFechaGYG();
+            }
+            else
+            {
+                Txt_Completed(sender, null);
+            }
+        }
+
+        private void CambiarFechaGYG()
+        {
+            LabelStatus.Text = "";
+
+            if (inicializando) return;
+            if (LaReserva == null) return;
+
+            if (LaReserva.GYGFechaHora == TxtFechaHora.Text) return;
+
+            LaReserva.GYGFechaHora = TxtFechaHora.Text;
+            var re = LaReserva;
+            var fecGYG = re.GYGFechaHora;
+            int k = re.GYGFechaHora.IndexOf("(");
+            if (k > -1)
+            {
+                fecGYG = re.GYGFechaHora.Substring(0, k).Trim();
+            }
+
+            // Si la fecha no tiene contenido válido, devolver nulo. (22/ago/23 20.22)
+            if (string.IsNullOrWhiteSpace(fecGYG))
+            {
+                return;
+            }
+
+            DateTime fec;
+            try
+            {
+                fec = DateTime.ParseExact(fecGYG, "dd/MM/yyyy HH:mm", System.Globalization.CultureInfo.InvariantCulture);
+                re.FechaActividad = fec.Date;
+                re.HoraActividad = fec.TimeOfDay;
+            }
+            catch (Exception ex)
+            {
+                LabelStatus.Text = $"ERROR en la fecha:{TxtFechaHora.Text} {ex.Message}.";
             }
         }
     }

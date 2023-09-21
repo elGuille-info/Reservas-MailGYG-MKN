@@ -120,7 +120,7 @@
                         </StackLayout>
                         <StackLayout Orientation="Horizontal">
                             <Label Text="Tour Language:" Style="{StaticResource LabelCampos}"/>
-                            <Entry x:Name="TxtLanguage" />
+                            <Entry x:Name="TxtLanguage" Completed="Txt_Completed" Unfocused="Txt_Unfocused"/>
                         </StackLayout>
                     </StackLayout>
                     <StackLayout Style="{StaticResource StackCampos}">
@@ -130,7 +130,7 @@
                         </StackLayout>
                         <StackLayout Orientation="Horizontal">
                             <Label Text="Fecha/Hora:" Style="{StaticResource LabelCampos}"/>
-                            <Entry x:Name="TxtFechaHora" />
+                            <Entry x:Name="TxtFechaHora" Completed="Txt_Completed" Unfocused="Txt_Unfocused" />
                         </StackLayout>
                     </StackLayout>
                     <StackLayout Style="{StaticResource StackCampos}">
@@ -140,19 +140,21 @@
                         </StackLayout>
                         <StackLayout Orientation="Horizontal">
                             <Label Text="Teléfono:" Style="{StaticResource LabelCampos}"/>
-                            <Entry x:Name="TxtTelefono" />
+                            <Entry x:Name="TxtTelefono" Completed="Txt_Completed" Unfocused="Txt_Unfocused" />
                         </StackLayout>
                     </StackLayout>
                     <StackLayout Style="{StaticResource StackCampos}">
                         <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand">
                             <Label Text="Email:" Style="{StaticResource LabelCampos}"/>
-                            <Entry x:Name="TxtEmail" WidthRequest="546"/>
+                            <Entry x:Name="TxtEmail" WidthRequest="546"
+                                   Completed="Txt_Completed" Unfocused="Txt_Unfocused"/>
                         </StackLayout>
                     </StackLayout>
                     <StackLayout Style="{StaticResource StackCampos}">
                         <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand">
                             <Label Text="Notas:" Style="{StaticResource LabelCampos}"/>
-                            <Editor x:Name="TxtNotas" WidthRequest="546" HeightRequest="100" />
+                            <Editor x:Name="TxtNotas" WidthRequest="546" HeightRequest="100"
+                                    Completed="Txt_Completed" Unfocused="Txt_Unfocused"/>
                         </StackLayout>
                     </StackLayout>
                     <StackLayout Style="{StaticResource StackCampos}">
@@ -162,7 +164,7 @@
                         </StackLayout>
                         <StackLayout Orientation="Horizontal">
                             <Label Text="País:" Style="{StaticResource LabelCampos}"/>
-                            <Entry x:Name="TxtPais" />
+                            <Entry x:Name="TxtPais" Completed="Txt_Completed" Unfocused="Txt_Unfocused" />
                         </StackLayout>
                     </StackLayout>
                     <StackLayout Style="{StaticResource StackCampos}">
