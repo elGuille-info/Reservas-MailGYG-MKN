@@ -593,17 +593,17 @@ namespace ReservasGYG
             // 
             // ChkIncluirTextoAviso
             // 
-            ChkIncluirTextoAviso.AutoSize = true;
+            ChkIncluirTextoAviso.Anchor = AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             ChkIncluirTextoAviso.Location = new Point(12, 891);
             ChkIncluirTextoAviso.Name = "ChkIncluirTextoAviso";
-            ChkIncluirTextoAviso.Size = new Size(464, 29);
+            ChkIncluirTextoAviso.Size = new Size(1346, 29);
             ChkIncluirTextoAviso.TabIndex = 2;
             ChkIncluirTextoAviso.Text = "Incluir este texto en enviar el mensaje de confirmación";
             ChkIncluirTextoAviso.UseVisualStyleBackColor = true;
             // 
             // TxtAvisoExtra
             // 
-            TxtAvisoExtra.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            TxtAvisoExtra.Anchor = AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             TxtAvisoExtra.Location = new Point(12, 926);
             TxtAvisoExtra.Multiline = true;
             TxtAvisoExtra.Name = "TxtAvisoExtra";
