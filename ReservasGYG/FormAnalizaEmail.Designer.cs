@@ -92,7 +92,7 @@ namespace ReservasGYG
             // 
             // GrbEmail
             // 
-            GrbEmail.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            GrbEmail.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             GrbEmail.Controls.Add(BtnLimpiarTexto);
             GrbEmail.Controls.Add(BtnAnalizarEmail);
             GrbEmail.Controls.Add(BtnPegarEmail);
@@ -156,7 +156,7 @@ namespace ReservasGYG
             // 
             // GrbReserva
             // 
-            GrbReserva.Anchor = AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            GrbReserva.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             GrbReserva.Controls.Add(LabelAvisoCambiarFecha);
             GrbReserva.Controls.Add(TxtTipo);
             GrbReserva.Controls.Add(label16);
@@ -593,7 +593,6 @@ namespace ReservasGYG
             // 
             // ChkIncluirTextoAviso
             // 
-            ChkIncluirTextoAviso.Anchor = AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             ChkIncluirTextoAviso.Location = new Point(12, 891);
             ChkIncluirTextoAviso.Name = "ChkIncluirTextoAviso";
             ChkIncluirTextoAviso.Size = new Size(1346, 29);
@@ -603,7 +602,7 @@ namespace ReservasGYG
             // 
             // TxtAvisoExtra
             // 
-            TxtAvisoExtra.Anchor = AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            TxtAvisoExtra.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             TxtAvisoExtra.Location = new Point(12, 926);
             TxtAvisoExtra.Multiline = true;
             TxtAvisoExtra.Name = "TxtAvisoExtra";
