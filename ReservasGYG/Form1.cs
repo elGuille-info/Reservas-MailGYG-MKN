@@ -26,18 +26,18 @@ public partial class Form1 : Form
 
     // Intentar no pasar de estas marcas: 60 caracteres. 2         3         4         5         6
     //                                ---------|---------|---------|---------|---------|---------|
-    //[COPIAR]AppDescripcionCopia = " tamaño mínimo-6"
+    //[COPIAR]AppDescripcionCopia = " tamaño mínimo-7"
     // BuscarClientes mostrar reservas en la pagina
 
     /// <summary>
     /// La versión de la aplicación.
     /// </summary>
-    public static string AppVersion { get; } = "1.0.83";
+    public static string AppVersion { get; } = "1.0.84";
 
     /// <summary>
     /// La versión del fichero (la revisión)
     /// </summary>
-    public static string AppFileVersion { get; } = "1.0.83.0";
+    public static string AppFileVersion { get; } = "1.0.84.0";
 
     /// <summary>
     /// La fecha de última actualización

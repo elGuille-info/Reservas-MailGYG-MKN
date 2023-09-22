@@ -58,11 +58,13 @@ public partial class FormAnalizaEmail : Form
     private void TimerInicio_Tick(object sender, EventArgs e)
     {
         TimerInicio.Enabled = false;
-        
-        //this.StartPosition = FormStartPosition.Manual;
+
+
         if (Height < 900)
         {
             statusStrip1.Dock = DockStyle.None;
+            //this.StartPosition = FormStartPosition.Manual;
+
             Height = 1000;
             Application.DoEvents();
 

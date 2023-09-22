@@ -568,24 +568,23 @@ namespace ReservasGYG
             // 
             LabelStatus.BorderSides = ToolStripStatusLabelBorderSides.Right;
             LabelStatus.Name = "LabelStatus";
-            LabelStatus.Size = new Size(1025, 29);
+            LabelStatus.Size = new Size(981, 29);
             LabelStatus.Spring = true;
             LabelStatus.Text = "Crear reservas de GetYourGuide en la app de MKN Reservas y enviar email de confirmación";
             LabelStatus.TextAlign = ContentAlignment.MiddleLeft;
             // 
             // LabelVersion
             // 
-            LabelVersion.AutoSize = false;
             LabelVersion.BorderSides = ToolStripStatusLabelBorderSides.Right;
             LabelVersion.Name = "LabelVersion";
-            LabelVersion.Size = new Size(200, 29);
+            LabelVersion.Size = new Size(204, 29);
             LabelVersion.Text = "v1.0.18.1 (11-sep-2023)";
             // 
             // LabelFechaHora
             // 
             LabelFechaHora.AutoSize = false;
             LabelFechaHora.Name = "LabelFechaHora";
-            LabelFechaHora.Size = new Size(200, 29);
+            LabelFechaHora.Size = new Size(240, 29);
             LabelFechaHora.Text = "dd/MM/yyyy HH:mm:ss";
             // 
             // TimerHoraStatus
