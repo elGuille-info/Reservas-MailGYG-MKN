@@ -558,6 +558,7 @@ namespace ReservasGYG
             statusStrip1.Items.AddRange(new ToolStripItem[] { LabelStatus, LabelVersion, LabelFechaHora });
             statusStrip1.Location = new Point(0, 1152);
             statusStrip1.Name = "statusStrip1";
+            statusStrip1.ShowItemToolTips = true;
             statusStrip1.Size = new Size(1370, 36);
             statusStrip1.TabIndex = 5;
             statusStrip1.Text = "statusStrip1";
@@ -566,7 +567,7 @@ namespace ReservasGYG
             // 
             LabelStatus.BorderSides = ToolStripStatusLabelBorderSides.Right;
             LabelStatus.Name = "LabelStatus";
-            LabelStatus.Size = new Size(955, 29);
+            LabelStatus.Size = new Size(909, 29);
             LabelStatus.Spring = true;
             LabelStatus.Text = "Crear reservas de GetYourGuide en la app de MKN Reservas y enviar email de confirmación";
             LabelStatus.TextAlign = ContentAlignment.MiddleLeft;
@@ -628,6 +629,7 @@ namespace ReservasGYG
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Analizar Email de GYG y crear reserva con confirmación";
             Load += FormAnalizaEmailGYG_Load;
+            Resize += FormAnalizaEmail_Resize;
             GrbEmail.ResumeLayout(false);
             GrbReserva.ResumeLayout(false);
             GrbReserva.PerformLayout();

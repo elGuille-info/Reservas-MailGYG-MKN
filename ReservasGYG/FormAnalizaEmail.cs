@@ -50,6 +50,19 @@ public partial class FormAnalizaEmail : Form
         RtfEmail.Text = "";
 
         LimpiarControlesReserva();
+        MostrarTamaño();
+    }
+
+    private void FormAnalizaEmail_Resize(object sender, EventArgs e)
+    {
+        if (inicializando) return;
+        MostrarTamaño();
+    }
+
+    private void MostrarTamaño()
+    {
+        LabelStatus.ToolTipText = $"H,W: {Height}, {Width}, Client H, W: {ClientSize.Height}, {ClientSize.Width}";
+        toolTip1.SetToolTip(statusStrip1, LabelStatus.ToolTipText);
     }
 
     private void BtnPegarEmail_Click(object sender, EventArgs e)
@@ -248,6 +261,8 @@ public partial class FormAnalizaEmail : Form
 
         // Ocultar el aviso al limpiar campos.              (21/sep/23 09.51)
         LabelAvisoCambiarFecha.Visible = false;
+
+        ChkIncluirTextoAviso.Checked = false;
 
         LabelVersion.Text = $"v{Form1.AppVersion} ({Form1.AppFechaVersion})";
     }
