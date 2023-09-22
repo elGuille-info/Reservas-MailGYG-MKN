@@ -40,6 +40,7 @@ namespace ReservasGYG
             BtnPegarEmail = new Button();
             RtfEmail = new RichTextBox();
             GrbReserva = new GroupBox();
+            LabelAvisoCambiarFecha = new Label();
             TxtTipo = new TextBox();
             label16 = new Label();
             label15 = new Label();
@@ -82,7 +83,8 @@ namespace ReservasGYG
             LabelFechaHora = new ToolStripStatusLabel();
             TimerHoraStatus = new Timer(components);
             toolTip1 = new ToolTip(components);
-            LabelAvisoCambiarFecha = new Label();
+            ChkIncluirTextoAviso = new CheckBox();
+            TxtAvisoExtra = new TextBox();
             GrbEmail.SuspendLayout();
             GrbReserva.SuspendLayout();
             statusStrip1.SuspendLayout();
@@ -97,7 +99,7 @@ namespace ReservasGYG
             GrbEmail.Controls.Add(RtfEmail);
             GrbEmail.Location = new Point(12, 12);
             GrbEmail.Name = "GrbEmail";
-            GrbEmail.Size = new Size(1346, 328);
+            GrbEmail.Size = new Size(1346, 384);
             GrbEmail.TabIndex = 0;
             GrbEmail.TabStop = false;
             GrbEmail.Text = "Texto del correo a analizar";
@@ -119,7 +121,7 @@ namespace ReservasGYG
             // 
             BtnAnalizarEmail.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
             BtnAnalizarEmail.BackColor = Color.Azure;
-            BtnAnalizarEmail.Location = new Point(1135, 252);
+            BtnAnalizarEmail.Location = new Point(1135, 308);
             BtnAnalizarEmail.Name = "BtnAnalizarEmail";
             BtnAnalizarEmail.Size = new Size(205, 70);
             BtnAnalizarEmail.TabIndex = 3;
@@ -146,7 +148,7 @@ namespace ReservasGYG
             RtfEmail.Font = new Font("Consolas", 9F, FontStyle.Regular, GraphicsUnit.Point);
             RtfEmail.Location = new Point(6, 30);
             RtfEmail.Name = "RtfEmail";
-            RtfEmail.Size = new Size(1099, 292);
+            RtfEmail.Size = new Size(1099, 348);
             RtfEmail.TabIndex = 0;
             RtfEmail.Text = resources.GetString("RtfEmail.Text");
             RtfEmail.WordWrap = false;
@@ -191,12 +193,24 @@ namespace ReservasGYG
             GrbReserva.Controls.Add(TxtReference);
             GrbReserva.Controls.Add(label1);
             GrbReserva.Controls.Add(BtnLimpiarReserva);
-            GrbReserva.Location = new Point(12, 346);
+            GrbReserva.Location = new Point(12, 402);
             GrbReserva.Name = "GrbReserva";
             GrbReserva.Size = new Size(1346, 483);
             GrbReserva.TabIndex = 1;
             GrbReserva.TabStop = false;
             GrbReserva.Text = "Datos de la reserva";
+            // 
+            // LabelAvisoCambiarFecha
+            // 
+            LabelAvisoCambiarFecha.BackColor = Color.Firebrick;
+            LabelAvisoCambiarFecha.ForeColor = Color.Yellow;
+            LabelAvisoCambiarFecha.Location = new Point(1137, 150);
+            LabelAvisoCambiarFecha.Margin = new Padding(6, 3, 3, 3);
+            LabelAvisoCambiarFecha.Name = "LabelAvisoCambiarFecha";
+            LabelAvisoCambiarFecha.Size = new Size(201, 214);
+            LabelAvisoCambiarFecha.TabIndex = 34;
+            LabelAvisoCambiarFecha.Text = "Has cambiado la fecha, comprueba que es correcta:";
+            LabelAvisoCambiarFecha.Visible = false;
             // 
             // TxtTipo
             // 
@@ -519,7 +533,7 @@ namespace ReservasGYG
             BtnLimpiarReserva.Margin = new Padding(12, 3, 3, 3);
             BtnLimpiarReserva.Name = "BtnLimpiarReserva";
             BtnLimpiarReserva.Size = new Size(205, 70);
-            BtnLimpiarReserva.TabIndex = 34;
+            BtnLimpiarReserva.TabIndex = 35;
             BtnLimpiarReserva.Text = "Limpiar campos";
             BtnLimpiarReserva.UseVisualStyleBackColor = false;
             BtnLimpiarReserva.Click += BtnLimpiarReserva_Click;
@@ -529,11 +543,11 @@ namespace ReservasGYG
             BtnOpciones.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
             BtnOpciones.BackColor = SystemColors.Highlight;
             BtnOpciones.ForeColor = SystemColors.Window;
-            BtnOpciones.Location = new Point(12, 846);
+            BtnOpciones.Location = new Point(12, 1090);
             BtnOpciones.Margin = new Padding(3, 3, 3, 12);
             BtnOpciones.Name = "BtnOpciones";
             BtnOpciones.Size = new Size(361, 54);
-            BtnOpciones.TabIndex = 2;
+            BtnOpciones.TabIndex = 4;
             BtnOpciones.Text = "Mostrar ventana de otras opciones";
             BtnOpciones.UseVisualStyleBackColor = false;
             BtnOpciones.Click += BtnOpciones_Click;
@@ -542,10 +556,10 @@ namespace ReservasGYG
             // 
             statusStrip1.ImageScalingSize = new Size(24, 24);
             statusStrip1.Items.AddRange(new ToolStripItem[] { LabelStatus, LabelVersion, LabelFechaHora });
-            statusStrip1.Location = new Point(0, 908);
+            statusStrip1.Location = new Point(0, 1152);
             statusStrip1.Name = "statusStrip1";
             statusStrip1.Size = new Size(1370, 36);
-            statusStrip1.TabIndex = 3;
+            statusStrip1.TabIndex = 5;
             statusStrip1.Text = "statusStrip1";
             // 
             // LabelStatus
@@ -577,23 +591,35 @@ namespace ReservasGYG
             TimerHoraStatus.Interval = 900;
             TimerHoraStatus.Tick += TimerHoraStatus_Tick;
             // 
-            // LabelAvisoCambiarFecha
+            // ChkIncluirTextoAviso
             // 
-            LabelAvisoCambiarFecha.BackColor = Color.Firebrick;
-            LabelAvisoCambiarFecha.ForeColor = Color.Yellow;
-            LabelAvisoCambiarFecha.Location = new Point(1137, 150);
-            LabelAvisoCambiarFecha.Margin = new Padding(6, 3, 3, 3);
-            LabelAvisoCambiarFecha.Name = "LabelAvisoCambiarFecha";
-            LabelAvisoCambiarFecha.Size = new Size(201, 214);
-            LabelAvisoCambiarFecha.TabIndex = 35;
-            LabelAvisoCambiarFecha.Text = "Has cambiado la fecha, comprueba que es correcta:";
-            LabelAvisoCambiarFecha.Visible = false;
+            ChkIncluirTextoAviso.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
+            ChkIncluirTextoAviso.AutoSize = true;
+            ChkIncluirTextoAviso.Location = new Point(12, 891);
+            ChkIncluirTextoAviso.Name = "ChkIncluirTextoAviso";
+            ChkIncluirTextoAviso.Size = new Size(464, 29);
+            ChkIncluirTextoAviso.TabIndex = 2;
+            ChkIncluirTextoAviso.Text = "Incluir este texto en enviar el mensaje de confirmación";
+            ChkIncluirTextoAviso.UseVisualStyleBackColor = true;
+            // 
+            // TxtAvisoExtra
+            // 
+            TxtAvisoExtra.Anchor = AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            TxtAvisoExtra.Location = new Point(12, 926);
+            TxtAvisoExtra.Multiline = true;
+            TxtAvisoExtra.Name = "TxtAvisoExtra";
+            TxtAvisoExtra.ScrollBars = ScrollBars.Both;
+            TxtAvisoExtra.Size = new Size(1346, 146);
+            TxtAvisoExtra.TabIndex = 3;
+            TxtAvisoExtra.Text = resources.GetString("TxtAvisoExtra.Text");
             // 
             // FormAnalizaEmail
             // 
             AutoScaleDimensions = new SizeF(10F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1370, 944);
+            ClientSize = new Size(1370, 1188);
+            Controls.Add(ChkIncluirTextoAviso);
+            Controls.Add(TxtAvisoExtra);
             Controls.Add(statusStrip1);
             Controls.Add(BtnOpciones);
             Controls.Add(GrbReserva);
@@ -664,5 +690,7 @@ namespace ReservasGYG
         private ToolStripStatusLabel LabelVersion;
         private ToolTip toolTip1;
         private Label LabelAvisoCambiarFecha;
+        private CheckBox ChkIncluirTextoAviso;
+        private TextBox TxtAvisoExtra;
     }
 }

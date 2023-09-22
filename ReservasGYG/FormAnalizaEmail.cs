@@ -34,6 +34,7 @@ public partial class FormAnalizaEmail : Form
         InitializeComponent();
         Current = this;
     }
+
     private void FormAnalizaEmailGYG_Load(object sender, EventArgs e)
     {
         LabelFechaHora.Text = $"{DateTime.Now:dd/MM/yyyy HH:mm:ss}";
@@ -253,7 +254,18 @@ public partial class FormAnalizaEmail : Form
 
     private void BtnCrearConEmail_Click(object sender, EventArgs e)
     {
-        // Las dos cosas seguidas.                      (22/ago/23 10.28)
+        // Las dos cosas seguidas.                          (22/ago/23 10.28)
+
+        // Comprobar si hay aviso extra a añadir.           (22/sep/23 16.52)
+        if (ChkIncluirTextoAviso.Checked)
+        {
+            if (MessageBox.Show($"Has indicado enviar el texto extra.{CrLf}¿Seguro que está bien ese texto?{CrLf}Pulsa SÍ para enviar, pulsa NO para cambiarlo o quitar la marca.", 
+                "Crear y confirmar con aviso extra", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No) 
+            {
+                TxtAvisoExtra.Focus();
+                return;
+            }
+        }
 
         // Deshabilitar el botón hasta que finalice.        (27/ago/23 09.58)
         ChkCrearConEmail.Checked = false;
@@ -732,8 +744,6 @@ public partial class FormAnalizaEmail : Form
             }
 
             // Indicar siempre que hagan la reseña.         (11/sep/23 10.25)
-            //// Si es para el mismo día de la actividad.     (24/ago/23 06.24)
-            //if (DateTime.Today == re.FechaActividad)
             sb.AppendLine("<br/>");
             sb.Append("<br/>");
             if (enIngles)
@@ -743,6 +753,22 @@ public partial class FormAnalizaEmail : Form
             else
             {
                 sb.Append("Nos encantaría recibir una reseña en el sitio de GetYourGuide con tu opinión sobre esta actividad, teniendo en cuenta que <b>Kayak Makarena</b> es la encargada de gestionar las reservas y <b>Maro - Kayak Nerja</b> realiza las rutas.<br/>");
+            }
+
+            // Si se ha indicado enviar el mensaje extra.   (22/sep/23 17.04)
+            if (ChkIncluirTextoAviso.Checked)
+            {
+                sb.Append("<br/>");
+                sb.Append("<br/>");
+                if (enIngles)
+                {
+                    sb.Append("<b>Please read this:</b><br/>");
+                }
+                else
+                {
+                    sb.Append("<b>Por favor lee esto:</b><br/>");
+                }
+                sb.Append(TxtAvisoExtra.Text.Replace(CrLf, "<br/>"));
             }
         }
 
