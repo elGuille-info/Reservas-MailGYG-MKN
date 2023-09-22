@@ -62,7 +62,7 @@ public partial class FormAnalizaEmail : Form
     private void MostrarTamaño()
     {
         LabelStatus.ToolTipText = $"H,W: {Height}, {Width}, Client H, W: {ClientSize.Height}, {ClientSize.Width}";
-        toolTip1.SetToolTip(statusStrip1, LabelStatus.ToolTipText);
+        toolTip1.SetToolTip(GrbEmail, LabelStatus.ToolTipText);
     }
 
     private void BtnPegarEmail_Click(object sender, EventArgs e)
