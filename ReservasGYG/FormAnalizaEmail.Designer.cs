@@ -566,10 +566,9 @@ namespace ReservasGYG
             // 
             // LabelStatus
             // 
-            LabelStatus.AutoSize = false;
             LabelStatus.BorderSides = ToolStripStatusLabelBorderSides.Right;
             LabelStatus.Name = "LabelStatus";
-            LabelStatus.Size = new Size(1071, 29);
+            LabelStatus.Size = new Size(1025, 29);
             LabelStatus.Spring = true;
             LabelStatus.Text = "Crear reservas de GetYourGuide en la app de MKN Reservas y enviar email de confirmación";
             LabelStatus.TextAlign = ContentAlignment.MiddleLeft;
