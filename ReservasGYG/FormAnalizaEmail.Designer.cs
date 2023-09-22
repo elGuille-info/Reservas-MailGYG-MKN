@@ -593,7 +593,6 @@ namespace ReservasGYG
             // 
             // ChkIncluirTextoAviso
             // 
-            ChkIncluirTextoAviso.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
             ChkIncluirTextoAviso.AutoSize = true;
             ChkIncluirTextoAviso.Location = new Point(12, 891);
             ChkIncluirTextoAviso.Name = "ChkIncluirTextoAviso";
@@ -604,7 +603,7 @@ namespace ReservasGYG
             // 
             // TxtAvisoExtra
             // 
-            TxtAvisoExtra.Anchor = AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            TxtAvisoExtra.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             TxtAvisoExtra.Location = new Point(12, 926);
             TxtAvisoExtra.Multiline = true;
             TxtAvisoExtra.Name = "TxtAvisoExtra";

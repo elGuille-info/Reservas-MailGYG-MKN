@@ -259,8 +259,8 @@ public partial class FormAnalizaEmail : Form
         // Comprobar si hay aviso extra a añadir.           (22/sep/23 16.52)
         if (ChkIncluirTextoAviso.Checked)
         {
-            if (MessageBox.Show($"Has indicado enviar el texto extra.{CrLf}¿Seguro que está bien ese texto?{CrLf}Pulsa SÍ para enviar, pulsa NO para cambiarlo o quitar la marca.", 
-                "Crear y confirmar con aviso extra", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No) 
+            if (MessageBox.Show($"Has indicado enviar el texto extra.{CrLf}¿Seguro que está bien ese texto?{CrLf}Pulsa SÍ para enviar, pulsa NO para cambiarlo o quitar la marca.",
+                "Crear y confirmar con aviso extra", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No)
             {
                 TxtAvisoExtra.Focus();
                 return;
