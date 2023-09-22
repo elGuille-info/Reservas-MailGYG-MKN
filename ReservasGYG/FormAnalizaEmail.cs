@@ -47,9 +47,18 @@ public partial class FormAnalizaEmail : Form
         TimerHoraStatus.Interval = 990;
         TimerHoraStatus.Enabled = true;
 
+        TimerInicio.Enabled = true;
+
         RtfEmail.Text = "";
 
         LimpiarControlesReserva();
+        MostrarTamaño();
+    }
+
+    private void TimerInicio_Tick(object sender, EventArgs e)
+    {
+        TimerInicio.Enabled = false;
+        if (Height < 900) Height = 1000;
         MostrarTamaño();
     }
 
@@ -61,8 +70,8 @@ public partial class FormAnalizaEmail : Form
 
     private void MostrarTamaño()
     {
-        LabelStatus.ToolTipText = $"H,W: {Height}, {Width}, Client H, W: {ClientSize.Height}, {ClientSize.Width}";
-        toolTip1.SetToolTip(GrbEmail, LabelStatus.ToolTipText);
+        LabelStatus.ToolTipText = $"W,H: {Width}, {Height} - Cliente W,H: {ClientSize.Width}, {ClientSize.Height}";
+        ToolTip1.SetToolTip(GrbEmail, LabelStatus.ToolTipText);
     }
 
     private void BtnPegarEmail_Click(object sender, EventArgs e)

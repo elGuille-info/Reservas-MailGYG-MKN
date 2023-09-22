@@ -82,9 +82,10 @@ namespace ReservasGYG
             LabelVersion = new ToolStripStatusLabel();
             LabelFechaHora = new ToolStripStatusLabel();
             TimerHoraStatus = new Timer(components);
-            toolTip1 = new ToolTip(components);
+            ToolTip1 = new ToolTip(components);
             ChkIncluirTextoAviso = new CheckBox();
             TxtAvisoExtra = new TextBox();
+            TimerInicio = new Timer(components);
             GrbEmail.SuspendLayout();
             GrbReserva.SuspendLayout();
             statusStrip1.SuspendLayout();
@@ -99,7 +100,7 @@ namespace ReservasGYG
             GrbEmail.Controls.Add(RtfEmail);
             GrbEmail.Location = new Point(12, 12);
             GrbEmail.Name = "GrbEmail";
-            GrbEmail.Size = new Size(1346, 384);
+            GrbEmail.Size = new Size(1462, 384);
             GrbEmail.TabIndex = 0;
             GrbEmail.TabStop = false;
             GrbEmail.Text = "Texto del correo a analizar";
@@ -109,7 +110,7 @@ namespace ReservasGYG
             BtnLimpiarTexto.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             BtnLimpiarTexto.BackColor = Color.LightGoldenrodYellow;
             BtnLimpiarTexto.ImageAlign = ContentAlignment.TopLeft;
-            BtnLimpiarTexto.Location = new Point(1135, 120);
+            BtnLimpiarTexto.Location = new Point(1251, 120);
             BtnLimpiarTexto.Name = "BtnLimpiarTexto";
             BtnLimpiarTexto.Size = new Size(205, 70);
             BtnLimpiarTexto.TabIndex = 2;
@@ -121,7 +122,7 @@ namespace ReservasGYG
             // 
             BtnAnalizarEmail.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
             BtnAnalizarEmail.BackColor = Color.Azure;
-            BtnAnalizarEmail.Location = new Point(1135, 308);
+            BtnAnalizarEmail.Location = new Point(1251, 308);
             BtnAnalizarEmail.Name = "BtnAnalizarEmail";
             BtnAnalizarEmail.Size = new Size(205, 70);
             BtnAnalizarEmail.TabIndex = 3;
@@ -134,7 +135,7 @@ namespace ReservasGYG
             BtnPegarEmail.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             BtnPegarEmail.BackColor = Color.Gold;
             BtnPegarEmail.ImageAlign = ContentAlignment.TopLeft;
-            BtnPegarEmail.Location = new Point(1135, 30);
+            BtnPegarEmail.Location = new Point(1251, 30);
             BtnPegarEmail.Name = "BtnPegarEmail";
             BtnPegarEmail.Size = new Size(205, 70);
             BtnPegarEmail.TabIndex = 1;
@@ -148,7 +149,7 @@ namespace ReservasGYG
             RtfEmail.Font = new Font("Consolas", 9F, FontStyle.Regular, GraphicsUnit.Point);
             RtfEmail.Location = new Point(6, 30);
             RtfEmail.Name = "RtfEmail";
-            RtfEmail.Size = new Size(1099, 348);
+            RtfEmail.Size = new Size(1215, 348);
             RtfEmail.TabIndex = 0;
             RtfEmail.Text = resources.GetString("RtfEmail.Text");
             RtfEmail.WordWrap = false;
@@ -195,7 +196,7 @@ namespace ReservasGYG
             GrbReserva.Controls.Add(BtnLimpiarReserva);
             GrbReserva.Location = new Point(12, 402);
             GrbReserva.Name = "GrbReserva";
-            GrbReserva.Size = new Size(1346, 483);
+            GrbReserva.Size = new Size(1462, 483);
             GrbReserva.TabIndex = 1;
             GrbReserva.TabStop = false;
             GrbReserva.Text = "Datos de la reserva";
@@ -242,7 +243,7 @@ namespace ReservasGYG
             // 
             BtnCrearConEmail.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             BtnCrearConEmail.BackColor = Color.MistyRose;
-            BtnCrearConEmail.Location = new Point(1135, 65);
+            BtnCrearConEmail.Location = new Point(1251, 65);
             BtnCrearConEmail.Margin = new Padding(12, 3, 3, 12);
             BtnCrearConEmail.Name = "BtnCrearConEmail";
             BtnCrearConEmail.Size = new Size(205, 70);
@@ -267,7 +268,7 @@ namespace ReservasGYG
             label14.Size = new Size(180, 31);
             label14.TabIndex = 22;
             label14.Text = "País:";
-            toolTip1.SetToolTip(label14, "Puedes modificar el país");
+            ToolTip1.SetToolTip(label14, "Puedes modificar el país");
             // 
             // TxtID
             // 
@@ -302,7 +303,7 @@ namespace ReservasGYG
             // 
             ChkCrearConEmail.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             ChkCrearConEmail.AutoSize = true;
-            ChkCrearConEmail.Location = new Point(1137, 30);
+            ChkCrearConEmail.Location = new Point(1253, 30);
             ChkCrearConEmail.Name = "ChkCrearConEmail";
             ChkCrearConEmail.Size = new Size(201, 29);
             ChkCrearConEmail.TabIndex = 32;
@@ -395,7 +396,7 @@ namespace ReservasGYG
             label8.Size = new Size(180, 31);
             label8.TabIndex = 2;
             label8.Text = "Tour language:";
-            toolTip1.SetToolTip(label8, "Indica English para mandar el mensaje en inglés");
+            ToolTip1.SetToolTip(label8, "Indica English para mandar el mensaje en inglés");
             // 
             // TxtNotas
             // 
@@ -417,7 +418,7 @@ namespace ReservasGYG
             label7.Size = new Size(180, 61);
             label7.TabIndex = 14;
             label7.Text = "Notas:\r\n(Wasap y edades)";
-            toolTip1.SetToolTip(label7, "Puedes modificar las notas");
+            ToolTip1.SetToolTip(label7, "Puedes modificar las notas");
             // 
             // TxtFechaHora
             // 
@@ -471,7 +472,7 @@ namespace ReservasGYG
             label4.Size = new Size(180, 31);
             label4.TabIndex = 12;
             label4.Text = "Email:";
-            toolTip1.SetToolTip(label4, "Puedes modificar el email");
+            ToolTip1.SetToolTip(label4, "Puedes modificar el email");
             // 
             // TxtTelefono
             // 
@@ -489,7 +490,7 @@ namespace ReservasGYG
             label3.Size = new Size(180, 31);
             label3.TabIndex = 10;
             label3.Text = "Teléfono:";
-            toolTip1.SetToolTip(label3, "Puedes modificar el teléfono");
+            ToolTip1.SetToolTip(label3, "Puedes modificar el teléfono");
             // 
             // TxtNombre
             // 
@@ -529,7 +530,7 @@ namespace ReservasGYG
             // 
             BtnLimpiarReserva.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
             BtnLimpiarReserva.BackColor = Color.LightYellow;
-            BtnLimpiarReserva.Location = new Point(1135, 398);
+            BtnLimpiarReserva.Location = new Point(1251, 398);
             BtnLimpiarReserva.Margin = new Padding(12, 3, 3, 3);
             BtnLimpiarReserva.Name = "BtnLimpiarReserva";
             BtnLimpiarReserva.Size = new Size(205, 70);
@@ -543,7 +544,7 @@ namespace ReservasGYG
             BtnOpciones.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
             BtnOpciones.BackColor = SystemColors.Highlight;
             BtnOpciones.ForeColor = SystemColors.Window;
-            BtnOpciones.Location = new Point(12, 1090);
+            BtnOpciones.Location = new Point(12, 1105);
             BtnOpciones.Margin = new Padding(3, 3, 3, 12);
             BtnOpciones.Name = "BtnOpciones";
             BtnOpciones.Size = new Size(361, 54);
@@ -556,18 +557,19 @@ namespace ReservasGYG
             // 
             statusStrip1.ImageScalingSize = new Size(24, 24);
             statusStrip1.Items.AddRange(new ToolStripItem[] { LabelStatus, LabelVersion, LabelFechaHora });
-            statusStrip1.Location = new Point(0, 1152);
+            statusStrip1.Location = new Point(0, 1167);
             statusStrip1.Name = "statusStrip1";
             statusStrip1.ShowItemToolTips = true;
-            statusStrip1.Size = new Size(1370, 36);
+            statusStrip1.Size = new Size(1486, 36);
             statusStrip1.TabIndex = 5;
             statusStrip1.Text = "statusStrip1";
             // 
             // LabelStatus
             // 
+            LabelStatus.AutoSize = false;
             LabelStatus.BorderSides = ToolStripStatusLabelBorderSides.Right;
             LabelStatus.Name = "LabelStatus";
-            LabelStatus.Size = new Size(909, 29);
+            LabelStatus.Size = new Size(1071, 29);
             LabelStatus.Spring = true;
             LabelStatus.Text = "Crear reservas de GetYourGuide en la app de MKN Reservas y enviar email de confirmación";
             LabelStatus.TextAlign = ContentAlignment.MiddleLeft;
@@ -608,15 +610,20 @@ namespace ReservasGYG
             TxtAvisoExtra.Multiline = true;
             TxtAvisoExtra.Name = "TxtAvisoExtra";
             TxtAvisoExtra.ScrollBars = ScrollBars.Both;
-            TxtAvisoExtra.Size = new Size(1346, 146);
+            TxtAvisoExtra.Size = new Size(1462, 154);
             TxtAvisoExtra.TabIndex = 3;
             TxtAvisoExtra.Text = resources.GetString("TxtAvisoExtra.Text");
+            // 
+            // TimerInicio
+            // 
+            TimerInicio.Interval = 300;
+            TimerInicio.Tick += TimerInicio_Tick;
             // 
             // FormAnalizaEmail
             // 
             AutoScaleDimensions = new SizeF(10F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1370, 1188);
+            ClientSize = new Size(1486, 1203);
             Controls.Add(ChkIncluirTextoAviso);
             Controls.Add(TxtAvisoExtra);
             Controls.Add(statusStrip1);
@@ -688,9 +695,10 @@ namespace ReservasGYG
         private TextBox TxtTipo;
         private Label label16;
         private ToolStripStatusLabel LabelVersion;
-        private ToolTip toolTip1;
+        private ToolTip ToolTip1;
         private Label LabelAvisoCambiarFecha;
         private CheckBox ChkIncluirTextoAviso;
         private TextBox TxtAvisoExtra;
+        private Timer TimerInicio;
     }
 }
