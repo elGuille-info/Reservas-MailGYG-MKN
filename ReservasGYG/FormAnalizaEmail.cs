@@ -22,6 +22,10 @@ namespace ReservasGYG;
 
 public partial class FormAnalizaEmail : Form
 {
+    // Para el texto de aviso original y el último usado.   (23/sep/23 10.48)
+    private string TextoAvisoUltimo { get; set; }
+    private string TextoAvisoOriginal { get; set; }
+
     private bool inicializando = true;
     private string StatusAnt { get; set; }
     private Reservas LaReserva { get; set; }
@@ -37,6 +41,9 @@ public partial class FormAnalizaEmail : Form
 
     private void FormAnalizaEmailGYG_Load(object sender, EventArgs e)
     {
+        // Copiar el texto de aviso original.               (23/sep/23 10.39)
+        TextoAvisoOriginal = TxtAvisoExtra.Text;
+
         LabelFechaHora.Text = $"{DateTime.Now:dd/MM/yyyy HH:mm:ss}";
 
         inicializando = false;
@@ -77,6 +84,9 @@ public partial class FormAnalizaEmail : Form
             statusStrip1.Refresh();
             Application.DoEvents();
         }
+
+        ChkIncluirTextoAviso.Checked = false;
+        Form1.ActualizarColorEnabled(ChkIncluirTextoAviso, TxtAvisoExtra);
 
         MostrarTamaño();
     }
@@ -143,7 +153,7 @@ public partial class FormAnalizaEmail : Form
 
         // Comprobar si es reserva para cambiar de fecha    (20/sep/23 19.28)
         // Comprobar también bad weather                    (23/sep/23 09.50)
-        if (re.GYGOption.Contains("to change", StringComparison.OrdinalIgnoreCase) || 
+        if (re.GYGOption.Contains("to change", StringComparison.OrdinalIgnoreCase) ||
             re.GYGOption.Contains("bad weather", StringComparison.OrdinalIgnoreCase))
         {
             // No comprobar fechas,                         (21/sep/23 09.41)
@@ -311,6 +321,9 @@ public partial class FormAnalizaEmail : Form
                 return;
             }
         }
+
+        // Copiar el texto que se va a enviar.              (23/sep/23 10.49)
+        TextoAvisoUltimo = TxtAvisoExtra.Text;
 
         // Deshabilitar el botón hasta que finalice.        (27/ago/23 09.58)
         ChkCrearConEmail.Checked = false;
@@ -1006,5 +1019,33 @@ public partial class FormAnalizaEmail : Form
             LabelAvisoCambiarFecha.Text = $"Error en la fecha indicada:{CrLf}{TxtFechaHora.Text}{CrLf}{ex.Message}.";
             LabelAvisoCambiarFecha.Visible = true;
         }
+    }
+
+    // Las opciones del menú contextual de TxtAvisoExtra    (23/sep/23 10.50)
+
+    private void MenuPegarTextoOriginal_Click(object sender, EventArgs e)
+    {
+        TxtAvisoExtra.Text = TextoAvisoOriginal;
+    }
+
+    private void MnuPegarÚltimoTextoEnviado_Click(object sender, EventArgs e)
+    {
+        // Comprobar que tenga contenido asignado.
+        if (string.IsNullOrEmpty(TextoAvisoUltimo) == false)
+        {
+            TxtAvisoExtra.Text = TextoAvisoUltimo;
+        }
+    }
+
+    private void ContextMenuTextoAviso_Opening(object sender, CancelEventArgs e)
+    {
+        MnuPegarÚltimoTextoEnviado.Enabled = !string.IsNullOrEmpty(TextoAvisoUltimo);
+    }
+
+    // Ajustar el color del textBox si está o no activado   (23/sep/23 10.57)
+
+    private void ChkIncluirTextoAviso_CheckedChanged(object sender, EventArgs e)
+    {
+        Form1.ActualizarColorEnabled(ChkIncluirTextoAviso, TxtAvisoExtra);
     }
 }

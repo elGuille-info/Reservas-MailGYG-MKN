@@ -86,9 +86,13 @@ namespace ReservasGYG
             ChkIncluirTextoAviso = new CheckBox();
             TxtAvisoExtra = new TextBox();
             TimerInicio = new Timer(components);
+            ContextMenuTextoAviso = new ContextMenuStrip(components);
+            MenuPegarTextoOriginal = new ToolStripMenuItem();
+            MnuPegarÚltimoTextoEnviado = new ToolStripMenuItem();
             GrbEmail.SuspendLayout();
             GrbReserva.SuspendLayout();
             statusStrip1.SuspendLayout();
+            ContextMenuTextoAviso.SuspendLayout();
             SuspendLayout();
             // 
             // GrbEmail
@@ -205,7 +209,7 @@ namespace ReservasGYG
             // 
             LabelAvisoCambiarFecha.BackColor = Color.Firebrick;
             LabelAvisoCambiarFecha.ForeColor = Color.Yellow;
-            LabelAvisoCambiarFecha.Location = new Point(1137, 150);
+            LabelAvisoCambiarFecha.Location = new Point(1253, 150);
             LabelAvisoCambiarFecha.Margin = new Padding(6, 3, 3, 3);
             LabelAvisoCambiarFecha.Name = "LabelAvisoCambiarFecha";
             LabelAvisoCambiarFecha.Size = new Size(201, 214);
@@ -568,7 +572,7 @@ namespace ReservasGYG
             // 
             LabelStatus.BorderSides = ToolStripStatusLabelBorderSides.Right;
             LabelStatus.Name = "LabelStatus";
-            LabelStatus.Size = new Size(995, 29);
+            LabelStatus.Size = new Size(1041, 29);
             LabelStatus.Spring = true;
             LabelStatus.Text = "Crear reservas de GetYourGuide en la app de MKN Reservas y enviar email de confirmación";
             LabelStatus.TextAlign = ContentAlignment.MiddleLeft;
@@ -601,6 +605,7 @@ namespace ReservasGYG
             ChkIncluirTextoAviso.TabIndex = 2;
             ChkIncluirTextoAviso.Text = "Incluir este texto en enviar el mensaje de confirmación";
             ChkIncluirTextoAviso.UseVisualStyleBackColor = true;
+            ChkIncluirTextoAviso.CheckedChanged += ChkIncluirTextoAviso_CheckedChanged;
             // 
             // TxtAvisoExtra
             // 
@@ -617,6 +622,28 @@ namespace ReservasGYG
             // 
             TimerInicio.Interval = 300;
             TimerInicio.Tick += TimerInicio_Tick;
+            // 
+            // ContextMenuTextoAviso
+            // 
+            ContextMenuTextoAviso.ImageScalingSize = new Size(24, 24);
+            ContextMenuTextoAviso.Items.AddRange(new ToolStripItem[] { MenuPegarTextoOriginal, MnuPegarÚltimoTextoEnviado });
+            ContextMenuTextoAviso.Name = "ContextMenuTextoAviso";
+            ContextMenuTextoAviso.Size = new Size(316, 68);
+            ContextMenuTextoAviso.Opening += ContextMenuTextoAviso_Opening;
+            // 
+            // MenuPegarTextoOriginal
+            // 
+            MenuPegarTextoOriginal.Name = "MenuPegarTextoOriginal";
+            MenuPegarTextoOriginal.Size = new Size(315, 32);
+            MenuPegarTextoOriginal.Text = "Pegar el texto original";
+            MenuPegarTextoOriginal.Click += MenuPegarTextoOriginal_Click;
+            // 
+            // MnuPegarÚltimoTextoEnviado
+            // 
+            MnuPegarÚltimoTextoEnviado.Name = "MnuPegarÚltimoTextoEnviado";
+            MnuPegarÚltimoTextoEnviado.Size = new Size(315, 32);
+            MnuPegarÚltimoTextoEnviado.Text = "Pegar el último texto enviado";
+            MnuPegarÚltimoTextoEnviado.Click += MnuPegarÚltimoTextoEnviado_Click;
             // 
             // FormAnalizaEmail
             // 
@@ -641,6 +668,7 @@ namespace ReservasGYG
             GrbReserva.PerformLayout();
             statusStrip1.ResumeLayout(false);
             statusStrip1.PerformLayout();
+            ContextMenuTextoAviso.ResumeLayout(false);
             ResumeLayout(false);
             PerformLayout();
         }
@@ -699,5 +727,8 @@ namespace ReservasGYG
         private CheckBox ChkIncluirTextoAviso;
         private TextBox TxtAvisoExtra;
         private Timer TimerInicio;
+        private ContextMenuStrip ContextMenuTextoAviso;
+        private ToolStripMenuItem MenuPegarTextoOriginal;
+        private ToolStripMenuItem MnuPegarÚltimoTextoEnviado;
     }
 }

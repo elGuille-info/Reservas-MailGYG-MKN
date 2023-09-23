@@ -5,9 +5,9 @@
         <ProduceReferenceAssembly>true</ProduceReferenceAssembly>
         <ProduceReferenceAssemblyInOutDir>true</ProduceReferenceAssemblyInOutDir>
         <Title>ReservasGYG Movil</Title>
-        <Version>1.0.86</Version>
-        <AssemblyVersion>1.0.86.0</AssemblyVersion>
-        <FileVersion>1.0.86.0</FileVersion>
+        <Version>1.0.87</Version>
+        <AssemblyVersion>1.0.87.0</AssemblyVersion>
+        <FileVersion>1.0.87.0</FileVersion>
         <Authors>gSoft (elguille.nfo)</Authors>
         <Product>ReservasGYG Movil</Product>
         <Description>Aplicación móvil para gestionar las reservas de GetYourGuide para MKN Reservas  (revisión del 23-sep-2023)</Description>

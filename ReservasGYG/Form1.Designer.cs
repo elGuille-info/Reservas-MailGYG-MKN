@@ -69,10 +69,14 @@ namespace ReservasGYG
             label8 = new Label();
             BtnComprobarSinMail = new Button();
             TimerInicioForm1 = new Timer(components);
+            ContextMenuTextoAviso = new ContextMenuStrip(components);
+            MenuPegarTextoOriginal = new ToolStripMenuItem();
+            MnuPegarÚltimoTextoEnviado = new ToolStripMenuItem();
             GrbOpcionesFecha.SuspendLayout();
             GrbAvisos.SuspendLayout();
             PanelBotones.SuspendLayout();
             ContextMenuListView.SuspendLayout();
+            ContextMenuTextoAviso.SuspendLayout();
             SuspendLayout();
             // 
             // ChkConAlquileres
@@ -429,6 +433,28 @@ namespace ReservasGYG
             TimerInicioForm1.Interval = 300;
             TimerInicioForm1.Tick += TimerInicioForm1_Tick;
             // 
+            // ContextMenuTextoAviso
+            // 
+            ContextMenuTextoAviso.ImageScalingSize = new Size(24, 24);
+            ContextMenuTextoAviso.Items.AddRange(new ToolStripItem[] { MenuPegarTextoOriginal, MnuPegarÚltimoTextoEnviado });
+            ContextMenuTextoAviso.Name = "ContextMenuTextoAviso";
+            ContextMenuTextoAviso.Size = new Size(316, 68);
+            ContextMenuTextoAviso.Opening += ContextMenuTextoAviso_Opening;
+            // 
+            // MenuPegarTextoOriginal
+            // 
+            MenuPegarTextoOriginal.Name = "MenuPegarTextoOriginal";
+            MenuPegarTextoOriginal.Size = new Size(315, 32);
+            MenuPegarTextoOriginal.Text = "Pegar el texto original";
+            MenuPegarTextoOriginal.Click += MenuPegarTextoOriginal_Click;
+            // 
+            // MnuPegarÚltimoTextoEnviado
+            // 
+            MnuPegarÚltimoTextoEnviado.Name = "MnuPegarÚltimoTextoEnviado";
+            MnuPegarÚltimoTextoEnviado.Size = new Size(315, 32);
+            MnuPegarÚltimoTextoEnviado.Text = "Pegar el último texto enviado";
+            MnuPegarÚltimoTextoEnviado.Click += MnuPegarÚltimoTextoEnviado_Click;
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(10F, 25F);
@@ -488,5 +514,8 @@ namespace ReservasGYG
         private TextBox TxtAvisoExtra;
         private CheckBox ChkIncluirTextoAviso;
         private Timer TimerInicioForm1;
+        private ContextMenuStrip ContextMenuTextoAviso;
+        private ToolStripMenuItem MenuPegarTextoOriginal;
+        private ToolStripMenuItem MnuPegarÚltimoTextoEnviado;
     }
 }

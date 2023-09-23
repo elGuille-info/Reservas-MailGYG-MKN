@@ -14,6 +14,7 @@ using KNDatos;
 
 using static ApiReservasMailGYG.MailGYG;
 using ApiReservasMailGYG;
+using System.ComponentModel;
 
 namespace ReservasGYG;
 
@@ -26,18 +27,18 @@ public partial class Form1 : Form
 
     // Intentar no pasar de estas marcas: 60 caracteres. 2         3         4         5         6
     //                                ---------|---------|---------|---------|---------|---------|
-    //[COPIAR]AppDescripcionCopia = " opcion bad weather"
+    //[COPIAR]AppDescripcionCopia = " colorear text box y menú contextual"
     // BuscarClientes mostrar reservas en la pagina
 
     /// <summary>
     /// La versión de la aplicación.
     /// </summary>
-    public static string AppVersion { get; } = "1.0.86";
+    public static string AppVersion { get; } = "1.0.87";
 
     /// <summary>
     /// La versión del fichero (la revisión)
     /// </summary>
-    public static string AppFileVersion { get; } = "1.0.86.0";
+    public static string AppFileVersion { get; } = "1.0.87.0";
 
     /// <summary>
     /// La fecha de última actualización
@@ -47,9 +48,26 @@ public partial class Form1 : Form
 
     public static Form1 Current { get; set; }
 
+    // Para el texto de aviso original y el último usado.   (23/sep/23 10.48)
+    private string TextoAvisoUltimo { get; set; }
+    private string TextoAvisoOriginal { get; set; }
+
     //
     // Métodos estáticos/compartidos
     //
+
+    public static void ActualizarColorEnabled(CheckBox ChkIncluirTextoAviso, TextBox TxtAvisoExtra)
+    {
+        TxtAvisoExtra.Enabled = ChkIncluirTextoAviso.Checked;
+        if (TxtAvisoExtra.Enabled)
+        {
+            TxtAvisoExtra.BackColor = Color.White;
+        }
+        else
+        {
+            TxtAvisoExtra.BackColor = Color.MintCream;
+        }
+    }
 
     /// <summary>
     /// Asignar las columnas y el ancho al listview indicado.
@@ -215,36 +233,24 @@ public partial class Form1 : Form
     {
         inicializando = false;
 
-        //LvwSinEmail.Items.Clear();
-        //LvwSinEmail.Columns.Clear();
-        //for (int j = 0; j < ApiReservasMailGYG.ReservasGYG.Columnas.Length; j++)
-        //{
-        //    LvwSinEmail.Columns.Add(ApiReservasMailGYG.ReservasGYG.Columnas[j]);
-        //}
+        // Copiar el texto de aviso original.               (23/sep/23 10.39)
+        TextoAvisoOriginal = TxtAvisoExtra.Text;
+
         AsignarColumnasLvw(LvwSinEmail, asignarColumnas: true);
         LabelInfoListView.Text = "";
-
-        // No cargarlo.                                     (25/ago/23 14.11)
-
-        //// Cargar el programa de analizar emails.           (24/ago/23 15.38)
-        ////CargarAnalizarEmail();
-        //// Hacerlo con el timer.                            (24/ago/23 15.40)
-        //TimerCargarAnalizarEmail.Interval = 300;
-        //TimerCargarAnalizarEmail.Enabled = true;
 
         HabilitarBotones(false);
 
         DateTimePickerGYG.Value = DateTime.Today;
 
         TimerInicioForm1.Enabled = true;
-        //Form1_Resize(null, null);
     }
 
     private void TimerInicioForm1_Tick(object sender, EventArgs e)
     {
         TimerInicioForm1.Enabled = false;
         ChkIncluirTextoAviso.Checked = false;
-        ActualizarColorEnabled();
+        ActualizarColorEnabled(ChkIncluirTextoAviso, TxtAvisoExtra);
         Form1_Resize(null, null);
     }
 
@@ -703,6 +709,9 @@ public partial class Form1 : Form
         // Si se indica enviar el texto extra.              (17/sep/23 20.51)
         if (ChkIncluirTextoAviso.Checked && string.IsNullOrWhiteSpace(TxtAvisoExtra.Text) == false)
         {
+            // Copiar el texto que se va a enviar.              (23/sep/23 10.49)
+            TextoAvisoUltimo = TxtAvisoExtra.Text;
+
             sb.Append("<br/>");
             sb.Append(TxtAvisoExtra.Text.Replace(CrLf, "<br/>"));
             sb.Append("<br/>");
@@ -750,19 +759,27 @@ public partial class Form1 : Form
 
     private void ChkIncluirTextoAviso_CheckedChanged(object sender, EventArgs e)
     {
-        ActualizarColorEnabled();
+        ActualizarColorEnabled(ChkIncluirTextoAviso, TxtAvisoExtra);
     }
 
-    private void ActualizarColorEnabled()
+    // Las opciones del menú contextual de TxtAvisoExtra    (23/sep/23 10.50)
+
+    private void MenuPegarTextoOriginal_Click(object sender, EventArgs e)
     {
-        TxtAvisoExtra.Enabled = ChkIncluirTextoAviso.Checked;
-        if (TxtAvisoExtra.Enabled)
+        TxtAvisoExtra.Text = TextoAvisoOriginal;
+    }
+
+    private void MnuPegarÚltimoTextoEnviado_Click(object sender, EventArgs e)
+    {
+        // Comprobar que tenga contenido asignado.
+        if (string.IsNullOrEmpty(TextoAvisoUltimo) == false)
         {
-            TxtAvisoExtra.BackColor = Color.White;
+            TxtAvisoExtra.Text = TextoAvisoUltimo;
         }
-        else
-        {
-            TxtAvisoExtra.BackColor = Color.MintCream;
-        }
+    }
+
+    private void ContextMenuTextoAviso_Opening(object sender, CancelEventArgs e)
+    {
+        MnuPegarÚltimoTextoEnviado.Enabled = !string.IsNullOrEmpty(TextoAvisoUltimo);
     }
 }
