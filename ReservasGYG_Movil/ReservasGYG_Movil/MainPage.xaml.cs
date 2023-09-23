@@ -141,7 +141,10 @@ namespace ReservasGYG_Movil
             // Por si elige la opción de cambiar fecha.     (21/sep/23 09.45)
             //
 
-            if (re.GYGOption.ToLower().Contains("to change"))
+            // Comprobar si es para cambiar de fecha        (20/sep/23 19.28)
+            // Comprobar también bad weather                (23/sep/23 09.50)
+            if (re.GYGOption.ToLower().Contains("to change") || 
+                re.GYGOption.ToLower().Contains("bad weather"))
             {
                 // No comprobar fechas,                         (21/sep/23 09.41)
                 // la reserva se dejará para el día que eligió.

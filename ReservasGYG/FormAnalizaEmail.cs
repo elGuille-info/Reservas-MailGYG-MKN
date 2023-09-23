@@ -142,7 +142,9 @@ public partial class FormAnalizaEmail : Form
         LimpiarControlesReserva();
 
         // Comprobar si es reserva para cambiar de fecha    (20/sep/23 19.28)
-        if (re.GYGOption.Contains("to change", StringComparison.OrdinalIgnoreCase))
+        // Comprobar también bad weather                    (23/sep/23 09.50)
+        if (re.GYGOption.Contains("to change", StringComparison.OrdinalIgnoreCase) || 
+            re.GYGOption.Contains("bad weather", StringComparison.OrdinalIgnoreCase))
         {
             // No comprobar fechas,                         (21/sep/23 09.41)
             // la reserva se dejará para el día que eligió.
