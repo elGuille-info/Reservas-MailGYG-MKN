@@ -27,18 +27,18 @@ public partial class Form1 : Form
 
     // Intentar no pasar de estas marcas: 60 caracteres. 2         3         4         5         6
     //                                ---------|---------|---------|---------|---------|---------|
-    //[COPIAR]AppDescripcionCopia = " asignar menú contextual a txtAviso"
+    //[COPIAR]AppDescripcionCopia = " reservas con Bad Weather GYG en movil"
     // BuscarClientes mostrar reservas en la pagina
 
     /// <summary>
     /// La versión de la aplicación.
     /// </summary>
-    public static string AppVersion { get; } = "1.0.88";
+    public static string AppVersion { get; } = "1.0.89";
 
     /// <summary>
     /// La versión del fichero (la revisión)
     /// </summary>
-    public static string AppFileVersion { get; } = "1.0.88.0";
+    public static string AppFileVersion { get; } = "1.0.89.0";
 
     /// <summary>
     /// La fecha de última actualización
