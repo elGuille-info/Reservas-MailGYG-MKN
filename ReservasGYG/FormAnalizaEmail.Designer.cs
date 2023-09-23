@@ -610,6 +610,7 @@ namespace ReservasGYG
             // TxtAvisoExtra
             // 
             TxtAvisoExtra.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            TxtAvisoExtra.ContextMenuStrip = ContextMenuTextoAviso;
             TxtAvisoExtra.Location = new Point(12, 926);
             TxtAvisoExtra.Multiline = true;
             TxtAvisoExtra.Name = "TxtAvisoExtra";

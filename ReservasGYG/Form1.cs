@@ -27,18 +27,18 @@ public partial class Form1 : Form
 
     // Intentar no pasar de estas marcas: 60 caracteres. 2         3         4         5         6
     //                                ---------|---------|---------|---------|---------|---------|
-    //[COPIAR]AppDescripcionCopia = " colorear text box y menú contextual"
+    //[COPIAR]AppDescripcionCopia = " asignar menú contextual a txtAviso"
     // BuscarClientes mostrar reservas en la pagina
 
     /// <summary>
     /// La versión de la aplicación.
     /// </summary>
-    public static string AppVersion { get; } = "1.0.87";
+    public static string AppVersion { get; } = "1.0.88";
 
     /// <summary>
     /// La versión del fichero (la revisión)
     /// </summary>
-    public static string AppFileVersion { get; } = "1.0.87.0";
+    public static string AppFileVersion { get; } = "1.0.88.0";
 
     /// <summary>
     /// La fecha de última actualización
@@ -511,7 +511,7 @@ public partial class Form1 : Form
         sb.Append(Properties.Resources.Hoy_es_el_dia.Replace(CrLf, "<br/>"));
 
         // Añadir la firma de Kayak Makarena                (18/sep/23 05.33)
-        MailGYG.FirmaMakarena(sb, enIngles:false);
+        MailGYG.FirmaMakarena(sb, enIngles: false);
 
         //sb.Append("<br/>");
         //sb.Append("<br/>");

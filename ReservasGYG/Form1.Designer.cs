@@ -145,7 +145,7 @@ namespace ReservasGYG
             GrbOpcionesFecha.Controls.Add(BtnComprobarSinMail);
             GrbOpcionesFecha.Location = new Point(12, 12);
             GrbOpcionesFecha.Name = "GrbOpcionesFecha";
-            GrbOpcionesFecha.Size = new Size(1316, 900);
+            GrbOpcionesFecha.Size = new Size(1316, 949);
             GrbOpcionesFecha.TabIndex = 0;
             GrbOpcionesFecha.TabStop = false;
             GrbOpcionesFecha.Text = "Opciones con fecha";
@@ -158,7 +158,7 @@ namespace ReservasGYG
             GrbAvisos.Controls.Add(PanelBotones);
             GrbAvisos.Location = new Point(6, 608);
             GrbAvisos.Name = "GrbAvisos";
-            GrbAvisos.Size = new Size(1310, 286);
+            GrbAvisos.Size = new Size(1310, 335);
             GrbAvisos.TabIndex = 11;
             GrbAvisos.TabStop = false;
             GrbAvisos.Text = "Enviar avisos";
@@ -176,12 +176,13 @@ namespace ReservasGYG
             // 
             // TxtAvisoExtra
             // 
-            TxtAvisoExtra.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            TxtAvisoExtra.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            TxtAvisoExtra.ContextMenuStrip = ContextMenuTextoAviso;
             TxtAvisoExtra.Location = new Point(6, 65);
             TxtAvisoExtra.Multiline = true;
             TxtAvisoExtra.Name = "TxtAvisoExtra";
             TxtAvisoExtra.ScrollBars = ScrollBars.Both;
-            TxtAvisoExtra.Size = new Size(1298, 103);
+            TxtAvisoExtra.Size = new Size(1298, 152);
             TxtAvisoExtra.TabIndex = 1;
             TxtAvisoExtra.Text = resources.GetString("TxtAvisoExtra.Text");
             // 
@@ -193,7 +194,7 @@ namespace ReservasGYG
             PanelBotones.Controls.Add(BtnAlerta1);
             PanelBotones.Controls.Add(BtnAlerta2);
             PanelBotones.Controls.Add(BtnAlerta3);
-            PanelBotones.Location = new Point(6, 174);
+            PanelBotones.Location = new Point(6, 223);
             PanelBotones.Name = "PanelBotones";
             PanelBotones.Padding = new Padding(3);
             PanelBotones.Size = new Size(1298, 106);
@@ -260,7 +261,7 @@ namespace ReservasGYG
             // LabelInfoListView
             // 
             LabelInfoListView.Anchor = AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            LabelInfoListView.Location = new Point(9, 571);
+            LabelInfoListView.Location = new Point(6, 571);
             LabelInfoListView.Margin = new Padding(3);
             LabelInfoListView.Name = "LabelInfoListView";
             LabelInfoListView.Size = new Size(1301, 31);
@@ -459,7 +460,7 @@ namespace ReservasGYG
             // 
             AutoScaleDimensions = new SizeF(10F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1346, 924);
+            ClientSize = new Size(1346, 973);
             Controls.Add(GrbOpcionesFecha);
             Icon = (Icon)resources.GetObject("$this.Icon");
             Name = "Form1";
@@ -474,6 +475,7 @@ namespace ReservasGYG
             GrbAvisos.PerformLayout();
             PanelBotones.ResumeLayout(false);
             ContextMenuListView.ResumeLayout(false);
+            ContextMenuTextoAviso.ResumeLayout(false);
             ResumeLayout(false);
         }
 

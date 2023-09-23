@@ -162,6 +162,9 @@ The GetYourGuide Team</value>
   <metadata name="TimerHoraStatus.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>177, 17</value>
   </metadata>
+  <metadata name="ContextMenuTextoAviso.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>662, 17</value>
+  </metadata>
   <data name="TxtAvisoExtra.Text" xml:space="preserve">
     <value>Las previsiones del mar para el día de la reserva no son favorables. ¿Podrías cambiar al INDICAR DÍA?
 Si no puedes cambiarla, no te preocupes, te avisaremos el día antes si las condiciones del mar no son buenas.
@@ -171,9 +174,6 @@ If you can't change to another date, don't worry, we'll tell you the day before 
   </data>
   <metadata name="TimerInicio.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>509, 17</value>
-  </metadata>
-  <metadata name="ContextMenuTextoAviso.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>662, 17</value>
   </metadata>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
