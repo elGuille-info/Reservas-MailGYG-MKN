@@ -159,27 +159,22 @@ public partial class FormAnalizaEmail : Form
             // No comprobar fechas,                         (21/sep/23 09.41)
             // la reserva se dejará para el día que eligió.
 
-            //var fechaChange1 = new DateTime(2023, 9, 21);
-            //var fechaChange2 = new DateTime(2023, 9, 22);
-            //string mensajeChange;
+            // Cambiar el mensaje por malas previsiones     (25/sep/23 15.24)
             StringBuilder mensajeChange = new StringBuilder();
             if (re.GYGLanguage.Contains("English"))
             {
-                mensajeChange.Append(" *The option you booked is for 'change to another date' that we expect better weather conditions in the sea.*");
-                //if (re.FechaActividad.FechasBetween(fechaChange1, fechaChange2))
-                //{
-                //    mensajeChange += " *I change your reservation to Saturday 23rd.*";
-                //}
-                mensajeChange.Append(" *Please tell me by WhatsApp message which day is good for you.*");
+                //mensajeChange.Append(" *The option you booked is for dates we expect BAD WEATHER conditions in the sea.*");
+                mensajeChange.Append(" *The option you have booked is for dates with unfavorable forecasts at sea.*");
+
+                //mensajeChange.Append(" *The option you booked is for 'change to another date' that we expect better weather conditions in the sea.*");
+                //mensajeChange.Append(" *Please tell me by WhatsApp message which day is good for you.*");
             }
             else
             {
-                mensajeChange.Append(" *La opción que has reservado es para 'cambiar a otra fecha' que las previsiones del mar estén mejor.*");
-                //if (re.FechaActividad.FechasBetween(fechaChange1, fechaChange2))
-                //{
-                //    mensajeChange += " *He cambiado tu reserva para el sábado 23.*";
-                //}
-                mensajeChange.Append(" *Por favor dime por mensaje de WhatsApp qué día te viene bien.*");
+                mensajeChange.Append(" *La opción que has reservado es para fechas con previsiones desfavorables en el mar.*");
+
+                //mensajeChange.Append(" *La opción que has reservado es para 'cambiar a otra fecha' que las previsiones del mar estén mejor.*");
+                //mensajeChange.Append(" *Por favor dime por mensaje de WhatsApp qué día te viene bien.*");
             }
             re.GYGNotas += mensajeChange.ToString();
 

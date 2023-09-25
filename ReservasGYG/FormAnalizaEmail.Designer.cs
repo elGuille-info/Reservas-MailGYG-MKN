@@ -85,10 +85,10 @@ namespace ReservasGYG
             ToolTip1 = new ToolTip(components);
             ChkIncluirTextoAviso = new CheckBox();
             TxtAvisoExtra = new TextBox();
-            TimerInicio = new Timer(components);
             ContextMenuTextoAviso = new ContextMenuStrip(components);
             MenuPegarTextoOriginal = new ToolStripMenuItem();
             MnuPegarÚltimoTextoEnviado = new ToolStripMenuItem();
+            TimerInicio = new Timer(components);
             GrbEmail.SuspendLayout();
             GrbReserva.SuspendLayout();
             statusStrip1.SuspendLayout();
@@ -619,11 +619,6 @@ namespace ReservasGYG
             TxtAvisoExtra.TabIndex = 3;
             TxtAvisoExtra.Text = resources.GetString("TxtAvisoExtra.Text");
             // 
-            // TimerInicio
-            // 
-            TimerInicio.Interval = 300;
-            TimerInicio.Tick += TimerInicio_Tick;
-            // 
             // ContextMenuTextoAviso
             // 
             ContextMenuTextoAviso.ImageScalingSize = new Size(24, 24);
@@ -645,6 +640,11 @@ namespace ReservasGYG
             MnuPegarÚltimoTextoEnviado.Size = new Size(315, 32);
             MnuPegarÚltimoTextoEnviado.Text = "Pegar el último texto enviado";
             MnuPegarÚltimoTextoEnviado.Click += MnuPegarÚltimoTextoEnviado_Click;
+            // 
+            // TimerInicio
+            // 
+            TimerInicio.Interval = 300;
+            TimerInicio.Tick += TimerInicio_Tick;
             // 
             // FormAnalizaEmail
             // 
