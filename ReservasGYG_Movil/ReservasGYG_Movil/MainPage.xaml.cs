@@ -57,11 +57,17 @@ namespace ReservasGYG_Movil
             }
             else
             {
-                MailGYG.CambioLinea = "\n";
+                // Así en iOS no cambia de línea            (26/sep/23 21.20)
+                //MailGYG.CambioLinea = "\n";
+                // Probar de esta forma.                    (26/sep/23 21.21)
+                MailGYG.CambioLinea = "\r\n";
             }
             inicializando = false;
 
             ActualizarImagenExpander();
+
+            // Mostrar la versión al cargar.                (26/sep/23 21.22)
+            LabelStatus.Text = $"{App.AppName} v{App.AppVersion} ({App.AppFechaVersion})";
         }
 
         /// <summary>
