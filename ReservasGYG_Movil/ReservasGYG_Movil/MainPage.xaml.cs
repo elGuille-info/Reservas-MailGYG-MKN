@@ -695,40 +695,55 @@ namespace ReservasGYG_Movil
                 }
                 else
                 {
-                    // Mandar el texto según el idioma.             (22/ago/23 10.58)
-                    if (re.HoraActividad.Hours == 9)
+                    // Solo mandar el IMPORTANTE            (26/sep/23 21.18)
+                    if (enIngles)
                     {
-                        if (enIngles)
-                        {
-                            sb.Append(await MainPage.LeerAsset("IMPORTANTE_EN_09_30.txt"));
-                        }
-                        else
-                        {
-                            sb.Append(await MainPage.LeerAsset("IMPORTANTE_ES_09_30.txt"));
-                        }
-                    }
-                    else if (re.HoraActividad.Hours == 10 || re.HoraActividad == new TimeSpan(11, 0, 0))
-                    {
-                        if (enIngles)
-                        {
-                            sb.Append(await MainPage.LeerAsset("IMPORTANTE_EN_10_30_11_00.txt"));
-                        }
-                        else
-                        {
-                            sb.Append(await MainPage.LeerAsset("IMPORTANTE_ES_10_30_11_00.txt"));
-                        }
+                        sb.Append(await MainPage.LeerAsset("IMPORTANTE_EN.txt"));
                     }
                     else
                     {
-                        if (enIngles)
-                        {
-                            sb.Append(await MainPage.LeerAsset("IMPORTANTE_EN.txt"));
-                        }
-                        else
-                        {
-                            sb.Append(await MainPage.LeerAsset("IMPORTANTE_ES.txt"));
-                        }
+                        sb.Append(await MainPage.LeerAsset("IMPORTANTE_ES.txt"));
                     }
+
+                    //
+                    // TODO: Después habrá que hacer varios textos para temporada alta y baja
+                    // y para cuando quiten el bus.
+                    //
+
+                    // Mandar el texto según el idioma.             (22/ago/23 10.58)
+                    //if (re.HoraActividad.Hours == 9)
+                    //{
+                    //    if (enIngles)
+                    //    {
+                    //        sb.Append(await MainPage.LeerAsset("IMPORTANTE_EN_09_30.txt"));
+                    //    }
+                    //    else
+                    //    {
+                    //        sb.Append(await MainPage.LeerAsset("IMPORTANTE_ES_09_30.txt"));
+                    //    }
+                    //}
+                    //else if (re.HoraActividad.Hours == 10 || re.HoraActividad == new TimeSpan(11, 0, 0))
+                    //{
+                    //    if (enIngles)
+                    //    {
+                    //        sb.Append(await MainPage.LeerAsset("IMPORTANTE_EN_10_30_11_00.txt"));
+                    //    }
+                    //    else
+                    //    {
+                    //        sb.Append(await MainPage.LeerAsset("IMPORTANTE_ES_10_30_11_00.txt"));
+                    //    }
+                    //}
+                    //else
+                    //{
+                    //    if (enIngles)
+                    //    {
+                    //        sb.Append(await MainPage.LeerAsset("IMPORTANTE_EN.txt"));
+                    //    }
+                    //    else
+                    //    {
+                    //        sb.Append(await MainPage.LeerAsset("IMPORTANTE_ES.txt"));
+                    //    }
+                    //}
                 }
                 // En temporada alta, hasta mediados septiembre (18/sep/23 05.18)
                 if (DateTime.Today <= new DateTime(2023, 9, 15))

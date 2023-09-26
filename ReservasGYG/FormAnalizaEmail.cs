@@ -754,40 +754,56 @@ public partial class FormAnalizaEmail : Form
             }
             else
             {
-                // Mandar el texto según el idioma.         (22/ago/23 10.58)
-                if (re.HoraActividad.Hours == 9)
+                // Solo mandar el IMPORTANTE                (26/sep/23 21.15)
+                if (enIngles)
                 {
-                    if (enIngles)
-                    {
-                        sb.Append(Properties.Resources.IMPORTANTE_EN_09_30.Replace(CrLf, "<br/>"));
-                    }
-                    else
-                    {
-                        sb.Append(Properties.Resources.IMPORTANTE_ES_09_30.Replace(CrLf, "<br/>"));
-                    }
-                }
-                else if (re.HoraActividad.Hours == 10 || re.HoraActividad == new TimeSpan(11, 0, 0))
-                {
-                    if (enIngles)
-                    {
-                        sb.Append(Properties.Resources.IMPORTANTE_EN_10_30_11_00.Replace(CrLf, "<br/>"));
-                    }
-                    else
-                    {
-                        sb.Append(Properties.Resources.IMPORTANTE_ES_10_30_11_00.Replace(CrLf, "<br/>"));
-                    }
+                    sb.Append(Properties.Resources.IMPORTANTE_EN.Replace(CrLf, "<br/>"));
                 }
                 else
                 {
-                    if (enIngles)
-                    {
-                        sb.Append(Properties.Resources.IMPORTANTE_EN.Replace(CrLf, "<br/>"));
-                    }
-                    else
-                    {
-                        sb.Append(Properties.Resources.IMPORTANTE_ES.Replace(CrLf, "<br/>"));
-                    }
+                    sb.Append(Properties.Resources.IMPORTANTE_ES.Replace(CrLf, "<br/>"));
                 }
+
+
+                //
+                // TODO: Después habrá que hacer varios textos para temporada alta y baja
+                // y para cuando quiten el bus.
+                //
+
+                // Mandar el texto según el idioma y hora   (22/ago/23 10.58)
+                //if (re.HoraActividad.Hours == 9)
+                //{
+                //    if (enIngles)
+                //    {
+                //        sb.Append(Properties.Resources.IMPORTANTE_EN_09_30.Replace(CrLf, "<br/>"));
+                //    }
+                //    else
+                //    {
+                //        sb.Append(Properties.Resources.IMPORTANTE_ES_09_30.Replace(CrLf, "<br/>"));
+                //    }
+                //}
+                //else if (re.HoraActividad.Hours == 10 || re.HoraActividad == new TimeSpan(11, 0, 0))
+                //{
+                //    if (enIngles)
+                //    {
+                //        sb.Append(Properties.Resources.IMPORTANTE_EN_10_30_11_00.Replace(CrLf, "<br/>"));
+                //    }
+                //    else
+                //    {
+                //        sb.Append(Properties.Resources.IMPORTANTE_ES_10_30_11_00.Replace(CrLf, "<br/>"));
+                //    }
+                //}
+                //else
+                //{
+                //    if (enIngles)
+                //    {
+                //        sb.Append(Properties.Resources.IMPORTANTE_EN.Replace(CrLf, "<br/>"));
+                //    }
+                //    else
+                //    {
+                //        sb.Append(Properties.Resources.IMPORTANTE_ES.Replace(CrLf, "<br/>"));
+                //    }
+                //}
             }
 
             // En temporada alta, hasta mediados septiembre (18/sep/23 05.18)
