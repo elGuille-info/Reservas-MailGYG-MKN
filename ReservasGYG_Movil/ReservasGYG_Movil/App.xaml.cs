@@ -26,17 +26,17 @@ namespace ReservasGYG_Movil
 
         // Intentar no pasar de estas marcas: 60 caracteres. 2         3         4         5         6
         //                                ---------|---------|---------|---------|---------|---------|
-        //[COPIAR]AppDescripcionCopia = " Mensajes Bad Weather GYG"
+        //[COPIAR]AppDescripcionCopia = " textos"
 
         /// <summary>
         /// La versión de la aplicación.
         /// </summary>
-        public static string AppVersion { get; } = "1.0.91";
+        public static string AppVersion { get; } = "1.0.92";
 
         /// <summary>
         /// La versión del fichero (la revisión)
         /// </summary>
-        public static string AppFileVersion { get; } = "1.0.91.0";
+        public static string AppFileVersion { get; } = "1.0.92.0";
 
         /// <summary>
         /// La fecha de última actualización
