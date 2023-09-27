@@ -27,23 +27,23 @@ public partial class Form1 : Form
 
     // Intentar no pasar de estas marcas: 60 caracteres. 2         3         4         5         6
     //                                ---------|---------|---------|---------|---------|---------|
-    //[COPIAR]AppDescripcionCopia = " versión en app móvil y cambio linea iOS"
+    //[COPIAR]AppDescripcionCopia = " firma makarena y enviar fotos"
     // BuscarClientes mostrar reservas en la pagina
 
     /// <summary>
     /// La versión de la aplicación.
     /// </summary>
-    public static string AppVersion { get; } = "1.0.94";
+    public static string AppVersion { get; } = "1.0.95";
 
     /// <summary>
     /// La versión del fichero (la revisión)
     /// </summary>
-    public static string AppFileVersion { get; } = "1.0.94.0";
+    public static string AppFileVersion { get; } = "1.0.95.0";
 
     /// <summary>
     /// La fecha de última actualización
     /// </summary>
-    public static string AppFechaVersion { get; } = "26-sep-2023";
+    public static string AppFechaVersion { get; } = "27-sep-2023";
 
 
     public static Form1 Current { get; set; }
@@ -411,11 +411,15 @@ public partial class Form1 : Form
         sb.Append("");
         sb.Append(Properties.Resources.Mañana_es_el_dia.Replace(CrLf, "<br/>"));
         sb.Append("<br/>");
-        sb.Append("<br/>");
-        // No tenía los cambios de línea, añado el teléfono (08/sep/23 13.55)
-        sb.Append("Kayak Makarena<br/>");
-        sb.Append("WhatsApp: +34 645 76 16 89<br/>");
-        sb.Append("https://kayakmakarena.com<br/>");
+
+        // Usar el método para la firma.                    (27/sep/23 11.49)
+        MailGYG.FirmaMakarena(sb, enIngles: false);
+
+        //sb.Append("<br/>");
+        //// No tenía los cambios de línea, añado el teléfono (08/sep/23 13.55)
+        //sb.Append("Kayak Makarena<br/>");
+        //sb.Append("WhatsApp: +34 645 76 16 89<br/>");
+        //sb.Append("https://kayakmakarena.com<br/>");
 
         string body = sb.ToString().Replace(CrLf, "<br/>");
         var msg = ApiReservasMailGYG.MailGYG.EnviarMensaje(colPara, "Mañana es el día / Tomorrow is the day", body, true);
@@ -718,13 +722,17 @@ public partial class Form1 : Form
         }
 
         sb.Append("<br/>");
-        sb.Append("<br/>");
-        //sb.Append("Kayak Makarena");
-        //sb.Append("https://kayakmakarena.com");
-        // No tenía los cambios de línea, añado el teléfono (08/sep/23 13.55)
-        sb.Append("Kayak Makarena<br/>");
-        sb.Append("WhatsApp: +34 645 76 16 89<br/>");
-        sb.Append("https://kayakmakarena.com<br/>");
+
+        // Usar el método para la firma.                    (27/sep/23 11.54)
+        MailGYG.FirmaMakarena(sb, enIngles: false);
+
+        //sb.Append("<br/>");
+        ////sb.Append("Kayak Makarena");
+        ////sb.Append("https://kayakmakarena.com");
+        //// No tenía los cambios de línea, añado el teléfono (08/sep/23 13.55)
+        //sb.Append("Kayak Makarena<br/>");
+        //sb.Append("WhatsApp: +34 645 76 16 89<br/>");
+        //sb.Append("https://kayakmakarena.com<br/>");
 
         // La fecha en español e inglés.                    (02/sep/23 21.05)
         var fechaES = $"{fecha.Date.ToString("dddd dd/MM/yyyy", System.Globalization.CultureInfo.CreateSpecificCulture("es-ES"))}";

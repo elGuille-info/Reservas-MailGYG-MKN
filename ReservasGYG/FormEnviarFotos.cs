@@ -165,7 +165,8 @@ public partial class FormEnviarFotos : Form
                 continue;
             }
             var hora = CboHoras.Items[i].ToString().AsTimeSpan();
-            if (EnviarFotos(fecha, hora, TxtFotosSeleccionada.Text, conAlertas: false))
+            // Pongo que avise si da error.                 (27/sep/23 11.46)
+            if (EnviarFotos(fecha, hora, TxtFotosSeleccionada.Text, conAlertas: true))
             {
                 Debug.WriteLine("{0} {1}", fecha, hora);
             }
@@ -241,11 +242,16 @@ public partial class FormEnviarFotos : Form
         sb.Append("<br/>");
         sb.Append(Properties.Resources.Fotos_ruta.Replace(CrLf, "<br/>"));
         sb.Append("<br/>");
-        sb.Append("<br/>");
-        // No tenía los cambios de línea, añado el teléfono (08/sep/23 13.55)
-        sb.Append("Kayak Makarena<br/>");
-        sb.Append("WhatsApp: +34 645 76 16 89<br/>");
-        sb.Append("https://kayakmakarena.com<br/>");
+
+        // Usar el método para la firma.                    (27/sep/23 11.49)
+        MailGYG.FirmaMakarena(sb, enIngles: false);
+
+        //sb.Append("<br/>");
+
+        //// No tenía los cambios de línea, añado el teléfono (08/sep/23 13.55)
+        //sb.Append("Kayak Makarena<br/>");
+        //sb.Append("WhatsApp: +34 645 76 16 89<br/>");
+        //sb.Append("https://kayakmakarena.com<br/>");
 
         string body = sb.ToString().Replace(CrLf, "<br/>");
 
