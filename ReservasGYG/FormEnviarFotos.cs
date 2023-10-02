@@ -143,7 +143,8 @@ public partial class FormEnviarFotos : Form
         if (ComprobarHorasFotosReservas(fecha, conAlertas: false))
         {
             var ret = MessageBox.Show("Hay horas de fotos y de reservas que no coinciden." + CrLf +
-                                      "¿Quieres mandarlas de todas formas?",
+                                      "¿Quieres mandarlas de todas formas?" + CrLf + 
+                                      "Solo se mandarán a las reservas en las que hay fotos.",
                                       "Hay reservas sin fotos",
                                       MessageBoxButtons.YesNo, MessageBoxIcon.Question);
             if (ret == DialogResult.No)
@@ -153,7 +154,9 @@ public partial class FormEnviarFotos : Form
         }
 
         int totalFotos = 0;
-
+        
+        // Para saber a qué horas se han mandado.           (02/oct/23 16.39)
+        StringBuilder sb = new StringBuilder();
 
         // Mandar todos los mensajes con todas las fotos del día.
         for (int i = 0; i < CboHoras.Items.Count; i++)
@@ -165,15 +168,21 @@ public partial class FormEnviarFotos : Form
                 continue;
             }
             var hora = CboHoras.Items[i].ToString().AsTimeSpan();
+            sb.Append($"    Hora: {hora:hh\\:mm}");
             // Pongo que avise si da error.                 (27/sep/23 11.46)
             if (EnviarFotos(fecha, hora, TxtFotosSeleccionada.Text, conAlertas: true))
             {
+                sb.Append(" - Error al enviar");
                 Debug.WriteLine("{0} {1}", fecha, hora);
             }
+            sb.AppendLine();
             totalFotos += 1;
         }
 
-        MessageBox.Show($"Se han enviado {totalFotos} {totalFotos.Plural("enlace")} con fotos de la fecha {fecha:dddd dd/MM/yyyy}.", "Enviar todas las fotos del día", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        MessageBox.Show($"Se han enviado {totalFotos} {totalFotos.Plural("enlace")} con fotos de la fecha {fecha:dddd dd/MM/yyyy}." + CrLf +
+                        sb.ToString(), 
+                        "Enviar todas las fotos del día", 
+                        MessageBoxButtons.OK, MessageBoxIcon.Information);
     }
 
     /// <summary>
