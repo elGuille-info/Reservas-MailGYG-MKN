@@ -573,10 +573,10 @@ public partial class FormAnalizaEmail : Form
             };
             // Avisar que es un producto por libre.         (05/oct/23 14.11)
             StringBuilder sb = new StringBuilder();
-            sb.Append($"Actividad: {pr.Actividad}");
-            sb.Append($"Fecha: {pr.Fecha:dddd dd/MM/yyyy}");
-            sb.Append($"Hora: {pr.Hora:hh\\:mm}");
-            sb.Append($"Pax: {re.TotalPax()}");
+            sb.AppendLine($"Actividad: {pr.Actividad}");
+            sb.AppendLine($"Fecha: {pr.Fecha:dddd dd/MM/yyyy}");
+            sb.AppendLine($"Hora: {pr.Hora:hh\\:mm}");
+            sb.AppendLine($"Pax: {re.TotalPax()}");
             MessageBox.Show($"El producto no existe, se usará un producto 'por libre':{CrLf}{sb}", 
                             "Se ha creado una reserva por libre", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
         }
