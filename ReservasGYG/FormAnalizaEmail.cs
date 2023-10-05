@@ -564,6 +564,14 @@ public partial class FormAnalizaEmail : Form
                 PrecioAdulto = BaseKayak.PrecioAdultoActividad(re.Actividad),
                 PrecioNiño = BaseKayak.PrecioNiñoActividad(re.Actividad)
             };
+            // Avisar que es un producto por libre.         (05/oct/23 14.11)
+            StringBuilder sb = new StringBuilder();
+            sb.Append($"Actividad: {pr.Actividad}");
+            sb.Append($"Fecha: {pr.Fecha:dddd dd/MM/yyyy}");
+            sb.Append($"Hora: {pr.Hora:hh\\:mm}");
+            sb.Append($"Pax: {re.TotalPax()}");
+            MessageBox.Show($"El producto no existe, se usará un producto 'por libre':{CrLf}{sb}", 
+                            "Se ha creado una reserva por libre", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
         }
         // Actualizar el producto.                          (23/ago/23 20.06)
         pr.TotalPax += re.TotalPax();
