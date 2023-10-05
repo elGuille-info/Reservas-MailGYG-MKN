@@ -537,6 +537,13 @@ public partial class FormAnalizaEmail : Form
             return true;
         }
 
+        // Cargar el Config del año de la actividad.        (05/oct/23 14.24)
+        // Asegurse que KNDatos.Config.Current está inicializada.
+        if (KNDatos.Config.Current == null)
+        {
+            KNDatos.Config.LeerDatos(re.FechaActividad.Year, "ReservasGYG");
+        }
+
         Producto pr;
         TimeSpan hora = re.HoraActividad;
 
