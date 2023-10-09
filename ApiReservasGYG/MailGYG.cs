@@ -426,6 +426,21 @@ namespace ApiReservasMailGYG
                 int k = fecGYG.IndexOf(" ", j + 1);
                 fecH = fecGYG.Substring(i+1, k-j).Trim();
             }
+            // Comprobar que la hora no sea menor           (06/oct/23 04.14)
+            // de la hora de inicio de la actividad.
+            var laHora = fecH.AsTimeSpan();
+            var laFecha = DateTime.Parse(fecD);
+            // Cargar el Config del año de la actividad.    (09/oct/23 04.16)
+            // Asegurse que KNDatos.Config.Current está inicializada.
+            if (KNDatos.Config.Current == null)
+            {
+                KNDatos.Config.LeerDatos(laFecha.Year, "MailGYG");
+            }
+
+            if (laHora.Hours < KNDatos.Config.Current.HoraActividadIni.Hours)
+            {
+                laHora = new TimeSpan(laHora.Hours + 12, laHora.Minutes, 0);
+            }
             var pax = Extraer(email, "Number of participants:");
 
             Reservas re = new Reservas
@@ -435,8 +450,8 @@ namespace ApiReservasMailGYG
                 GYGOption = actividad,
                 GYGReference = refGyG, // El número de booking
                 Nombre = nombre,
-                FechaActividad = DateTime.Parse(fecD), // fec.Date,
-                HoraActividad = fecH.AsTimeSpan(), //.TimeOfDay,
+                FechaActividad = laFecha, // DateTime.Parse(fecD), // fec.Date,
+                HoraActividad = laHora, // fecH.AsTimeSpan(), //.TimeOfDay,
                 Adultos = pax.AsInteger(),
                 GYGNotas = notas,
             };
