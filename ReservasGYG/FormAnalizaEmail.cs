@@ -129,6 +129,10 @@ public partial class FormAnalizaEmail : Form
     {
         ChkCrearConEmail.Enabled = false;
         ChkCrearConEmail.Checked = false;
+        // Opción para no enviar el email.                  (19/oct/23 15.18)
+        ChkNOEnviarEmail.Enabled = false;
+        ChkNOEnviarEmail.Checked = false;
+
         LabelAvisoCambiarFecha.Visible = false;
 
         if (string.IsNullOrEmpty(RtfEmail.Text)) return;
@@ -253,6 +257,8 @@ public partial class FormAnalizaEmail : Form
 
         ChkCrearConEmail.Enabled = true;
         ChkCrearConEmail.Checked = false;
+        ChkNOEnviarEmail.Enabled = true;
+        ChkNOEnviarEmail.Checked = false;
 
         // Si es desde booking avisar que revise las cosas antes de guardar.
         //if (desdeBooking)
@@ -290,8 +296,10 @@ public partial class FormAnalizaEmail : Form
         }
 
         ChkCrearConEmail.Enabled = false;
-
         ChkCrearConEmail.Checked = false;
+        ChkNOEnviarEmail.Enabled = false;
+        ChkNOEnviarEmail.Checked = false;
+
         BtnCrearConEmail.Enabled = ChkCrearConEmail.Checked;
 
         // Ocultar el aviso al limpiar campos.              (21/sep/23 09.51)
@@ -323,6 +331,9 @@ public partial class FormAnalizaEmail : Form
         // Deshabilitar el botón hasta que finalice.        (27/ago/23 09.58)
         ChkCrearConEmail.Checked = false;
         ChkCrearConEmail.Enabled = false;
+        // Aquí no quitar la marca.                         (19/oct/23 15.32)
+        //ChkNOEnviarEmail.Checked = false;
+        ChkNOEnviarEmail.Enabled = false;
         BtnCrearConEmail.Enabled = ChkCrearConEmail.Checked;
 
         // Limpiar el contenido para que no se acumule.     (11/sep/23 10.57)
@@ -364,6 +375,9 @@ public partial class FormAnalizaEmail : Form
         {
             ChkCrearConEmail.Checked = false;
             ChkCrearConEmail.Enabled = false;
+            ChkNOEnviarEmail.Checked = false;
+            ChkNOEnviarEmail.Enabled = false;
+
             BtnCrearConEmail.Enabled = ChkCrearConEmail.Checked;
 
             MessageBox.Show(InfoCrearConEmail.ToString(), "Crear reserva y enviar email", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -376,11 +390,17 @@ public partial class FormAnalizaEmail : Form
         LabelStatus.Text = "Enviando el email de confirmación...";
         Application.DoEvents();
 
-        EnviarMensajeConfirmacion();
+        // si se indica no mandar email.                    (19/oct/23 15.23)
+        if (ChkNOEnviarEmail.Checked == false)
+        {
+            EnviarMensajeConfirmacion();
+        }
 
         Application.DoEvents();
 
         ChkCrearConEmail.Checked = false;
+        ChkNOEnviarEmail.Checked = false;
+        //ChkNOEnviarEmail.Enabled = false;
         BtnCrearConEmail.Enabled = ChkCrearConEmail.Checked;
 
         MessageBox.Show(InfoCrearConEmail.ToString(), "Crear reserva y enviar email", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -577,7 +597,7 @@ public partial class FormAnalizaEmail : Form
             sb.AppendLine($"Fecha: {pr.Fecha:dddd dd/MM/yyyy}");
             sb.AppendLine($"Hora: {pr.Hora:hh\\:mm}");
             sb.AppendLine($"Pax: {re.TotalPax()}");
-            MessageBox.Show($"El producto no existe, se usará un producto 'por libre':{CrLf}{sb}", 
+            MessageBox.Show($"El producto no existe, se usará un producto 'por libre':{CrLf}{sb}",
                             "Se ha creado una reserva por libre", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
         }
         // Actualizar el producto.                          (23/ago/23 20.06)
@@ -887,29 +907,9 @@ public partial class FormAnalizaEmail : Form
     {
         if (inicializando) return;
 
+        ChkNOEnviarEmail.Enabled = ChkCrearConEmail.Checked;
         BtnCrearConEmail.Enabled = ChkCrearConEmail.Checked;
     }
-
-    //private void HabilitarBotonesReservas()
-    //{
-    //    BtnCrearConEmail.Enabled = ChkCrearConEmail.Checked;
-
-    //    //// No habilitar los otros                       (22/ago/23 20.18)
-    //    //// si el de hacer las dos cosas está habilitado
-    //    ////ChkEnviarConfirm.Enabled = !ChkCrearConEmail.Checked;
-    //    //if (ChkCrearConEmail.Checked == false)
-    //    //{
-    //    //    ChkEnviarConfirm.Enabled = false;
-    //    //}
-    //    //if (ChkEnviarConfirm.Enabled == false)
-    //    //{
-    //    //    ChkEnviarConfirm.Enabled = false;
-    //    //    ChkEnviarConfirm.Checked = false;
-    //    //}
-
-    //    //BtnCrearReserva.Enabled = ChkEnviarConfirm.Checked;
-    //    //BtnEnviarConfirm.Enabled = ChkEnviarConfirm.Checked;
-    //}
 
     private void BtnLimpiarTexto_Click(object sender, EventArgs e)
     {

@@ -610,10 +610,21 @@ namespace ApiReservasMailGYG
                 GYGPais = ExtraerDespues(email, "Main customer:", 2),
                 Email = ExtraerDespues(email, "Main customer:", 3),
                 // Por si las notas están en varias líneas.     (25/ago/23 23.36)
-                GYGNotas = Extraer(email, "children in your group.:", "Tour language:"),
+                //GYGNotas = Extraer(email, "children in your group.:", "Tour language:"),
                 GYGLanguage = Extraer(email, "Tour language:"),
                 GYGTipo = Reservas.GYGTipos.Email,
             };
+
+            // Las notas de alquiler estarán entre este texto:
+            //please indicate their ages:
+            // y Best regards,
+            // Por si las notas están en varias líneas.     (25/ago/23 23.36)
+            var notas = Extraer(email, "children in your group.:", "Tour language:");
+            if (string.IsNullOrEmpty(notas))
+            {
+                notas = Extraer(email, "please indicate their ages:", "Best regards,");
+            }
+            re.GYGNotas = notas;
 
             var pax = ExtraerEntre(email, "Number of participants:", "Reference number:");
             for (int i = 0; i < pax.Count; i++)

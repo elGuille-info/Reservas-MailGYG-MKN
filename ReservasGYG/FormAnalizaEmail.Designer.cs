@@ -89,6 +89,7 @@ namespace ReservasGYG
             MenuPegarTextoOriginal = new ToolStripMenuItem();
             MnuPegarÚltimoTextoEnviado = new ToolStripMenuItem();
             TimerInicio = new Timer(components);
+            ChkNOEnviarEmail = new CheckBox();
             GrbEmail.SuspendLayout();
             GrbReserva.SuspendLayout();
             statusStrip1.SuspendLayout();
@@ -162,6 +163,7 @@ namespace ReservasGYG
             // GrbReserva
             // 
             GrbReserva.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            GrbReserva.Controls.Add(ChkNOEnviarEmail);
             GrbReserva.Controls.Add(LabelAvisoCambiarFecha);
             GrbReserva.Controls.Add(TxtTipo);
             GrbReserva.Controls.Add(label16);
@@ -209,7 +211,7 @@ namespace ReservasGYG
             // 
             LabelAvisoCambiarFecha.BackColor = Color.Firebrick;
             LabelAvisoCambiarFecha.ForeColor = Color.Yellow;
-            LabelAvisoCambiarFecha.Location = new Point(1253, 150);
+            LabelAvisoCambiarFecha.Location = new Point(1251, 187);
             LabelAvisoCambiarFecha.Margin = new Padding(6, 3, 3, 3);
             LabelAvisoCambiarFecha.Name = "LabelAvisoCambiarFecha";
             LabelAvisoCambiarFecha.Size = new Size(201, 214);
@@ -534,7 +536,7 @@ namespace ReservasGYG
             // 
             BtnLimpiarReserva.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
             BtnLimpiarReserva.BackColor = Color.LightYellow;
-            BtnLimpiarReserva.Location = new Point(1251, 398);
+            BtnLimpiarReserva.Location = new Point(1251, 407);
             BtnLimpiarReserva.Margin = new Padding(12, 3, 3, 3);
             BtnLimpiarReserva.Name = "BtnLimpiarReserva";
             BtnLimpiarReserva.Size = new Size(205, 70);
@@ -646,6 +648,17 @@ namespace ReservasGYG
             TimerInicio.Interval = 300;
             TimerInicio.Tick += TimerInicio_Tick;
             // 
+            // ChkNOEnviarEmail
+            // 
+            ChkNOEnviarEmail.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            ChkNOEnviarEmail.AutoSize = true;
+            ChkNOEnviarEmail.Location = new Point(1253, 150);
+            ChkNOEnviarEmail.Name = "ChkNOEnviarEmail";
+            ChkNOEnviarEmail.Size = new Size(164, 29);
+            ChkNOEnviarEmail.TabIndex = 34;
+            ChkNOEnviarEmail.Text = "NO enviar email";
+            ChkNOEnviarEmail.UseVisualStyleBackColor = true;
+            // 
             // FormAnalizaEmail
             // 
             AutoScaleDimensions = new SizeF(10F, 25F);
@@ -731,5 +744,6 @@ namespace ReservasGYG
         private ContextMenuStrip ContextMenuTextoAviso;
         private ToolStripMenuItem MenuPegarTextoOriginal;
         private ToolStripMenuItem MnuPegarÚltimoTextoEnviado;
+        private CheckBox ChkNOEnviarEmail;
     }
 }
