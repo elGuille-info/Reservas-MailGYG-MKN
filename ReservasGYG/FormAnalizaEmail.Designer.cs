@@ -40,6 +40,7 @@ namespace ReservasGYG
             BtnPegarEmail = new Button();
             RtfEmail = new RichTextBox();
             GrbReserva = new GroupBox();
+            ChkNOEnviarEmail = new CheckBox();
             LabelAvisoCambiarFecha = new Label();
             TxtTipo = new TextBox();
             label16 = new Label();
@@ -89,7 +90,6 @@ namespace ReservasGYG
             MenuPegarTextoOriginal = new ToolStripMenuItem();
             MnuPegarÚltimoTextoEnviado = new ToolStripMenuItem();
             TimerInicio = new Timer(components);
-            ChkNOEnviarEmail = new CheckBox();
             GrbEmail.SuspendLayout();
             GrbReserva.SuspendLayout();
             statusStrip1.SuspendLayout();
@@ -206,6 +206,18 @@ namespace ReservasGYG
             GrbReserva.TabIndex = 1;
             GrbReserva.TabStop = false;
             GrbReserva.Text = "Datos de la reserva";
+            // 
+            // ChkNOEnviarEmail
+            // 
+            ChkNOEnviarEmail.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            ChkNOEnviarEmail.AutoSize = true;
+            ChkNOEnviarEmail.Location = new Point(1253, 150);
+            ChkNOEnviarEmail.Name = "ChkNOEnviarEmail";
+            ChkNOEnviarEmail.Size = new Size(164, 29);
+            ChkNOEnviarEmail.TabIndex = 34;
+            ChkNOEnviarEmail.Text = "NO enviar email";
+            ChkNOEnviarEmail.UseVisualStyleBackColor = true;
+            ChkNOEnviarEmail.CheckedChanged += ChkNOEnviarEmail_CheckedChanged;
             // 
             // LabelAvisoCambiarFecha
             // 
@@ -647,17 +659,6 @@ namespace ReservasGYG
             // 
             TimerInicio.Interval = 300;
             TimerInicio.Tick += TimerInicio_Tick;
-            // 
-            // ChkNOEnviarEmail
-            // 
-            ChkNOEnviarEmail.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            ChkNOEnviarEmail.AutoSize = true;
-            ChkNOEnviarEmail.Location = new Point(1253, 150);
-            ChkNOEnviarEmail.Name = "ChkNOEnviarEmail";
-            ChkNOEnviarEmail.Size = new Size(164, 29);
-            ChkNOEnviarEmail.TabIndex = 34;
-            ChkNOEnviarEmail.Text = "NO enviar email";
-            ChkNOEnviarEmail.UseVisualStyleBackColor = true;
             // 
             // FormAnalizaEmail
             // 

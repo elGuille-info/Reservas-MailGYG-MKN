@@ -209,18 +209,21 @@ public partial class FormAnalizaEmail : Form
 
         // Comprobar el tipo de reserva y asignar el texto  (09/sep/23 00.04)
         // del botón crear
-        if (re.GYGTipo == Reservas.GYGTipos.Cancelada)
-        {
-            BtnCrearConEmail.Text = "Cancelar reserva y enviar email";
-        }
-        else if (re.GYGTipo == Reservas.GYGTipos.Modificada)
-        {
-            BtnCrearConEmail.Text = "Modificar reserva y enviar email";
-        }
-        else
-        {
-            BtnCrearConEmail.Text = "Crear reserva y enviar email de confirmación";
-        }
+        //if (re.GYGTipo == Reservas.GYGTipos.Cancelada)
+        //{
+        //    BtnCrearConEmail.Text = "Cancelar reserva y enviar email";
+        //}
+        //else if (re.GYGTipo == Reservas.GYGTipos.Modificada)
+        //{
+        //    BtnCrearConEmail.Text = "Modificar reserva y enviar email";
+        //}
+        //else
+        //{
+        //    BtnCrearConEmail.Text = "Crear reserva y enviar email de confirmación";
+        //}
+
+        // Aquí no hace falta comprobar el texto.           (19/oct/23 15.47)
+        ComprobarConEmail();
 
         // Comprobar el alquiler con menos de 2 adultos.    (08/sep/23 23.51)
         if (KNDatos.BaseKayak.ActividadesAlquiler().Contains(LaReserva.Actividad))
@@ -1073,5 +1076,61 @@ public partial class FormAnalizaEmail : Form
     private void ChkIncluirTextoAviso_CheckedChanged(object sender, EventArgs e)
     {
         Form1.ActualizarColorEnabled(ChkIncluirTextoAviso, TxtAvisoExtra);
+    }
+
+    private void ChkNOEnviarEmail_CheckedChanged(object sender, EventArgs e)
+    {
+        ComprobarConEmail();
+    }
+
+    private void ComprobarConEmail()
+    {
+        string noEnviar;
+        noEnviar = ChkNOEnviarEmail.Checked ? "NO " : "";
+
+        if (ChkNOEnviarEmail.Checked )
+        {
+            ChkCrearConEmail.Text = "Habilitar crear-email ";
+        }
+        else
+        {
+            ChkCrearConEmail.Text = "Habilitar crear+email";
+        }
+        
+        if (LaReserva.GYGTipo == Reservas.GYGTipos.Cancelada)
+        {
+            BtnCrearConEmail.Text = $"Cancelar reserva y {noEnviar}enviar email";
+        }
+        else if (LaReserva.GYGTipo == Reservas.GYGTipos.Modificada)
+        {
+            BtnCrearConEmail.Text = $"Modificar reserva y {noEnviar}enviar email";
+        }
+        else
+        {
+            BtnCrearConEmail.Text = $"Crear reserva y {noEnviar}enviar email de confirmación";
+        }
+
+        //if (ChkNOEnviarEmail.Checked)
+        //{
+        //    if (BtnCrearConEmail.Text.Contains(" y enviar email"))
+        //    {
+        //        int j = BtnCrearConEmail.Text.IndexOf(" y enviar email");
+        //        if (j > -1)
+        //        {
+        //            BtnCrearConEmail.Text = BtnCrearConEmail.Text.Substring(0, j);
+        //        }
+        //    }
+        //    else
+        //    {
+        //        BtnCrearConEmail.Text += " y enviar email";
+        //    }
+        //}
+        //else
+        //{
+        //    if (BtnCrearConEmail.Text.Contains(" y enviar email") == false)
+        //    {
+        //        BtnCrearConEmail.Text += " y enviar email";
+        //    }
+        //}
     }
 }
