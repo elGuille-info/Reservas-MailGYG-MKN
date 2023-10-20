@@ -27,18 +27,18 @@ public partial class Form1 : Form
 
     // Intentar no pasar de estas marcas: 60 caracteres. 2         3         4         5         6
     //                                ---------|---------|---------|---------|---------|---------|
-    //[COPIAR]AppDescripcionCopia = " textos para alerta"
+    //[COPIAR]AppDescripcionCopia = " texto extra para hoy o mañana es el día"
     // BuscarClientes mostrar reservas en la pagina
 
     /// <summary>
     /// La versión de la aplicación.
     /// </summary>
-    public static string AppVersion { get; } = "1.0.109";
+    public static string AppVersion { get; } = "1.0.110";
 
     /// <summary>
     /// La versión del fichero (la revisión)
     /// </summary>
-    public static string AppFileVersion { get; } = "1.0.109.0";
+    public static string AppFileVersion { get; } = "1.0.110.0";
 
     /// <summary>
     /// La fecha de última actualización
@@ -409,6 +409,19 @@ public partial class Form1 : Form
 
         StringBuilder sb = new StringBuilder();
         sb.Append("");
+
+        // Si se indica enviar el texto extra.              (20/oct/23 22.17)
+        if (ChkIncluirTextoAviso.Checked && string.IsNullOrWhiteSpace(TxtAvisoExtra.Text) == false)
+        {
+            // Copiar el texto que se va a enviar.          (23/sep/23 10.49)
+            TextoAvisoUltimo = TxtAvisoExtra.Text;
+
+            sb.Append("<b>*IMPORTANTE / IMPORTANT*</b>");
+            sb.Append(TxtAvisoExtra.Text.Replace(CrLf, "<br/>"));
+            sb.Append("<br/>");
+            sb.AppendLine("<br/>");
+        }
+
         sb.Append(Properties.Resources.Mañana_es_el_dia.Replace(CrLf, "<br/>"));
         sb.Append("<br/>");
 
@@ -512,6 +525,19 @@ public partial class Form1 : Form
 
         StringBuilder sb = new StringBuilder();
         sb.Append("");
+
+        // Si se indica enviar el texto extra.              (20/oct/23 22.18)
+        if (ChkIncluirTextoAviso.Checked && string.IsNullOrWhiteSpace(TxtAvisoExtra.Text) == false)
+        {
+            // Copiar el texto que se va a enviar.          (23/sep/23 10.49)
+            TextoAvisoUltimo = TxtAvisoExtra.Text;
+
+            sb.Append("<b>*IMPORTANTE / IMPORTANT*</b>");
+            sb.Append(TxtAvisoExtra.Text.Replace(CrLf, "<br/>"));
+            sb.Append("<br/>");
+            sb.AppendLine("<br/>");
+        }
+
         sb.Append(Properties.Resources.Hoy_es_el_dia.Replace(CrLf, "<br/>"));
 
         // Añadir la firma de Kayak Makarena                (18/sep/23 05.33)
