@@ -1,6 +1,6 @@
 Hola, este mensaje es para informarte que la previsión del mar para el día de tu actividad indica que habrá pequeñas olas.
 
-*Tu actividad sigue adelante*, pero como habrá un poco de movimiento, te avisamos solamente en caso que tú o alguien de tu grupo se suela marear, para darte la oportunidad de cambiar la reserva para otra fecha.
+<b>*Tu actividad sigue adelante*</b>, pero como habrá un poco de movimiento, te avisamos solamente en caso que tú o alguien de tu grupo se suela marear, para darte la oportunidad de cambiar la reserva para otra fecha.
 
 Si no puedes cambiar para otra fecha y no quieres arriesgarte a venir, no hay problema, te devolveremos el dinero pagado.
 
@@ -11,7 +11,7 @@ Muchas gracias.
 
 Hi, this message is to inform you that the sea forecast for the day of your activity says that there will be small waves.
 
-*Your scheduled activity is still on*, but as there will be a bit of sea movement, we are just notifying you in case that you or someone in your group gets dizzy easily, to give you the opportunity to change the reservation for another date.
+<b>*Your scheduled activity is still on*</b>, but as there will be a bit of sea movement, we are just notifying you in case that you or someone in your group gets dizzy easily, to give you the opportunity to change the reservation for another date.
 
 If you cannot change the activity for another date and you do not want to risk it, that's fine, we will refund the money that you've paid.
 

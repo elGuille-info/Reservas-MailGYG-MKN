@@ -27,23 +27,23 @@ public partial class Form1 : Form
 
     // Intentar no pasar de estas marcas: 60 caracteres. 2         3         4         5         6
     //                                ---------|---------|---------|---------|---------|---------|
-    //[COPIAR]AppDescripcionCopia = " opción para no mandar el email"
+    //[COPIAR]AppDescripcionCopia = " textos para alerta"
     // BuscarClientes mostrar reservas en la pagina
 
     /// <summary>
     /// La versión de la aplicación.
     /// </summary>
-    public static string AppVersion { get; } = "1.0.107";
+    public static string AppVersion { get; } = "1.0.109";
 
     /// <summary>
     /// La versión del fichero (la revisión)
     /// </summary>
-    public static string AppFileVersion { get; } = "1.0.107.0";
+    public static string AppFileVersion { get; } = "1.0.109.0";
 
     /// <summary>
     /// La fecha de última actualización
     /// </summary>
-    public static string AppFechaVersion { get; } = "19-oct-2023";
+    public static string AppFechaVersion { get; } = "20-oct-2023";
 
 
     public static Form1 Current { get; set; }
@@ -703,6 +703,18 @@ public partial class Form1 : Form
         StringBuilder sb = new StringBuilder();
         sb.Append("");
 
+        // Si se indica enviar el texto extra.              (17/sep/23 20.51)
+        if (ChkIncluirTextoAviso.Checked && string.IsNullOrWhiteSpace(TxtAvisoExtra.Text) == false)
+        {
+            // Copiar el texto que se va a enviar.              (23/sep/23 10.49)
+            TextoAvisoUltimo = TxtAvisoExtra.Text;
+
+            sb.Append("<b>*IMPORTANTE / IMPORTANT*</b>");
+            sb.Append(TxtAvisoExtra.Text.Replace(CrLf, "<br/>"));
+            sb.Append("<br/>");
+            sb.AppendLine("<br/>");
+        }
+
         if (alerta == 1)
             sb.Append(Properties.Resources.Alerta1_es_en.Replace(CrLf, "<br/>"));
         else if (alerta == 2)
@@ -710,16 +722,16 @@ public partial class Form1 : Form
         else if (alerta == 3)
             sb.Append(Properties.Resources.Alerta3_es_en.Replace(CrLf, "<br/>"));
 
-        // Si se indica enviar el texto extra.              (17/sep/23 20.51)
-        if (ChkIncluirTextoAviso.Checked && string.IsNullOrWhiteSpace(TxtAvisoExtra.Text) == false)
-        {
-            // Copiar el texto que se va a enviar.              (23/sep/23 10.49)
-            TextoAvisoUltimo = TxtAvisoExtra.Text;
+        //// Si se indica enviar el texto extra.              (17/sep/23 20.51)
+        //if (ChkIncluirTextoAviso.Checked && string.IsNullOrWhiteSpace(TxtAvisoExtra.Text) == false)
+        //{
+        //    // Copiar el texto que se va a enviar.              (23/sep/23 10.49)
+        //    TextoAvisoUltimo = TxtAvisoExtra.Text;
 
-            sb.Append("<br/>");
-            sb.Append(TxtAvisoExtra.Text.Replace(CrLf, "<br/>"));
-            sb.Append("<br/>");
-        }
+        //    sb.Append("<b>*IMPORTANTE / IMPORTANT*</b>");
+        //    sb.Append(TxtAvisoExtra.Text.Replace(CrLf, "<br/>"));
+        //    sb.Append("<br/>");
+        //}
 
         sb.Append("<br/>");
 
