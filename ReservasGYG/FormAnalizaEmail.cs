@@ -229,7 +229,9 @@ public partial class FormAnalizaEmail : Form
         if (KNDatos.BaseKayak.ActividadesAlquiler().Contains(LaReserva.Actividad))
         {
             DialogResult ret;
-            if (LaReserva.Adultos < 2)
+            // Los menores de 7+ pagan igual que adultos    (22/mar/24 15.35)
+            //if (LaReserva.Adultos < 2)
+            if ((LaReserva.Adultos + LaReserva.Niños) < 2)
             {
                 ret = MessageBox.Show("Es un alquiler para menos de 2 pax (adultos o menores mayor de 6 años)." + CrLf +
                                       "NO se debe aceptar esta reserva." + CrLf + CrLf +

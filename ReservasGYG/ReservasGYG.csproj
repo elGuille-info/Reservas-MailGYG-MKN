@@ -7,18 +7,18 @@
         <Nullable>disable</Nullable>
         <UseWindowsForms>true</UseWindowsForms>
         <ImplicitUsings>disable</ImplicitUsings>
-        <Description>Aplicación para gestionar las reservas recibidas por email de GetYourGuide con MKN Reservas  (revisión del 20-oct-2023)</Description>
+        <Description>Aplicación para gestionar las reservas recibidas por email de GetYourGuide con MKN Reservas  (revisión del 22-mar-2024)</Description>
         <PackageIcon>GYG_logo_naranja_265x265.png</PackageIcon>
         <ApplicationIcon>GYG_logo_blanco.ico</ApplicationIcon>
         <Title>Analizar email de GetYourGuide</Title>
         <Company>gSoft (elguille.info) para MKN Reservas</Company>
-        <Copyright>(c) gSoft (elguille.info) para MKN Reservas, 2023</Copyright>
+        <Copyright>(c) gSoft (elguille.info) para MKN Reservas, 2023-2024</Copyright>
         <PackageReadmeFile>Readme.md</PackageReadmeFile>
         <RepositoryType>git</RepositoryType>
         <RepositoryUrl>https://github.com/elGuille-info/Reservas-MailGYG-MKN</RepositoryUrl>
         <Version>1.0.110</Version>
-        <AssemblyVersion>1.0.110.0</AssemblyVersion>
-        <FileVersion>1.0.110.0</FileVersion>
+        <AssemblyVersion>1.0.110.1</AssemblyVersion>
+        <FileVersion>1.0.110.1</FileVersion>
     </PropertyGroup>
 
     <ItemGroup>

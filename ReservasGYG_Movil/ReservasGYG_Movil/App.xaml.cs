@@ -26,7 +26,7 @@ namespace ReservasGYG_Movil
 
         // Intentar no pasar de estas marcas: 60 caracteres. 2         3         4         5         6
         //                                ---------|---------|---------|---------|---------|---------|
-        //[COPIAR]AppDescripcionCopia = " opción para no mandar el email"
+        //[COPIAR]AppDescripcionCopia = " System.Data.SqlClient"
 
         /// <summary>
         /// La versión de la aplicación.
@@ -36,12 +36,12 @@ namespace ReservasGYG_Movil
         /// <summary>
         /// La versión del fichero (la revisión)
         /// </summary>
-        public static string AppFileVersion { get; } = "1.0.110.0";
+        public static string AppFileVersion { get; } = "1.0.110.1";
 
         /// <summary>
         /// La fecha de última actualización
         /// </summary>
-        public static string AppFechaVersion { get; } = "20-oct-2023";
+        public static string AppFechaVersion { get; } = "23-mar-2024";
 
         /// <summary>
         /// El nombre de la aplicación.

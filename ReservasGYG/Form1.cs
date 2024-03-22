@@ -27,7 +27,7 @@ public partial class Form1 : Form
 
     // Intentar no pasar de estas marcas: 60 caracteres. 2         3         4         5         6
     //                                ---------|---------|---------|---------|---------|---------|
-    //[COPIAR]AppDescripcionCopia = " texto extra para hoy o mañana es el día"
+    //[COPIAR]AppDescripcionCopia = " cancelar falla"
     // BuscarClientes mostrar reservas en la pagina
 
     /// <summary>
@@ -38,12 +38,12 @@ public partial class Form1 : Form
     /// <summary>
     /// La versión del fichero (la revisión)
     /// </summary>
-    public static string AppFileVersion { get; } = "1.0.110.0";
+    public static string AppFileVersion { get; } = "1.0.110.5";
 
     /// <summary>
     /// La fecha de última actualización
     /// </summary>
-    public static string AppFechaVersion { get; } = "20-oct-2023";
+    public static string AppFechaVersion { get; } = "22-mar-2024";
 
 
     public static Form1 Current { get; set; }
@@ -706,7 +706,7 @@ public partial class Form1 : Form
         // No enviar las alertas a las reservas canceladas. (10/sep/23 02.06)
         var lisRes = ApiReservasMailGYG.MailGYG.DatosReservas(fecha, new TimeSpan(0, 0, 0), ChkConAlquileres.Checked, conCanceladas: false);
 
-        if (MessageBox.Show($"Se va a madar el mensaje a {lisRes.Count} {lisRes.Count.Plural("reserva")}",
+        if (MessageBox.Show($"Se va a mandar el mensaje a {lisRes.Count} {lisRes.Count.Plural("reserva")}",
                             $"Mandar aviso de Alerta {alerta}", MessageBoxButtons.OKCancel, MessageBoxIcon.Question) == DialogResult.Cancel)
         {
             return;

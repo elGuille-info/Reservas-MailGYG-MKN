@@ -485,8 +485,16 @@ namespace ApiReservasMailGYG
         /// <returns>Nulo si no es cancelación o los datos de la reserva a cancelar.</returns>
         private static Reservas EsCancelacion(string email)
         {
+            // Las cancelaciones por mal tiempo no indican  (22/mar/24 16.14)
+            // following booking has been canceled si no: Cancellation date
+            // pero no se indica el resto de textos... 
             if (email.Contains("following booking has been canceled") == false)
             {
+                // No sirve salvo que se tenga acceso al asunto en el que se indica el número de reserva
+                //if (email.Contains("Cancellation date") == false)
+                //{
+                //    return null;
+                //}
                 return null;
             }
             
