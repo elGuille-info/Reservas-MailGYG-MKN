@@ -488,6 +488,27 @@ namespace ApiReservasMailGYG
             // Las cancelaciones por mal tiempo no indican  (22/mar/24 16.14)
             // following booking has been canceled si no: Cancellation date
             // pero no se indica el resto de textos... 
+
+            // En el mensaje incluye "was cancelled" delante está el número de reserva.
+            // El nombre del cliente está en:
+            //      Customer: Raphael rubiano vasco
+            // La actividad:
+            //      Tour: Nerja: Cliffs of Maro-Cerro Gordo Guided Kayak Tour
+            // La fecha de la actividad:
+            //      Date: 2024-03-23 11:00:00
+            // Si es por mal tiempo:
+            //      Cancellation reason: Bad weather conditions
+            /*
+            GYGZG27V3455 was cancelled
+            ...
+            Customer: Raphael rubiano vasco
+            Tour: Nerja: Cliffs of Maro-Cerro Gordo Guided Kayak Tour
+            Date: 2024-03-23 11:00:00
+            Price paid: 100.02 EUR
+            Cancellation date: 2024-03-22 16:04:01
+            Cancellation reason: Bad weather conditions
+            */
+
             if (email.Contains("following booking has been canceled") == false)
             {
                 // No sirve salvo que se tenga acceso al asunto en el que se indica el número de reserva
@@ -1019,7 +1040,9 @@ Sep 5, 2023
 
                 var smtp = new System.Net.Mail.SmtpClient("smtp.servidor-correo.net", 587);
                 smtp.EnableSsl = true;
-                NetworkCredential netCre = new NetworkCredential("reservas@kayakmakarena.com", "Net13@Riti");
+                // Nuevo password email.                    (23/mar/24 15.58)
+                //NetworkCredential netCre = new NetworkCredential("reservas@kayakmakarena.com", "Net13@Riti");
+                NetworkCredential netCre = new NetworkCredential("reservas@kayakmakarena.com", "Net13@rIti");
                 smtp.Credentials = netCre;
 
                 try
@@ -1063,7 +1086,9 @@ Sep 5, 2023
 
                 var smtp = new System.Net.Mail.SmtpClient("smtp.servidor-correo.net", 587);
                 smtp.EnableSsl = true;
-                NetworkCredential netCre = new NetworkCredential("reservas@kayakmakarena.com", "Net13@Riti");
+                // Nuevo password                           (23/mar/24 15.57)
+                //NetworkCredential netCre = new NetworkCredential("reservas@kayakmakarena.com", "Net13@Riti");
+                NetworkCredential netCre = new NetworkCredential("reservas@kayakmakarena.com", "Net13@rIti");
                 smtp.Credentials = netCre;
 
                 try
