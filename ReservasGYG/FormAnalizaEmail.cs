@@ -385,7 +385,7 @@ public partial class FormAnalizaEmail : Form
 
             BtnCrearConEmail.Enabled = ChkCrearConEmail.Checked;
 
-            MessageBox.Show(InfoCrearConEmail.ToString(), "Crear reserva y enviar email", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            MessageBox.Show(InfoCrearConEmail.ToString() + CrLf + "Se ha producido un error. No se manda el email.", "Crear reserva y enviar email", MessageBoxButtons.OK, MessageBoxIcon.Information);
             return;
         }
 
@@ -408,6 +408,12 @@ public partial class FormAnalizaEmail : Form
         //ChkNOEnviarEmail.Enabled = false;
         BtnCrearConEmail.Enabled = ChkCrearConEmail.Checked;
 
+        // Si InfoCrearConEmail no tiene nada, mostrar un mensaje normal. (27/may/04 11.07)
+        if(InfoCrearConEmail.Length == 0)
+        {
+            InfoCrearConEmail.AppendLine("Reserva procesada correctamente.");
+        }
+
         MessageBox.Show(InfoCrearConEmail.ToString(), "Crear reserva y enviar email", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
         // Limpiar donde se pone el texto a analizar.       (09/sep/23 22.15)
@@ -418,6 +424,8 @@ public partial class FormAnalizaEmail : Form
 
     private bool ModificarReserva()
     {
+        InfoCrearConEmail.Clear();
+
         // Buscar la reserva con el booking indicado.
         var re = Reservas.Buscar($"Notas like '%{LaReserva.GYGReference}%' and activa=1");
         if (re == null)
@@ -487,6 +495,9 @@ public partial class FormAnalizaEmail : Form
         re.Notas2 = string.Concat("Modificada //", re.Notas2);
         re.Actualizar2();
 
+        InfoCrearConEmail.AppendLine("Se ha modificado la :");
+        InfoCrearConEmail.AppendLine($"Booking: '{LaReserva.GYGReference}'");
+
         // Asignar los valores no en base datos.            (11/sep/23 12.17)
         re.GYGReference = LaReserva.GYGReference;
         re.GYGTipo = LaReserva.GYGTipo;
@@ -500,6 +511,9 @@ public partial class FormAnalizaEmail : Form
 
     private bool CancelarReserva()
     {
+        // Para que no esté vacio si no se manda email.     (27/may/24 11.10)
+        InfoCrearConEmail.Clear();
+
         // Buscar la reserva con el booking indicado.
         var re = Reservas.Buscar($"Notas like '%{LaReserva.GYGReference}%' and activa=1");
         if (re == null)
@@ -532,6 +546,9 @@ public partial class FormAnalizaEmail : Form
             pr.Actualizar2();
         }
         re.Actualizar2();
+
+        InfoCrearConEmail.AppendLine("Se ha cancelado la reserva:");
+        InfoCrearConEmail.AppendLine($"Booking: '{LaReserva.GYGReference}'");
 
         // Asignar los valores no en base datos.            (11/sep/23 12.15)
         re.GYGReference = LaReserva.GYGReference;

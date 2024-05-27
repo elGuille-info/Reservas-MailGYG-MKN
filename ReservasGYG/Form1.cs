@@ -27,23 +27,23 @@ public partial class Form1 : Form
 
     // Intentar no pasar de estas marcas: 60 caracteres. 2         3         4         5         6
     //                                ---------|---------|---------|---------|---------|---------|
-    //[COPIAR]AppDescripcionCopia = " password email-compilar"
+    //[COPIAR]AppDescripcionCopia = " mostrar texto al cancelar sin enviar mail"
     // BuscarClientes mostrar reservas en la pagina
 
     /// <summary>
     /// La versión de la aplicación.
     /// </summary>
-    public static string AppVersion { get; } = "1.0.111";
+    public static string AppVersion { get; } = "1.0.113";
 
     /// <summary>
     /// La versión del fichero (la revisión)
     /// </summary>
-    public static string AppFileVersion { get; } = "1.0.111.0";
+    public static string AppFileVersion { get; } = "1.0.113.0";
 
     /// <summary>
     /// La fecha de última actualización
     /// </summary>
-    public static string AppFechaVersion { get; } = "23-mar-2024";
+    public static string AppFechaVersion { get; } = "27-may-2024";
 
 
     public static Form1 Current { get; set; }

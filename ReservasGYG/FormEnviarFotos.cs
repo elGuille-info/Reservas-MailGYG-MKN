@@ -333,26 +333,32 @@ public partial class FormEnviarFotos : Form
         CboHoras.Tag = fotosHoras;
 
         var laFechaFotos = MailGYG.FechaFotos(TxtFotosDia.Text);
-        DateTime fechaFotos = DateTime.Today;
-        var culture = System.Globalization.CultureInfo.CurrentCulture;
-        string[] formatos = {
+        // Hacer comprobaciones si no es una cadena vacía   (19/abr/24 14.08)
+        // Por si no tiene "Fotos rutas la_fecha" al principio
+        if (laFechaFotos != "")
+        {
+
+            DateTime fechaFotos = DateTime.Today;
+            var culture = System.Globalization.CultureInfo.CurrentCulture;
+            string[] formatos = {
                 "dd-MM-yyyy", "dd.MM.yyyy", "dd.MM.yy", "dd/MM/yyyy", "dd-MM-yy", "dd/MM/yy",
                 "d/M/yyyy", "d-M-yyyy","d/M/yy", "d-M-yy",
                 "dd/M/yyyy", "dd-M-yyyy","dd/M/yy", "dd-M-yy",
                 "d/MM/yyyy", "d-MM-yyyy","d/MM/yy", "d-MM-yy",
                 "yyyy-MM-dd", "yyyy/MM/dd", "yy-MM-dd", "yy/MM/dd" };
 
-        if (string.IsNullOrEmpty(laFechaFotos) == false)
-        {
-            if (DateTime.TryParseExact(laFechaFotos, formatos, culture, System.Globalization.DateTimeStyles.None, out fechaFotos) == false)
+            if (string.IsNullOrEmpty(laFechaFotos) == false)
             {
-                // La fecha no es correcta.
-                MessageBox.Show($"La fecha '{laFechaFotos}' no es correcta.", "Extraer horas de las fotos", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-                CboHoras.Tag = null;
-                return;
+                if (DateTime.TryParseExact(laFechaFotos, formatos, culture, System.Globalization.DateTimeStyles.None, out fechaFotos) == false)
+                {
+                    // La fecha no es correcta.
+                    MessageBox.Show($"La fecha '{laFechaFotos}' no es correcta.", "Extraer horas de las fotos", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                    CboHoras.Tag = null;
+                    return;
+                }
             }
+            DateTimePickerGYG.Value = fechaFotos;
         }
-        DateTimePickerGYG.Value = fechaFotos;
 
         // Seleccionar la primera hora
         CboHoras.SelectedIndex = 0;
