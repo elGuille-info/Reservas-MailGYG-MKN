@@ -13,9 +13,9 @@ Usando .NET Standard 2.0 y KNDatos para Xamarin con System.Data.SqlClient v4.8.6
         <Copyright>(c) 2023-2024 gSoft para Maro-Kayak Nerja</Copyright>
         <PackageReadmeFile>Readme.md</PackageReadmeFile>
         <Authors>gSoft (elguille.info)</Authors>
-        <Version>1.0.113</Version>
-        <FileVersion>1.0.113.0</FileVersion>
-        <AssemblyVersion>1.0.113.0</AssemblyVersion>
+        <Version>1.0.114</Version>
+        <FileVersion>1.0.114.0</FileVersion>
+        <AssemblyVersion>1.0.114.0</AssemblyVersion>
 
     </PropertyGroup>
 
