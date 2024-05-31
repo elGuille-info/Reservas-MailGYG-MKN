@@ -211,7 +211,7 @@ namespace ReservasGYG
             // 
             ChkNOEnviarEmail.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             ChkNOEnviarEmail.AutoSize = true;
-            ChkNOEnviarEmail.Location = new Point(1253, 150);
+            ChkNOEnviarEmail.Location = new Point(1253, 189);
             ChkNOEnviarEmail.Name = "ChkNOEnviarEmail";
             ChkNOEnviarEmail.Size = new Size(164, 29);
             ChkNOEnviarEmail.TabIndex = 34;
@@ -221,12 +221,13 @@ namespace ReservasGYG
             // 
             // LabelAvisoCambiarFecha
             // 
+            LabelAvisoCambiarFecha.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left;
             LabelAvisoCambiarFecha.BackColor = Color.Firebrick;
             LabelAvisoCambiarFecha.ForeColor = Color.Yellow;
-            LabelAvisoCambiarFecha.Location = new Point(1251, 187);
-            LabelAvisoCambiarFecha.Margin = new Padding(6, 3, 3, 3);
+            LabelAvisoCambiarFecha.Location = new Point(1084, 224);
+            LabelAvisoCambiarFecha.Margin = new Padding(3);
             LabelAvisoCambiarFecha.Name = "LabelAvisoCambiarFecha";
-            LabelAvisoCambiarFecha.Size = new Size(201, 214);
+            LabelAvisoCambiarFecha.Size = new Size(368, 214);
             LabelAvisoCambiarFecha.TabIndex = 34;
             LabelAvisoCambiarFecha.Text = "Has cambiado la fecha, comprueba que es correcta:";
             LabelAvisoCambiarFecha.Visible = false;
@@ -262,9 +263,8 @@ namespace ReservasGYG
             BtnCrearConEmail.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             BtnCrearConEmail.BackColor = Color.MistyRose;
             BtnCrearConEmail.Location = new Point(1251, 65);
-            BtnCrearConEmail.Margin = new Padding(12, 3, 3, 12);
             BtnCrearConEmail.Name = "BtnCrearConEmail";
-            BtnCrearConEmail.Size = new Size(205, 70);
+            BtnCrearConEmail.Size = new Size(205, 118);
             BtnCrearConEmail.TabIndex = 33;
             BtnCrearConEmail.Text = "Crear reserva y enviar email de confirmación";
             BtnCrearConEmail.UseVisualStyleBackColor = false;
@@ -548,10 +548,9 @@ namespace ReservasGYG
             // 
             BtnLimpiarReserva.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
             BtnLimpiarReserva.BackColor = Color.LightYellow;
-            BtnLimpiarReserva.Location = new Point(1251, 407);
-            BtnLimpiarReserva.Margin = new Padding(12, 3, 3, 3);
+            BtnLimpiarReserva.Location = new Point(1251, 444);
             BtnLimpiarReserva.Name = "BtnLimpiarReserva";
-            BtnLimpiarReserva.Size = new Size(205, 70);
+            BtnLimpiarReserva.Size = new Size(205, 33);
             BtnLimpiarReserva.TabIndex = 35;
             BtnLimpiarReserva.Text = "Limpiar campos";
             BtnLimpiarReserva.UseVisualStyleBackColor = false;

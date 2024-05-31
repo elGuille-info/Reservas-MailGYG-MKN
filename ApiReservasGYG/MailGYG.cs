@@ -341,6 +341,33 @@ namespace ApiReservasMailGYG
         }
 
         /// <summary>
+        /// Extrae lo que haya en la línea desde el principio hasta el campo indicado.
+        /// </summary>
+        /// <param name="texto">El texto a evaluar.</param>
+        /// <param name="campo">La cadena a buscar.</param>
+        /// <returns>Lo que haya antes del texto indicado en el campo</returns>
+        private static string ExtraerAntes(string texto, string campo)
+        {
+            string res = "";
+
+            int i = texto.IndexOf(campo, StringComparison.OrdinalIgnoreCase);
+            if (i > -1)
+            {
+                var elTexto = texto.Substring(0, i).Trim();
+                res = elTexto;
+
+                //// Buscar el espacio anterior
+                //int j = elTexto.LastIndexOf(" ");
+                //if (j == -1)
+                //{
+                //    j = 0;
+                //}
+                //res = elTexto.Substring(j);
+            }
+            return res.Trim();
+        }
+
+        /// <summary>
         /// Comprobar si todos los campos usados están en la cadena a evaluar.
         /// </summary>
         /// <param name="texto">El texto a evaluar.</param>
@@ -509,22 +536,54 @@ namespace ApiReservasMailGYG
             Cancellation reason: Bad weather conditions
             */
 
-            if (email.Contains("following booking has been canceled") == false)
+            // Si se cancela porque nosotros lo solicitamos (31/may/24 15.05)
+            // tendrá: Cancellation date
+
+            //if (email.Contains("following booking has been canceled") == false)
+            //{
+            //    // No sirve salvo que se tenga acceso al asunto en el que se indica el número de reserva
+            //    //if (email.Contains("Cancellation date") == false)
+            //    //{
+            //    //    return null;
+            //    //}
+            //    return null;
+            //}
+
+            string refGyG; // = Extraer(email, "Reference Number:");
+            string nombre; // = Extraer(email, "Name:");
+            string fecGYG; // = Extraer(email, "Date:");
+            string actividad; // = Extraer(email, "Activity:");
+            string notas;
+
+            if (email.Contains("following booking has been canceled"))
             {
-                // No sirve salvo que se tenga acceso al asunto en el que se indica el número de reserva
-                //if (email.Contains("Cancellation date") == false)
-                //{
-                //    return null;
-                //}
+                refGyG = Extraer(email, "Reference Number:");
+                nombre = Extraer(email, "Name:");
+                fecGYG = Extraer(email, "Date:");
+                actividad = Extraer(email, "Activity:");
+                notas = "Cancelado por el cliente";
+            }
+            else if (email.Contains("Cancellation date"))
+            {
+                // GYG7VL448XK7 was cancelled
+                var lista = ExtraerEntre(email, "GYG", "was cancelled");
+                if (lista.Count > 0)
+                {
+                    refGyG = $"GYG{lista[0]}";
+                }
+                else
+                {
+                    refGyG = ExtraerAntes(email, "was cancelled");
+                }
+                nombre = Extraer(email, "Customer:");
+                fecGYG = Extraer(email, "Date:");
+                actividad = Extraer(email, "Tour:");
+                notas = Extraer(email, "Cancellation reason:");
+            }
+            else
+            {
                 return null;
             }
-            
-            var refGyG = Extraer(email, "Reference Number:");
-            var nombre = Extraer(email, "Name:");
-            var fecGYG = Extraer(email, "Date:");
-            var actividad = Extraer(email, "Activity:");
-            ////var fec = DateTime.ParseExact(fecGYG, "MMMM dd, yyyy h:mm", System.Globalization.CultureInfo.InvariantCulture);
-            //var fec = DateTime.ParseExact(fecGYG, "MMMM dd, yyyy h:mm", System.Globalization.CultureInfo.GetCultureInfo("en-US"));
 
             Reservas re = new Reservas
             {
@@ -533,6 +592,7 @@ namespace ApiReservasMailGYG
                 GYGOption = actividad,
                 GYGReference = refGyG, // El número de booking
                 Nombre = nombre,
+                GYGNotas = notas,
                 //FechaActividad = fec.Date,
                 //HoraActividad = fec.TimeOfDay
             };
