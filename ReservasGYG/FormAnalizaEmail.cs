@@ -594,9 +594,15 @@ public partial class FormAnalizaEmail : Form
         if (re.Actividad == "KAYAK")
         {
             hora = new TimeSpan(re.HoraActividad.Hours, 0, 0);
+            // Si es alquiler, buscar con 1h de duración.   (03/jun/24 14.31)
+            pr = Producto.Buscar(re.FechaActividad, hora, re.Actividad, 1);
+        }
+        else // Para las rutas o tablas
+        {
+            pr = Producto.Buscar(re.FechaActividad, hora, re.Actividad);
         }
         // Buscar el producto.
-        pr = Producto.Buscar(re.FechaActividad, hora, re.Actividad);
+        //pr = Producto.Buscar(re.FechaActividad, hora, re.Actividad);
         if (pr == null)
         {
             // Si no existe el producto, ponerlo por libre. (07/sep/23 08.13)

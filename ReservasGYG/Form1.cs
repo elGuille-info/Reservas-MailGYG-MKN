@@ -27,23 +27,23 @@ public partial class Form1 : Form
 
     // Intentar no pasar de estas marcas: 60 caracteres. 2         3         4         5         6
     //                                ---------|---------|---------|---------|---------|---------|
-    //[COPIAR]AppDescripcionCopia = " diseño formAnalizar y cancelar"
+    //[COPIAR]AppDescripcionCopia = " Reserva alquiler con duracion"
     // BuscarClientes mostrar reservas en la pagina
 
     /// <summary>
     /// La versión de la aplicación.
     /// </summary>
-    public static string AppVersion { get; } = "1.0.115";
+    public static string AppVersion { get; } = "1.0.116";
 
     /// <summary>
     /// La versión del fichero (la revisión)
     /// </summary>
-    public static string AppFileVersion { get; } = "1.0.115.2";
+    public static string AppFileVersion { get; } = "1.0.116.0";
 
     /// <summary>
     /// La fecha de última actualización
     /// </summary>
-    public static string AppFechaVersion { get; } = "31-may-2024";
+    public static string AppFechaVersion { get; } = "03-jun-2024";
 
 
     public static Form1 Current { get; set; }
