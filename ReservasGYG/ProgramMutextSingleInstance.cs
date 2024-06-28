@@ -37,7 +37,9 @@ class ProgramMutextSingleInstance
             // To customize application configuration such as set high DPI settings or default font,
             // see https://aka.ms/applicationconfiguration.
             ApplicationConfiguration.Initialize();
-            Application.Run(new FormAnalizaEmail());
+            //Application.Run(new FormAnalizaEmail());
+            // Iniciar con Form1.                               (28/jun/24 13.41)
+            Application.Run(new Form1());
 
             //Application.EnableVisualStyles();
             //Application.SetCompatibleTextRenderingDefault(false);

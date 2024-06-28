@@ -27,23 +27,23 @@ public partial class Form1 : Form
 
     // Intentar no pasar de estas marcas: 60 caracteres. 2         3         4         5         6
     //                                ---------|---------|---------|---------|---------|---------|
-    //[COPIAR]AppDescripcionCopia = " Nuevos textos hoy-mañana es el dia-3"
+    //[COPIAR]AppDescripcionCopia = " Ajustes texto extra y ventana de inicio"
     // BuscarClientes mostrar reservas en la pagina
 
     /// <summary>
     /// La versión de la aplicación.
     /// </summary>
-    public static string AppVersion { get; } = "1.0.119";
+    public static string AppVersion { get; } = "1.0.121";
 
     /// <summary>
     /// La versión del fichero (la revisión)
     /// </summary>
-    public static string AppFileVersion { get; } = "1.0.119.0";
+    public static string AppFileVersion { get; } = "1.0.121.0";
 
     /// <summary>
     /// La fecha de última actualización
     /// </summary>
-    public static string AppFechaVersion { get; } = "15-jun-2024";
+    public static string AppFechaVersion { get; } = "28-jun-2024";
 
 
     public static Form1 Current { get; set; }
@@ -417,6 +417,8 @@ public partial class Form1 : Form
             TextoAvisoUltimo = TxtAvisoExtra.Text;
 
             sb.Append("<b>*IMPORTANTE / IMPORTANT*</b>");
+            // Añadir una línea de separación                   (28/jun/24 13.06)
+            sb.Append("<br/>");
             sb.Append(TxtAvisoExtra.Text.Replace(CrLf, "<br/>"));
             sb.Append("<br/>");
             sb.AppendLine("<br/>");
@@ -827,5 +829,27 @@ public partial class Form1 : Form
     private void ContextMenuTextoAviso_Opening(object sender, CancelEventArgs e)
     {
         MnuPegarÚltimoTextoEnviado.Enabled = !string.IsNullOrEmpty(TextoAvisoUltimo);
+    }
+
+    private void BtnAnalizar_Click(object sender, EventArgs e)
+    {
+        //if (Form1.Current == null || Form1.Current.IsDisposed)
+        //{
+        //    Form1.Current = new Form1();
+        //}
+        //Form1.Current.BringToFront();
+        //Form1.Current.Show();
+        //Form1.Current.Focus();
+
+        FormAnalizaEmail frm1 = FormAnalizaEmail.Current;
+
+        if (frm1 == null || frm1.IsDisposed)
+        {
+            frm1 = new FormAnalizaEmail();
+        }
+
+        frm1.BringToFront();
+        frm1.Show();
+        frm1.Focus();
     }
 }

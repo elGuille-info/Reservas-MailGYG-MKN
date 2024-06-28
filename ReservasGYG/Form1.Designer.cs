@@ -42,6 +42,9 @@ namespace ReservasGYG
             GrbAvisos = new GroupBox();
             ChkIncluirTextoAviso = new CheckBox();
             TxtAvisoExtra = new TextBox();
+            ContextMenuTextoAviso = new ContextMenuStrip(components);
+            MenuPegarTextoOriginal = new ToolStripMenuItem();
+            MnuPegarÚltimoTextoEnviado = new ToolStripMenuItem();
             PanelBotones = new Panel();
             BtnMañanaEs = new Button();
             BtnHoyEs = new Button();
@@ -69,14 +72,12 @@ namespace ReservasGYG
             label8 = new Label();
             BtnComprobarSinMail = new Button();
             TimerInicioForm1 = new Timer(components);
-            ContextMenuTextoAviso = new ContextMenuStrip(components);
-            MenuPegarTextoOriginal = new ToolStripMenuItem();
-            MnuPegarÚltimoTextoEnviado = new ToolStripMenuItem();
+            BtnAnalizar = new Button();
             GrbOpcionesFecha.SuspendLayout();
             GrbAvisos.SuspendLayout();
+            ContextMenuTextoAviso.SuspendLayout();
             PanelBotones.SuspendLayout();
             ContextMenuListView.SuspendLayout();
-            ContextMenuTextoAviso.SuspendLayout();
             SuspendLayout();
             // 
             // ChkConAlquileres
@@ -122,7 +123,7 @@ namespace ReservasGYG
             BtnFotos.Location = new Point(662, 80);
             BtnFotos.Margin = new Padding(3, 12, 3, 3);
             BtnFotos.Name = "BtnFotos";
-            BtnFotos.Size = new Size(639, 40);
+            BtnFotos.Size = new Size(360, 40);
             BtnFotos.TabIndex = 6;
             BtnFotos.Text = "Enviar fotos";
             BtnFotos.UseVisualStyleBackColor = false;
@@ -131,6 +132,7 @@ namespace ReservasGYG
             // GrbOpcionesFecha
             // 
             GrbOpcionesFecha.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            GrbOpcionesFecha.Controls.Add(BtnAnalizar);
             GrbOpcionesFecha.Controls.Add(GrbAvisos);
             GrbOpcionesFecha.Controls.Add(LabelInfoListView);
             GrbOpcionesFecha.Controls.Add(ChkSoloCanceladas);
@@ -185,6 +187,28 @@ namespace ReservasGYG
             TxtAvisoExtra.Size = new Size(1298, 152);
             TxtAvisoExtra.TabIndex = 1;
             TxtAvisoExtra.Text = resources.GetString("TxtAvisoExtra.Text");
+            // 
+            // ContextMenuTextoAviso
+            // 
+            ContextMenuTextoAviso.ImageScalingSize = new Size(24, 24);
+            ContextMenuTextoAviso.Items.AddRange(new ToolStripItem[] { MenuPegarTextoOriginal, MnuPegarÚltimoTextoEnviado });
+            ContextMenuTextoAviso.Name = "ContextMenuTextoAviso";
+            ContextMenuTextoAviso.Size = new Size(316, 68);
+            ContextMenuTextoAviso.Opening += ContextMenuTextoAviso_Opening;
+            // 
+            // MenuPegarTextoOriginal
+            // 
+            MenuPegarTextoOriginal.Name = "MenuPegarTextoOriginal";
+            MenuPegarTextoOriginal.Size = new Size(315, 32);
+            MenuPegarTextoOriginal.Text = "Pegar el texto original";
+            MenuPegarTextoOriginal.Click += MenuPegarTextoOriginal_Click;
+            // 
+            // MnuPegarÚltimoTextoEnviado
+            // 
+            MnuPegarÚltimoTextoEnviado.Name = "MnuPegarÚltimoTextoEnviado";
+            MnuPegarÚltimoTextoEnviado.Size = new Size(315, 32);
+            MnuPegarÚltimoTextoEnviado.Text = "Pegar el último texto enviado";
+            MnuPegarÚltimoTextoEnviado.Click += MnuPegarÚltimoTextoEnviado_Click;
             // 
             // PanelBotones
             // 
@@ -434,27 +458,18 @@ namespace ReservasGYG
             TimerInicioForm1.Interval = 300;
             TimerInicioForm1.Tick += TimerInicioForm1_Tick;
             // 
-            // ContextMenuTextoAviso
+            // BtnAnalizar
             // 
-            ContextMenuTextoAviso.ImageScalingSize = new Size(24, 24);
-            ContextMenuTextoAviso.Items.AddRange(new ToolStripItem[] { MenuPegarTextoOriginal, MnuPegarÚltimoTextoEnviado });
-            ContextMenuTextoAviso.Name = "ContextMenuTextoAviso";
-            ContextMenuTextoAviso.Size = new Size(316, 68);
-            ContextMenuTextoAviso.Opening += ContextMenuTextoAviso_Opening;
-            // 
-            // MenuPegarTextoOriginal
-            // 
-            MenuPegarTextoOriginal.Name = "MenuPegarTextoOriginal";
-            MenuPegarTextoOriginal.Size = new Size(315, 32);
-            MenuPegarTextoOriginal.Text = "Pegar el texto original";
-            MenuPegarTextoOriginal.Click += MenuPegarTextoOriginal_Click;
-            // 
-            // MnuPegarÚltimoTextoEnviado
-            // 
-            MnuPegarÚltimoTextoEnviado.Name = "MnuPegarÚltimoTextoEnviado";
-            MnuPegarÚltimoTextoEnviado.Size = new Size(315, 32);
-            MnuPegarÚltimoTextoEnviado.Text = "Pegar el último texto enviado";
-            MnuPegarÚltimoTextoEnviado.Click += MnuPegarÚltimoTextoEnviado_Click;
+            BtnAnalizar.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            BtnAnalizar.BackColor = Color.PaleTurquoise;
+            BtnAnalizar.Location = new Point(1028, 80);
+            BtnAnalizar.Margin = new Padding(3, 12, 3, 3);
+            BtnAnalizar.Name = "BtnAnalizar";
+            BtnAnalizar.Size = new Size(279, 40);
+            BtnAnalizar.TabIndex = 12;
+            BtnAnalizar.Text = "Analizar email";
+            BtnAnalizar.UseVisualStyleBackColor = false;
+            BtnAnalizar.Click += BtnAnalizar_Click;
             // 
             // Form1
             // 
@@ -473,9 +488,9 @@ namespace ReservasGYG
             GrbOpcionesFecha.PerformLayout();
             GrbAvisos.ResumeLayout(false);
             GrbAvisos.PerformLayout();
+            ContextMenuTextoAviso.ResumeLayout(false);
             PanelBotones.ResumeLayout(false);
             ContextMenuListView.ResumeLayout(false);
-            ContextMenuTextoAviso.ResumeLayout(false);
             ResumeLayout(false);
         }
 
@@ -519,5 +534,6 @@ namespace ReservasGYG
         private ContextMenuStrip ContextMenuTextoAviso;
         private ToolStripMenuItem MenuPegarTextoOriginal;
         private ToolStripMenuItem MnuPegarÚltimoTextoEnviado;
+        private Button BtnAnalizar;
     }
 }

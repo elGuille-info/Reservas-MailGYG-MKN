@@ -63,7 +63,7 @@ namespace ReservasGYG.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Hola, este mensaje es para informarte que la previsión del mar para el día de tu actividad indica que habrá pequeñas olas.
         ///
-        ///*Tu actividad sigue adelante*, pero como habrá un poco de movimiento, te avisamos solamente en caso que tú o alguien de tu grupo se suela marear, para darte la oportunidad de cambiar la reserva para otra fecha.
+        ///&lt;b&gt;*Tu actividad sigue adelante*&lt;/b&gt;, pero como habrá un poco de movimiento, te avisamos solamente en caso que tú o alguien de tu grupo se suela marear, para darte la oportunidad de cambiar la reserva para otra fecha.
         ///
         ///Si no puedes cambiar para otra fecha y no quieres arriesgarte a venir, no hay problema, te devolveremos el dinero pagado.
         ///
@@ -72,7 +72,7 @@ namespace ReservasGYG.Properties {
         ///
         ///
         ///
-        ///Hi, this message is to [rest of string was truncated]&quot;;.
+        ///Hi, this messag [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string Alerta1_es_en {
             get {
@@ -84,7 +84,7 @@ namespace ReservasGYG.Properties {
         ///   Looks up a localized string similar to 
         ///Hola buenas, este mensaje es para informarte que las previsiones de oleaje y viento para el día de tu actividad no son buenas.
         ///
-        ///*Las actividades siguen adelante por el momento*, pero es probable que se puedan cancelar. Por lo tanto, te recomendamos cambiar la actividad a otra fecha.
+        ///&lt;b&gt;*Las actividades siguen adelante por el momento*&lt;/b&gt;, pero es probable que se puedan cancelar. Por lo tanto, te recomendamos cambiar la actividad a otra fecha.
         ///
         ///En caso que no puedas cambiar de fecha y no quieras arriesgarte a venir, no hay problema, te devolveremos el dinero pagado.
         ///
@@ -92,7 +92,7 @@ namespace ReservasGYG.Properties {
         ///
         ///
         ///
-        ///Hi, this message is to inform you that the forecasts for waves and wind [rest of string was truncated]&quot;;.
+        ///Hi, this message is to inform you that the forecasts for waves a [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string Alerta2_es_en {
             get {
@@ -107,11 +107,11 @@ namespace ReservasGYG.Properties {
         ///
         ///En caso que no puedas cambiar de fecha, no hay problema, te devolveremos el dinero que has pagado.
         ///
-        ///Muchas gracias por tu compresión.
+        ///Muchas gracias por tu comprensión.
         ///
         ///
         ///
-        ///Hi, we regret to inform you that, for security reasons and the expected bad wave conditions, we are [rest of string was truncated]&quot;;.
+        ///Hi, we regret to inform you that, for security reasons and the expected bad wave conditions, we ar [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string Alerta3_es_en {
             get {
@@ -174,9 +174,8 @@ namespace ReservasGYG.Properties {
         ///El punto de encuentro es en la playa de Maro (https://goo.gl/wbLLFd).
         ///Te recuerdo que &lt;b&gt;debes estar en el mostrador de la empresa de los kayaks 15 minutos antes de la hora de la actividad&lt;/b&gt;.
         ///Si hay cola, NO la hagas, ve directamente al mostrador e indica que tienes una reserva de ruta (o alquiler).
-        ///Si llegas tarde tu reserva se cancelará.
         ///
-        ///Los vehículos no pueden ir hasta la playa de Maro (porque es zona protegida) y debes aparcar  [rest of string was truncated]&quot;;.
+        ///Desde junio a septiembre los coches no pueden bajar a la playa, pero hay un servicio de bus (lanzadera) para ir a la playa que empieza  [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string Hoy_es_el_dia {
             get {
@@ -196,18 +195,35 @@ namespace ReservasGYG.Properties {
         ///
         ///
         ///
-        ///&lt;b&gt;*LOCALIZACIÓN DEL PARKING JUNTO A PARADA DEL BUS A LA PLAYA*&lt;/b&gt;
-        ///Este sería (aproximadamente) el sitio donde dejar el coche y poder tomar el bus de bajada a la playa de Maro.
-        ///https://goo.gl/maps/ZfNzUsfkCN1q8iD47
-        ///
-        ///
-        ///
         ///&lt;b&gt;*IMPORTANTE*:&lt;/b&gt;
-        ///Recuerda que debes estar en el mostrador de la  [rest of string was truncated]&quot;;.
+        ///Recuerda que debes estar en el mostrador de la empresa (Maro Kayak Nerja, que está justo cuando llegas a la playa) &lt;b&gt;*15 minutos antes de la hora de salida de la actividad*&lt;/b&gt; si te retrasas se cancelará la reserva y no habrá devolución del importe pagado.
+        ///
+        ///No es nece [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string IMPORTANTE_ALQUILER {
             get {
                 return ResourceManager.GetString("IMPORTANTE_ALQUILER", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &lt;b&gt;*INFORMATION OF INTEREST*&lt;/b&gt;
+        ///
+        ///
+        ///&lt;b&gt;*LOCATION*&lt;/b&gt;
+        ///Location on Google Maps of *Maro Beach* https://goo.gl/wbLLFd
+        ///(&lt;b&gt;*NOT Caleta de Maro, don’t confuse the beaches*&lt;/b&gt;.)
+        ///
+        ///
+        ///
+        ///&lt;b&gt;*IMPORTANT*&lt;/b&gt;:
+        ///Remember that you must be at the company’s counter (Maro Kayak Nerja, which is right when you arrive at the beach) &lt;b&gt;*15 minutes before the activity’s departure time*&lt;/b&gt; if you are late, the reservation will be canceled and there will be no refund of the amount paid.
+        ///
+        ///You don’t need to queue, go direc [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string IMPORTANTE_EN {
+            get {
+                return ResourceManager.GetString("IMPORTANTE_EN", resourceCulture);
             }
         }
         
@@ -258,26 +274,25 @@ namespace ReservasGYG.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to &lt;b&gt;*INFORMATION OF INTEREST*&lt;/b&gt;
-        ///
-        ///
-        ///&lt;b&gt;*LOCATION*&lt;/b&gt;
-        ///Location on Google Maps of *Maro Beach* https://goo.gl/wbLLFd
-        ///(*NOT Caleta de Maro, don’t confuse the beaches*.)
-        ///
-        ///
-        ///&lt;b&gt;*LOCATION OF THE PARKING LOT AND THE BUS STOP TO THE BEACH*&lt;/b&gt;
-        ///This would be (approximately) the place to park your car and take the bus down to Maro beach.
-        ///https://goo.gl/maps/ZfNzUsfkCN1q8iD47
+        ///   Looks up a localized string similar to &lt;b&gt;*INFORMACIÓN DE INTERÉS*&lt;/b&gt;
         ///
         ///
         ///
-        ///&lt;b&gt;*IMPORTANT*&lt;/b&gt;:
-        ///Remember that you must be at the company’s counter (Maro Kayak Nerja, which is right when you arrive at the [rest of string was truncated]&quot;;.
+        ///&lt;b&gt;*LOCALIZACIÓN*&lt;/b&gt;
+        ///Ubicación en Google Maps de la &lt;b&gt;*Playa de Maro*&lt;/b&gt;
+        ///https://goo.gl/wbLLFd
+        ///(&lt;b&gt;*NO ES &quot;Caleta de Maro&quot;, no te confundas de playa*&lt;/b&gt;.)
+        ///
+        ///
+        ///
+        ///&lt;b&gt;*IMPORTANTE*:&lt;/b&gt;
+        ///Recuerda que debes estar en el mostrador de la empresa (Maro Kayak Nerja, que está justo cuando llegas a la playa) &lt;b&gt;*15 minutos antes de la hora de salida de la actividad*&lt;/b&gt; si te retrasas se cancelará la reserva y no habrá devolución del importe pagado.
+        ///
+        ///No es necesario que  [rest of string was truncated]&quot;;.
         /// </summary>
-        internal static string IMPORTANTE_EN {
+        internal static string IMPORTANTE_ES {
             get {
-                return ResourceManager.GetString("IMPORTANTE_EN", resourceCulture);
+                return ResourceManager.GetString("IMPORTANTE_ES", resourceCulture);
             }
         }
         
@@ -332,32 +347,6 @@ namespace ReservasGYG.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to &lt;b&gt;*INFORMACIÓN DE INTERÉS*&lt;/b&gt;
-        ///
-        ///
-        ///
-        ///&lt;b&gt;*LOCALIZACIÓN*&lt;/b&gt;
-        ///Ubicación en Google Maps de la &lt;b&gt;*Playa de Maro*&lt;/b&gt;
-        ///https://goo.gl/wbLLFd
-        ///(&lt;b&gt;*NO ES &quot;Caleta de Maro&quot;, no te confundas de playa*&lt;/b&gt;.)
-        ///
-        ///
-        ///&lt;b&gt;*LOCALIZACIÓN DEL PARKING JUNTO A PARADA DEL BUS A LA PLAYA*&lt;/b&gt;
-        ///Este sería (aproximadamente) el sitio donde dejar el coche y poder tomar el bus de bajada a la playa de Maro.
-        ///https://goo.gl/maps/ZfNzUsfkCN1q8iD47
-        ///
-        ///
-        ///
-        ///&lt;b&gt;*IMPORTANTE*:&lt;/b&gt;
-        ///Recuerda que debes estar en el mostrador de la empresa (Mar [rest of string was truncated]&quot;;.
-        /// </summary>
-        internal static string IMPORTANTE_ES {
-            get {
-                return ResourceManager.GetString("IMPORTANTE_ES", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to &lt;b&gt;*Por favor lee esto*&lt;/b&gt;, el pueblo de Maro es muy pequeño y hay pocos sitios donde aparcar. Si no vas en taxi a la playa de Maro, por favor calcula al menos una hora y media para aparcar y si no encuentras en el pueblo, puedes ir al parking de las Cuevas de Nerja, aunque es de pago.
         ///Te aviso porque si no estás en la playa de Maro 15 minutos antes de la hora de la actividad perderás tu reserva.
         ///Gracias por tu comprensión.
@@ -378,9 +367,8 @@ namespace ReservasGYG.Properties {
         ///El punto de encuentro es en la playa de Maro (https://goo.gl/wbLLFd).
         ///Te recuerdo que &lt;b&gt;debes estar en el mostrador de la empresa de los kayaks 15 minutos antes de la hora de la actividad&lt;/b&gt;.
         ///Si hay cola, NO la hagas, ve directamente al mostrador e indica que tienes una reserva de ruta (o alquiler).
-        ///Si llegas tarde tu reserva se cancelará.
         ///
-        ///Los vehículos no pueden ir hasta la playa de Maro (porque es zona protegida) y debes aparca [rest of string was truncated]&quot;;.
+        ///Desde junio a septiembre los coches no pueden bajar a la playa, pero hay un servicio de bus (lanzadera) para ir a la playa que empiez [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string Mañana_es_el_dia {
             get {
