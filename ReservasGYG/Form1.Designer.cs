@@ -39,6 +39,7 @@ namespace ReservasGYG
             ChkSoloCanceladas = new CheckBox();
             BtnFotos = new Button();
             GrbOpcionesFecha = new GroupBox();
+            BtnAnalizar = new Button();
             GrbAvisos = new GroupBox();
             ChkIncluirTextoAviso = new CheckBox();
             TxtAvisoExtra = new TextBox();
@@ -72,7 +73,6 @@ namespace ReservasGYG
             label8 = new Label();
             BtnComprobarSinMail = new Button();
             TimerInicioForm1 = new Timer(components);
-            BtnAnalizar = new Button();
             GrbOpcionesFecha.SuspendLayout();
             GrbAvisos.SuspendLayout();
             ContextMenuTextoAviso.SuspendLayout();
@@ -123,7 +123,7 @@ namespace ReservasGYG
             BtnFotos.Location = new Point(662, 80);
             BtnFotos.Margin = new Padding(3, 12, 3, 3);
             BtnFotos.Name = "BtnFotos";
-            BtnFotos.Size = new Size(360, 40);
+            BtnFotos.Size = new Size(645, 40);
             BtnFotos.TabIndex = 6;
             BtnFotos.Text = "Enviar fotos";
             BtnFotos.UseVisualStyleBackColor = false;
@@ -151,6 +151,19 @@ namespace ReservasGYG
             GrbOpcionesFecha.TabIndex = 0;
             GrbOpcionesFecha.TabStop = false;
             GrbOpcionesFecha.Text = "Opciones con fecha";
+            // 
+            // BtnAnalizar
+            // 
+            BtnAnalizar.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
+            BtnAnalizar.BackColor = Color.PaleTurquoise;
+            BtnAnalizar.Location = new Point(1008, 571);
+            BtnAnalizar.Margin = new Padding(3, 12, 3, 3);
+            BtnAnalizar.Name = "BtnAnalizar";
+            BtnAnalizar.Size = new Size(302, 40);
+            BtnAnalizar.TabIndex = 12;
+            BtnAnalizar.Text = "Mostrar analizar email";
+            BtnAnalizar.UseVisualStyleBackColor = false;
+            BtnAnalizar.Click += BtnAnalizar_Click;
             // 
             // GrbAvisos
             // 
@@ -288,7 +301,7 @@ namespace ReservasGYG
             LabelInfoListView.Location = new Point(6, 571);
             LabelInfoListView.Margin = new Padding(3);
             LabelInfoListView.Name = "LabelInfoListView";
-            LabelInfoListView.Size = new Size(1301, 31);
+            LabelInfoListView.Size = new Size(996, 31);
             LabelInfoListView.TabIndex = 10;
             LabelInfoListView.Text = "Hay n elementos";
             LabelInfoListView.TextAlign = ContentAlignment.MiddleLeft;
@@ -457,19 +470,6 @@ namespace ReservasGYG
             // 
             TimerInicioForm1.Interval = 300;
             TimerInicioForm1.Tick += TimerInicioForm1_Tick;
-            // 
-            // BtnAnalizar
-            // 
-            BtnAnalizar.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            BtnAnalizar.BackColor = Color.PaleTurquoise;
-            BtnAnalizar.Location = new Point(1028, 80);
-            BtnAnalizar.Margin = new Padding(3, 12, 3, 3);
-            BtnAnalizar.Name = "BtnAnalizar";
-            BtnAnalizar.Size = new Size(279, 40);
-            BtnAnalizar.TabIndex = 12;
-            BtnAnalizar.Text = "Analizar email";
-            BtnAnalizar.UseVisualStyleBackColor = false;
-            BtnAnalizar.Click += BtnAnalizar_Click;
             // 
             // Form1
             // 

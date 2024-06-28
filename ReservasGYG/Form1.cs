@@ -38,7 +38,7 @@ public partial class Form1 : Form
     /// <summary>
     /// La versión del fichero (la revisión)
     /// </summary>
-    public static string AppFileVersion { get; } = "1.0.121.0";
+    public static string AppFileVersion { get; } = "1.0.121.1";
 
     /// <summary>
     /// La fecha de última actualización
