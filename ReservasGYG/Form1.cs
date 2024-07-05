@@ -27,18 +27,18 @@ public partial class Form1 : Form
 
     // Intentar no pasar de estas marcas: 60 caracteres. 2         3         4         5         6
     //                                ---------|---------|---------|---------|---------|---------|
-    //[COPIAR]AppDescripcionCopia = " Lineas separacion en texto extra"
+    //[COPIAR]AppDescripcionCopia = " Status en form1"
     // BuscarClientes mostrar reservas en la pagina
 
     /// <summary>
     /// La versión de la aplicación.
     /// </summary>
-    public static string AppVersion { get; } = "1.0.123";
+    public static string AppVersion { get; } = "1.0.124";
 
     /// <summary>
     /// La versión del fichero (la revisión)
     /// </summary>
-    public static string AppFileVersion { get; } = "1.0.123.0";
+    public static string AppFileVersion { get; } = "1.0.124.0";
 
     /// <summary>
     /// La fecha de última actualización
@@ -233,6 +233,13 @@ public partial class Form1 : Form
     {
         inicializando = false;
 
+        // Mostrar la fecha y hora actual.                      (05/jul/24 12.54)
+        LabelFechaHora.Text = $"{DateTime.Now:dd/MM/yyyy HH:mm:ss}";
+
+        // Iniciar el temporizador                              (05/jul/24 12.57)
+        TimerHoraStatus.Interval = 990;
+        TimerHoraStatus.Enabled = true;
+
         // Copiar el texto de aviso original.               (23/sep/23 10.39)
         TextoAvisoOriginal = TxtAvisoExtra.Text;
 
@@ -251,6 +258,10 @@ public partial class Form1 : Form
         TimerInicioForm1.Enabled = false;
         ChkIncluirTextoAviso.Checked = false;
         ActualizarColorEnabled(ChkIncluirTextoAviso, TxtAvisoExtra);
+
+        // Mostrar la versión de la app.                        (05/jul/24 12.52)
+        LabelVersion.Text = $"v{Form1.AppVersion} ({Form1.AppFechaVersion})";
+
         Form1_Resize(null, null);
     }
 
@@ -836,5 +847,10 @@ public partial class Form1 : Form
         frm1.BringToFront();
         frm1.Show();
         frm1.Focus();
+    }
+
+    private void TimerHoraStatus_Tick(object sender, EventArgs e)
+    {
+        LabelFechaHora.Text = $"{DateTime.Now:dd/MM/yyyy HH:mm:ss}";
     }
 }

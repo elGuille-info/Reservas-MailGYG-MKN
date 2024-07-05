@@ -73,11 +73,17 @@ namespace ReservasGYG
             label8 = new Label();
             BtnComprobarSinMail = new Button();
             TimerInicioForm1 = new Timer(components);
+            statusStrip1 = new StatusStrip();
+            LabelStatus = new ToolStripStatusLabel();
+            LabelVersion = new ToolStripStatusLabel();
+            LabelFechaHora = new ToolStripStatusLabel();
+            TimerHoraStatus = new Timer(components);
             GrbOpcionesFecha.SuspendLayout();
             GrbAvisos.SuspendLayout();
             ContextMenuTextoAviso.SuspendLayout();
             PanelBotones.SuspendLayout();
             ContextMenuListView.SuspendLayout();
+            statusStrip1.SuspendLayout();
             SuspendLayout();
             // 
             // ChkConAlquileres
@@ -471,11 +477,52 @@ namespace ReservasGYG
             TimerInicioForm1.Interval = 300;
             TimerInicioForm1.Tick += TimerInicioForm1_Tick;
             // 
+            // statusStrip1
+            // 
+            statusStrip1.ImageScalingSize = new Size(24, 24);
+            statusStrip1.Items.AddRange(new ToolStripItem[] { LabelStatus, LabelVersion, LabelFechaHora });
+            statusStrip1.Location = new Point(0, 979);
+            statusStrip1.Name = "statusStrip1";
+            statusStrip1.ShowItemToolTips = true;
+            statusStrip1.Size = new Size(1340, 36);
+            statusStrip1.TabIndex = 6;
+            statusStrip1.Text = "statusStrip1";
+            // 
+            // LabelStatus
+            // 
+            LabelStatus.BorderSides = ToolStripStatusLabelBorderSides.Right;
+            LabelStatus.Name = "LabelStatus";
+            LabelStatus.Size = new Size(895, 29);
+            LabelStatus.Spring = true;
+            LabelStatus.Text = "Opciones para las reservas de GetYourGuide";
+            LabelStatus.TextAlign = ContentAlignment.MiddleLeft;
+            // 
+            // LabelVersion
+            // 
+            LabelVersion.AutoSize = false;
+            LabelVersion.BorderSides = ToolStripStatusLabelBorderSides.Right;
+            LabelVersion.Name = "LabelVersion";
+            LabelVersion.Size = new Size(210, 29);
+            LabelVersion.Text = "v1.0.18.1 (11-sep-2023)";
+            // 
+            // LabelFechaHora
+            // 
+            LabelFechaHora.AutoSize = false;
+            LabelFechaHora.Name = "LabelFechaHora";
+            LabelFechaHora.Size = new Size(220, 29);
+            LabelFechaHora.Text = "dd/MM/yyyy HH:mm:ss";
+            // 
+            // TimerHoraStatus
+            // 
+            TimerHoraStatus.Interval = 900;
+            TimerHoraStatus.Tick += TimerHoraStatus_Tick;
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(10F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1346, 973);
+            ClientSize = new Size(1340, 1015);
+            Controls.Add(statusStrip1);
             Controls.Add(GrbOpcionesFecha);
             Icon = (Icon)resources.GetObject("$this.Icon");
             Name = "Form1";
@@ -491,7 +538,10 @@ namespace ReservasGYG
             ContextMenuTextoAviso.ResumeLayout(false);
             PanelBotones.ResumeLayout(false);
             ContextMenuListView.ResumeLayout(false);
+            statusStrip1.ResumeLayout(false);
+            statusStrip1.PerformLayout();
             ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion
@@ -535,5 +585,10 @@ namespace ReservasGYG
         private ToolStripMenuItem MenuPegarTextoOriginal;
         private ToolStripMenuItem MnuPegarÚltimoTextoEnviado;
         private Button BtnAnalizar;
+        private StatusStrip statusStrip1;
+        private ToolStripStatusLabel LabelStatus;
+        private ToolStripStatusLabel LabelVersion;
+        private ToolStripStatusLabel LabelFechaHora;
+        private Timer TimerHoraStatus;
     }
 }
