@@ -27,18 +27,18 @@ public partial class Form1 : Form
 
     // Intentar no pasar de estas marcas: 60 caracteres. 2         3         4         5         6
     //                                ---------|---------|---------|---------|---------|---------|
-    //[COPIAR]AppDescripcionCopia = " Quito llamadas wasap en frma email"
+    //[COPIAR]AppDescripcionCopia = " Lineas separacion en texto extra"
     // BuscarClientes mostrar reservas en la pagina
 
     /// <summary>
     /// La versión de la aplicación.
     /// </summary>
-    public static string AppVersion { get; } = "1.0.122";
+    public static string AppVersion { get; } = "1.0.123";
 
     /// <summary>
     /// La versión del fichero (la revisión)
     /// </summary>
-    public static string AppFileVersion { get; } = "1.0.122.0";
+    public static string AppFileVersion { get; } = "1.0.123.0";
 
     /// <summary>
     /// La fecha de última actualización
@@ -535,6 +535,8 @@ public partial class Form1 : Form
             TextoAvisoUltimo = TxtAvisoExtra.Text;
 
             sb.Append("<b>*IMPORTANTE / IMPORTANT*</b>");
+            // Añadir una línea de separación               (05/jul/24 12.32)
+            sb.Append("<br/>");
             sb.Append(TxtAvisoExtra.Text.Replace(CrLf, "<br/>"));
             sb.Append("<br/>");
             sb.AppendLine("<br/>");
@@ -738,6 +740,8 @@ public partial class Form1 : Form
             TextoAvisoUltimo = TxtAvisoExtra.Text;
 
             sb.Append("<b>*IMPORTANTE / IMPORTANT*</b>");
+            // Añadir línea de separación                       (05/jul/24 12.30)
+            sb.Append("<br/>");
             sb.Append(TxtAvisoExtra.Text.Replace(CrLf, "<br/>"));
             sb.Append("<br/>");
             sb.AppendLine("<br/>");
@@ -750,29 +754,10 @@ public partial class Form1 : Form
         else if (alerta == 3)
             sb.Append(Properties.Resources.Alerta3_es_en.Replace(CrLf, "<br/>"));
 
-        //// Si se indica enviar el texto extra.              (17/sep/23 20.51)
-        //if (ChkIncluirTextoAviso.Checked && string.IsNullOrWhiteSpace(TxtAvisoExtra.Text) == false)
-        //{
-        //    // Copiar el texto que se va a enviar.              (23/sep/23 10.49)
-        //    TextoAvisoUltimo = TxtAvisoExtra.Text;
-
-        //    sb.Append("<b>*IMPORTANTE / IMPORTANT*</b>");
-        //    sb.Append(TxtAvisoExtra.Text.Replace(CrLf, "<br/>"));
-        //    sb.Append("<br/>");
-        //}
-
         sb.Append("<br/>");
 
         // Usar el método para la firma.                    (27/sep/23 11.54)
         MailGYG.FirmaMakarena(sb, enIngles: false);
-
-        //sb.Append("<br/>");
-        ////sb.Append("Kayak Makarena");
-        ////sb.Append("https://kayakmakarena.com");
-        //// No tenía los cambios de línea, añado el teléfono (08/sep/23 13.55)
-        //sb.Append("Kayak Makarena<br/>");
-        //sb.Append("WhatsApp: +34 645 76 16 89<br/>");
-        //sb.Append("https://kayakmakarena.com<br/>");
 
         // La fecha en español e inglés.                    (02/sep/23 21.05)
         var fechaES = $"{fecha.Date.ToString("dddd dd/MM/yyyy", System.Globalization.CultureInfo.CreateSpecificCulture("es-ES"))}";
