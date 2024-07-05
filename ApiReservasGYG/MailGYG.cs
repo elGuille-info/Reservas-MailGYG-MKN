@@ -1730,13 +1730,16 @@ Sep 5, 2023
             // No tenía los cambios de línea, añado el teléfono (08/sep/23 13.55)
             sb.AppendLine("Kayak Makarena<br/>");
             sb.Append("iMessage / WhatsApp: +34 645 76 16 89 ");
+            // Quito lo de las llamadas por wasap.              (05/jul/24 10.42)
             if (enIngles)
             {
-                sb.Append("<small>(Please, only WhatsApp messages or calls as I usually don't have phone coverage)</small>");
+                //sb.Append("<small>(Please, only WhatsApp messages or calls as I usually don't have phone coverage)</small>");
+                sb.Append("<small>(Please, only WhatsApp messages as I usually don't have phone coverage)</small>");
             }
             else
             {
-                sb.Append("<small>(Por favor, solo mensajes o llamadas por wasap ya que no suelo tener cobertura)</small>");
+                //sb.Append("<small>(Por favor, solo mensajes o llamadas por wasap ya que no suelo tener cobertura)</small>");
+                sb.Append("<small>(Por favor, solo mensajes por wasap ya que no suelo tener cobertura)</small>");
             }
             sb.AppendLine("<br/>");
             sb.AppendLine("https://kayakmakarena.com<br/>");
