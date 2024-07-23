@@ -257,8 +257,9 @@ public partial class FormEnviarFotos : Form
             return true;
         }
 
-        // Agregar el email de kayak.makarena@gmail.com     (23/ago/23 22.16)
-        list.Add("kayak.makarena@gmail.com");
+        // No añadir el de makarena para que no lleguen repetidos (23/jul/24 12.44)
+        //// Agregar el email de kayak.makarena@gmail.com     (23/ago/23 22.16)
+        //list.Add("kayak.makarena@gmail.com");
 
         sb.Clear();
         sb.Append("");
