@@ -49,7 +49,22 @@ public partial class FormEnviarFotos : Form
 
         LabelInfoListView.Text = "";
 
+        // Deshabilitar los botones de enviar fotos        (23/jul/24 11.09)
+        HabilitarBotones(false);
+
         inicializando = false;
+    }
+
+    // Deshabilitar los botones de enviar fotos             (23/jul/24 11.08)
+
+    /// <summary>
+    /// Habilitar o no los botones de enviar fotos.
+    /// </summary>
+    /// <param name="hab"></param>
+    private void HabilitarBotones(bool hab)
+    {
+        BtnEnviarFotos.Enabled = hab;
+        BtnEnviarFotosDia.Enabled = hab;
     }
 
     private void CboHoras_SelectedIndexChanged(object sender, EventArgs e)
@@ -360,6 +375,9 @@ public partial class FormEnviarFotos : Form
             DateTimePickerGYG.Value = fechaFotos;
         }
 
+        // Habilitar botones de enviar fotos                    (23/jul/24 11.11)
+        HabilitarBotones(true);
+
         // Seleccionar la primera hora
         CboHoras.SelectedIndex = 0;
 
@@ -468,6 +486,8 @@ https://photos.app.goo.gl/qqxWBkVthdBGMjFEA
     private void BtnLimpiar_Click(object sender, EventArgs e)
     {
         //LimpiarTextosFotos();
+        
+        HabilitarBotones(false);
 
         TxtFotosDia.Text = "";
     }
@@ -475,6 +495,8 @@ https://photos.app.goo.gl/qqxWBkVthdBGMjFEA
     private void BtnPegar_Click(object sender, EventArgs e)
     {
         //LimpiarTextosFotos();
+
+        HabilitarBotones(false);
 
         var dClip = Clipboard.GetDataObject();
         if (dClip == null) return;

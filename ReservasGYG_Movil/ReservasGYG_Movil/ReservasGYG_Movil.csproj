@@ -5,12 +5,12 @@
         <ProduceReferenceAssembly>true</ProduceReferenceAssembly>
         <ProduceReferenceAssemblyInOutDir>true</ProduceReferenceAssemblyInOutDir>
         <Title>ReservasGYG Movil</Title>
-        <Version>1.0.126</Version>
-        <AssemblyVersion>1.0.126.0</AssemblyVersion>
-        <FileVersion>1.0.126.0</FileVersion>
+        <Version>1.0.127</Version>
+        <AssemblyVersion>1.0.127.0</AssemblyVersion>
+        <FileVersion>1.0.127.0</FileVersion>
         <Authors>gSoft (elguille.nfo)</Authors>
         <Product>ReservasGYG Movil</Product>
-        <Description>Aplicación móvil para gestionar las reservas de GetYourGuide para MKN Reservas  (revisión del 16-jul-2024)</Description>
+        <Description>Aplicación móvil para gestionar las reservas de GetYourGuide para MKN Reservas  (revisión del 23-jul-2024)</Description>
         <Copyright>(c) gSoft (elguille.info) para Kayak Makarena</Copyright>
         <RepositoryUrl>https://github.com/elGuille-info/Reservas-MailGYG-MKN</RepositoryUrl>
         <RepositoryType>git</RepositoryType>
