@@ -1541,9 +1541,10 @@ Sep 5, 2023
         /// </summary>
         /// <param name="fecha">La fecha de las reservas a comprobar.</param>
         /// <param name="conCanceladas">Si se tienen en cuenta las canceladas.</param>
+        /// <param name="conAlquileres">Si se deben incluir los alquileres o no.</param>
         /// <returns>Una colección con las reservas sin salida de la fecha indicada.</returns>
         /// <remarks>Aquí no se mira si es con o sin alquileres.</remarks>
-        public static List<ReservasGYG> ReservasSinSalida(DateTime fecha, bool conCanceladas)
+        public static List<ReservasGYG> ReservasSinSalida(DateTime fecha, bool conCanceladas, bool conAlquileres)
         {
             StringBuilder sb = new StringBuilder();
             //
@@ -1556,6 +1557,13 @@ Sep 5, 2023
             {
                 sb.Append("and CanceladaCliente = 0 ");
             }
+
+            // Si se deben incluir los alquileres               (30/jul/24 14.16)
+            if (conAlquileres == false)
+            {
+                sb.Append($"and Actividad like 'ruta%' ");
+            }
+
             //
             //sb.Append("Select * from Reservas ");
             //sb.Append("where Activa = 1 and CanceladaCliente = 0 and idDistribuidor = 10 ");

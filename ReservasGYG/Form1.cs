@@ -27,23 +27,23 @@ public partial class Form1 : Form
 
     // Intentar no pasar de estas marcas: 60 caracteres. 2         3         4         5         6
     //                                ---------|---------|---------|---------|---------|---------|
-    //[COPIAR]AppDescripcionCopia = " cambio el texto de mañana es el dia"
+    //[COPIAR]AppDescripcionCopia = " incluir o no alquileres en sin salida"
     // BuscarClientes mostrar reservas en la pagina
 
     /// <summary>
     /// La versión de la aplicación.
     /// </summary>
-    public static string AppVersion { get; } = "1.0.129";
+    public static string AppVersion { get; } = "1.0.130";
 
     /// <summary>
     /// La versión del fichero (la revisión)
     /// </summary>
-    public static string AppFileVersion { get; } = "1.0.129.0";
+    public static string AppFileVersion { get; } = "1.0.130.0";
 
     /// <summary>
     /// La fecha de última actualización
     /// </summary>
-    public static string AppFechaVersion { get; } = "24-jul-2024";
+    public static string AppFechaVersion { get; } = "30-jul-2024";
 
 
     public static Form1 Current { get; set; }
@@ -613,12 +613,14 @@ public partial class Form1 : Form
 
     private void BtnReservasSinSalida_Click(object sender, EventArgs e)
     {
-        // Comprobar las reservas que no han salido         (29/ago/23 11.18)
+        // Comprobar las reservas que no han salido             (29/ago/23 11.18)
         // de la fecha indicada 
         var fecha = DateTimePickerGYG.Value.Date;
 
-        // Incluir o no las canceladas.                     (10/sep/23 13.36)
-        var col = ApiReservasMailGYG.MailGYG.ReservasSinSalida(fecha, ChkConCanceladas.Checked);
+        // Incluir o no las canceladas.                         (10/sep/23 13.36)
+        //var col = ApiReservasMailGYG.MailGYG.ReservasSinSalida(fecha, ChkConCanceladas.Checked);
+        // Incluir o no los alquileres.                         (30/jul/24 14.09)
+        var col = ApiReservasMailGYG.MailGYG.ReservasSinSalida(fecha, ChkConCanceladas.Checked, ChkConAlquileres.Checked);
 
         AsignarListView(col, LvwSinEmail);
 
