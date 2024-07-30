@@ -27,18 +27,18 @@ public partial class Form1 : Form
 
     // Intentar no pasar de estas marcas: 60 caracteres. 2         3         4         5         6
     //                                ---------|---------|---------|---------|---------|---------|
-    //[COPIAR]AppDescripcionCopia = " incluir o no alquileres en sin salida"
+    //[COPIAR]AppDescripcionCopia = " al comprobar pluralizar bien email"
     // BuscarClientes mostrar reservas en la pagina
 
     /// <summary>
     /// La versión de la aplicación.
     /// </summary>
-    public static string AppVersion { get; } = "1.0.130";
+    public static string AppVersion { get; } = "1.0.131";
 
     /// <summary>
     /// La versión del fichero (la revisión)
     /// </summary>
-    public static string AppFileVersion { get; } = "1.0.130.0";
+    public static string AppFileVersion { get; } = "1.0.131.0";
 
     /// <summary>
     /// La fecha de última actualización
@@ -600,7 +600,9 @@ public partial class Form1 : Form
         if (res > 0)
         {
             LabelInfoListView.Text = $"Hay {res} {res.Plural("reserva")} del {fecha:dddd dd/MM/yyyy} sin emails.";
-            MessageBox.Show($"Hay {res} {res.Plural("reserva")} del {fecha:dddd dd/MM/yyyy} sin emails.{CrLf}No se debe continuar hasta que lo soluciones.", "Comprobar reservas sin email", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            //MessageBox.Show($"Hay {res} {res.Plural("reserva")} del {fecha:dddd dd/MM/yyyy} sin emails.{CrLf}No se debe continuar hasta que lo soluciones.", "Comprobar reservas sin email", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            // Pluralizar también email                         (30/jul/24 20.32)
+            MessageBox.Show($"Hay {res} {res.Plural("reserva")} del {fecha:dddd dd/MM/yyyy} sin {res.Plural("email")}.{CrLf}No se debe continuar hasta que lo soluciones.", "Comprobar reservas sin email", MessageBoxButtons.OK, MessageBoxIcon.Error);
             HabilitarBotones(false);
         }
         else
