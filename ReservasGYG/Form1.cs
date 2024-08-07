@@ -27,23 +27,23 @@ public partial class Form1 : Form
 
     // Intentar no pasar de estas marcas: 60 caracteres. 2         3         4         5         6
     //                                ---------|---------|---------|---------|---------|---------|
-    //[COPIAR]AppDescripcionCopia = " nuevos textos mañana y hoy es el dia"
+    //[COPIAR]AppDescripcionCopia = " mañana es el día"
     // BuscarClientes mostrar reservas en la pagina
 
     /// <summary>
     /// La versión de la aplicación.
     /// </summary>
-    public static string AppVersion { get; } = "1.0.133";
+    public static string AppVersion { get; } = "1.0.135";
 
     /// <summary>
     /// La versión del fichero (la revisión)
     /// </summary>
-    public static string AppFileVersion { get; } = "1.0.133.0";
+    public static string AppFileVersion { get; } = "1.0.135.0";
 
     /// <summary>
     /// La fecha de última actualización
     /// </summary>
-    public static string AppFechaVersion { get; } = "05-ago-2024";
+    public static string AppFechaVersion { get; } = "07-ago-2024";
 
 
     public static Form1 Current { get; set; }
@@ -449,7 +449,9 @@ public partial class Form1 : Form
         //sb.Append("https://kayakmakarena.com<br/>");
 
         string body = sb.ToString().Replace(CrLf, "<br/>");
-        var msg = ApiReservasMailGYG.MailGYG.EnviarMensaje(colPara, "Mañana es el día / Tomorrow is the day", body, true);
+        // Cambio el texto del asunto.                          (07/ago/24 20.36)
+        //var msg = ApiReservasMailGYG.MailGYG.EnviarMensaje(colPara, "Mañana es el día / Tomorrow is the day", body, true);
+        var msg = ApiReservasMailGYG.MailGYG.EnviarMensaje(colPara, "El día de tu actividad / The day of your activity", body, true);
         if (msg.StartsWith("ERROR"))
         {
             MessageBox.Show($"ERROR al enviar el email:{CrLf}{msg}.", "Error al enviar el email de la reserva", MessageBoxButtons.OK, MessageBoxIcon.Warning);

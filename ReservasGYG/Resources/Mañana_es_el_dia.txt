@@ -1,4 +1,4 @@
-<b>¡Llega el día de tu actividad!</b>
+<b>¡El día de tu actividad!</b>
 
 
 <b>*LOCALIZACIÓN*</b>
@@ -24,7 +24,7 @@ Si has contratado una ruta guiada, recuerda que las fotos que os hagan durante l
 
 
 <b>Por favor lee esto,</b> el pueblo de Maro es muy pequeño y hay pocos sitios donde aparcar. 
-Si llevas tu propio vehículo ten en cuenta que en temporada alta puede estar complicado encontrar aparcamiento, por tanto, te recomendamos que calcules una hora o dos para aparcar y bajar a la playa.
+Si llevas tu propio vehículo ten en cuenta que en temporada alta puede estar complicado encontrar aparcamiento, por tanto, te recomendamos que calcules una hora o más para aparcar y bajar a la playa.
 Si no encuentras aparcamiento en el pueblo, puedes ir al parking de las Cuevas de Nerja, aunque es de pago. 
 Gracias por tu comprensión.
 
@@ -34,7 +34,7 @@ Gracias por tu comprensión.
 
 
 
-<b>The day of your activity is here!</b>
+<b>The day of your activity!</b>
 
 
 <b>*LOCATION*</b>
@@ -60,7 +60,7 @@ If you have booked a guided tour, remember that the photos taken during the guid
 
 
 <b>Please read this,</b> we are in high season and the town of Maro is very small and there are few places to park. 
-If you bring your own vehicle, keep in mind that in high season it can be complicated to find parking, so we recommend that you calculate an hour or two more to park and go down to the beach.
+If you bring your own vehicle, keep in mind that in high season it can be complicated to find parking, so we recommend that you calculate an hour or more to park and go down to the beach.
 If you do not find any parking in the town, you can go to the parking lot of the Nerja Caves, although it is paid. 
 Thank you for your understanding.
 

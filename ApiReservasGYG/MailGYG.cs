@@ -1738,7 +1738,9 @@ Sep 5, 2023
             sb.AppendLine("<br/>");
             // No tenía los cambios de línea, añado el teléfono (08/sep/23 13.55)
             sb.AppendLine("Kayak Makarena<br/>");
-            sb.Append("iMessage / WhatsApp: +34 645 76 16 89 ");
+            // Quito lo de iMessage                             (06/ago/24 19.39)
+            sb.Append("WhatsApp: +34 645 76 16 89 ");
+            //sb.Append("iMessage / WhatsApp: +34 645 76 16 89 ");
             // Quito lo de las llamadas por wasap.              (05/jul/24 10.42)
             if (enIngles)
             {
