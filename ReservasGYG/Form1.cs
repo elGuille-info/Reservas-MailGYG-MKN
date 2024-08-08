@@ -27,18 +27,18 @@ public partial class Form1 : Form
 
     // Intentar no pasar de estas marcas: 60 caracteres. 2         3         4         5         6
     //                                ---------|---------|---------|---------|---------|---------|
-    //[COPIAR]AppDescripcionCopia = " tamaño del form1 para ver hora salida"
+    //[COPIAR]AppDescripcionCopia = " más ancho el campo de notas"
     // BuscarClientes mostrar reservas en la pagina
 
     /// <summary>
     /// La versión de la aplicación.
     /// </summary>
-    public static string AppVersion { get; } = "1.0.136";
+    public static string AppVersion { get; } = "1.0.137";
 
     /// <summary>
     /// La versión del fichero (la revisión)
     /// </summary>
-    public static string AppFileVersion { get; } = "1.0.136.0";
+    public static string AppFileVersion { get; } = "1.0.137.0";
 
     /// <summary>
     /// La fecha de última actualización
@@ -95,7 +95,8 @@ public partial class Form1 : Form
         LvwSinEmail.Columns[3].Width = 260; // Reserva
         LvwSinEmail.Columns[4].Width = 160; // pax
         LvwSinEmail.Columns[10].Width = 300; // Email
-        LvwSinEmail.Columns[11].Width = 700; // 500 Notas
+        // Poner más espacio en las notas                       (08/ago/24 12.59)
+        LvwSinEmail.Columns[11].Width = 1000; // 700; // 500 Notas
         LvwSinEmail.Columns[5].Width = 96; // Cancelada
         LvwSinEmail.Columns[6].Width = 80; // H.Salida
         LvwSinEmail.Columns[7].Width = 80; // H.Vuelta
