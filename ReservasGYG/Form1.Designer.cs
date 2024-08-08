@@ -153,7 +153,7 @@ namespace ReservasGYG
             GrbOpcionesFecha.Controls.Add(BtnComprobarSinMail);
             GrbOpcionesFecha.Location = new Point(12, 12);
             GrbOpcionesFecha.Name = "GrbOpcionesFecha";
-            GrbOpcionesFecha.Size = new Size(1316, 949);
+            GrbOpcionesFecha.Size = new Size(1365, 949);
             GrbOpcionesFecha.TabIndex = 0;
             GrbOpcionesFecha.TabStop = false;
             GrbOpcionesFecha.Text = "Opciones con fecha";
@@ -162,7 +162,7 @@ namespace ReservasGYG
             // 
             BtnAnalizar.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
             BtnAnalizar.BackColor = Color.PaleTurquoise;
-            BtnAnalizar.Location = new Point(1008, 571);
+            BtnAnalizar.Location = new Point(1057, 571);
             BtnAnalizar.Margin = new Padding(3, 12, 3, 3);
             BtnAnalizar.Name = "BtnAnalizar";
             BtnAnalizar.Size = new Size(302, 40);
@@ -179,7 +179,7 @@ namespace ReservasGYG
             GrbAvisos.Controls.Add(PanelBotones);
             GrbAvisos.Location = new Point(6, 608);
             GrbAvisos.Name = "GrbAvisos";
-            GrbAvisos.Size = new Size(1310, 335);
+            GrbAvisos.Size = new Size(1359, 335);
             GrbAvisos.TabIndex = 11;
             GrbAvisos.TabStop = false;
             GrbAvisos.Text = "Enviar avisos";
@@ -203,7 +203,7 @@ namespace ReservasGYG
             TxtAvisoExtra.Multiline = true;
             TxtAvisoExtra.Name = "TxtAvisoExtra";
             TxtAvisoExtra.ScrollBars = ScrollBars.Both;
-            TxtAvisoExtra.Size = new Size(1298, 152);
+            TxtAvisoExtra.Size = new Size(1347, 152);
             TxtAvisoExtra.TabIndex = 1;
             TxtAvisoExtra.Text = resources.GetString("TxtAvisoExtra.Text");
             // 
@@ -240,7 +240,7 @@ namespace ReservasGYG
             PanelBotones.Location = new Point(6, 223);
             PanelBotones.Name = "PanelBotones";
             PanelBotones.Padding = new Padding(3);
-            PanelBotones.Size = new Size(1298, 106);
+            PanelBotones.Size = new Size(1347, 106);
             PanelBotones.TabIndex = 2;
             // 
             // BtnMañanaEs
@@ -307,7 +307,7 @@ namespace ReservasGYG
             LabelInfoListView.Location = new Point(6, 571);
             LabelInfoListView.Margin = new Padding(3);
             LabelInfoListView.Name = "LabelInfoListView";
-            LabelInfoListView.Size = new Size(996, 31);
+            LabelInfoListView.Size = new Size(1045, 31);
             LabelInfoListView.TabIndex = 10;
             LabelInfoListView.Text = "Hay n elementos";
             LabelInfoListView.TextAlign = ContentAlignment.MiddleLeft;
@@ -319,7 +319,7 @@ namespace ReservasGYG
             BtnReservasSinSalida.Location = new Point(6, 135);
             BtnReservasSinSalida.Margin = new Padding(3, 12, 3, 3);
             BtnReservasSinSalida.Name = "BtnReservasSinSalida";
-            BtnReservasSinSalida.Size = new Size(650, 40);
+            BtnReservasSinSalida.Size = new Size(699, 40);
             BtnReservasSinSalida.TabIndex = 7;
             BtnReservasSinSalida.Text = "Comprobar reservas sin salida (not show)";
             BtnReservasSinSalida.UseVisualStyleBackColor = false;
@@ -336,7 +336,7 @@ namespace ReservasGYG
             LvwSinEmail.Location = new Point(9, 184);
             LvwSinEmail.Margin = new Padding(3, 6, 3, 3);
             LvwSinEmail.Name = "LvwSinEmail";
-            LvwSinEmail.Size = new Size(1301, 381);
+            LvwSinEmail.Size = new Size(1350, 381);
             LvwSinEmail.TabIndex = 9;
             LvwSinEmail.UseCompatibleStateImageBehavior = false;
             LvwSinEmail.View = View.Details;
@@ -434,7 +434,7 @@ namespace ReservasGYG
             BtnMostrarReservas.Location = new Point(662, 135);
             BtnMostrarReservas.Margin = new Padding(3, 12, 3, 3);
             BtnMostrarReservas.Name = "BtnMostrarReservas";
-            BtnMostrarReservas.Size = new Size(645, 40);
+            BtnMostrarReservas.Size = new Size(694, 40);
             BtnMostrarReservas.TabIndex = 8;
             BtnMostrarReservas.Text = "Mostrar Reservas";
             BtnMostrarReservas.UseVisualStyleBackColor = false;
@@ -466,7 +466,7 @@ namespace ReservasGYG
             BtnComprobarSinMail.BackColor = Color.FloralWhite;
             BtnComprobarSinMail.Location = new Point(6, 80);
             BtnComprobarSinMail.Name = "BtnComprobarSinMail";
-            BtnComprobarSinMail.Size = new Size(650, 40);
+            BtnComprobarSinMail.Size = new Size(699, 40);
             BtnComprobarSinMail.TabIndex = 5;
             BtnComprobarSinMail.Text = "Comprobar reservas sin email en la fecha";
             BtnComprobarSinMail.UseVisualStyleBackColor = false;
@@ -484,7 +484,7 @@ namespace ReservasGYG
             statusStrip1.Location = new Point(0, 979);
             statusStrip1.Name = "statusStrip1";
             statusStrip1.ShowItemToolTips = true;
-            statusStrip1.Size = new Size(1340, 36);
+            statusStrip1.Size = new Size(1389, 36);
             statusStrip1.TabIndex = 6;
             statusStrip1.Text = "statusStrip1";
             // 
@@ -492,7 +492,7 @@ namespace ReservasGYG
             // 
             LabelStatus.BorderSides = ToolStripStatusLabelBorderSides.Right;
             LabelStatus.Name = "LabelStatus";
-            LabelStatus.Size = new Size(895, 29);
+            LabelStatus.Size = new Size(944, 29);
             LabelStatus.Spring = true;
             LabelStatus.Text = "Opciones para las reservas de GetYourGuide";
             LabelStatus.TextAlign = ContentAlignment.MiddleLeft;
@@ -521,7 +521,7 @@ namespace ReservasGYG
             // 
             AutoScaleDimensions = new SizeF(10F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1340, 1015);
+            ClientSize = new Size(1389, 1015);
             Controls.Add(statusStrip1);
             Controls.Add(GrbOpcionesFecha);
             Icon = (Icon)resources.GetObject("$this.Icon");

@@ -27,23 +27,23 @@ public partial class Form1 : Form
 
     // Intentar no pasar de estas marcas: 60 caracteres. 2         3         4         5         6
     //                                ---------|---------|---------|---------|---------|---------|
-    //[COPIAR]AppDescripcionCopia = " mañana es el día"
+    //[COPIAR]AppDescripcionCopia = " tamaño del form1 para ver hora salida"
     // BuscarClientes mostrar reservas en la pagina
 
     /// <summary>
     /// La versión de la aplicación.
     /// </summary>
-    public static string AppVersion { get; } = "1.0.135";
+    public static string AppVersion { get; } = "1.0.136";
 
     /// <summary>
     /// La versión del fichero (la revisión)
     /// </summary>
-    public static string AppFileVersion { get; } = "1.0.135.0";
+    public static string AppFileVersion { get; } = "1.0.136.0";
 
     /// <summary>
     /// La fecha de última actualización
     /// </summary>
-    public static string AppFechaVersion { get; } = "07-ago-2024";
+    public static string AppFechaVersion { get; } = "08-ago-2024";
 
 
     public static Form1 Current { get; set; }
